@@ -1,0 +1,209 @@
+/* HEADER */
+header .navbar {
+  padding-bottom: 20px;
+
+  .navbar-brand {
+    background: @logo no-repeat scroll left center transparent;
+    float: left;
+    height: 115px;
+    width: 310px;
+    margin-top: 1em;
+  }
+  .navbar-form {
+      width: 100%;
+      margin-top: 15px;
+      padding-left: 8px;
+      padding-right: 0;
+  }
+}
+
+/** Searchbar/-box ***/
+
+.well {
+    background-color: @lightgrey;
+    color: @black;
+    text-align: left;
+    width:60%;
+    margin:auto;
+    margin-top: 5em;
+    margin-bottom: 2em;
+}
+
+#searchForm  {
+    width: 100% !important;
+}
+
+.searchForm_lookfor {
+    min-width: 50%;
+    max-width: 100% !important;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    background-color: @white;
+}
+
+.twitter-typeahead {
+  min-width: 50%;
+}
+
+/* FOOTER */
+.bottom_logos {
+    background: @powered-by no-repeat scroll right top transparent;
+    height: 100px;
+}
+
+footer {
+  padding-top: 0px;
+  ul {
+    padding-left: 0px;
+    list-style-type: none;
+  }
+}
+
+.footer-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* FACETS */
+.fa-info-circle {
+  padding-left: 10px;
+}
+
+/* General Layout */
+body {
+    background: @background-color;
+}
+
+.container {
+	background: @white;
+	-webkit-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
+	-moz-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
+	box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
+}
+
+.breadcrumb {
+	background: @background-color;
+  margin-top: 0px;
+  & > .active {
+      color: @black;
+    }
+}
+
+.badge {
+    color: @grey;
+    border: 1px solid @grey;
+    background-color: @white;
+    border-radius: 10px;
+}
+
+.label {
+  background-color: @brand-primary;
+}
+
+.table-striped th {
+    width: 20%;
+}
+
+.highlight,
+mark {
+  background: @highlighter-color;
+  border-radius: 5px;
+}
+
+hr {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  border-color: lightgray;
+}
+
+/* Lightbox Layout */
+/*h2.providerbox {
+  color: @brand-primary;
+}*/
+
+/* SPages Layout */
+body.template-dir-spages {
+    #content.container {
+      padding: 10px 30px 10px 30px;
+    }
+}
+
+div#contacts {
+  .left {
+    float: left;
+    padding-right: 100px;
+  }
+  .right {
+    padding-top: 1px;
+  }
+}
+
+/* Agent Layout */
+
+.agent-container {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 3px solid @brand-primary;
+
+    .agent-column {
+        flex: 0 1 100%;
+        padding: 15px;
+
+        .external-icon img {
+            width: 16px;
+            margin-right: 0.5em;
+        }
+
+        h2#agentName {
+          margin-top: 10px;
+        }
+      }
+}
+
+/*
+.agent-container {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 3px solid @brand-primary;
+
+    .agent-column#thumb {
+        flex: 0 2 100%;
+        padding: 15px;
+    }
+
+    .agent-column#details {
+        flex: 2 1 100%;
+        padding: 15px;
+
+        .agent-subcontainer {
+            display: flex;
+
+            .agent-subcolumn {
+                flex: 0 1 100%;
+
+                .external-icon img {
+                    width: 16px;
+                    margin-right: 0.5em;
+                }
+             }
+    }
+
+    h2#agentName {
+      margin-top: 10px;
+    }
+  }
+}
+*/
+
+/* Detailed Record View */
+.mainbody#recordview {
+  width: 100%;
+  .media-left {
+    width: 30%;
+  }
+  .medium > a {
+    width: 100%;
+  }
+}
