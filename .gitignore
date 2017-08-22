@@ -19,3 +19,5 @@ lessphp_*.list
 module/VuFind/tests/.phpunit.result.cache
 node_modules
 public/swagger-ui
+.vagrant
+local/config/vufind/config.ini
