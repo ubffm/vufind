@@ -1,0 +1,60 @@
+<? // Set page title.
+$this->headTitle($this->translate('News') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+
+<h2>Newsstream</h2>
+
+<p>
+Zusammen mit der <a target="_blank" href="http://www.theater-wissenschaft.de/">Gesellschaft für Theaterwissenschaft</a> betreut der <i>FID Darstellende
+Kunst</i> den Profildienst Darstellende Kunst. Fachrelevante Nachrichten aus der Theater-
+und Tanzwissenschaft werden redaktionell ausgewertet und steht Ihnen als <a href="/news/rss">RSS-Feed</a>
+zur Verfügung. Sie können diesen in ihrem Browser und in den gängigen Mail-Programmen
+integrieren. Die RSS-Reader-Funktion richten Sie mittels der Hilfe-Funktion ein.<br>
+<a href="/news/current">Zur News-Übersicht</a>
+</p>
+
+<h2>Newsletter</h2>
+Abonnieren Sie unseren Newsletter!<br>
+Wir senden Ihnen drei bis vier Mal im Jahr aktuelle Informationen zum <i>FID</i> bzw. aus der Forschung
+und Lehre der Theater- und Tanzwissenschaft zu. <br>
+<br>
+<?
+    } else {
+?>
+
+<h2>News Streaming</h2>
+
+<p>
+The <i>SIS Performing Arts</i> has teamed up with the <a target="_blank" href="http://www.theater-wissenschaft.de/">Society for Theatre Studies</a> to
+operate the Performing Arts News Service, which evaluates and edits news from the world of theatre and dance studies. The sources
+thus provided can be subscribed to via an <a href="/news/rss">RSS feed</a>. You can integrate this feed into your browser and into
+all common e-mail programmes. To set up an RSS feed, please use the Help function.
+<br>
+<a href="/news/current">News overview</a>
+</p>
+
+<h2>Newsletter</h2>
+Subscribe to our newsletter!<br>
+We will send you current information from the <i>SIS</i>, related to research and teaching in theatre and dance studies, three to four times per year.<br>
+<br>
+<?
+    }
+?>
+<? if ($display_message) {?>
+<div class="group row" style="background-color:#d9e9ef"><?=$this->transEsc($message);?></div>
+<? } ?>
+<form accept-charset="UTF-8"  method="POST" action="/spages/news">
+
+<input type="radio" id="ein" name="action" value="EINTRAGEN">
+<label style="vertical-align:middle;" for="ein"><?=$this->transEsc("mail subscribe");?></label><br>
+<input type="radio" id="aus" name="action"  value="AUSTRAGEN">
+<label style="vertical-align:middle;" for="aus"><?=$this->transEsc("mail unsubscribe");?></label><br>
+
+<label for="subscriber"><?=$this->transEsc("mail address"). ':';?></label><br>
+<input id="subscriber" name="email" size="50" maxlength="100" value="" /><br>
+<br>
+<input class="btn btn-primary" align="left" type="SUBMIT" value="<?=$this->transEsc('Send')?>">
+</form>

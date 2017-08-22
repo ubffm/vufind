@@ -1,0 +1,194 @@
+<? // Set page title.
+$this->headTitle($this->translate('Suggestion Buy') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Suggestion Buy')?></h2>
+
+<?
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+if ($lang =='de') {
+?>
+
+<p>Um das gesamte Spektrum an Fachliteratur für die Darstellende
+Kunst abdecken zu können, benötigen wir Ihre Mithilfe! Sie haben
+einen Titel nicht im FID-Portal gefunden oder Sie können Ihren
+Wunschtitel nicht über die Fernleihe beziehen? Melden Sie Ihren
+Kaufvorschlag an die FID-Redaktion. Wir werden Ihren Vorschlag
+prüfen und Ihnen eine Rückmeldung geben.
+</p>
+
+<?
+    } else {
+?>
+
+<h2>Suggestions for New Acquisitions</h2>
+
+<p>To do justice to the entire range of literature in the field of performing arts, we need your help! If you
+  have been unable to find a title you need using the SIS web portal, or if you are unable to obtain it using
+  the interlibrary loan programme, please send your suggestion for a new acquisition to the SIS editorial team.
+  We will evaluate your suggestion and send you a response. </p>
+
+<?
+    }
+?>
+
+<form accept-charset="UTF-8"  method="POST" action="kaufvorschlag">
+
+<? if ($display_message) {?>
+<div class="group row" style="background-color:#d9e9ef"><?=$this->transEsc($message);?></div>
+<? } ?>
+
+<p><b><?=$this->transEsc("Suggested Acquisition") . ":";?></b></p>
+
+<table style="border-collapse: separate; border-spacing: 10px;">
+
+<tr>
+<td width="250px">
+ISBN/ISSN:
+</td>
+<td>
+<input type="text" name="ISBN" size="13" maxlength="20" value="<?if(isset($inputs['ISBN']))echo $inputs['ISBN'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<b>*</b><?=$this->transEsc("Author Surname");?>:
+</td>
+<td>
+<input type="text" name="Name_Autor" size="50" maxlength="100" value="<?if(isset($inputs['Name_Autor']))echo $inputs['Name_Autor'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<?=$this->transEsc("Author First Name");?>:
+</td>
+<td>
+<input type="text" name="Vorname_Autor" size="50" maxlength="100" value="<?if(isset($inputs['Vorname_Autor']))echo $inputs['Vorname_Autor'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<b>*</b><?=$this->transEsc("Title");?>:
+</td>
+<td>
+<textarea name="Titel" rows="1" cols="47" wrap="" maxlength="300">
+<?if(isset($inputs['Titel']))echo $inputs['Titel'];?></textarea>
+</td>
+</tr>
+
+<tr>
+<td>
+<b>*</b><?=$this->transEsc("Publisher");?>:
+</td>
+<td>
+<input type="text" name="Verlag" size="30" maxlength="100" value="<?if(isset($inputs['Verlag']))echo $inputs['Verlag'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<?=$this->transEsc("Place of Publication");?>:
+</td>
+<td>
+<input type="text" name="Erscheinungsort" size="30" maxlength="100" value="<?if(isset($inputs['Erscheinungsort']))echo $inputs['Erscheinungsort'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<?=$this->transEsc("Date of Publication");?>:
+</td>
+<td>
+<input type="text" name="Erscheinungsjahr" size="4" maxlength="4" value="<?if(isset($inputs['Erscheinungsjahr']))echo $inputs['Erscheinungsjahr'];?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<?=$this->transEsc("Remarks");?>:
+</td>
+<td>
+<textarea name="Anmerkungen" rows="2" cols="50" wrap="" maxlength="1000">
+<?if(isset($inputs['Anmerkungen']))echo $inputs['Anmerkungen'];?></textarea>
+</td>
+</tr>
+
+</table>
+
+<hr size="1">
+
+<p><b><?=$this->transEsc("Request Contact Details");?>:</b></p>
+
+<table style="border-collapse: separate;border-spacing: 10px;">
+<tr>
+<td width="250px">
+<b>*</b><?=$this->transEsc("Name");?>:
+</td>
+<td>
+<input type="text" name="Name" size="50" value="<?if(isset($inputs['Name']))echo $inputs['Name'];?>" maxlength="100">
+</td>
+</tr>
+
+<tr>
+<td>
+<b>*</b><?=$this->transEsc("First Name");?>:
+</td>
+<td>
+<input type="text" name="Vorname" size="50" value="<?if(isset($inputs['Vorname']))echo $inputs['Vorname'];?>" maxlength="100">
+</td>
+</tr>
+
+<tr>
+<td>
+<b>*</b>E-Mail:
+</td>
+<td>
+<input id="email" name="email" size="30" value="<?if(isset($inputs['email']))echo $inputs['email'];?>" maxlength="100"/>
+</td>
+</tr>
+
+<tr>
+<td>
+Institution:
+</td>
+<td>
+<input id="institution" name="institution" size="50" value="<?if(isset($inputs['institution']))echo $inputs['institution'];?>" maxlength="100"/>
+</td>
+</tr>
+
+<tr>
+<td>
+</td>
+<td>
+<input align="left" type="SUBMIT" value="<?=$this->transEsc('Send')?>">
+<input align="right" type="RESET" value="<?=$this->transEsc('Clear')?>">
+</td>
+</tr>
+
+</table>
+
+</form><br><br>
+
+<?
+    if ($lang =='de') {
+?>
+
+<p>Bitte beachten Sie, dass die Kaufvorschläge dem <a href="/spages/neuerwerb">Erwerbungsprofil</a>
+des Fachinformationsdienstes entsprechen müssen.<br>
+Mit einem * gekennzeichnete Felder sind Pflichtfelder, die Sie ausfüllen müssen, damit Ihr Vorschlag
+bearbeitet werden kann.
+</p>
+
+<?
+    } else {
+?>
+
+<p>Please note that the suggestions for new acquistions must be in line with
+  <a href="/spages/neuerwerb"><i>SIS</i>'s acquisition strategy</a>.
+An asterisk (*) denotes information that must be entered if we are to process your request.</p>
+
+<?
+    }
+?>

@@ -1,0 +1,103 @@
+<? // Set page title.
+$this->headTitle($this->translate('Contact') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Contact')?></h2>
+
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+<div id="contacts">
+<div class="left">
+<h4>Projektleitung und Koordination</h4>
+Franziska Voß<br>
+Tel: 069/ 798-39574<br>
+<a href="mailto:f.voss@ub.uni-frankfurt.de">f.voss@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Technische Realisierung</h4>
+Julia Beck<br>
+Tel: 069/ 798-39387<br>
+<a href="mailto:j.beck@ub.uni-frankfurt.de">j.beck@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Grafische Gestaltung</h4>
+Axel Dörrer<br>
+Tel: 069/ 798-39213<br>
+<a href="mailto:a.doerrer@ub.uni-frankfurt.de">a.doerrer@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Bibliothekarische Dienstleistung</h4>
+Erzsébet Trautz<br>
+Tel: 069/ 798-39244<br>
+<a href="mailto:e.trautz@ub.uni-frankfurt.de">e.trautz@ub.uni-frankfurt.de</a>
+<br><br>
+</div>
+
+<div class="right">
+<h4>Weitere Ansprechpartner</h4>
+Dr. Ann-Barbara Kersting-Meuleman<br>
+Abteilungsleitung Musik, Theater<br>
+Tel: 069/ 798-39245<br>
+<a href="mailto:a.b.kersting-meuleman@ub.uni-frankfurt.de">a.b.kersting-meuleman@ub.uni-frankfurt.de</a>
+<br><br>
+
+Abteilung Musik, Theater<br>
+Tel.: 069/798-39 244<br>
+<a href="mailto:slg-musik-theater@ub.uni-frankfurt.de">slg-musik-theater@ub.uni-frankfurt.de</a>
+<br><br>
+
+Allgemeine Anfragen können Sie auch an die Redaktion senden:<br>
+<a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>
+</div>
+</div>
+<?
+    } else {
+?>
+
+<div id="contacts">
+<div class="left">
+<h4>Project Leader and Coordinator</h4>
+Franziska Voß<br>
+Tel: +49 69/ 798-39574<br>
+<a href="mailto:f.voss@ub.uni-frankfurt.de">f.voss@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Technical Implementation</h4>
+Julia Beck<br>
+Tel: +49 69/ 798-39387<br>
+<a href="mailto:j.beck@ub.uni-frankfurt.de">j.beck@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Graphic Design</h4>
+Axel Dörrer<br>
+Tel: +49 69/ 798-39213<br>
+<a href="mailto:a.doerrer@ub.uni-frankfurt.de">a.doerrer@ub.uni-frankfurt.de</a>
+<br><br>
+
+<h4>Library Services</h4>
+Erzsébet Trautz<br>
+Tel: +49 69/798-39244<br>
+<a href="mailto:e.trautz@ub.uni-frankfurt.de">e.trautz@ub.uni-frankfurt.de</a>
+<br><br>
+</div>
+
+<div class="right">
+<h4>Additional Contact Person</h4>
+Dr. Ann-Barbara Kersting-Meuleman<br>
+Head of the Music and Theatre Department<br>
+Tel: +49 69/ 798-39245<br>
+<a href="mailto:a.b.kersting-meuleman@ub.uni-frankfurt.de">a.b.kersting-meuleman@ub.uni-frankfurt.de</a>
+<br><br>
+
+Department of Music, Theatre<br>
+Tel.: +49 69/798-39 244<br>
+<a href="mailto:slg-musik-theater@ub.uni-frankfurt.de">slg-musik-theater@ub.uni-frankfurt.de</a>
+<br><br>
+
+General enquiries may be sent to the editorial team:<br>
+<a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>
+</div>
+
+<?
+    }
+?>

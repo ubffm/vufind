@@ -1,0 +1,50 @@
+<? // Set page title.
+$this->headTitle($this->translate('Links to from') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Links to from')?></h2>
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+
+<p>Bei direkten oder indirekten Verweisen auf fremde Webseiten ("Hyperlinks"),
+die außerhalb des Verantwortungsbereiches der UB Frankfurt liegen, würde eine
+Haftungsverpflichtung ausschließlich in dem Fall in Kraft treten, in dem die UB Frankfurt
+von den Inhalten Kenntnis hat und es der UB Frankfurt technisch möglich und zumutbar
+wäre, die Nutzung im Falle rechtswidriger Inhalte zu verhindern. Die UB Frankfurt erklärt
+hiermit ausdrücklich, dass zum Zeitpunkt der Linksetzung keine illegalen Inhalte auf den
+zu verlinkenden Seiten erkennbar waren. Auf die aktuelle und zukünftige Gestaltung, die
+Inhalte oder die Urheberschaft der gelinkten/verknüpften Seiten hat die UB Frankfurt keinerlei
+Einfluss. Deshalb distanziert sich die UB Frankfurt hiermit ausdrücklich von allen Inhalten aller
+gelinkten/verknüpften Seiten, die nach der Linksetzung verändert wurden. Diese Feststellung gilt
+für alle innerhalb des eigenen Internetangebotes gesetzten Links und Verweise sowie für
+Fremdeinträge in von der UB Frankfurt eingerichteten Gästebüchern, Diskussionsforen und
+Mailinglisten. Für illegale, fehlerhafte oder unvollständige Inhalte und insbesondere für Schäden,
+die aus der Nutzung oder Nichtnutzung solcherart dargebotener Informationen entstehen, haftet allein
+ der Anbieter der Seite, auf welche verwiesen wurde, nicht derjenige, der über Links auf die jeweilige
+ Veröffentlichung lediglich verweist.
+</p>
+<?
+    } else {
+?>
+
+<p>Where our site contains hyperlinks that lead directly or indirectly to other websites for which
+  the University Library Frankfurt bears no responsibility, the University Library Frankfurt is only
+  subject to liability claims where the Library has full awareness of the content in question and where
+  it would be both reasonable and technically possible for the University Library Frankfurt to prevent
+  illegal usage of the content in question. The University Library Frankfurt hereby explicitly states
+  that at the time the link was placed, there was no evidence of illegal usage of content on the site(s)
+  to which the link led. The University Library Frankfurt bears no responsibility for the current and
+  future content, structure or any possible copyrights on the sites in question. For this reason, the
+  University Library Frankfurt hereby explicitly refuses to claim responsibility for the content of
+  all sites linked to ours where the content has been modified after the link was placed. This applies
+  to all links both direct and indirect placed on our own website and to contributions made by external
+  parties to guest books, discussion forums and mailing lists set up by the University Library Frankfurt.
+  In the case of illegal, defective or incomplete content and especially regarding any damages resulting
+  from the use or non-use of information of this kind, liability is borne solely by the party operating
+  the website to which our website provides a link, and not the party which has simply referred users to
+  the publication in question via a link.
+</p>
+
+<?
+    }
+?>

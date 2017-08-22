@@ -1,0 +1,42 @@
+<? // Set page title.
+$this->headTitle($this->translate('Website Information') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Website Information')?></h2>
+
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+
+<p>Der <i>Fachinformationsdienst Darstellende Kunst</i> und das Portal ist ein Angebot der:<br/>
+<br/>
+<a target="_blank" href="http://www.ub.uni-frankfurt.de"><b>Universitätsbibliothek Johann Christian Senckenberg in Frankfurt am Main</b></a><br/>
+vertreten durch den Direktor der Universitätsbibliothek Johann Christian Senckenberg <b>Dr. Heiner Schnelling</b>
+<br/><br/>
+
+Universitätsbibliothek Frankfurt a.M.<br/>
+Bockenheimer Landstr. 134-138<br/>
+60325 Frankfurt am Main<br/>
+Tel.: 069/ 798-39205<br/>
+<a href="mailto:Direktion@ub.uni-frankfurt.de">Direktion@ub.uni-frankfurt.de</a><br/>
+</p>
+
+<?
+    } else {
+?>
+
+<p>The <i>Specialised Information Service Performing Arts</i> and the web portal are run by:<br/>
+<br/>
+<a target="_blank" href="http://www.ub.uni-frankfurt.de/home_en.html"><b>University Library Johann Christian Senckenberg</b></a><br/>
+represented by the Director of the University Library Johann Christian Senckenberg <b>Dr. Heiner Schnelling</b>
+<br/><br/>
+
+University Library Frankfurt am Main<br/>
+Bockenheimer Landstr. 134-138<br/>
+60325 Frankfurt am Main<br/>
+Tel.: +49 69/ 798-39205<br/>
+<a href="mailto:Direktion@ub.uni-frankfurt.de">Direktion@ub.uni-frankfurt.de</a><br/>
+</p>
+
+<?
+    }
+?>

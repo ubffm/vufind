@@ -1,0 +1,64 @@
+<? // Set page title.
+$this->headTitle($this->translate('Liability Information') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Liability Information')?></h2>
+
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+
+<p>
+Die UB Frankfurt ist als Inhaltsanbieter für die "eigenen Inhalte", die sie zur Nutzung
+bereithält, nach den allgemeinen Gesetzen verantwortlich. Die UB Frankfurt ist um Richtigkeit
+und Aktualität der auf den Seiten von <a href="http://www.performing-arts.eu">www.performing-arts.eu</a> bereitgestellten Informationen bemüht.
+Fehler und Unklarheiten können aber nicht vollständig ausgeschlossen werden, so dass keine Gewähr
+für die Aktualität, Richtigkeit, Vollständigkeit, Qualität und jederzeitige Verfügbarkeit der
+Inhalte übernommen werden kann. Für Schäden materieller oder immaterieller Art, die durch die
+Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und
+unvollständiger Informationen unmittelbar oder mittelbar verursacht werden, haften die UB Frankfurt
+nicht, sofern ihr nicht nachweislich vorsätzliches oder grob fahrlässiges Verschulden zur Last fällt.
+Dies gilt auch für etwaige Schäden, die beim Aufrufen oder Herunterladen von Daten durch
+Computerviren oder bei der Installation von Software verursacht werden. Die Nutzung der auf dem
+Portal <a href="www.performing-arts.eu">www.performing-arts.eu</a> zur Verfügung gestellten Inhalte
+erfolgt auf alleinige Gefahr des Benutzers/der Benutzerin.</p>
+
+<p>Die UB Frankfurt behält es sich ausdrücklich vor, Teile des Internetangebotes oder das gesamte
+Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung
+zeitweise oder endgültig einzustellen.
+</p>
+
+<h4>Rechtswirksamkeit dieses Haftungsausschlusses</h4>
+<p>Dieser Haftungsausschluss ist als Teil des Internetangebotes zu betrachten, von dem aus auf diese Seite
+  verwiesen wurde. Sofern Teile oder einzelne Formulierungen dieses Textes der geltenden Rechtslage nicht,
+  nicht mehr oder nicht vollständig entsprechen sollten, bleiben die übrigen Teile des Dokumentes in ihrem Inhalt und ihrer Gültigkeit davon unberührt.
+</p>
+<a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>
+
+<?
+    } else {
+?>
+
+<p>In accordance with generally applicable law, the University Library Frankfurt as operator of the
+  website hereby assumes responsibility for its own content provided to users. The University Library
+  Frankfurt makes every effort to provide correct and current information on the <a href="http://www.performing-arts.eu">www.performing-arts.eu</a> sites,
+  but cannot promise that this information is without mistakes and/or ambiguities. Thus the University Library
+  Frankfurt offers no legal guarantee that the information in question is correct, complete, high-quality,
+  up-to-date, and accessible at all times.  The University Library Frankfurt is not liable for damages, of a
+  tangible or intangible nature, that directly or indirectly result from the use or non-use of this information
+  and/or from the use of defective or incomplete information, except in cases where it can be proven to have
+  acted with intent and/or to be culpable of gross negligence. This also applies to any damages caused by
+  computer viruses during a visit to our site(s) or during software installation. The user utilises the contents
+  provided on the <a href="www.performing-arts.eu">www.performing-arts.eu</a> web portal at his or her own risk.</p>
+
+<p>The University Library Frankfurt explicitly reserves the right to modify its websites either fully or partially,
+to expand, delete or to stop making them public on a temporary or permanent basis, without specific notification being given.</p>
+
+<h4>Liability Clause</h4>
+<p>This clause stipulating lack of liability is to be considered part of the website(s) which provide a link to this site.
+Should individual phrases or parts thereof within this text be invalid, no longer valid or not entirely in accordance with
+current laws, this shall not affect the remaining part of the text, its content and validity.</p>
+<a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>
+
+<?
+    }
+?>

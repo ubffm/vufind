@@ -1,0 +1,16 @@
+<h2><?=$this->transEsc('Dossiers, Themen')?></h2>
+<?
+    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+?>
+
+<p>Deutscher Blindtext ...</p>
+
+<?
+    } else {
+?>
+
+<p>Englischer Blindtext ...</p>
+
+<?
+    }
+?>
