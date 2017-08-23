@@ -1,0 +1,47 @@
+<?
+    // Set page title.
+    $this->headTitle($this->translate('Staff View') . ': ' . $this->driver->getBreadcrumb());
+?>
+<table class="citation table table-striped">
+  <? foreach ($this->driver->getRawData() as $field => $values): ?>
+    <tr>
+      <th><?=$this->escapeHtml($field)?></th>
+      <td>
+        <!-- display full record field as indented xml string -->
+      <? if ($field == "fullrecord"): ?>
+           <pre><?=formatXML($values);?></pre>
+      <? else : ?>
+        <? if (!is_array($values)) { $values = [$values]; } ?>
+        <? foreach ($values as $value): ?>
+          <?=$this->escapeHtml(is_array($value) ? print_r($value, true) : $value)?><br />
+        <? endforeach; ?>
+      <? endif; ?>
+      </td>
+    </tr>
+  <? endforeach; ?>
+</table>
+
+<!-- Formats the full record field to a structured, highlighted, indented xml string to make debugging easier -->
+<? function formatXML($value) {
+
+     $xml = new SimpleXMLElement($value);
+     $dom = new DOMDocument("1.0","UTF-8");
+     $dom->preserveWhiteSpace = false;
+     $dom->formatOutput = true;
+     $dom->loadXML($xml->asXML());
+     $str = $dom->saveXML($dom->documentElement);
+     $str = htmlentities($str, $encoding=ini_get("UTF-8"));
+     $tag = '#0000BB';
+     $att = '#FF4500';
+     $find = array(
+        '~(\s[a-z].*?="[a-zA-Z0-9\/#].*?")~', // Highlight attributes
+        '~(&lt;(\?|[a-z]|_).*?&gt;)~',                // Highlight opening tag
+        '~(&lt;/([a-z]|_).*?&gt;)~');            // Highlight closing tag
+     $replace = array(
+        '<span style="color:'.$att.';">$1</span>',
+        '<span style="color:'.$tag.';">$1</span>',
+        '<span style="color:'.$tag.';">$1</span>');
+     return preg_replace($find, $replace, $str);
+}
+
+?>
