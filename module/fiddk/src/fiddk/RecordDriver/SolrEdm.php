@@ -184,7 +184,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getPublicationDates()
     {
-      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];;
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
       $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
       $pDates = [];
 
@@ -302,7 +302,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     public function getView()
     {
       $aggs = $this->classes["ore:Aggregation"];
-      $web = $this->classes["edm:WebResource"];
+      $web = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
       $views = [];
 
       foreach ($aggs as $agg) {
