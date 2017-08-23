@@ -1,0 +1,10 @@
+<? foreach ($data as $key => $field): ?>
+  <span property="dates">
+  <? if ($key == "created"): ?>
+    <? foreach ($field as $date): ?>
+      <span property="created"><?=$this->escapeHtml($date)?></span>
+  <? endforeach; ?>
+  <? endif; ?>
+  </span>
+  <br/>
+<? endforeach; ?>

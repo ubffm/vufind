@@ -1,0 +1,105 @@
+<? if ($agent->name) : ?>
+<div class="agent-container">
+
+   <? $sameAs = $agent->sameAs; ?>
+
+   <? if ($agent->depiction) : ?>
+      <? parse_str(parse_url($agent->depiction,PHP_URL_QUERY),$url);?>
+      <div class="agent-column" style="max-width:<?=$url['width']?>px;"><img src="<?=$agent->depiction?>" alt="<?=$this->transEsc('Depiction')?>"/></div>
+   <? endif; ?>
+
+   <div class="agent-column">
+      <h2 id="agentName"><?=$agent->name;?></h2>
+
+      <? $birthDate = $agent->birthDate;
+         $birthPlace = $agent->birthPlace;
+         $deathDate = $agent->deathDate;
+         $deathPlace = $agent->deathPlace; ?>
+
+            <? if ($birthDate or $birthPlace) : ?>
+              <span property="born">
+                 <?=$this->transEsc("born")?>
+                 <? if ($birthDate) : ?>
+                 <span property="birthDate">
+                    <?=$birthDate?>
+                 </span>
+                 <? endif; ?>
+                 <? if ($birthPlace) : ?>
+                 <?=$this->transEsc("in")?>
+                 <span property="birthPlace">
+                    <?=$birthPlace?>
+                 </span>
+                 <? endif; ?>
+              </span><br/>
+            <? endif; ?>
+
+            <? if ($deathDate or $deathPlace) : ?>
+              <span property="died">
+                 <?=$this->transEsc("died")?>
+                 <? if ($deathDate) : ?>
+                 <span property="deathDate">
+                    <?=$deathDate?>
+                 </span>
+                 <? endif; ?>
+                 <? if ($deathPlace) : ?>
+                 <?=$this->transEsc("in")?>
+                 <span property="deathPlace">
+                    <?=$deathPlace?>
+                 </span>
+                 <? endif; ?>
+              </span><br/>
+            <? endif; ?>
+
+            <? if ($agent->establishment) : ?>
+                 <?=$this->transEsc("established")?>
+                 <span property="established">
+                    <?=$agent->establishment?>
+                 </span><br/>
+            <? endif; ?>
+            <? if ($agent->termination) : ?>
+                 <?=$this->transEsc("terminated")?>
+                 <span property="terminated">
+                    <?=$agent->termination?>
+                 </span><br/>
+            <? endif; ?>
+
+            <? if ($agent->prof) : ?>
+              <?=implode($agent->prof,', ');?><br/>
+            <? endif; ?>
+
+            <? if ($agent->topic) : ?>
+              <?=implode($agent->topic,', ');?><br/>
+            <? endif; ?>
+
+            <? if ($agent->bio) : ?>
+               <br/><?=$agent->bio;?>
+            <? endif; ?>
+
+            <? if ($agent->placeOfActivity) : ?>
+             <br/><?=$this->transEsc("placeOfActivity") . ': ' .  implode($agent->placeOfActivity,', ');?><br/>
+            <? endif; ?>
+
+            <? if ($agent->placeOfBusiness) : ?>
+             <br/><?=$this->transEsc("placeOfBusiness") . ' ' . $this->transEsc("in") . ' ' . implode($agent->placeOfBusiness,', ');?><br/>
+            <? endif; ?>
+
+            <? if ($agent->variants) : ?>
+               <br/><b><?=$this->transEsc("Variants")?></b><br/>
+               <?=implode($agent->variants,', ');?><br/>
+            <? endif; ?>
+
+         </div>
+
+         <? if ($sameAs) : ?>
+           <div class="agent-column">
+             <h4><?=$this->transEsc('More Links')?></h4>
+             <? foreach ($sameAs as $k => $sa) : ?>
+               <a href="<?=$sa[0]?>" target="_blank"><i class="external-icon"><img src="<?=$sa[1]?>"></i><?=$this->escapeHtml($sa[2]);?></a><br/>
+               <? if(array_key_exists($k+1,$sameAs)):?>
+                  <hr/>
+               <? endif;?>
+             <? endforeach; ?>
+           </div>
+          <? endif; ?>
+</div>
+<? endif; ?>

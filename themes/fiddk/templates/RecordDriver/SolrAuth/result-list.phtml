@@ -1,0 +1,64 @@
+<?
+  $heading = $this->driver->getTitle();
+  if (empty($heading)) {
+    $heading = $this->translate('Heading unavailable.');
+  }
+  $seeAlso = $this->driver->getSeeAlso();
+  $id = $this->driver->getUniqueId();
+  $agent = $this->driver->getAgentFacts($id,false);
+
+  $establishment = $agent->establishment;
+  $termination = $agent->termination;
+  $birthDate = $agent->birthDate;
+  $deathDate = $agent->deathDate;
+
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $agent->depiction);
+  $thumbnail = $agent->depiction;
+  $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result'); ?>
+  <input type="hidden" value="<?=$this->escapeHtmlAttr($id)?>" class="hiddenId" />
+  <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+  <div class="media">
+    <? if ($thumbnail && $thumbnailAlignment == 'left'): ?>
+    <div class="media-<?=$thumbnailAlignment?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
+      <a href="<?=$this->url('search-authorityresults')?>?lookfor=<?=$id?>&amp;type=agentID"><img src="<?=$thumbnail?>" alt="<?=$this->transEsc('Depiction')?>"></img></a>
+    </div>
+    <? endif ?>
+  <div class="media-body">
+    <div class="resultItemLine1">
+      <a href="<?=$this->url('search-authorityresults')?>?lookfor=<?=$id?>&amp;type=agentID" class="title"><?=$this->escapeHtml($heading)?></a>
+    </div>
+
+    <div class="resultItemLine2">
+      <? if ($establishment or $termination) : ?>
+            <? if (!$termination) : ?>
+               <?=$this->transEsc('since') . ' ' . $establishment?><br/>
+            <? elseif(!$establishment) : ?>
+               <?=$this->transEsc('until') . ' ' . $establishment?><br/>
+            <? else : ?>
+               <?=$establishment . ' - ' . $termination?><br/>
+          <? endif; ?>
+      <? endif; ?>
+      <? if ($birthDate or $deathDate) : ?>
+            <? if (!$deathDate) : ?>
+               <?='* ' . $birthDate?><br/>
+            <? elseif(!$birthDate) : ?>
+               <?='† ' . $deathDate?><br/>
+            <? else : ?>
+               <?='* ' . $birthDate . ' - † ' . $deathDate?><br/>
+          <? endif; ?>
+      <? endif; ?>
+      <? if ($agent->prof) : ?>
+        <?=implode($agent->prof,', ');?><br/>
+      <? endif; ?>
+      <? if ($agent->topic) : ?>
+            <?=implode($agent->topic,', ');?><br/>
+          <? endif; ?>
+      <? if (!empty($seeAlso)): ?>
+        <?=$this->transEsc("See also")?>:<br/>
+        <? foreach ($seeAlso as $current): ?>
+          <a href="<?=$this->url('authority-search')?>?lookfor=%22<?=urlencode($current)?>%22&amp;type=MainHeading"><?=$this->escapeHtml($current)?></a><br/>
+        <? endforeach; ?>
+      <? endif; ?>
+    </div>
+  </div>
+</div>

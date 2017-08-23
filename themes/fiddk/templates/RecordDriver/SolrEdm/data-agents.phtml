@@ -1,0 +1,13 @@
+<? foreach ($data as $key => $field): ?>
+  <span property="agents">
+    <? foreach ($field as $agent): ?>
+    <? $agentID = $agent[0]; ?>
+    <? if ($agentID != '' and $this->driver->checkExistence($agentID,'SolrAuth')) : ?>
+      <a href="<?=$this->url('search-authorityresults')?>?lookfor=<?=$agentID?>&amp;type=agentID">
+        <span property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></span></a><br/>
+    <? else : ?>
+      <span property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></span><br/>
+    <? endif; ?>
+  <? endforeach; ?>
+  </span>
+<? endforeach; ?>

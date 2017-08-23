@@ -1,0 +1,6 @@
+<? foreach ($data as $key => $field): ?>
+    <? foreach ($field as $view): ?>
+      <?=$this->escapeHtml($view)?></span>
+    <? endforeach;?>
+  <br/>
+<? endforeach; ?>
