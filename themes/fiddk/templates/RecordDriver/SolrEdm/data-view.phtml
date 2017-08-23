@@ -1,6 +1,8 @@
 <? foreach ($data as $key => $field): ?>
-    <? foreach ($field as $view): ?>
-      <?=$this->escapeHtml($view)?></span>
+    <? foreach ($field as $resource => $view): ?>
+    <? if ($view != '') :?>
+      <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($view)?></a>
+    <? endif; ?>
     <? endforeach;?>
   <br/>
 <? endforeach; ?>

@@ -120,17 +120,22 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     * Get resource about (link)
     * @return array
     */
-   public function getResource($elem,$class)
+   public function getWebResource($elem,$class)
    {
       $resource = $elem->getAttribute("rdf:resource");
+      $literal = '';
       if($resource != '') {
          foreach ($class as $about => $contents) {
             if ($resource == $about) {
-               $literal = $content->nodeValue;
-            }
+               foreach ($contents as $content) {
+                  if ($content->nodeName == 'dc:description') {
+                     $literal = $content->nodeValue;
+                  }
+               }
+         }
          }
       }
-      return $literal;
+      return [$resource => $literal];
    }
 
     /**
@@ -179,8 +184,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getPublicationDates()
     {
-      $chos = $this->classes["edm:ProvidedCHO"];
-      $timespans = $this->classes["edm:TimeSpan"];
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];;
+      $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
       $pDates = [];
 
       foreach ($chos as $cho) {
@@ -303,7 +308,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       foreach ($aggs as $agg) {
          foreach ($agg as $elem) {
             if ($elem->nodeName == 'edm:hasView') {
-               $views[] = $this->getResource($elem,$web);
+               $views[] = $this->getWebResource($elem,$web);
             }
          }
       }
