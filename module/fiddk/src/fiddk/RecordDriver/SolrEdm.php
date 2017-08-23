@@ -156,8 +156,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getDates()
     {
-      $chos = $this->classes["edm:ProvidedCHO"];
-      $timespans = $this->classes["edm:TimeSpan"];
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+      $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
       $dates = [];
 
       foreach ($chos as $cho) {
