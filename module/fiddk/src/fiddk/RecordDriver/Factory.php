@@ -26,4 +26,13 @@ class Factory
         );
     }
 
+    public static function getSolrAuth(ServiceManager $sm)
+    {
+        return new SolrAuth(
+            $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
+            null,
+            $sm->getServiceLocator()->get('VuFind\Config')->get('searches'),
+            $sm->getServiceLocator()->get('VuFind\RecordLoader')
+        );
+    }
 }
