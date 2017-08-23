@@ -9,4 +9,10 @@ return array(
         'compiled.less'
     ),
     'favicon' => 'fid-dk_favicon.png',
+    'helpers' => array(
+      'factories' => array(
+        'record' => 'fiddk\View\Helper\fiddk\Factory::getRecord',
+        'recorddataformatter' => 'fiddk\View\Helper\fiddk\RecordDataFormatterFactory',
+      ),
+    ),
 );
