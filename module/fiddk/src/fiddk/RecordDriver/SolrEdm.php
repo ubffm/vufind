@@ -214,12 +214,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getPublicationPlaces()
     {
-      $chos = $this->classes["edm:ProvidedCHO"];
-      if (array_key_exists("edm:Place", $this->classes)) {
-         $edmPlaces = $this->classes["edm:Place"];
-      } else {
-         $edmPlaces = [];
-      }
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+      $edmPlaces = isset($this->classes["edm:Place"])? $this->classes["edm:Place"] : [];
       $pPlaces = [];
 
       foreach ($chos as $cho) {
@@ -299,7 +295,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      *
      * @return array
      */
-    public function getView()
+    public function getSeeAlso()
     {
       $aggs = $this->classes["ore:Aggregation"];
       $web = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];

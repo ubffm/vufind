@@ -246,7 +246,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setTemplateLine('Tags', true, 'data-tags.phtml');
         $spec->setLine('Institution', 'getInstitutions');
         $spec->setTemplateLine(
-            'View', 'getView', 'data-view.phtml'
+            'See also', 'getSeeAlso', 'data-seeAlso.phtml'
         );
         return $spec->getArray();
     }

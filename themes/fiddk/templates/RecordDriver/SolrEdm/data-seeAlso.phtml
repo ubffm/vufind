@@ -1,0 +1,8 @@
+<? foreach ($data as $key => $field): ?>
+    <? foreach ($field as $resource => $seeAlso): ?>
+    <? if ($seeAlso != '') :?>
+      <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a>
+    <? endif; ?>
+    <? endforeach;?>
+  <br/>
+<? endforeach; ?>
