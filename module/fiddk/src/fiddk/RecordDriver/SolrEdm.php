@@ -291,6 +291,30 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     }
 
     /**
+     * Get call number
+     *
+     * @return string
+     */
+    public function getCallNumber()
+    {
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+      $cN = '';
+
+      foreach ($chos as $cho) {
+         foreach ($cho as $elem) {
+            switch ($elem->nodeName) {
+               case 'dm2e:callNumber':
+                  $cN = $elem->nodeValue;
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+      return $cN;
+    }
+
+    /**
      * Get an array of backlinks to data provider content for the record.
      *
      * @return array
