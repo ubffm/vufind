@@ -48,7 +48,6 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
    protected $classes = [];
    protected $loader = NULL;
 
-
    public function __construct(\Zend\Config\Config $config, $recordConfig= NULL,
      $searchSettings = NULL, \VuFind\Record\Loader $loader
    ) {
@@ -265,26 +264,33 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     }
 
     /**
-     * Get an array of extent descriptions for the record.
+     * Get an array of descriptions about the record.
      *
      * @return array
      */
-    public function getExtraContent()
+    public function getAboutObject()
     {
       $chos = $this->classes["edm:ProvidedCHO"];
       $contents = [];
+
+      $languages = $this->getLanguages();
+      $descriptions = $this->getSummary();
+      if ($languages) {
+         $contents['dc:language'] = $languages;
+      }
+      if ($descriptions) {
+         $contents['dc:description'] = $descriptions;
+      }
 
       foreach ($chos as $cho) {
          foreach ($cho as $elem) {
             switch ($elem->nodeName) {
                case 'dcterms:extent':
-                  $contents["extent"][] = $elem->nodeValue;
-                  break;
                case 'bibo:isbn':
-                  $contents["isbn"][] = $elem->nodeValue;
-                  break;
                case 'bibo:issn':
-                  $contents["issn"][] = $elem->nodeValue;
+               case 'dcterms:provenance':
+               case 'dcterms:tableOfContents':
+                  $contents[$elem->nodeName][] = $elem->nodeValue;
                   break;
                default:
                   break;

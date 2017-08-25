@@ -104,6 +104,16 @@ body {
     width: 20%;
 }
 
+table.table-inside {
+    margin: initial;
+    tr:first-child td, tr:first-child th {
+      border-top: 0;
+    }
+    //tr:first-child > th {
+    //  border-top: 0;
+    //}
+}
+
 .highlight,
 mark {
   background: @highlighter-color;

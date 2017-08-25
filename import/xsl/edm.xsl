@@ -602,10 +602,11 @@
         <xsl:param name="type"/>
         <xsl:variable name="mapType">
         <xsl:choose>
-            <xsl:when test="$type = 'Grafik-Konvolut' or $type = 'Portraitgrafik' or $type = 'Druckgrafik' or $type = 'Gebrauchsgrafik' or $type = 'Originalgrafik'">
+            <xsl:when test="contains($type, 'grafik') or contains($type, 'koloriert') or contains($type,'stich') or contains($type,'Radierung') 
+                or contains($type,'ithographie') or $type = 'Grafik-Konvolut' or $type = 'Punktiermanier' or contains($type,'gravure') or $type = 'Aquatinta'">
                 <xsl:text>Grafik</xsl:text>
             </xsl:when>
-            <xsl:when test="$type = 'Filmfoto' or $type = 'Szenenfoto'">
+            <xsl:when test="$type = 'Foto' or $type = 'Filmfoto' or $type = 'Szenenfoto' or $type = 'Bühnenbildfotografie'">
                 <xsl:text>Fotografie</xsl:text>
             </xsl:when>
             <xsl:when test="$type = 'Musikalien'">
@@ -625,7 +626,7 @@
             <xsl:when test="$type = 'Buch (gedruckt)' or $type = 'Lebensdokument' or $type = 'Druck- und Schriftgut'">
                 <xsl:text>Druckschrift</xsl:text>
             </xsl:when>
-            <xsl:when test="$type = 'Zeichnung' or $type = 'Gemälde' or $type = 'Malerei'">
+            <xsl:when test="starts-with($type,'Zeichnung') or contains($type,'zeichnung') or $type = 'Gemälde' or $type = 'Malerei'">
                 <xsl:text>Zeichnung / Gemälde</xsl:text>
             </xsl:when>
             <xsl:otherwise>

@@ -1,0 +1,21 @@
+<table class="table table-inside">
+<? foreach ($data as $key => $field): ?>
+  <? if ($key == 'dc:language') : ?>
+  <? $prefix = 'iso639-1::';?>
+  <? else: ?>
+  <? $prefix = '';?>
+  <? endif;?>
+  <tr>
+    <th><?=$this->transEsc('edm::' . $key);?></th>
+    <td>
+  <? foreach ($field as $value) : ?>
+    <? if ($prefix) : ?>
+    <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>
+    <? else : ?>
+    <span property="<?=$key?>"><?=$this->escapeHtml($value);?></span><br/>
+    <? endif; ?>
+  <? endforeach; ?>
+   </td>
+  </tr>
+<? endforeach; ?>
+</table>

@@ -56,7 +56,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         );
         $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
         $helper->setDefaults('result', [$this, 'getDefaultResultSpecs']);
-        $helper->setDefaults('description', [$this, 'getDefaultDescriptionSpecs']);
         return $helper;
     }
 
@@ -216,29 +215,11 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             },]
         );
         $spec->setTemplateLine(
+            'AboutObject', 'getAboutObject', 'data-aboutObject.phtml'
+        );
+        $spec->setTemplateLine(
             'Contributors', 'getAgents', 'data-agents.phtml'
         );
-        $spec->setTemplateLine(
-            'Other Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'context' => [
-                    'type' => 'secondary',
-                    'schemaLabel' => 'contributor',
-                    'requiredDataFields' => [
-                        ['name' => 'role', 'prefix' => 'CreatorRoles::']
-                    ]
-                ],
-            ]
-        );
-        $spec->setTemplateLine(
-            'ExtraContents', 'getExtraContent', 'data-extraContent.phtml'
-        );
-        $spec->setLine(
-            'Description', 'getSummary'
-        );
-        $spec->setLine('Language', 'getLanguages', 'Simple',
-            ['translate' => true, 'translateTextDomain' => 'iso639-1::']);
         $spec->setLine(
             'Edition', 'getEdition', null,
             ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
@@ -260,36 +241,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setTemplateLine(
             'See also', 'getSeeAlso', 'data-seeAlso.phtml'
         );
-        return $spec->getArray();
-    }
-
-    /**
-     * Get default specifications for displaying data in the description tab.
-     *
-     * @return array
-     */
-    public function getDefaultDescriptionSpecs()
-    {
-        $spec = new RecordDataFormatter\SpecBuilder();
-        $spec->setLine('Summary', 'getSummary');
-        $spec->setLine('Published', 'getDateSpan');
-        $spec->setLine('Item Description', 'getGeneralNotes');
-        $spec->setLine('Physical Description', 'getPhysicalDescriptions');
-        $spec->setLine('Publication Frequency', 'getPublicationFrequency');
-        $spec->setLine('Playing Time', 'getPlayingTimes');
-        $spec->setLine('Format', 'getSystemDetails');
-        $spec->setLine('Audience', 'getTargetAudienceNotes');
-        $spec->setLine('Awards', 'getAwards');
-        $spec->setLine('Production Credits', 'getProductionCredits');
-        $spec->setLine('Bibliography', 'getBibliographyNotes');
-        $spec->setLine('ISBN', 'getISBNs');
-        $spec->setLine('ISSN', 'getISSNs');
-        $spec->setLine('DOI', 'getCleanDOI');
-        $spec->setLine('Related Items', 'getRelationshipNotes');
-        $spec->setLine('Access', 'getAccessRestrictions');
-        $spec->setLine('Finding Aid', 'getFindingAids');
-        $spec->setLine('Publication_Place', 'getHierarchicalPlaceNames');
-        $spec->setTemplateLine('Author Notes', true, 'data-authorNotes.phtml');
         return $spec->getArray();
     }
 
@@ -320,6 +271,5 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         );
         return $spec->getArray();
     }
-
 
 }
