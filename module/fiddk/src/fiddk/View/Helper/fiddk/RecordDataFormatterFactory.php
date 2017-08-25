@@ -198,6 +198,23 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             ['helperMethod' => 'getFormatList']
         );
         $spec->setLine('Call Number', 'getCallNumber');
+        // normally only one of the next three is contained in the data
+        $spec->setTemplateLine(
+            'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
+        );
+        $spec->setTemplateLine(
+            'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
+        );
+        $spec->setTemplateLine(
+            'DatesPlaces', 'getOtherDatesAndPlaces', 'data-datesPlaces.phtml',[
+                'labelFunction' => function ($data) {
+                    if (empty($data['otherDetails']['dates'])) {
+                        return 'Place';
+                    } elseif (empty($data['otherDetails']['places'])) {
+                        return 'Date';
+                    }
+            },]
+        );
         $spec->setTemplateLine(
             'Contributors', 'getAgents', 'data-agents.phtml'
         );
@@ -222,12 +239,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         );
         $spec->setLine('Language', 'getLanguages', 'Simple',
             ['translate' => true, 'translateTextDomain' => 'iso639-1::']);
-        $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
-        );
-        $spec->setTemplateLine(
-            'Dates', 'getDates', 'data-dates.phtml'
-        );
         $spec->setLine(
             'Edition', 'getEdition', null,
             ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
@@ -290,8 +301,22 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function getDefaultResultSpecs()
     {
         $spec = new RecordDataFormatter\SpecBuilder();
+        // normally only one of the next three is contained in the data
         $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
+            'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
+        );
+        $spec->setTemplateLine(
+            'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
+        );
+        $spec->setTemplateLine(
+            'DatesPlaces', 'getOtherDatesAndPlaces', 'data-datesPlaces.phtml',[
+                'labelFunction' => function ($data) {
+                    if (empty($data['otherDetails']['dates'])) {
+                        return 'Place';
+                    } elseif (empty($data['otherDetails']['places'])) {
+                        return 'Date';
+                    }
+            },]
         );
         return $spec->getArray();
     }

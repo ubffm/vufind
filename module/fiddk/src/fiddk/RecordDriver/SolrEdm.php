@@ -100,6 +100,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
    public function getResourceOrLiteral($elem,$class)
    {
       $resource = $elem->getAttribute("rdf:resource");
+      $literal = '';
       if($resource != '') {
          foreach ($class as $about => $contents) {
             if ($resource == $about) {
@@ -150,55 +151,6 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     }
 
     /**
-     * Get an array of relevant dates for the record.
-     *
-     * @return array
-     */
-    public function getDates()
-    {
-      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
-      $dates = [];
-
-      foreach ($chos as $cho) {
-         foreach ($cho as $elem) {
-            switch ($elem->nodeName) {
-               case 'dcterms:created':
-                  $dates["created"][] = $this->getResourceOrLiteral($elem,$timespans);
-                  break;
-               case 'dcterms:temporal':
-                  $dates["temporal"][] = $this->getResourceOrLiteral($elem,$timespans);
-                  break;
-               default:
-                  break;
-            }
-         }
-      }
-      return $dates;
-    }
-
-    /**
-     * Get an array of publication dates for the record.
-     *
-     * @return array
-     */
-    public function getPublicationDates()
-    {
-      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
-      $pDates = [];
-
-      foreach ($chos as $cho) {
-         foreach ($cho as $elem) {
-            if ($elem->nodeName == 'dcterms:issued') {
-               $pDates[] = $this->getResourceOrLiteral($elem,$timespans);
-            }
-         }
-      }
-      return $pDates;
-    }
-
-    /**
      * Not using this at the moment
      *
      * @return array
@@ -208,54 +160,106 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     }
 
     /**
-     * Get an array of publication places for the record.
+     * Get an array of lines combining information about place and time.
+     *
      *
      * @return array
      */
-    public function getPublicationPlaces()
+    public function getEventDetails()
     {
-      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $edmPlaces = isset($this->classes["edm:Place"])? $this->classes["edm:Place"] : [];
-      $pPlaces = [];
-
-      foreach ($chos as $cho) {
-         foreach ($cho as $elem) {
-            if ($elem->nodeName == 'dm2e:publishedAt') {
-               if ($edmPlaces) {
-                  $pPlaces[] = $this->getResourceOrLiteral($elem,$edmPlaces);
-               } else {
-                  $pPlaces[] = $elem->nodeValue;
-               }
-            }
-         }
-      }
-      return $pPlaces;
+      return $this->getDatesPlaces('Performed');
     }
 
     /**
-     * Get an array of publication detail lines combining information from
-     * getPublicationDates(), getPublishers() and getPlacesOfPublication().
+     * Get an array of lines combining information about place and time.
+     *
      *
      * @return array
      */
     public function getPublicationDetails()
     {
-    $places = $this->getPublicationPlaces();
-    $names = $this->getPublishers();
-    $dates = $this->getPublicationDates();
-
-    $i = 0;
-    $retval = [];
-    while (isset($places[$i]) || isset($names[$i]) || isset($dates[$i])) {
-        // Build objects to represent each set of data; these will
-        // transform seamlessly into strings in the view layer.
-        $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
-            isset($places[$i]) ? $places[$i] : '',
-            isset($names[$i]) ? $names[$i] : '',
-            isset($dates[$i]) ? $dates[$i] : ''
-        );
-        $i++;
+      return $this->getDatesPlaces('Published');
     }
+
+    /**
+     * Get an array of lines combining information about place and time.
+     *
+     *
+     * @return array
+     */
+    public function getOtherDatesPlaces()
+    {
+      return $this->getDatesPlaces('Other');
+    }
+
+    /**
+     * Get an array of lines combining information about place and time.
+     * Used for all types of place and time given (publication, event or other)
+     *
+     * @return array
+     */
+    public function getDatesPlaces($kind)
+    {
+    $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+    $edmPlaces = isset($this->classes["edm:Place"])? $this->classes["edm:Place"] : [];
+    $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
+    $retval = [];
+
+    $datesPlaces = ['names' => [], 'dates' => [], 'places' => []];
+
+    foreach ($chos as $cho) {
+      foreach ($cho as $elem) {
+         switch ($kind) {
+            case 'Published':
+               $datesPlaces['names'] = $this->getPublishers();
+               switch ($elem->nodeName) {
+                  case 'dcterms:issued':
+                     $datesPlaces['dates'][] = $this->getResourceOrLiteral($elem,$timespans);
+                     break;
+                  case 'dm2e:publishedAt':
+                     $datesPlaces['places'][] = $this->getResourceOrLiteral($elem,$edmPlaces);
+                     break;
+                  default:
+                  break;
+               }
+               break;
+            case 'Other':
+               switch ($elem->nodeName) {
+                  case 'dc:date':
+                  case 'dcterms:temporal':
+                  case 'dcterms:created':
+                     $datesPlaces['dates'][] = $this->getResourceOrLiteral($elem,$timespans);
+                     break;
+                  case 'dcterms:spatial':
+                     $datesPlaces['places'][] = $this->getResourceOrLiteral($elem,$edmPlaces);
+                     break;
+                  default:
+                  break;
+               }
+               break;
+            case 'Performed':
+               switch ($elem->nodeName) {
+                 case 'eclap:firstPerformanceDate':
+                 case 'eclap:performanceDate':
+                    $datesPlaces['dates'][] = $this->getResourceOrLiteral($elem,$timespans);
+                    break;
+                 case 'eclap:firstPerformancePlace':
+                 case 'eclap:performancePlace':
+                    $datesPlaces['places'][] = $this->getResourceOrLiteral($elem,$edmPlaces);
+                    break;
+                 default:
+                 break;
+               }
+               break;
+            default:
+               break;
+         }
+      }
+   }
+
+   if (count(array_filter($datesPlaces)) != 0) {
+      $retval[] = $datesPlaces;
+   }
 
     return $retval;
     }
