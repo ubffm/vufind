@@ -106,12 +106,14 @@ body {
 
 table.table-inside {
     margin: initial;
+    background-color: inherit !important;
+    tr th, tr td {
+      padding-left: 0px;
+    }
     tr:first-child td, tr:first-child th {
       border-top: 0;
+      padding-top: 0px;
     }
-    //tr:first-child > th {
-    //  border-top: 0;
-    //}
 }
 
 .highlight,
