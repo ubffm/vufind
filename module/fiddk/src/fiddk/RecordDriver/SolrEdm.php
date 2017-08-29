@@ -371,7 +371,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       $contents = [];
       $agentRoles = ['dc:contributor' => true,'dc:creator' => true,'pro:author' => true,'eclap:director' => true
          ,'eclap:actor' => true,'eclap:setDesigner' => true,'eclap:costumeDesigner' => true,'eclap:performer' => true
-         ,'eclap:choreographer' => true, 'eclap:dramaturge'=> true, 'eclap:composer' => true, 'eclap:dancer' => true];
+         ,'eclap:choreographer' => true, 'eclap:dramaturge'=> true, 'eclap:composer' => true, 'eclap:dancer' => true
+         ,'gndo:photographer' => true];
 
       foreach ($chos as $cho) {
          foreach ($cho as $elem) {
@@ -426,6 +427,14 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
             );
         }
         return $toc;
+     }
+
+     public function getThumbnail($size = 'small')
+     {
+         if (isset($this->fields['thumbnail']) && $this->fields['thumbnail']) {
+             return $this->fields['thumbnail'];
+         }
+
      }
 
      public function checkExistence($containerID,$containerSource) {
