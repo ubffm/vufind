@@ -431,7 +431,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       $agentRoles = ['dc:contributor' => true,'dc:creator' => true,'pro:author' => true,'eclap:director' => true
          ,'eclap:actor' => true,'eclap:setDesigner' => true,'eclap:costumeDesigner' => true,'eclap:performer' => true
          ,'eclap:choreographer' => true, 'eclap:dramaturge'=> true, 'eclap:composer' => true, 'eclap:dancer' => true
-         ,'gndo:photographer' => true];
+         ,'gndo:photographer' => true, 'pro:illustrator' => true];
 
       foreach ($chos as $cho) {
          foreach ($cho as $elem) {
