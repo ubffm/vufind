@@ -205,13 +205,25 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
         );
         $spec->setTemplateLine(
-            'DatesPlaces', 'getOtherDatesAndPlaces', 'data-datesPlaces.phtml',[
+            'DatesPlaces', 'getOtherDatesPlaces', 'data-datesPlaces.phtml',[
                 'labelFunction' => function ($data) {
-                    if (empty($data['otherDetails']['dates'])) {
-                        return 'Place';
-                    } elseif (empty($data['otherDetails']['places'])) {
-                        return 'Date';
+                $placeFound = false;
+                $dateFound = false;
+                  foreach ($data as $entry) {
+                    if (!empty($entry['dates'])) {
+                      $dateFound = true;
                     }
+                    if (!empty($entry['places'])) {
+                      $placeFound = true;
+                    }
+                  }
+                  if ($dateFound && $placeFound) {
+                    return 'DatesPlaces';
+                  } elseif ($dateFound) {
+                    return 'Date';
+                  } else {
+                    return 'Place';
+                  }
             },]
         );
         $spec->setTemplateLine(
@@ -260,13 +272,25 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
         );
         $spec->setTemplateLine(
-            'DatesPlaces', 'getOtherDatesAndPlaces', 'data-datesPlaces.phtml',[
+            'DatesPlaces', 'getOtherDatesPlaces', 'data-datesPlaces.phtml',[
                 'labelFunction' => function ($data) {
-                    if (empty($data['otherDetails']['dates'])) {
-                        return 'Place';
-                    } elseif (empty($data['otherDetails']['places'])) {
-                        return 'Date';
+                $placeFound = false;
+                $dateFound = false;
+                  foreach ($data as $entry) {
+                    if (!empty($entry['dates'])) {
+                      $dateFound = true;
                     }
+                    if (!empty($entry['places'])) {
+                      $placeFound = true;
+                    }
+                  }
+                  if ($dateFound && $placeFound) {
+                    return 'DatesPlaces';
+                  } elseif ($dateFound) {
+                    return 'Date';
+                  } else {
+                    return 'Place';
+                  }
             },]
         );
         return $spec->getArray();
