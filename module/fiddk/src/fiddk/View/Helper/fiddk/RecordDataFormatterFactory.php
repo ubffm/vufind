@@ -249,7 +249,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'Related Items', 'getAllRecordLinks', 'data-allRecordLinks.phtml'
         );
         $spec->setTemplateLine('Tags', true, 'data-tags.phtml');
-        $spec->setLine('Institution', 'getInstitutions');
         $spec->setTemplateLine(
             'See also', 'getSeeAlso', 'data-seeAlso.phtml'
         );

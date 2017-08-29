@@ -1,8 +1,18 @@
-<? foreach ($data as $key => $field): ?>
-    <? foreach ($field as $resource => $seeAlso): ?>
-    <? if ($seeAlso != '') :?>
-      <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a>
-    <? endif; ?>
-    <? endforeach;?>
-  <br/>
+<table class="table table-inside">
+<? foreach ($data as $key => $fields): ?>
+  <tr>
+    <th><?=$this->transEsc($key);?></th>
+    <td>
+      <? foreach ($fields as $field) : ?>
+       <? foreach ($field as $resource => $seeAlso) : ?>
+         <? if ($key == 'Related' || $key == 'Digital Copies') : ?>
+           <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
+        <? else: ?>
+          <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
+        <? endif; ?>
+      <? endforeach; ?>
+    <? endforeach; ?>
+   </td>
+  </tr>
 <? endforeach; ?>
+</table>

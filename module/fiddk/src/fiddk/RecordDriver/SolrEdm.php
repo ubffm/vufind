@@ -332,28 +332,87 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     public function getSeeAlso()
     {
       $aggs = $this->classes["ore:Aggregation"];
-      $web = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
-      $views = [];
+
+      $webs = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
+      $orgs = isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [];
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+      $seeAlso = ['Institution' => false, 'Catalogue' => false, 'Digital Copies' => false, 'Related' => false];
 
       foreach ($aggs as $agg) {
          foreach ($agg as $elem) {
-            if ($elem->nodeName == 'edm:hasView') {
-               $views[] = $this->getWebResource($elem,$web);
+            switch ($elem->nodeName) {
+               case 'edm:hasView':
+                  $seeAlso['Digital Copies'][] = $this->getWebResource($elem,$webs);
+                  break;
+               case 'edm:isShownAt':
+                  $seeAlso['Catalogue'][] = $this->getWebResource($elem,$webs);
+                  break;
+               case 'edm:dataProvider':
+                  $seeAlso['Institution'][] = $this->getDataProvider($elem,$orgs);
+                  break;
+               default:
+                  break;
             }
          }
       }
-      return $views;
+
+      foreach ($chos as $cho) {
+         foreach ($cho as $elem) {
+            switch ($elem->nodeName) {
+               case 'edm:isRelatedTo':
+                 $resource = $elem->getAttribute("rdf:resource");
+                 $resourceID = explode('/',$resource);
+                 $seeAlso['Related'][] = [$resource => $this->checkExistenceReturnTitleFormat(end($resourceID), 'Solr')];
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+
+      return array_filter($seeAlso);
     }
 
+    public function checkExistenceReturnTitleFormat($containerID, $containerSource) {
+
+		try {
+			$edmObject = $this->loader->load($containerID,$containerSource);
+			$str = $edmObject->getTitle() . ' (' . implode(', ',$edmObject->getFormats()) . ')';
+			return $str;
+		} catch (\VuFind\Exception\RecordMissing $e) {
+			return '';
+		}
+	}
+
     /**
-     * Get an array of data providers.
+     * Get homepage and prefLabel of data providers.
      *
      * @return array
      */
-    public function getDataProviders()
+    public function getDataProvider($elem,$class)
     {
-        return isset($this->fields['dataProvider']) ?
-            $this->fields['dataProvider'] : [];
+      $resource = $elem->getAttribute("rdf:resource");
+      $literal = '';
+      $homepage = '';
+      if($resource != '') {
+         foreach ($class as $about => $contents) {
+            if ($resource == $about) {
+               foreach ($contents as $content) {
+                  switch ($content->nodeName) {
+                     case 'skos:prefLabel':
+                        $literal = $content->nodeValue;
+                        break;
+                     case 'foaf:homepage':
+                        $homepage = $content->getAttribute("rdf:resource");
+                        break;
+                     default:
+                        break;
+                  }
+               }
+            }
+         }
+      }
+      return [$homepage => $literal];
     }
 
     /**

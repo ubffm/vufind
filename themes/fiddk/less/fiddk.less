@@ -104,16 +104,11 @@ body {
     width: 20%;
 }
 
-table.table-inside {
-    margin: initial;
-    background-color: inherit !important;
-    tr th, tr td {
-      padding-left: 0px;
-    }
-    tr:first-child td, tr:first-child th {
-      border-top: 0;
-      padding-top: 0px;
-    }
+a[target="_blank"]:after {
+    font-family: FontAwesome;
+    content: "\f08e";
+    display: inline-block;
+    padding-left: 7px;
 }
 
 .highlight,
@@ -218,4 +213,16 @@ div#contacts {
   .medium > a {
     width: 100%;
   }
+}
+
+table.table-inside {
+    margin: initial;
+    background-color: inherit !important;
+    tr th, tr td {
+      padding-left: 0px;
+    }
+    tr:first-child td, tr:first-child th {
+      border-top: 0;
+      padding-top: 0px;
+    }
 }
