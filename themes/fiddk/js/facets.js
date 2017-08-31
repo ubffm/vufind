@@ -95,8 +95,7 @@ function initFacetTree(treeNode, inSidebar)
           'Don Juan Archiv Wien':'kom',
           'Mime Centrum Berlin':'mcb',
           'Online Contents':'olc',
-          'Theaterwissenschaftliche Sammlung der Universität zu Köln, Archivbestand':'slw',
-          'Theaterwissenschaftliche Sammlung der Universität zu Köln, Bibliotheksbestand':'slw',
+          'Theaterwissenschaftliche Sammlung der Universität zu Köln':'slw',
           'Schweizerische Theatersammlung':'sts',
           'Tanzarchiv Leipzig':'tal',
           'Teatro Español del Siglo de Oro':'tes',
@@ -110,24 +109,27 @@ function initFacetTree(treeNode, inSidebar)
         treeNode.find('.fa-spinner').parent().remove();
         if (inSidebar) {
 
-          treeNode.on('loaded.jstree', function treeNodeOpen(/*e, data*/) {
+          treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
             var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
             $(treeItems).addClass('list-group-item');
             $(treeItems).each(function addInfo(i) {
               $(this).append('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
             });
           });
-          treeNode.on('open_node.jstree', function treeNodeOpen(/*e, data*/) {
+          treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
             var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
             $(treeItems).addClass('list-group-item');
-            var treeChildren = treeItems.find('ul.jstree-children > li.jstree-node');
-            if (treeChildren) {
-              var parentPos = treeChildren.parent().parent()[0].attributes.id.value.split("_").pop();
-              $(treeItems[parentPos-1].children[1]).after('<a data-lightbox href="/vufind/dprovider/' + results[parentPos-1].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
-              $(treeChildren).each(function addInfo(i) {
-                $(this).append('<a data-lightbox href="/vufind/dprovider/' + results[parentPos-1].children[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
-              });
-            }
+            $(treeItems).each(function addInfo(i) {
+              if (this.id == data.node.id) {
+                // add info to parent node
+                $(this.children[1]).after('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
+                // add info to each child
+                data.node.children.forEach(function(child,j) {
+                  $(treeChildren[j]).append('<a data-lightbox href="/vufind/dprovider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                });
+              }
+            });
           });
         }
         treeNode.jstree({
