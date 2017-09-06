@@ -22,7 +22,6 @@ $config = [
         'fiddk\RecordDriver\SolrEdm' => [
           'tabs' => [
             'Description' => null,
-            'TOC' => 'TOC',
             'Similar' => 'SimilarItemsCarousel',
             'Details' => 'StaffViewArray',
           ]

@@ -48,6 +48,11 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
    protected $classes = [];
    protected $loader = NULL;
 
+   protected $agentRoles = ['dc:contributor' => true,'dc:creator' => true,'pro:author' => true,'eclap:director' => true
+      ,'eclap:actor' => true,'eclap:setDesigner' => true,'eclap:costumeDesigner' => true,'eclap:performer' => true
+      ,'eclap:choreographer' => true, 'eclap:dramaturge'=> true, 'eclap:composer' => true, 'eclap:dancer' => true
+      ,'gndo:photographer' => true, 'pro:illustrator' => true, 'bibo:editor' => true, 'bibo:recipient' => true];
+
    public function __construct(\Zend\Config\Config $config, $recordConfig= NULL,
      $searchSettings = NULL, \VuFind\Record\Loader $loader
    ) {
@@ -428,16 +433,42 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
          isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [],
          isset($this->classes["edm:Agent"])? $this->classes["edm:Agent"] : []);
       $contents = [];
-      $agentRoles = ['dc:contributor' => true,'dc:creator' => true,'pro:author' => true,'eclap:director' => true
-         ,'eclap:actor' => true,'eclap:setDesigner' => true,'eclap:costumeDesigner' => true,'eclap:performer' => true
-         ,'eclap:choreographer' => true, 'eclap:dramaturge'=> true, 'eclap:composer' => true, 'eclap:dancer' => true
-         ,'gndo:photographer' => true, 'pro:illustrator' => true, 'bibo:recipient' => true];
 
       foreach ($chos as $cho) {
          foreach ($cho as $elem) {
             $name = $elem->nodeName;
-            if (array_key_exists($name, $agentRoles)) {
+            if (array_key_exists($name, $this->agentRoles)) {
                $contents[$elem->nodeName][] = [$this->getAgentID($elem),$this->getResourceOrLiteral($elem,$agents)];
+            }
+         }
+      }
+      return $contents;
+    }
+
+    /**
+     * Get first Agent.
+     *
+     * @return array
+     */
+    public function getAgent()
+    {
+      $chos = $this->classes["edm:ProvidedCHO"];
+      $agents = array_merge(
+         isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [],
+         isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [],
+         isset($this->classes["edm:Agent"])? $this->classes["edm:Agent"] : []);
+      $contents = [];
+      $notFound = true;
+
+      foreach ($chos as $cho) {
+         foreach ($cho as $elem) {
+            if ($notFound) {
+               $name = $elem->nodeName;
+               if (array_key_exists($name, $this->agentRoles)) {
+                  $contents[$elem->nodeName][] = [$this->getAgentID($elem),$this->getResourceOrLiteral($elem,$agents)];
+                  $notFound = false; // break
+               }
+
             }
          }
       }
@@ -460,33 +491,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
          }
       }
       return $resource;
-    }
-
-    /**
-     * Get an array of lines from the table of contents.
-     *
-     * @return array
-     */
-    public function getTOC()
-    {
-        // Return empty array if we have no table of contents:
-        $fields = isset($this->fields['contents']) ?
-            $this->fields['contents'] : [];
-        if (!$fields) {
-           return [];
-        }
-        // If we got this far, we have a table -- collect it as a string:
-        $toc = [];
-        foreach ($fields as $field) {
-            // Break the string into appropriate chunks, filtering empty strings,
-            // and merge them into return array:
-            $toc = array_merge(
-                $toc,
-                array_filter(explode('--', $field), 'trim')
-            );
-        }
-        return $toc;
-     }
+    }    
 
      public function getThumbnail($size = 'small')
      {
