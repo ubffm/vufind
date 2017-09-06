@@ -9,11 +9,22 @@
     <th><?=$this->transEsc('edm::' . $key);?></th>
     <td>
   <? foreach ($field as $value) : ?>
+  <? if ($key == 'dcterms:tableOfContents') : ?>
+    <span property="<?=$key?>">
+      <?$toc = array_filter(explode('--', $value), 'trim');?>
+      <ul class="toc">
+        <? foreach ($toc as $line): ?>
+          <li><?=$this->escapeHtml($line)?></li>
+        <? endforeach; ?>
+      </ul>
+    </span>
+  <? else : ?>
     <? if ($prefix) : ?>
     <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>
     <? else : ?>
     <span property="<?=$key?>"><?=$this->escapeHtml($value);?></span><br/>
     <? endif; ?>
+  <? endif;?>
   <? endforeach; ?>
    </td>
   </tr>

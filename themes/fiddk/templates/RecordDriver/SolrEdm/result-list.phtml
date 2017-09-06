@@ -149,7 +149,11 @@
       ?>
       <? if (!empty($resultFields)): ?>
           <? foreach ($resultFields as $key => $current): ?>
+          <? if (strpos($key,':')) : ?>
+            <?=$this->transEsc('edm::'.$key) . ": " . $current['value']?>
+          <? else: ?>
             <?=$this->transEsc($key) . ": " . $current['value']?>
+          <? endif; ?>
           <? endforeach; ?>
       <? endif; ?>
       <?/* End Details */?>

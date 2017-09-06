@@ -263,6 +263,12 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function getDefaultResultSpecs()
     {
         $spec = new RecordDataFormatter\SpecBuilder();
+        $spec->setTemplateLine(
+            'Contributors', 'getAgent', 'data-agent.phtml',[
+                'labelFunction' => function ($data) {
+                    return key($data);
+                }]
+        );
         // normally only one of the next three is contained in the data
         $spec->setTemplateLine(
             'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
