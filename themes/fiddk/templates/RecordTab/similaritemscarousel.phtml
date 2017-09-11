@@ -20,16 +20,14 @@
               <? $thumb = $this->record($data)->getThumbnail('large'); ?>
               <img src="<?=$thumb?>" alt="<?=$data->getTitle()?>" title="<?=$data->getTitle() ?>"/>
               <div class="content">
-                <? $formats = $data->getFormats(); ?>
-                <i class="fa fa-x<? if (count($formats) > 0): ?> fa-<?=preg_replace('/[^a-z0-9]/', '', strtolower($formats[0]))?>" title="<?=$formats[0] ?><? endif; ?>"></i>
-                <b><?=$this->escapeHtml($data->getTitle())?></b>
-                <? $authors = $data->getPrimaryAuthors(); if (!empty($authors)): ?>
-                  <br/><?=$this->transEsc('by')?>: <?=$this->escapeHtml($authors[0]);?><? if (count($authors) > 1): ?>, <?=$this->transEsc('more_authors_abbrev')?><? endif; ?>
-                <? endif; ?>
-                <? $pubDates = $data->getPublicationDates(); if (!empty($pubDates)): ?>
-                  <br/><?=$this->transEsc('Published')?>: (<?=$this->escapeHtml($pubDates[0])?>)
-                <? endif; ?>
               </div>
+              <? if (!$thumb) :?>
+              <? if ($data->getContainerTitle()) :?>
+                <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
+              <? endif; ?>
+              <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getFormats());?></p>
+              <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+              <? endif; ?>
             </a>
           </div>
           <? if(($index+1) % $perPage == 0 && $index < count($similarRecords)-1): ?>

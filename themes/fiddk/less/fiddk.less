@@ -123,6 +123,35 @@ hr {
   border-color: lightgray;
 }
 
+/* Carousel */
+.carousel-control {
+    width: 7%;
+    &.left, &.left:focus {
+      background-image: linear-gradient(to right, rgba(119, 165, 227, 1) 0%, transparent 100%);
+    }
+    &.right, &.right:focus {
+      background-image: linear-gradient(to right, transparent 0%, rgba(119, 165, 227, 1) 100%);
+    }
+}
+
+#similar-items-carousel {
+  .carousel-indicators {
+    bottom: -20px;
+  }
+  .hover-overlay .content {
+      background-color: rgba(119, 165, 227, 0.2);
+  }
+  .hover-overlay {
+      padding-top: 12px;
+      padding-left: 12px;
+      text-align: left;
+  }
+  img[title] {
+      font-weight: bold;
+  }
+}
+
+
 /* Lightbox Layout */
 /*h2.providerbox {
   color: @brand-primary;
