@@ -298,6 +298,9 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
                   }
             },]
         );
+        $spec->setTemplateLine(
+          'Fulltext','getLicenceLink','data-licenceLink'
+        );
         return $spec->getArray();
     }
 

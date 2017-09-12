@@ -504,6 +504,30 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
 
      }
 
+     public function getLicenceLink() {
+
+        $licenceLink = [];
+        $institution = $this->getInstitutions()[0];
+
+        if ($institution == 'transcript Verlag' or $institution == 'Alexander Street Press') {
+           $aggs = $this->classes["ore:Aggregation"];
+           $webs = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
+
+           foreach ($aggs as $agg) {
+             foreach ($agg as $elem) {
+                switch ($elem->nodeName) {
+                   case 'edm:isShownAt':
+                      $licenceLink[] = $this->getWebResource($elem,$webs);
+                      break;
+                   default:
+                      break;
+                }
+             }
+          }
+        }
+        return $licenceLink;
+    }
+
      public function checkExistence($containerID,$containerSource) {
 
        try {

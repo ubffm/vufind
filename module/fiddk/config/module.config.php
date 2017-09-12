@@ -47,7 +47,7 @@ $staticRoutes = [
         'spages/contents',
         'spages/neuerwerb',
         'spages/fernleihe',
-        'spages/fiddk-licensed-content',
+        'spages/licensed',
         'spages/kaufvorschlag',
         'spages/impressum',
         'spages/copyright',
