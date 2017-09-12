@@ -64,7 +64,7 @@ class SearchController extends \VuFind\Controller\SearchController
             $query = $this->getRequest()->getQuery()->set('fuzzy', 'true');
             return $this->forwardTo('Tag', 'Home');
         }
-        $view = $this->createViewModel(['driver' => $driver, 'tabs' => $tabs]);
+        $view = $this->createViewModel(['driver' => $driver]);
 
         // Handle saved search requests:
         $savedId = $this->params()->fromQuery('saved', false);

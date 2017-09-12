@@ -75,8 +75,14 @@ namespace fiddk\RecordDriver;
         public function loadEntityFacts($id)
         {
            $id = explode('_', $id)[1];
-           $json = file_get_contents($this->entityLink . $id);
-           return json_decode($json);
+           $json = [];
+           try {
+               $json = @file_get_contents($this->entityLink . $id);
+               $json = json_decode($json);
+           } catch (Exception $e) {
+               // does not exist
+           };
+           return $json;
         }
 
         public function getAgentFacts($id,$full) {
@@ -94,27 +100,36 @@ namespace fiddk\RecordDriver;
             $obj = $this->loadEntityFacts($id);
             if ($obj) {
                $agent->name = \Normalizer::normalize($obj->preferredName,\Normalizer::NFC);
-               $agent->depiction = $obj->depiction->{"thumbnail"}->{"@id"};
+               $agent->depiction = isset($obj->depiction->{"thumbnail"}->{"@id"}) ? $obj->depiction->{"thumbnail"}->{"@id"} : '';
                if ($obj->{"@type"} == 'person') {
-                   $agent->birthDate = $obj->dateOfBirth;
-                   $agent->birthPlace = \Normalizer::normalize($obj->placeOfBirth[0]->{"preferredName"},\Normalizer::NFC);
-                   $agent->deathDate = $obj->dateOfDeath;
-                   $agent->deathPlace = \Normalizer::normalize($obj->placeOfDeath[0]->{"preferredName"},\Normalizer::NFC);
+                   $agent->birthDate = isset($obj->dateOfBirth) ? $obj->dateOfBirth : '';
+                   $agent->birthPlace = isset($obj->placeOfBirth[0]->{"preferredName"}) ?
+                     \Normalizer::normalize($obj->placeOfBirth[0]->{"preferredName"},\Normalizer::NFC) : '';
+                   $agent->deathDate = isset($obj->dateOfDeath) ? $obj->dateOfDeath : '';
+                   $agent->deathPlace = isset($obj->placeOfDeath[0]->{"preferredName"}) ?
+                     \Normalizer::normalize($obj->placeOfDeath[0]->{"preferredName"},\Normalizer::NFC) : '';
+                   if (isset($obj->professionOrOccupation)) {
                    foreach ($obj->professionOrOccupation as $prof) {
-                      $agent->prof[] = \Normalizer::normalize($prof->{"preferredName"},\Normalizer::NFC);
+                      $agent->prof[] = isset($prof->{"preferredName"}) ?
+                        \Normalizer::normalize($prof->{"preferredName"},\Normalizer::NFC) : '';
                    }
+               }
                    if ($full) {
-                       $agent->bio = $obj->biographicalOrHistoricalInformation;
+                       $agent->bio = isset($obj->biographicalOrHistoricalInformation) ? $obj->biographicalOrHistoricalInformation : '';
+                       if (isset($obj->placeOfActivity)) {
                        foreach ($obj->placeOfActivity as $poa) {
-                          $agent->placeOfActivity[] = $poa->{"preferredName"};
+                          $agent->placeOfActivity[] = isset($poa->{"preferredName"}) ? $poa->{"preferredName"} : '';
                        }
                    }
-               } else {
-                   $agent->establishment = $obj->dateOfEstablishment[0];
-                   $agent->termination = $obj->dateOfTermination[0];
-                   foreach ($obj->topic as $top) {
-                      $agent->topic[] = \Normalizer::normalize($top->{"preferredName"},\Normalizer::NFC);
                    }
+               } else {
+                   $agent->establishment = isset($obj->dateOfEstablishment[0]) ? $obj->dateOfEstablishment[0] : '';
+                   $agent->termination = isset($obj->dateOfTermination[0]) ? $obj->dateOfTermination[0] : '';
+                   if (isset($obj->topic)) {
+                   foreach ($obj->topic as $top) {
+                     $agent->topic[] = isset($top->{"preferredName"}) ? \Normalizer::normalize($top->{"preferredName"},\Normalizer::NFC) : '';
+                   }
+               }
                    if ($full) {
                    foreach ($obj->placeOfBusiness as $pob) {
                         $agent->placeOfBusiness[] = \Normalizer::normalize($pob->{"preferredName"},\Normalizer::NFC);
@@ -128,7 +143,7 @@ namespace fiddk\RecordDriver;
                         $icon = $link->collection->icon;
                         $agent->sameAs[] = [$id,$icon,$name];
                     }
-                    $agent->variants = $obj->variantName;
+                    $agent->variants = isset($obj->variantName) ? $obj->variantName : [];
                }
              }
              //var_dump($obj);

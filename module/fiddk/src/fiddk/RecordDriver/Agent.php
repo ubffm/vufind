@@ -39,8 +39,9 @@ namespace fiddk\RecordDriver;
     class Agent
     {
 
-    public $birthDate,$birthPlace,$deathDate,$bio = '';
-    public $prof,$topic = [];
+    public $name,$birthDate,$birthPlace,$deathDate,$deathPlace,$bio,$depiction,$establishment,$termination,
+    $dateOfEstablishment,$dateOfTermination,$placeOfActivity,$placeOfBusiness = '';
+    public $prof,$topic,$variantName = [];
 
         public function getDepiction() {
             return $this->depiction;

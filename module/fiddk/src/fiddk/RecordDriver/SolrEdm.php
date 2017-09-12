@@ -341,7 +341,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       $webs = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
       $orgs = isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [];
       $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $seeAlso = ['Institution' => false, 'Catalogue' => false, 'Digital Copies' => false, 'Related' => false];
+      $seeAlso = ['Institution' => false, 'Fulltext' => false, 'Catalogue' => false, 'Digital Copies' => false, 'Related' => false];
 
       foreach ($aggs as $agg) {
          foreach ($agg as $elem) {
@@ -350,6 +350,9 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                   $seeAlso['Digital Copies'][] = $this->getWebResource($elem,$webs);
                   break;
                case 'edm:isShownAt':
+                  $seeAlso['Fulltext'][] = $this->getWebResource($elem,$webs);
+                  break;
+              case 'dm2e:hasAnnotatableVersionAt':
                   $seeAlso['Catalogue'][] = $this->getWebResource($elem,$webs);
                   break;
                case 'edm:dataProvider':
@@ -427,11 +430,11 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getAgents()
     {
-      $chos = $this->classes["edm:ProvidedCHO"];
+      $chos = isset($this->classes["edm:ProvidedCHO"]) ? $this->classes["edm:ProvidedCHO"] : [];
       $agents = array_merge(
-         isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [],
-         isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [],
-         isset($this->classes["edm:Agent"])? $this->classes["edm:Agent"] : []);
+         isset($this->classes["foaf:Person"]) ? $this->classes["foaf:Person"] : [],
+         isset($this->classes["foaf:Organization"]) ? $this->classes["foaf:Organization"] : [],
+         isset($this->classes["edm:Agent"]) ? $this->classes["edm:Agent"] : []);
       $contents = [];
 
       foreach ($chos as $cho) {
@@ -452,7 +455,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getAgent()
     {
-      $chos = $this->classes["edm:ProvidedCHO"];
+      $chos = isset($this->classes["edm:ProvidedCHO"]) ? $this->classes["edm:ProvidedCHO"] : [];
       $agents = array_merge(
          isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [],
          isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [],
@@ -491,7 +494,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
          }
       }
       return $resource;
-    }    
+    }
 
      public function getThumbnail($size = 'small')
      {
