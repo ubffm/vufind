@@ -7,6 +7,7 @@ $config = [
       'dprovider' => 'fiddk\Controller\Factory::getDproviderController',
       'spages' => 'fiddk\Controller\Factory::getSpagesController',
       'search' => 'fiddk\Controller\Factory::getSearchController',
+      'ajax' => 'fiddk\Controller\Factory::getAjaxController',
     ],
   ],
   'vufind' => [
