@@ -6,6 +6,7 @@ use Zend\Mail;
 
 class SpagesController extends \VuFind\Controller\AbstractBase
 {
+    protected $link = '';
 
     /**
      *
@@ -67,10 +68,11 @@ class SpagesController extends \VuFind\Controller\AbstractBase
         return $this->createViewModel();
     }
 
-    public function fiddkLicensedContentAction()
+    public function licensedAction()
     {
-      $licenseView = new ViewModel(array(
-        'link'    => $this->licenceLink($link),
+      $licenseView = $this->createViewModel(
+          array(
+              'link'    => $this->licenceLink($this->link),
       ));
 
       // render page without vufind/fid layout
@@ -274,7 +276,7 @@ Institution:
     public function licenceLink($licenceLink=null)
     {
       $config = $this->getConfig();
-      $link = $config->Site->url.'/spages/fiddk-licensed-content?link='.$licenceLink;
+      $link = $config->Site->url.'/spages/licensed?link='.$licenceLink;
       return $link;
     }
 
