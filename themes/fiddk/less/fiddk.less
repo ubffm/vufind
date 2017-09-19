@@ -1,6 +1,7 @@
 /* HEADER */
 header .navbar {
   padding-bottom: 20px;
+  border: 0;
 
   .navbar-brand {
     background: @logo no-repeat scroll left center transparent;
@@ -15,6 +16,23 @@ header .navbar {
       padding-left: 8px;
       padding-right: 0;
   }
+}
+
+header .search.container.navbar {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+header .banner.container.navbar {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  ul {
+    margin-top: 5px;
+  }
+}
+
+header .banner.container.navbar.search {
+  padding-bottom: 0px;
 }
 
 /** Searchbar/-box ***/
@@ -76,9 +94,7 @@ body {
 
 .container {
 	background: @white;
-	-webkit-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
-	-moz-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
-	box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.28);
+	box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.28);
 }
 
 .breadcrumb {
@@ -232,6 +248,12 @@ div#contacts {
   }
 }
 */
+
+body.template-dir-authority .result {
+  .media-left {
+    width: 10%;
+  }
+}
 
 /* Detailed Record View */
 .mainbody#recordview {
