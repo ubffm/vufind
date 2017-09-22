@@ -1,6 +1,7 @@
 <? if ($agent->name) : ?>
 <div class="agent-container">
 
+   <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
    <? $sameAs = $agent->sameAs; ?>
 
    <? if ($agent->depiction) : ?>
@@ -72,20 +73,36 @@
             <? endif; ?>
 
             <? if ($agent->bio) : ?>
-               <br/><?=$agent->bio;?>
+               <br/><b><?=$this->transEsc("BiographicalDetails")?></b><br/>
+               <?=$agent->bio;?><br/>
             <? endif; ?>
 
             <? if ($agent->placeOfActivity) : ?>
-             <br/><?=$this->transEsc("placeOfActivity") . ': ' .  implode($agent->placeOfActivity,', ');?><br/>
+             <?=$this->transEsc("placeOfActivity") . ': ' .  implode($agent->placeOfActivity,', ');?><br/>
             <? endif; ?>
 
             <? if ($agent->placeOfBusiness) : ?>
-             <br/><?=$this->transEsc("placeOfBusiness") . ' ' . $this->transEsc("in") . ' ' . implode($agent->placeOfBusiness,', ');?><br/>
+             <?=$this->transEsc("placeOfBusiness") . ' ' . $this->transEsc("in") . ' ' . implode($agent->placeOfBusiness,', ');?><br/>
             <? endif; ?>
 
             <? if ($agent->variants) : ?>
                <br/><b><?=$this->transEsc("Variants")?></b><br/>
-               <?=implode($agent->variants,', ');?><br/>
+               <? if (sizeof($agent->variants) <= 20) : ?>
+                 <?=implode($agent->variants,', ');?>
+               <? else : ?>
+                 <? $start = array_slice($agent->variants, 0,20);?>
+                 <? $rest = array_slice($agent->variants, 20);?>
+                 <?=implode($start,', ') . ', ';?>
+                 <span class="toggleContainer">
+                    <input type="checkbox" class="toggle" id="toggle_id">
+                    <span><?=implode($rest,', ');?></span>
+                    <? if ($lang =='de') : ?>
+                       <label for="toggle_id" class="label_de"></label>
+                    <? else : ?>
+                       <label for="toggle_id" class="label_en"></label>
+                    <? endif; ?>
+                 </span>
+               <? endif; ?>
             <? endif; ?>
 
          </div>
@@ -98,7 +115,8 @@
                <? if(array_key_exists($k+1,$sameAs)):?>
                   <hr/>
                <? endif;?>
-             <? endforeach; ?>
+            <? endforeach; ?>
+             <br/><p><b>Quelle:</b> <a href="http://www.dnb.de/entityfacts.html">Entity Facts</a></p>
            </div>
           <? endif; ?>
 </div>

@@ -5,15 +5,27 @@
   }
   $seeAlso = $this->driver->getSeeAlso();
   $id = $this->driver->getUniqueId();
-  $agent = $this->driver->getAgentFacts($id,false);
 
-  $establishment = $agent->establishment;
-  $termination = $agent->termination;
-  $birthDate = $agent->birthDate;
-  $deathDate = $agent->deathDate;
+  //$agent = $this->driver->getAgentFacts($id,false);
 
-  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $agent->depiction);
-  $thumbnail = $agent->depiction;
+  //$establishment = $agent->establishment;
+  //$termination = $agent->termination;
+  //$birthDate = $agent->birthDate;
+  //$deathDate = $agent->deathDate;
+  //$prof = $agent->prof;
+  //$topic = $agent->topic;
+
+  $establishment = '';
+  $termination = '';
+  $birthDate = '';
+  $deathDate = '';
+  $prof = '';
+  $topic = '';
+
+  //$coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $agent->depiction);
+  //$thumbnail = $agent->depiction;
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', '');
+  $thumbnail = '';
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result'); ?>
   <input type="hidden" value="<?=$this->escapeHtmlAttr($id)?>" class="hiddenId" />
   <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
@@ -47,11 +59,11 @@
                <?='* ' . $birthDate . ' - † ' . $deathDate?><br/>
           <? endif; ?>
       <? endif; ?>
-      <? if ($agent->prof) : ?>
-        <?=implode($agent->prof,', ');?><br/>
+      <? if ($prof) : ?>
+        <?=implode($prof,', ');?><br/>
       <? endif; ?>
-      <? if ($agent->topic) : ?>
-            <?=implode($agent->topic,', ');?><br/>
+      <? if ($topic) : ?>
+            <?=implode($topic,', ');?><br/>
           <? endif; ?>
       <? if (!empty($seeAlso)): ?>
         <?=$this->transEsc("See also")?>:<br/>

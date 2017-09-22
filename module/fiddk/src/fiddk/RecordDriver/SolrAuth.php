@@ -131,10 +131,12 @@ namespace fiddk\RecordDriver;
                    }
                }
                    if ($full) {
+                     if (isset($obj->placeOfBusiness)) {
                    foreach ($obj->placeOfBusiness as $pob) {
                         $agent->placeOfBusiness[] = \Normalizer::normalize($pob->{"preferredName"},\Normalizer::NFC);
                    }
                   }
+              }
                }
                if ($full) {
                    foreach ($obj->sameAs as $link) {
@@ -146,7 +148,6 @@ namespace fiddk\RecordDriver;
                     $agent->variants = isset($obj->variantName) ? $obj->variantName : [];
                }
              }
-             //var_dump($obj);
            return $agent;
         }
 

@@ -3,15 +3,39 @@
 <? foreach ($data as $key => $field): ?>
     <tr>
       <th><?=$this->transEsc('edm::' . $key);?></th>
+      <? if (sizeof($field > 5)) : ?>
+        <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+        <? $rest = array_slice($field, 5); ?>
+        <? $field = array_slice($field, 0, 5);?>
+      <? endif; ?>
       <td><? foreach ($field as $agent): ?>
     <? $agentID = $agent[0]; ?>
     <? if ($agentID != '' and $this->driver->checkExistence($agentID,'SolrAuth')) : ?>
       <a href="<?=$this->url('search-authorityresults')?>?lookfor=<?=$agentID?>&amp;type=agentID">
-        <span property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></span></a><br/>
+        <div property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></div></a>
     <? else : ?>
-      <span property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></span><br/>
+      <div property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></div>
     <? endif; ?>
   <? endforeach; ?>
+  <? if (!(empty($rest))) : ?>
+  <span class="toggleContainer">
+    <input type="checkbox" class="toggle" id="toggle_<?=$key?>">
+    <span><? foreach ($rest as $agent): ?>
+  <? $agentID = $agent[0]; ?>
+  <? if ($agentID != '' and $this->driver->checkExistence($agentID,'SolrAuth')) : ?>
+    <a href="<?=$this->url('search-authorityresults')?>?lookfor=<?=$agentID?>&amp;type=agentID">
+      <div property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></div></a>
+  <? else : ?>
+      <div property="<?=$key?>"><?=$this->escapeHtml($agent[1])?></div>
+  <? endif; ?>
+<? endforeach; ?></span>
+<? if ($lang =='de') : ?>
+   <label for="toggle_<?=$key?>" class="label_de"></label>
+<? else : ?>
+   <label for="toggle_<?=$key?>" class="label_en"></label>
+<? endif; ?>
+  </span>
+  <? endif; ?>
    </td>
   </tr>
 <? endforeach; ?>
