@@ -41,14 +41,13 @@ class AjaxController extends \VuFind\Controller\AjaxController
 
     protected function getResultTotalAjax() {
         $this->disableSessionWrites();  // avoid session write timing bug
-        $id = $this->getRequest()->getQuery("searchClassId");
+        $id = $this->getRequest()->getQuery('searchClassId');
         $results = $this->getResultsManager()->get($id);
         $params = $results->getParams();
         $params->initFromRequest($this->getRequest()->getQuery());
         $resultTotal = $results->getResultTotal();
         $plugin = $this->getViewRenderer()->plugin('localizednumber');
         return $this->output($plugin($resultTotal), static::STATUS_OK);
-    }
-
+    }   
 
 }
