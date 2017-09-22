@@ -63,6 +63,32 @@ header .banner.container.navbar.search {
   min-width: 50%;
 }
 
+.adv_search_links {
+  margin: 0px;
+}
+
+/* SEARCH_TABS */
+.loader {
+  display: none;
+}
+
+ul.nav-tabs li:not(.active) a:hover .loader {
+    display: inline;
+    float: left;
+    margin-right: 5px;
+    border: 3px solid @lightgrey;
+    border-top: 3px solid @brand-primary;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* FOOTER */
 .bottom_logos {
     background: @powered-by no-repeat scroll right top transparent;
@@ -139,6 +165,10 @@ hr {
   border-color: lightgray;
 }
 
+.record-nav {
+  float: right;
+}
+
 /* Carousel */
 .carousel-control {
     width: 7%;
@@ -213,42 +243,6 @@ div#contacts {
       }
 }
 
-/*
-.agent-container {
-    display: flex;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 3px solid @brand-primary;
-
-    .agent-column#thumb {
-        flex: 0 2 100%;
-        padding: 15px;
-    }
-
-    .agent-column#details {
-        flex: 2 1 100%;
-        padding: 15px;
-
-        .agent-subcontainer {
-            display: flex;
-
-            .agent-subcolumn {
-                flex: 0 1 100%;
-
-                .external-icon img {
-                    width: 16px;
-                    margin-right: 0.5em;
-                }
-             }
-    }
-
-    h2#agentName {
-      margin-top: 10px;
-    }
-  }
-}
-*/
-
 body.template-dir-authority .result {
   .media-left {
     width: 10%;
@@ -276,4 +270,45 @@ table.table-inside {
       border-top: 0;
       padding-top: 0px;
     }
+}
+
+/* Toggle MORE/LESS without js */
+span.toggleContainer {
+  .toggle {
+    display:none;
+  }
+  .toggle ~ span {
+    opacity: 0;
+    max-height: 0;
+    font-size: 0;
+    transition: .25s ease;
+  }
+  .toggle:checked ~ span {
+    opacity: 1;
+    font-size: inherit;
+    max-height: 300px;
+  }
+
+  .toggle ~ label.label_de:before {
+    content: 'Mehr anzeigen';
+  }
+
+  .toggle:checked ~ label.label_de:before {
+    content: 'Weniger anzeigen';
+  }
+
+  .toggle ~ label.label_en:before {
+    content: 'Show more';
+  }
+
+  .toggle:checked ~ label.label_en:before {
+    content: 'Show less';
+  }
+
+  label {
+    display: inline-block;
+    font-size: 80%;
+    color: @brand-primary;
+    cursor: pointer;
+  }
 }

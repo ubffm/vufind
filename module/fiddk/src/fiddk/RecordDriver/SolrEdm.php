@@ -539,4 +539,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
 
      }
 
+     public function getDM2EXML() {
+       return $this->fields['fullrecord'];
+     }
+
 }

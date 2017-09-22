@@ -4,7 +4,9 @@
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
   <?
     $QRCode = $this->record($this->driver)->getQRCode("core");
-    $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $this->record($this->driver)->getThumbnail('large'));
+    $thumbnail = $this->record($this->driver)->getThumbnail('large');
+    if ($thumbnail) :
+    $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $thumbnail);
     $cover = $coverDetails['html'];
     $preview = $this->record($this->driver)->getPreviews();
   ?>
@@ -33,6 +35,10 @@
       <? endif; ?>
     </div>
   <? endif; ?>
+<? else : ?>
+  <div class="media-left">
+  </div>
+<? endif; ?>
   <div class="media-body">
 
     <? if ($this->userlist()->getMode() !== 'disabled'): ?>

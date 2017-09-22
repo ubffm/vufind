@@ -1,0 +1,36 @@
+<? if (sizeof($data > 5)) : ?>
+  <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+  <? $rest = array_slice($data, 5); ?>
+  <? $data = array_slice($data, 0, 5);?>
+  <? endif; ?>
+<? foreach ($data as $field): ?>
+  <div class="subject-line" property="keywords">
+    <? $subject = ''; ?>
+    <? if(count($field) == 1) $field = explode('--', $field[0]); ?>
+    <? $i = 0; foreach ($field as $subfield): ?>
+       <?=($i++ == 0) ? '' : ' &gt; '?>
+       <? $subject = trim($subject . ' ' . $subfield); ?>
+        <a title="<?=$this->escapeHtmlAttr($subject)?>" href="<?=$this->record($this->driver)->getLink('subject', $subject)?>" rel="nofollow"><?=trim($this->escapeHtml($subfield))?></a>
+    <? endforeach; ?>
+  </div>
+<? endforeach; ?>
+<? if (!(empty($rest))) : ?>
+<span class="toggleContainer">
+  <input type="checkbox" class="toggle" id="toggle_subject">
+  <span><? foreach ($rest as $field): ?>
+    <div class="subject-line" property="keywords">
+      <? $subject = ''; ?>
+      <? if(count($field) == 1) $field = explode('--', $field[0]); ?>
+      <? $i = 0; foreach ($field as $subfield): ?>
+         <?=($i++ == 0) ? '' : ' &gt; '?>
+         <? $subject = trim($subject . ' ' . $subfield); ?>
+          <a title="<?=$this->escapeHtmlAttr($subject)?>" href="<?=$this->record($this->driver)->getLink('subject', $subject)?>" rel="nofollow"><?=trim($this->escapeHtml($subfield))?></a>
+      <? endforeach; ?></div>
+    <? endforeach; ?></span>
+  <? if ($lang =='de') : ?>
+     <label for="toggle_subject" class="label_de"></label>
+  <? else : ?>
+     <label for="toggle_subject" class="label_en"></label>
+  <? endif; ?>
+</span><br/>
+<? endif; ?>

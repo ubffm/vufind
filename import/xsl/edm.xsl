@@ -39,7 +39,7 @@
                         <xsl:copy-of select="."/>
                     </xsl:for-each>
                 </xsl:variable>
-                <xsl:variable name="container_titles">
+                <xsl:variable name="containerTitles">
                     <xsl:for-each
                         select="../edm:ProvidedCHO[@rdf:about = $cho/dcterms:isPartOf/@rdf:resource]/dc:title">
                         <xsl:element name="title">
@@ -84,12 +84,13 @@
                     <xsl:call-template name="dprovider">
                         <xsl:with-param name="dataProvider" select="$dataProvider"/>
                         <xsl:with-param name="id" select="substring-after($choID,'Record/')"/>
+                        <xsl:with-param name="containerTitles" select="$containerTitles"/>
                     </xsl:call-template>
                     <xsl:call-template name="providedCHO">
                         <xsl:with-param name="cho" select="$cho"/>
                         <xsl:with-param name="choID" select="$choID"/>
                         <xsl:with-param name="contextuals" select="$contextuals"/>
-                        <xsl:with-param name="containerTitles" select="$container_titles"/>
+                        <xsl:with-param name="containerTitles" select="$containerTitles"/>
                         <xsl:with-param name="premierDates" select="$premierDates"/>
                     </xsl:call-template>
                 </xsl:element>
@@ -102,6 +103,7 @@
     <xsl:template name="dprovider">
         <xsl:param name="id"/>
         <xsl:param name="dataProvider"/>
+        <xsl:param name="containerTitles"/>
         <xsl:variable name="dProvider" select="$dataProvider/skos:prefLabel"/>
         <xsl:if test="$dProvider != ''">
             <xsl:element name="field">
@@ -111,6 +113,45 @@
                 <xsl:value-of select="normalize-space($dProvider)"/>
             </xsl:element>
             <xsl:choose>
+                <xsl:when
+                    test="$dProvider = 'Universitätsbibliothek Frankfurt am Main'">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">
+                            <xsl:text>institutionFacet</xsl:text>
+                        </xsl:attribute>
+                        <xsl:text>0/Universitätsbibliothek Frankfurt am Main/</xsl:text>
+                    </xsl:element>
+                    <xsl:choose>
+                        <xsl:when test="starts-with($id,'FUB_OLC_')">
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>institutionFacet</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Online Contents/</xsl:text>
+                            </xsl:element>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>archive</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>0</xsl:text>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>institutionFacet</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Bibliotheksbestand/</xsl:text>
+                            </xsl:element>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>archive</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>0</xsl:text>
+                            </xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
                 <xsl:when
                     test="$dProvider = 'Theaterwissenschaftliche Sammlung der Universität zu Köln'">
                     <xsl:element name="field">
@@ -183,11 +224,15 @@
                     <xsl:choose>
                         <xsl:when
                             test="$dProvider = 'Akademie der Künste Berlin, Archiv Darstellende Kunst'">
+                            <xsl:variable name="parentid">
+                                <xsl:value-of
+                                    select="normalize-space(substring-after(exsl:node-set($containerTitles)/title/@id, 'Record/'))"/>
+                            </xsl:variable>
                             <xsl:choose>
                                 <!-- it's dance if part of "Gret Palucca (BK_1254),  Mary Wigman (BK_5822), Gerhard Bohner, Valeska Gert, Lilo Gruber, Tatjana Gsovsky,
                                         Ulrich Kessler, Johann Kresnik, Harald Kreutzberg, Susanne Linke, Maya Plisetskaya, Gert Reinholm, Tom Schilling, Joachim Schlömer, Karin Waehner,
                                         Tanztheater der Komischen Oper Berlin, Tanzsammlung" -->
-                                <xsl:when test="$id = 'ADK_A_BK_1254' or $id = 'ADK_A_BK_5822'">
+                                <xsl:when test="$id = 'ADK_A_BK_1254' or $id = 'ADK_A_BK_5822' or $parentid = 'ADK_A_BK_1254' or $parentid = 'ADK_A_BK_5822'">
                                     <xsl:element name="field">
                                         <xsl:attribute name="name">
                                             <xsl:text>institutionFacet</xsl:text>
@@ -214,7 +259,7 @@
                                         <xsl:attribute name="name">
                                             <xsl:text>institutionFacet</xsl:text>
                                         </xsl:attribute>
-                                        <xsl:text>0/Akademie der Künste Berlin/Archivbestand/</xsl:text>
+                                        <xsl:text>1/Akademie der Künste Berlin/Archivbestand/</xsl:text>
                                     </xsl:element>
                                 </xsl:otherwise>
                             </xsl:choose>

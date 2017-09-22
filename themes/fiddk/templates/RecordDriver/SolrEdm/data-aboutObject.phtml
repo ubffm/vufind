@@ -1,3 +1,4 @@
+<? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <table class="table table-inside">
 <? foreach ($data as $key => $field): ?>
   <? if ($key == 'dc:language') : ?>
@@ -8,7 +9,7 @@
   <tr>
     <th><?=$this->transEsc('edm::' . $key);?></th>
     <td>
-  <? foreach ($field as $value) : ?>
+  <? foreach ($field as $k => $value) : ?>
   <? if ($key == 'dcterms:tableOfContents') : ?>
     <span property="<?=$key?>">
       <?$toc = array_filter(explode('--', $value), 'trim');?>
@@ -18,6 +19,28 @@
         <? endforeach; ?>
       </ul>
     </span>
+  <? elseif ($key == 'dc:description') : ?>
+    <? $words = explode(' ', $value);?>
+    <? if (sizeof($words) <= 30) : ?>
+        <? if ($prefix) : ?>
+            <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>
+        <? else : ?>
+            <span property="<?=$key?>"><?=$this->escapeHtml($value);?></span><br/>
+        <? endif; ?>
+    <? else : ?>
+        <? $start = array_slice($words, 0, 30);?>
+        <? $rest = array_slice($words, 30);?>
+        <?=implode($start,' ') . ' ';?>
+        <span class="toggleContainer">
+          <input type="checkbox" class="toggle" id="toggle_<?=$k?>">
+          <span><?=implode($rest,' ');?></span>
+          <? if ($lang =='de') : ?>
+             <label for="toggle_<?=$k?>" class="label_de"></label>
+          <? else : ?>
+             <label for="toggle_<?=$k?>" class="label_en"></label>
+          <? endif; ?>
+        </span><br/>
+  <? endif; ?>
   <? else : ?>
     <? if ($prefix) : ?>
     <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>
