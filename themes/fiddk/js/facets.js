@@ -84,8 +84,8 @@ function initFacetTree(treeNode, inSidebar)
     function getFacetData(response/*, textStatus*/) {
       if (response.status === "OK") {
         var dprovs = {
-          'Akademie der Künste Berlin, Archiv':'adka',
-          'Akademie der Künste Berlin, Bibliothek':'adkb',
+          'Akademie der Künste Berlin':'adk',
+          'Akademie der Künste Berlin, Archiv Darstellende Kunst':'adka',
           'Alexander Street Press':'asp',
           'Deutsches Tanzfilminstitut Bremen':'dtb',
           'Deutsches Tanzarchiv Köln':'dtk',
@@ -113,7 +113,9 @@ function initFacetTree(treeNode, inSidebar)
             var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
             $(treeItems).addClass('list-group-item');
             $(treeItems).each(function addInfo(i) {
-              $(this).append('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+              if (results[i].dprov) {
+                $(this).append('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+              }
             });
           });
           treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
@@ -122,11 +124,15 @@ function initFacetTree(treeNode, inSidebar)
             $(treeItems).each(function addInfo(i) {
               if (this.id == data.node.id) {
                 // add info to parent node
-                $(this.children[1]).after('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                if (results[i].dprov) {
+                  $(this.children[1]).after('<a data-lightbox href="/vufind/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                }
                 var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
                 // add info to each child
                 data.node.children.forEach(function(child,j) {
-                  $(treeChildren[j]).append('<a data-lightbox href="/vufind/dprovider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                  if (results[i].children[j].dprov) {
+                    $(treeChildren[j]).append('<a data-lightbox href="/vufind/dprovider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                  }
                 });
               }
             });
