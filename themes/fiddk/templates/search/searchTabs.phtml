@@ -2,7 +2,8 @@
   <ul class="nav nav-tabs">
     <? foreach ($searchTabs as $tab): ?>
         <li id="<?=$tab["id"]?>"<?=$tab['selected'] ? ' class="active"' : ''?>>
-          <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>><?=$this->transEsc($tab['label']); ?></a>
+          <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>>
+            <!--<div class="loader"></div>--> <?=$this->transEsc($tab['label']); ?></a>
         <? if ($tab["id"] === "SolrAuth" && !$tab['selected']) :
             $url = str_replace("/Authority/Search", "/AJAX/json", $tab["url"]);
             $var = <<<JS

@@ -164,7 +164,7 @@
 #-----------------------------------------------------------------------------------
 
 # These searches use Dismax when possible:
-Author:
+Agent:
   DismaxFields:
     - author^150
     - topic_unstemmed^100
