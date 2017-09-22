@@ -1,11 +1,10 @@
 <?
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Schweizerische Theatersammlung Bern');
 ?>
-
 <h2>Schweizerische Theatersammlung Bern</h2>
 <p><a href="http://www.theatersammlung.ch/"
     target="_blank">Zur Webseite der Sammlung</a></p>
-
 <p>Die Schweizerische Theatersammlung ist eine nationale Dokumentationsstelle des
   Schweizer Theaterschaffens. Sie  wurde als Privatinitiative von Theaterakteuren
   1927 gegründet und 1978 überführt in eine privatrechtliche Stiftung mit Sitz in Bern.
@@ -24,3 +23,21 @@
   zum <a href="http://www.theatersammlung.ch/?q=search_berufstheater" target="_blank">Berufstheater</a> und zum
   <a href="http://www.theatersammlung.ch/?q=search_amateure" target="_blank">Amateurtheater</a> online recherchiert werden.
 </p>
+<? } else {
+  // Set page title
+  $this->headTitle('Swiss Theatre Collection, Bern');
+?>
+<h2>Swiss Theatre Collection, Bern</h2>
+<p><a href="http://www.theatersammlung.ch/"
+    target="_blank">To the collection</a></p>
+<p>The library of the Swiss Theatre Collection houses approximately 80,000 titles on theatre-related
+  topics (acting, opera, operetta, musicals, dance/stage dance) as well as on niche topics such as
+  puppet theatre, cabaret, variety theatre, the circus, exhibits, traditions in the world of theatre,
+  and variations of performance in the media. Since September 1st 1993, newly acquired books have been
+  catalogued electronically in the
+  <a href="http://aleph.unibas.ch/menu.html" target="_blank">Basel-Bern Library Association IDS</a>.
+  Currently the <a href="http://www.theatersammlung.ch/archiv/erschliessung" target="_blank">repertoire databases</a>
+  on <a href="http://www.theatersammlung.ch/?q=search_berufstheater" target="_blank">professional theatre</a> and
+  <a href="http://www.theatersammlung.ch/?q=search_amateure" target="_blank">amateur theatre</a> can be searched online.
+</p>
+<? } ?>

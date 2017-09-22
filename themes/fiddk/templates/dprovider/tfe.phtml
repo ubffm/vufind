@@ -1,11 +1,11 @@
 <?
-    $this->headTitle('Tanzfonds Erbe');
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+  // Set page title
+  $this->headTitle('Tanzfonds Erbe - Förderung von künstlerischen Projekten zum Tanz im 20. Jahrhundert');
 ?>
-
 <h2>Tanzfonds Erbe - Förderung von künstlerischen Projekten zum Tanz im 20. Jahrhundert</h2>
 <p><a href="http://tanzfonds.de/home/"
     target="_blank">Direkt zur Einrichtung</a></p>
-
 <p>Tanzfonds.de ist die Webseite der beiden Förderfonds Tanzfonds Erbe und Tanzfonds
   Partner, die die Kulturstiftung des Bundes 2011 initiiert hat. Projektträger ist
   <a href="http://www.diehl-ritter.de/" target="_blank">DIEHL+RITTER</a>. Während
@@ -14,3 +14,21 @@
   finden Sie Informationen zur Antragsstellung, die Videodokumentationen der Tanzfonds
   Erbe-Projekte sowie weiterführende Beiträge zum Thema Tanzerbe. Im FID-Portal
   www.performing-arts.eu sind die Projektdokumentationen der Förderfonds recherchierbar.</p>
+<? } else {
+    // Set page title
+    $this->headTitle('Tanzfonds Erbe (Dance Heritage Fund) – Funding to Promote an Artistic Approach to 20th Century Dance');
+?>
+<h2>Tanzfonds Erbe (Dance Heritage Fund) – Funding to Promote an Artistic Approach to 20th Century Dance</h2>
+<p><a href="http://tanzfonds.de/en/home/"
+      target="_blank">Go directly to their website</a></p>
+<p>Tanzfonds.de is the website for two funds set up by the Kulturstiftung des Bundes
+  (German Federal Cultural Foundation), namely Tanzfonds Erbe (Dance Heritage Fund) and
+  Tanzfonds Partner (Dance Partner Fund).
+  <a href="http://www.diehl-ritter.de/" target="_blank">DIEHL+RITTER</a> is the non-profit
+  agency managing the funds. Although Tanzfonds Partner – a fund for partnerships between
+  schools and dance institutions – expired in 2014, Tanzfonds Erbe has been extended to 2018.
+  Information about the application procedure, documentary videos on previous and current
+  Tanzfonds projects as well as additional contributions on the theme of dance heritage can
+  all be found at tanzfonds.de. The SIS Performing Arts web portal at www.performing-arts.eu
+  can be used to conduct research regarding the fund’s project documentation.</p>
+<? } ?>

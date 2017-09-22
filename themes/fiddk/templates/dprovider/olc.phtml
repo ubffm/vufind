@@ -1,12 +1,29 @@
 <?
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Aufsatzdatenbanken/Online Contents Darstellende Kunst');
 ?>
 
 <h2>Aufsatzdatenbanken/Online Contents Darstellende Kunst</h2>
-<p><a href="http://orsprod.rz.uni-frankfurt.de/LNG=DU/DB=3.6/?COOKIE=U203,K203,I251,B1999++++++,SN,NDefault+login,D3.6,Ee61732b8-0,A,H,R141.2.32.198,FY"
+<p><a href="http://orsprod.rz.uni-frankfurt.de/LNG=DU/DB=3.6/"
     target="_blank">Direkt zum Angebot</a></p>
 
 <p>Die Datenbank Online Contents (kurz OLC) Darstellende Kunst erschließt Inhaltsverzeichnisse von
     fachrelevanten Zeitschriften aus dem Bereich Theater, Tanz und Performancekunst nach Autor und Titel.
     Betreut wird diese kostenlose und frei zugängliche Datenbank von der
     <a href="http://www.ub.uni-franfurt.de" target="_blank">Universitätsbibliothek Frankfurt am Main</a>.</p>
+
+<? } else {
+    // Set page title
+    $this->headTitle('Online Contents (OLC) Performing Arts');
+?>
+
+<h2>Online Contents (OLC) Performing Arts</h2>
+<p><a href="http://orsprod.rz.uni-frankfurt.de/DB=3.6/SET=1/TTL=1/START_ABOUT "
+    target="_blank">Direct to the website</a></p>
+
+<p>The database Online Contents (OLC) Performing Arts catalogues and lists tables of contents from periodicals
+  dealing with theatre, dance, and performance art, sorted by the author’s name and the title of the article.
+  This database, which can be used free of charge, is run by the
+  <a href="http://www.ub.uni-franfurt.de" target="_blank">University Library Frankfurt am Main</a>.</p>
+
+<? } ?>

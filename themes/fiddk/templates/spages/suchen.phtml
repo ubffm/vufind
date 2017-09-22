@@ -1,10 +1,8 @@
 <? // Set page title.
 $this->headTitle($this->translate('Search in SIS Portal') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
-
 <?
     if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
 ?>
-
 <h2><?=$this->transEsc('Search in SIS Portal')?></h2>
 
 <p>
@@ -15,7 +13,7 @@ und anderen Informationsquellen mit einem spezifischen Fokus auf die darstellend
 Kunst basiert.<br>
 Die Ausgabe der Trefferliste erfolgt mittels des <a target="_blank" href="https://vufind-org.github.io/vufind/">VuFind</a> Discovery System und der
 Suchmaschinentechnologie (<a target="_blank" href="https://lucene.apache.org/core/">Apache Lucene</a>).
-In der <a href="/Search/Advanced">Erweiterten Suche</a> stehen Ihnen zudem zusätzliche Suchfacetten zur
+In der <a href="<?=$this->url('search-advanced')?>">Erweiterten Suche</a> stehen Ihnen zudem zusätzliche Suchfacetten zur
 Verfügung. Die Trefferliste kann beispielsweise nach Institutionen, Materialart und
 Sammlung gefiltert werden.
 </p>
@@ -34,7 +32,7 @@ Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">reda
   media whose index is based on library catalogues, archive indices, databases and other sources focussing specifically on the performing arts.<br>
 The list of hits is shown using a <a target="_blank" href="https://vufind-org.github.io/vufind/">VuFind</a> Discovery System with its search engine
 program (<a target="_blank" href="https://lucene.apache.org/core/">Apache Lucene</a>).
-Using the <a href="/Search/Advanced">Advanced Search</a> option, you have access to additional search options. For example, the list of hits can be
+Using the <a href="<?=$this->url('search-advanced')?>">Advanced Search</a> option, you have access to additional search options. For example, the list of hits can be
 sorted by institution, by type of material or by collection.</p>
 <p>If your search doesn’t bring useful results or if you need help searching, please feel free to
   contact <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>!

@@ -1,11 +1,33 @@
 <?
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Universitätsbibliothek Frankfurt am Main - Fachinformationsdienst Darstellende Kunst');
 ?>
-
 <h2>Universitätsbibliothek Frankfurt am Main - Fachinformationsdienst Darstellende Kunst</h2>
 <p><a href="https://hds.hebis.de/ubffm/Search/Advanced" target="_blank">Direkt zum Katalog</a></p>
-
+<p>Der Fachinformationsdienst (FID) Darstellende Kunst ist an der Universitätsbibliothek Frankfurt am Main
+    beheimatet. Zu den Aufgaben des FIDs Darstellende Kunst gehört  die Erwerbung und Bereitstellung von
+    Fachliteratur. Seine Kernaufgabe liegt im Aufbau eines Recherche- und Nachweisportals für Bibliotheks-
+    und Archivbestände zur darstellenden Kunst. Hervorgegangen ist der FID Darstellende Kunst aus dem
+    Sondersammelgebiet Theater und Filmkunst, dass über sechzig Jahre, von 1950 bis 2014, an der
+    Universitätsbibliothek Frankfurt am Main betreut wurde. Diese Erfahrungen und das Know-how sind in
+    den Fachinformationsdienst eingeflossen, der 2015 seine Arbeit aufnahm und von der Deutschen
+    Forschungsgemeinschaft (DFG) gefördert wird.  </p>
 <p>In diesem Katalogausschnitt der UB Frankfurt finden Sie die für die Theater- und Filmwissenschaft
     relevanten Bücher und Nichtbuchmaterialien (AV-Medien, Noten, Illustrationen etc.) ab Erscheinungsjahr
     1986 sowie Print- und Online-Zeitschriften (alle Erscheinungsjahre). Der Bestand wird im Rahmen des
     Fachinformationsdienstes Darstellende Kunst fortlaufend ergänzt.</p>
+<? } else {
+ // Set page title
+ $this->headTitle('Johann Christian Senckenberg University Library - Specialised Information Service (SIS) of the Performing Arts');
+?>
+<h2>Johann Christian Senckenberg University Library - Specialised Information Service (SIS) of the Performing Arts</h2>
+<p><a href="https://hds.hebis.de/ubffm/Search/Advanced" target="_blank">To the catalogue</a></p>
+<p>The Specialised Information Service (SIS) of the Performing Arts is based at the Frankfurt University
+    Library. The SIS’s tasks include purchasing specialised literature and making it available to the
+    public. Its core task is setting up a research and reference web portal for library and archive
+    collections dealing with the performing arts. The SIS Performing Arts is an offshoot of the
+    Special Subject Collections focusing on theatre and the art of film which were maintained by
+    the Frankfurt University Library for over sixty years, from 1950 to 2014. The SIS, which we began
+    setting up in 2015, has profited from these decades of experience and expertise. It is subsidised
+    by the German Research Foundation (DFG).</p>
+<? } ?>

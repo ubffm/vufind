@@ -20,6 +20,11 @@ class DproviderController extends \VuFind\Controller\AbstractBase
         return $this->createViewModel();
     }
 
+    public function adkAction()
+    {
+        return $this->createViewModel();
+    }
+
     public function adkaAction()
     {
         return $this->createViewModel();
@@ -86,6 +91,11 @@ class DproviderController extends \VuFind\Controller\AbstractBase
     }
 
     public function tmdAction()
+    {
+        return $this->createViewModel();
+    }
+
+    public function vdtAction()
     {
         return $this->createViewModel();
     }

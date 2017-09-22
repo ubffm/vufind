@@ -1,5 +1,5 @@
 <? // Set page title.
-$this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+$this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Darstellende Kunst'));?>
 
 <h2><?=$this->transEsc('Networks')?></h2>
 
@@ -7,14 +7,14 @@ $this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Da
     if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
 ?>
 <b>Fachgesellschaften und Arbeitskreise</b><br>
-<a href="/spages/netzwerke2">Gedächtnisinstitutionen der Darstellenden Künste</a><br>
-<a href="/spages/netzwerke3">Verbünde, Arbeitskreise etc.</a>
+<a href="<?=$this->url('spages-netzwerke2')?>">Gedächtnisinstitutionen der Darstellenden Künste</a><br>
+<a href="<?=$this->url('spages-netzwerke3')?>">Verbünde, Arbeitskreise etc.</a>
 <br><br>
 <p>Der <i>Fachinformationsdienst Darstellende Kunst</i> stellt Ihnen in dieser Rubrik
 Fachgesellschaften sowie Arbeitskreise der theater- und tanzwissenschaftlichen
 Forschung vor.</p>
 <br><br>
-<a target="_blank" href="http://www.theater-wissenschaft.de"><img src="/themes/fid_dk_edm/images/gtw_logo.png"></a>
+<a target="_blank" href="http://www.theater-wissenschaft.de"><img src="<?=$this->imageLink('gtw_logo.png')?>"></a>
 <h4><a target="_blank" href="http://www.theater-wissenschaft.de">Gesellschaft für Theaterwissenschaft (gtw)</a></h4>
 <p>Die Gesellschaft für Theaterwissenschaft hat die Aufgabe, die Theaterwissenschaft
 in Forschung und Lehre zu fördern. Sie veranstaltet zu diesem Zweck Kongresse, gibt
@@ -22,7 +22,7 @@ Publikationen heraus und vertritt die Interessen des Faches nach außen. Ihr Int
 gilt dem Theater in allen seinen Ausprägungen in Geschichte und Gegenwart, sowie Film,
 Hörfunk, Fernsehen und Video.</p>
 <br><br>
-<a target="_blank" href="http://www.theatergeschichte.org"><img src="/themes/fid_dk_edm/images/theatergeschichte_logo.png"></a>
+<a target="_blank" href="http://www.theatergeschichte.org"><img src="<?=$this->imageLink('theatergeschichte_logo.png')?>"></a>
 <h4><a target="_blank" href="http://www.theatergeschichte.org">Gesellschaft für Theatergeschichte</a></h4>
 <p>Die Gesellschaft für Theatergeschichte e. V. wurde am 6. April 1902 in Berlin von
  Schriftstellern, Journalisten, Gelehrten, Bühnenangehörigen und anderen am Theater
@@ -33,7 +33,7 @@ anderen theaterwissenschaftlichen Lehr- und Forschungseinrichtungen, Theatersamm
  Museen und Bibliotheken des In- und Auslandes. Gegenwärtig gehören der Gesellschaft etwa
  50 persönliche und 70 korporative Mitglieder (Institute/Bibliotheken) an.</p>
 <br><br>
-<a target="_blank" href="http://www.gtf-tanzforschung.de"><img src="/themes/fid_dk_edm/images/gft_logo.png"></a>
+<a target="_blank" href="http://www.gtf-tanzforschung.de"><img src="<?=$this->imageLink('gft_logo.png')?>"></a>
 <h4><a target="_blank" href="http://www.gtf-tanzforschung.de">Gesellschaft für Tanzforschung (GFT)</a></h4>
 <p>Angeregt durch die UNESCO gab es Mitte der 80er Jahre in der BRD Bestrebungen zum
 Zusammenschluss aller Tanzvereinigungen zu einem Tanzrat. Aus diesen Initiativen entstand
@@ -47,19 +47,19 @@ im Bereich des Tanzes und der Kommunikation darüber. Ausgehend vom deutschsprac
 ?>
 
 <b>Professional Associations and Research Groups in the Field</b><br>
-<a href="/spages/netzwerke2">Institutions Documenting the History of the Performing Arts</a><br>
-<a href="/spages/netzwerke3">Associations, Research Groups, etc.</a>
+<a href="<?=$this->url('spages-netzwerke2')?>">Institutions Documenting the History of the Performing Arts</a><br>
+<a href="<?=$this->url('spages-netzwerke3')?>">Associations, Research Groups, etc.</a>
 <br><br>
 <p>The <i>Specialised Information Service (SIS) Performing Arts</i> web portal displays
   the range of professional associations and research groups in theatre and dance-related academic research.</p>
 <br><br>
-<a target="_blank" href="http://www.theater-wissenschaft.de"><img src="/themes/fid_dk_edm/images/gtw_logo.png"></a>
+<a target="_blank" href="http://www.theater-wissenschaft.de"><img src="<?=$this->imageLink('gtw_logo.png')?>"></a>
 <h4><a target="_blank" href="http://www.theater-wissenschaft.de">Society for Theatre Studies (gtw)</a></h4>
 <p>The Society for Theatre Studies promotes research and teaching in the field of theatre studies. To this
   end it organises conferences, issues publications and serves as a public interface for the discipline. It
   includes all branches of theatre both past and present, as well as film, radio, television and video arts.</p>
 <br><br>
-<a target="_blank" href="http://www.theatergeschichte.org"><img src="/themes/fid_dk_edm/images/theatergeschichte_logo.png"></a>
+<a target="_blank" href="http://www.theatergeschichte.org"><img src="<?=$this->imageLink('theatergeschichte_logo.png')?>"></a>
 <h4><a target="_blank" href="http://www.theatergeschichte.org">Society for Theatre History</a></h4>
 <p>The Society for Theatre History was founded in Berlin in 1902 by writers, journalists, scholars, aficionados
   and others with an interest in theatre, with the aim of creating an interdisciplinary forum for involvement
@@ -68,7 +68,7 @@ im Bereich des Tanzes und der Kommunikation darüber. Ausgehend vom deutschsprac
   in the theatre studies, as well as to theatre archives, museums and libraries both in Germany and abroad.
   Currently the Association has about 50 members and 70 institutional members (institutes and/or libraries).</p>
 <br><br>
-<a target="_blank" href="http://gtf.danceinfo.de/en/home/"><img src="/themes/fid_dk_edm/images/gft_logo.png"></a>
+<a target="_blank" href="http://gtf.danceinfo.de/en/home/"><img src="<?=$this->imageLink('gft_logo.png')?>"></a>
 <h4><a target="_blank" href="http://gtf.danceinfo.de/en/home/">Society of Dance Research (GFT)</a></h4>
 <p>In the mid-1980s with the encouragement of UNESCO, efforts were made to unite all dance organisations in the Federal
   Republic of Germany into an umbrella organisation. These initiatives finally resulted in the Society for Dance

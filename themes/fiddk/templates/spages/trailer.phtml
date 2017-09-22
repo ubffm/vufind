@@ -5,11 +5,11 @@ $this->headTitle($this->translate('Trailer') . ' - ' . $this->translate('FID Dar
 
 <div id="trailer-container">
   <video id="FID-trailer" controls>
-    <source src="/themes/fid_dk_edm/images/FID_Master_31102016.mp4" type="video/mp4"/>
+    <source src="<?=$this->imageLink('FID_Master_31102016.mp4')?>" type="video/mp4"/>
   </video>
   <!--
   <iframe class="youtube-player" frameborder="0" src="https://www.youtube.com/embed/2VrTBbHgXFk" allowfullscreen></iframe>
 -->
-<p id="credits"><b>Credits:</b> <a href="http://www.pixelpec.de"><img src="/themes/fid_dk_edm/images/pixelpec_small.png"></img></a>
+<p id="credits"><b>Credits:</b> <a href="http://www.pixelpec.de"><img src="<?=$this->imageLink('pixelpec_small.png')?>"></img></a>
 &nbsp;<?=$this->transEsc("Production");?>: Sebastian Simon; <?=$this->transEsc("Direction");?>: Daniel Jude; <?=$this->transEsc("Camera");?>: Boris Hölter.</p>
 </div>

@@ -1,12 +1,23 @@
 <?
-    $this->headTitle('Transcript-Verlag');
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('Transcript-Verlag: eBook-Frontlist 2015-2017 Theater- und Tanzwissenschaft');
 ?>
-
 <h2>Transcript-Verlag: eBook-Frontlist 2015-2017 Theater- und Tanzwissenschaft</h2>
 <p><a href="http://www.transcript-verlag.de/programmbereiche/kulturwissenschaften/theater-und-tanzwissenschaft/?f=79385"
     target="_blank">Direkt zum Verlag</a></p>
-
 <p>Der transcript Verlag ist ein wissenschaftlicher Fachverlag mit Schwerpunkten in den Kultur- und Sozialwissenschaften.
     Für die Theater-, Tanz- und Performancewissenschaft bietet transcript ein umfassendes Spektrum an Veröffentlichungen an.
     Hier ist u.a. die Reihe Tanzscripte (Hg. Brandstetter/Klein) angesiedelt und es werden zahlreiche Dissertationen und
     Tagungsbände publiziert, u.a. die Beiträge zum Kongress der Fachgesellschaft für Theaterwissenschaft.</p>
+<? } else {
+  // Set page title
+  $this->headTitle('Transcript-Verlag: 2015-2017 eBook Frontlist on Theatre and Dance Studies');
+?>
+<h2>Transcript-Verlag: 2015-2017 eBook Frontlist on Theatre and Dance Studies</h2>
+<p><a href="http://www.transcript-verlag.de/programmbereiche/kulturwissenschaften/theater-und-tanzwissenschaft/?f=79385"
+    target="_blank">Go directly to their website</a></p>
+<p>The transcript Verlag publishing house specialises in cultural studies and the social sciences, with a comprehensive
+  spectrum of publications dealing with theatre, dance and performance studies. Among other publications, they are home
+  to the series Tanzscripte (Dance Scripts, published in cooperation with Brandstetter/Klein) and the house also publishes
+  numerous dissertations and conference volumes, including the articles submitted to the Society for Theatre Studies’ Conference.</p>
+<? } ?>

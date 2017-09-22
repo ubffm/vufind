@@ -1,13 +1,10 @@
 <? // Set page title.
 $this->headTitle($this->translate('Suggestion Buy') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
-
 <h2><?=$this->transEsc('Suggestion Buy')?></h2>
-
 <?
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 if ($lang =='de') {
 ?>
-
 <p>Um das gesamte Spektrum an Fachliteratur für die Darstellende
 Kunst abdecken zu können, benötigen wir Ihre Mithilfe! Sie haben
 einen Titel nicht im FID-Portal gefunden oder Sie können Ihren
@@ -15,30 +12,22 @@ Wunschtitel nicht über die Fernleihe beziehen? Melden Sie Ihren
 Kaufvorschlag an die FID-Redaktion. Wir werden Ihren Vorschlag
 prüfen und Ihnen eine Rückmeldung geben.
 </p>
-
 <?
     } else {
 ?>
-
 <h2>Suggestions for New Acquisitions</h2>
-
 <p>To do justice to the entire range of literature in the field of performing arts, we need your help! If you
   have been unable to find a title you need using the SIS web portal, or if you are unable to obtain it using
   the interlibrary loan programme, please send your suggestion for a new acquisition to the SIS editorial team.
   We will evaluate your suggestion and send you a response. </p>
-
 <?
     }
 ?>
-
 <form accept-charset="UTF-8"  method="POST" action="kaufvorschlag">
-
 <? if ($display_message) {?>
 <div class="group row" style="background-color:#d9e9ef"><?=$this->transEsc($message);?></div>
 <? } ?>
-
 <p><b><?=$this->transEsc("Suggested Acquisition") . ":";?></b></p>
-
 <table style="border-collapse: separate; border-spacing: 10px;">
 
 <tr>
@@ -175,7 +164,7 @@ Institution:
     if ($lang =='de') {
 ?>
 
-<p>Bitte beachten Sie, dass die Kaufvorschläge dem <a href="/spages/neuerwerb">Erwerbungsprofil</a>
+<p>Bitte beachten Sie, dass die Kaufvorschläge dem <a href="<?=$this->url('spages-neuerwerb')?>">Erwerbungsprofil</a>
 des Fachinformationsdienstes entsprechen müssen.<br>
 Mit einem * gekennzeichnete Felder sind Pflichtfelder, die Sie ausfüllen müssen, damit Ihr Vorschlag
 bearbeitet werden kann.
@@ -186,7 +175,7 @@ bearbeitet werden kann.
 ?>
 
 <p>Please note that the suggestions for new acquistions must be in line with
-  <a href="/spages/neuerwerb"><i>SIS</i>'s acquisition strategy</a>.
+  <a href="<?=$this->url('spages-neuerwerb')?>"><i>SIS</i>'s acquisition strategy</a>.
 An asterisk (*) denotes information that must be entered if we are to process your request.</p>
 
 <?

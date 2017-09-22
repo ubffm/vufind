@@ -1,14 +1,13 @@
 <?
-    $this->headTitle('Deutsches Tanzarchiv Köln');
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('Deutsches Tanzarchiv Köln: Auszug aus der archivinternen Datenbank des Deutschen Tanzarchivs Köln (TIS-Tanzinformationssystem)');
 ?>
-
 <h2>Deutsches Tanzarchiv Köln- Auszug aus der archivinternen Datenbank des Deutschen Tanzarchivs Köln (TIS-Tanzinformationssystem)</h2>
 <p><a href="http://www.sk-kultur.de/tanz"
     target="_blank">Zur Webseite des Archives</a></p>
-
 <p>Das Archiv beherbergt über 400 Nachlässe und Sammlungen von Tänzern, Choreographen,
   Tanzpädagogen und Ballettkritikern (Harald Kreutzberg, Kurt Jooss, die Duncans, die
-  Sacharoffs, Mary Wigman, Dore Hoyer, usw). Die Fotosammlung umfasst über 300.000
+  Sacharoffs, Mary Wigman, Dore Hoyer, usw). <br/> Die Fotosammlung umfasst über 300.000
   Aufnahmen / Negative sowie Fotografennachlässe (Siegfried Enkelmann, Dietmar Dünhöft,
   Hans Rama, usw.). Ferner verfügt das Archiv über eine umfangreiche Kunstsammlung
   (Nachlässe von Ernst Oppler, Arthur Grunenberg etc.) sowie eine Kostüm- und Plakatsammlung.
@@ -17,3 +16,21 @@
 <p>Die Bibliothek umfasst ca. 14.000 Titel und rund 20.000 Fachzeitschriftenhefte.
   Die Videothek betreut über 4.500 Filme: Kamera-Choreographien, filmische Inszenierungen,
   experimentelle Tanzfilme, Musicals, Dokumentationen, Bühnenaufzeichnungen.</p>
+<? } else {
+  // Set page title
+  $this->headTitle('German Dance Archives Cologne – Excerpt from the In-house Database of the German Dance Archive Cologne (Dance Information System)');
+?>
+<h2>German Dance Archives Cologne – Excerpt from the In-house Database of the German Dance Archive Cologne (Dance Information System)</h2>
+<p><a href="http://www.sk-kultur.de/tanz/dtk-english.html"
+      target="_blank">To the archive website</a></p>
+<p>The Archive houses over 400 inherited private libraries and collections once owned by dancers,
+  choreographers, dance teachers and ballet critics (Harald Kreutzberg, Kurt Jooss, the Duncans,
+  the Sacharoffs, Mary Wigman, Dore Hoyer, etc.).<br/>
+  The photo collection includes over 300,000 photos and/or negatives as well as inherited photo
+  collections once owned by people in the field (Siegfried Enkelmann, Dietmar Dünhöft, Hans Rama, etc.).
+  In addition, the Archive has an extensive art collection (inherited private collections once owned
+  by Ernst Oppler, Arthur Grunenberg etc.) as well as a collection of costumes and posters.</p>
+<p>The library boasts approximately 14,000 titles and about 20,000 periodicals related to the field.
+  The video library houses over 4,500 films, including camera choreographies, filmed stagings,
+  experimental dance films, musicals, documentaries, and stage recordings.</p>
+<? } ?>

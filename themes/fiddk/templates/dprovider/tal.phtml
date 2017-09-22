@@ -1,11 +1,10 @@
 <?
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Tanzarchiv Leipzig e.V.');
 ?>
-
 <h2>Tanzarchiv Leipzig e.V.</h2>
 <p><a href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070"
     target="_blank">Zur Webseite des Archives</a></p>
-
 <p>Gegründet 1957 von Kurt Petermann als Sammlung traditionell überlieferter Folklore
   erweiterte sich das Tanzarchiv Leipzig zu einer Dokumentationsstelle zu "allen
   Gebieten des Tanzes". Bis zu seinem Tod im Jahr 1984 etablierte Petermann das Archiv
@@ -19,3 +18,23 @@
   Fotografien, Postkarten, Mikrofilme und Archivmaterial. Die Bestände sind teilweise in
   einer Datenbank erschlossen, die in den Sondersammlungen und an den Computern in der
   UBL benutzt werden kann.</p>
+  <? } else {
+    // Set page title
+    $this->headTitle('Dance Archive Leipzig');
+  ?>
+<h2>Dance Archive Leipzig</h2>
+<p><a href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070"
+      target="_blank">To the archive website</a></p>
+<p>Founded in 1957 as a collection of traditional folkloric items, the Leipzig Dance Archive
+  has since expanded to become a documentation centre representing all types of dance. By the
+  time of his death in 1984, Petermann had established the Archive as a well-recognized institution
+  contributing to an understanding of dance as a cultural phenomenon. In 1975, the Archive became
+  an associate member of the German Democratic Republic’s Academy of Arts. Since 1993, the Dance Archive
+  has been run as a non-profit association founded by the University of Leipzig and the Felix Mendelssohn
+  Bartholdy Academy of Music and Theatre. In 2011, the Leipzig Dance Archive was taken on the University
+  of Leipzig Library. The documents and other items are divided into a specialised library and the dance
+  archive collection, which includes film recordings from the second half of the 20th century, literary
+  collections, full and partial inherited private collections, posters, photographs, postcards, microfilm
+  and other archive material. Some of the documents and other items have been entered into a database
+  which can be viewed in the special collections and using University of Leipzig Library computers.</p>
+<? } ?>

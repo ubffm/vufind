@@ -1,18 +1,34 @@
 <?
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Akademie der Künste Berlin, Bibliothek');
 ?>
-
 <h2>Akademie der Künste Berlin, Bibliothek</h2>
 <p><a href="https://opac.adk.de/"
     target="_blank">Direkt zum Katalog</a></p>
-
 <p>Die Bibliothek verfügt über einen Bestand von mehr als 600.000 Bänden und umfasst
     alle Sparten der Künste. Der Sammelschwerpunkt liegt auf Werken der Mitglieder und
     Preisträger der Akademie, ergänzt werden die Bestände um zahlreiche Sondersammlungen,
     besonders herausragend z.B. zum Expressionismus und zur Exilliteratur zwischen 1933
     und 1945. Darüber hinaus besitzt die Bibliothek umfangreiche Sammlungen von Bühnenmanuskripten,
     nationalen und internationalen Ausstellungskatalogen, seltenen Zeitschriften sowie
-    Bibliotheken von Institutionen und Künstlervereinigungen.  Für das Portal des
+    Bibliotheken von Institutionen und Künstlervereinigungen. <br/> Für das Portal des
     Fachinformationsdienstes Darstellende Kunst wurden fachspezifische Nachlass- und
     Sammlungsbibliotheken ausgewählt, darunter z.B. Bertolt Brecht, Bernhard Minetti,
     Herbert Ihering und Christoph Schlingensief. </p>
+<? } else {
+  // Set page title
+  $this->headTitle('Academy of the Arts Berlin, Library');
+?>
+<h2>Academy of the Arts Berlin, Library</h2>
+<p><a href="https://www.adk.de/en/archive/the-academy-of-arts-library/"
+      target="_blank">Direct to this catalogue</a></p>
+<p>The Library houses documents and other items amounting to over 600,000 volumes on all disciplines
+  in the arts. The focal point is the works of the Academy’s members and award winners. The documents
+  and other items are supplemented by numerous special collections, with those on expressionism and
+  literature produced in exile from 1933-1945 being especially noteworthy. In addition, the Library
+  boasts extensive collections of stage manuscripts, national and international exhibition catalogues,
+  rare periodicals and the collections of institutions and artists’ associations.<br/>
+  For the SIS Performing Arts web portal were selected subject specific inherited and collection
+  libraries including, e.g. Bertolt Brecht, Bernhard Minetti, Herbert Ihering und Christoph Schlingensief.
+ </p>
+<? } ?>

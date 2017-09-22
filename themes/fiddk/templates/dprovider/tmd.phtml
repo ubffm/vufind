@@ -1,11 +1,10 @@
 <?
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Theatermuseum der Landeshauptstadt Düsseldorf');
 ?>
-
 <h2>Theatermuseum der Landeshauptstadt Düsseldorf</h2>
 <p><a href="https://emuseum.duesseldorf.de/search/advanced/Objects"
     target="_blank">Direkt zum Katalog</a></p>
-
 <p>Das Theatermuseum ging aus dem 1938 gegründeten privaten Theaterarchiv des
   "Schauspielhaus Düsseldorf Dumont-Lindemann“ (1904-1933) hervor und befindet
   sich nach der Schenkung von Gustaf Lindemann seit 1947 im Besitz der Stadt.
@@ -15,3 +14,21 @@
   Sammlung, Quellen zur Theaterpraxis, audiovisuelle Medien, Handschriften, die
   Presseausschnittsammlung, dreidimensionale Objekte und eine wissenschaftliche
   Spezialbibliothek, wobei die Bestände vorwiegend aus dem 20. und 21. Jahrhundert stammen.</p>
+<? } else {
+  // Set page title
+  $this->headTitle('Theatre Museum of the State Capital of Düsseldorf');
+?>
+<h2>Theatre Museum of the State Capital of Düsseldorf</h2>
+<p><a href="https://emuseum.duesseldorf.de/search/advanced/Objects"
+    target="_blank">To the catalogue</a></p>
+<p>The Theatre Museum grew out of the private theatre archive of the Düsseldorf
+  Dumont-Lindemann Actors’ Association (1904 - 1933); the archive was founded in
+  1938. It was donated to the City of Düsseldorf by Gustaf Lindemann in 1947. Today,
+  the focal point of its collections, research, documentation and exhibitions is
+  the history of theatre in Düsseldorf and the surrounding region beginning in the
+  16th century. The documents and other items include a wide variety of theatre-related
+  collections: photos, the collection of graphic arts, sources on theatre practice,
+  audiovisual media, hand-written manuscripts, the collection of press excerpts,
+  three-dimensional objects and a specialised library on theatre studies. Most of
+  the documents and other items are from the 20th and 21st centuries.</p>
+<? } ?>

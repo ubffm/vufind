@@ -1,11 +1,10 @@
 <?
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Theaterwissenschaftliche Sammlung der Universität zu Köln');
 ?>
-
 <h2>Theaterwissenschaftliche Sammlung der Universität zu Köln</h2>
 <p><a href="http://www.ub.uni-koeln.de/"
     target="_blank">Direkt zum Katalog</a></p>
-
 <p>Die Theaterwissenschaftliche Sammlung der Universität zu Köln ist ein internationales
   Dokumentations- und Forschungszentrum für Theatergeschichte und Medienkultur.
   chwerpunkte der Sammlung liegen zum einen auf der deutschsprachigen Theaterkultur –
@@ -19,3 +18,24 @@
   lässt sich der Teilbestand bis Erwerbungsjahr 2012 über den
   <a href="http://www.ub.uni-koeln.de/bibliotheken/38_429/" target="_blank">Online-Katalog der
     Fachbibliothek Medienkultur und Theater</a> recherchieren.</p>
+<? } else {
+  // Set page title // translation missing!!
+  $this->headTitle('Theaterwissenschaftliche Sammlung der Universität zu Köln');
+?>
+  <h2>Theaterwissenschaftliche Sammlung der Universität zu Köln</h2>
+  <p><a href="http://www.ub.uni-koeln.de/"
+        target="_blank">Direkt zum Katalog</a></p>
+    <p>Die Theaterwissenschaftliche Sammlung der Universität zu Köln ist ein internationales
+      Dokumentations- und Forschungszentrum für Theatergeschichte und Medienkultur.
+      chwerpunkte der Sammlung liegen zum einen auf der deutschsprachigen Theaterkultur –
+      mit einem umfassenden Kritiken- und Fotoarchiv, das durch eine vielseitige graphische
+      Sammlung ergänzt wird –, zum anderen auf den Theater- und Medienformen unterschiedlicher
+      Kulturen und Epochen. Die Bibliothek ist Teil der gemeinsamen Fachbibliothek Medienkultur
+      und Theater. Sie ist eine reine Präsenzbibliothek; ein Entleihen der Bücher ist nicht möglich.
+      Der vollständige Bestand der Bibliothek der Theaterwissenschaftlichen Sammlung kann über
+      den <a href="http://www.ub.uni-koeln.de/" target="_blank">Online-Katalog der Universitäts-
+      und Stadtbibliothek</a> recherchiert werden (bitte den Suchmodus "Uni" auswählen). Bei Bedarf
+      lässt sich der Teilbestand bis Erwerbungsjahr 2012 über den
+      <a href="http://www.ub.uni-koeln.de/bibliotheken/38_429/" target="_blank">Online-Katalog der
+        Fachbibliothek Medienkultur und Theater</a> recherchieren.</p>
+<? } ?>

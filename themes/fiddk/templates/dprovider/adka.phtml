@@ -1,14 +1,29 @@
 <?
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Akademie der Künste Berlin, Archiv Darstellende Kunst');
 ?>
-
 <h2>Akademie der Künste Berlin, Archiv Darstellende Kunst</h2>
 <p><a href="https://archiv.adk.de/"
     target="_blank">Direkt zum Katalog</a></p>
-
 <p>Das Archiv sammelt, bewahrt, erschließt Bestände von Regisseuren, Intendanten im Bereich
     Sprech- und Musiktheater, von Schauspielern, Tänzern und Choreographen, Bühnenbildnern,
     Kritikern, Theaterwissenschaftlern, Dramatikern, Dramaturgen, Kabarettisten und Komponisten
     vorrangig für den Bereich Kabarett. Mit Hilfe der Methode der Inszenierungsdokumentation
     werden im Bereich Theaterdokumentation Arbeitsprozesse und -ergebnisse aktueller Inszenierungen
     führender Regisseure des Sprech- und Musiktheaters festgehalten.</p>
+<? } else {
+      // Set page title
+      $this->headTitle('Academy of the Arts, Berlin, Performing Arts Archive');
+  ?>
+<h2>Academy of the Arts, Berlin, Performing Arts Archive</h2>
+<p><a href="https://archiv.adk.de/"
+      target="_blank">Direct to this catalogue</a></p>
+<p>The Archive collects, preserves, and catalogues documents and other items belonging to directors
+  and conductors of theatre and musical performances; actors, dancers and choreographers; stage
+  designers; critics; theatre scholars; dramatists; dramatologists; as well as cabarettists and
+  composers working primarily in cabaret. Staging documentation has been used here as a submethod
+  of theatre documentation to record how current stage productions by leading directors in theatre
+  and musical performances came into being. The seed for the Performing Arts Archive was sown in
+  1951-52, and in 1960 it received its first inherited private collections. The documents and other
+  items it houses represent the period from the 19th century to today. </p>
+<? } ?>
