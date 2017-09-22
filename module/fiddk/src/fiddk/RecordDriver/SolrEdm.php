@@ -206,6 +206,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     {
     $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
     $edmPlaces = isset($this->classes["edm:Place"])? $this->classes["edm:Place"] : [];
+    $orgs = isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [];
+    $placesOrgs = array_merge($edmPlaces,$orgs);
     $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
     $retval = [];
 
@@ -249,7 +251,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                     break;
                  case 'eclap:firstPerformancePlace':
                  case 'eclap:performancePlace':
-                    $datesPlaces['places'][] = $this->getResourceOrLiteral($elem,$edmPlaces);
+                    $datesPlaces['places'][] = $this->getResourceOrLiteral($elem,$placesOrgs);
                     break;
                  default:
                  break;
