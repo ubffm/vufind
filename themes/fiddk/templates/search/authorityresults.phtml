@@ -2,6 +2,9 @@
   // Set up page title:
   $title = $this->driver->getTitle();
   $lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $this->params->getDisplayQuery();
+  if (strpos($lookfor,  'gnd_') !== FALSE) {
+    $lookfor = 'GND ' . explode('_', $lookfor)[1];
+  }
   if (isset($this->overrideTitle)) {
       $this->headTitle($this->overrideTitle);
   } else {
@@ -11,12 +14,13 @@
   $searchIndex = $this->params->getSearchHandler();
   $searchType = $this->params->getSearchType();
   $searchClassId = $this->params->getsearchClassId();
+  $agent = $this->driver->getAgentFacts($this->driver->getUniqueID(),true);
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
-        'lookfor' => $lookfor,
+        'lookfor' => $agent->name . ' (' . $lookfor . ')',
         'searchIndex' => $searchIndex,
         'searchType' => $searchType,
         'searchId' => $this->results->getSearchId(),
@@ -52,9 +56,8 @@
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
   $hiddenFilters = $this->searchtabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
   $searchTabs = $this->searchtabs()->getTabConfig($searchClassId, $lookfor, $searchIndex, $searchType, $hiddenFilters);
-  $recordTotal = $this->results->getResultTotal();
+  $recordTotal = $this->results->getResultTotal();?>
 
-  $agent = $this->driver->getAgentFacts($this->driver->getUniqueID(),true);?>
   <?=$this->context($this)->renderInContext('RecordDriver/SolrAuth/data-agent.phtml', ['agent' => $agent])?>
 
 <div class="<?=$this->layoutClass('mainbody')?>">
@@ -67,7 +70,7 @@
   <nav class="search-header hidden-print">
     <div class="search-stats">
       <? if ($recordTotal > 0): ?>
-        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
+        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $agent->name . ' (' . $lookfor . ')', 'recordTotal' => $recordTotal]) ?>
       <? else: ?>
         <h2><?=$this->transEsc('nohit_heading')?></h2>
       <? endif; ?>
@@ -88,7 +91,7 @@
       <? if (isset($this->overrideEmptyMessage)): ?>
         <?=$this->overrideEmptyMessage?>
       <? else: ?>
-        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($agent->name . ' (' . $lookfor . ')')]); ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>
     </p>
