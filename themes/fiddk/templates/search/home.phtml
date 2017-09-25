@@ -41,6 +41,8 @@ JS;
 </div>
 </div>
 
+<?=$this->render("news/stream.phtml")?>
+
 <? if (isset($facetList) && is_array($facetList)): ?>
   <div class="search-home-facets">
     <? foreach ($facetList as $field => $details): ?>
