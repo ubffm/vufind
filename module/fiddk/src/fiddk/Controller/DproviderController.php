@@ -80,6 +80,11 @@ class DproviderController extends \VuFind\Controller\AbstractBase
         return $this->createViewModel();
     }
 
+    public function tfeAction()
+    {
+        return $this->createViewModel();
+    }
+
     public function mcbAction()
     {
         return $this->createViewModel();
