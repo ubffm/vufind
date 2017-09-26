@@ -130,7 +130,7 @@ namespace fiddk\RecordDriver;
                    foreach ($obj->sameAs as $link) {
                         $id = $link->{"@id"};
                         $name = \Normalizer::normalize($link->collection->name,\Normalizer::NFC);
-                        $icon = $link->collection->icon;
+                        $icon = isset($link->collection->icon) ? $link->collection->icon : '';
                         $agent->sameAs[] = [$id,$icon,$name];
                     }
                     $agent->variants = isset($obj->variantName) ? $obj->variantName : [];
