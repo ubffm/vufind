@@ -1,6 +1,6 @@
 <?php
 return array(
-    'extends' => 'bootstrap3',
+    'extends' => 'newsstream',
     'css' => array(
       //'fiddk.css:screen, projection',
     ),
