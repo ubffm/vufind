@@ -280,6 +280,24 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       $chos = $this->classes["edm:ProvidedCHO"];
       $contents = [];
 
+      foreach ($chos as $cho) {
+         foreach ($cho as $elem) {
+            switch ($elem->nodeName) {
+               case 'dcterms:extent':
+               case 'bibo:isbn':
+               case 'bibo:issn':
+               case 'bibo:volume':
+               case 'dcterms:provenance':
+               case 'dcterms:tableOfContents':
+               case 'dm2e:callNumber':
+                  $contents[$elem->nodeName][] = $elem->nodeValue;
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+
       $languages = $this->getLanguages();
       $descriptions = $this->getSummary();
       if ($languages) {
@@ -288,47 +306,8 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       if ($descriptions) {
          $contents['dc:description'] = $descriptions;
       }
-
-      foreach ($chos as $cho) {
-         foreach ($cho as $elem) {
-            switch ($elem->nodeName) {
-               case 'dcterms:extent':
-               case 'bibo:isbn':
-               case 'bibo:issn':
-               case 'dcterms:provenance':
-               case 'dcterms:tableOfContents':
-                  $contents[$elem->nodeName][] = $elem->nodeValue;
-                  break;
-               default:
-                  break;
-            }
-         }
-      }
+      
       return $contents;
-    }
-
-    /**
-     * Get call number
-     *
-     * @return string
-     */
-    public function getCallNumber()
-    {
-      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $cN = '';
-
-      foreach ($chos as $cho) {
-         foreach ($cho as $elem) {
-            switch ($elem->nodeName) {
-               case 'dm2e:callNumber':
-                  $cN = $elem->nodeValue;
-                  break;
-               default:
-                  break;
-            }
-         }
-      }
-      return $cN;
     }
 
     /**
@@ -343,22 +322,30 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       $webs = isset($this->classes["edm:WebResource"])? $this->classes["edm:WebResource"] : [];
       $orgs = isset($this->classes["foaf:Organization"])? $this->classes["foaf:Organization"] : [];
       $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
-      $seeAlso = ['Institution' => false, 'Fulltext' => false, 'Catalogue' => false, 'Digital Copies' => false, 'Related' => false];
+      $seeAlso = ['edm:dataProvider' => false, 'edm:isShownAt' => false, 'dm2e:hasAnnotatableVersionAt' => false,
+      'edm:hasView' => false, 'edm:isRelatedTo' => false];
 
       foreach ($aggs as $agg) {
          foreach ($agg as $elem) {
             switch ($elem->nodeName) {
                case 'edm:hasView':
-                  $seeAlso['Digital Copies'][] = $this->getWebResource($elem,$webs);
+                  $seeAlso['edm:hasView'][] = $this->getWebResource($elem,$webs);
                   break;
                case 'edm:isShownAt':
-                  $seeAlso['Fulltext'][] = $this->getWebResource($elem,$webs);
+                  $webR = $this->getWebResource($elem,$webs);
+                  if ($webR != '') {
+                     if (current($webR) == 'Inhaltsverzeichnis') {
+                        $seeAlso['dcterms:tableOfContents'][] = $webR;
+                     } else {
+                        $seeAlso['edm:isShownAt'][] = $webR;
+                     }
+                  }
                   break;
               case 'dm2e:hasAnnotatableVersionAt':
-                  $seeAlso['Catalogue'][] = $this->getWebResource($elem,$webs);
+                  $seeAlso['dm2e:hasAnnotatableVersionAt'][] = $this->getWebResource($elem,$webs);
                   break;
                case 'edm:dataProvider':
-                  $seeAlso['Institution'][] = $this->getDataProvider($elem,$orgs);
+                  $seeAlso['edm:dataProvider'][] = $this->getDataProvider($elem,$orgs);
                   break;
                default:
                   break;
@@ -372,7 +359,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                case 'edm:isRelatedTo':
                  $resource = $elem->getAttribute("rdf:resource");
                  $resourceID = explode('/',$resource);
-                 $seeAlso['Related'][] = [$resource => $this->checkExistenceReturnTitleFormat(end($resourceID), 'Solr')];
+                 $seeAlso['edm:isRelatedTo'][] = [$resource => $this->checkExistenceReturnTitleFormat(end($resourceID), 'Solr')];
                   break;
                default:
                   break;
@@ -443,7 +430,10 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
          foreach ($cho as $elem) {
             $name = $elem->nodeName;
             if (array_key_exists($name, $this->agentRoles)) {
-               $contents[$elem->nodeName][] = [$this->getAgentID($elem),$this->getResourceOrLiteral($elem,$agents)];
+               $resOrLit = $this->getResourceOrLiteral($elem,$agents);
+               if ($resOrLit) {
+                 $contents[$elem->nodeName][] = [$this->getAgentID($elem),$resOrLit];
+               }
             }
          }
       }

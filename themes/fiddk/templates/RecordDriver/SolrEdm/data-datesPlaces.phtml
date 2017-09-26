@@ -18,6 +18,9 @@
   <? elseif (isset($dates[$i])) : ?>
      <?=$this->escapeHtml($dates[$i])?>
   <? endif; ?>
+  <? if (isset($names[$i+1]) || isset($dates[$i+1]) || isset($places[$i+1])) : ?>
+  <?="; "?>
+<? endif; ?>
   <? $i++; ?>
 <? endwhile; ?>
    <br/>

@@ -1,15 +1,16 @@
 <table class="table table-inside">
+<? $institution = isset($data["edm:dataProvider"][0]) ? current($data["edm:dataProvider"][0]) : '';?>
 <? foreach ($data as $key => $fields): ?>
   <tr>
-    <th><?=$this->transEsc($key);?></th>
+    <th><?=$this->transEsc('edm::' . $key);?></th>
     <td>
       <? foreach ($fields as $field) : ?>
        <? foreach ($field as $resource => $seeAlso) : ?>
-         <? if ($key == 'Related' || $key == 'Digital Copies') : ?>
+         <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
            <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-        <? elseif ($key == 'Fulltext') : ?>
+        <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
            <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
-           <img src="/vufind/themes/fiddk/images/fid-dk_logo_nur-Taenzer.png" style="width:7%"/><br />
+           <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
         <? else: ?>
           <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
         <? endif; ?>

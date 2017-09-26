@@ -196,7 +196,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'Format', 'getFormats', 'RecordHelper',
             ['helperMethod' => 'getFormatList']
         );
-        $spec->setLine('Call Number', 'getCallNumber');
         // normally only one of the next three is contained in the data
         $spec->setTemplateLine(
             'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
