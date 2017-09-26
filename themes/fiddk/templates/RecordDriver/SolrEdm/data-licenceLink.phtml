@@ -1,4 +1,4 @@
 <? foreach ($data as $field): ?>
 <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
-<img src="/vufind/themes/fiddk/images/fid-dk_logo_nur-Taenzer.png" style="width:7%"/><br />
+<img src="<?=$this->imageLink('fid-dk_logo_nur-Taenzer.png')?>" style="width:7%"/><br />
 <? endforeach; ?>
