@@ -80,17 +80,15 @@
                 <xsl:value-of select="."/>
             </xsl:element>
             -->
+                <xsl:element name="field">
+                    <xsl:attribute name="name">
+                        <xsl:text>heading</xsl:text>
+                    </xsl:attribute>
+                    <xsl:value-of select="normalize-space(child::*[name() = 'skos:prefLabel'][1])"/>
+                </xsl:element>            
 
             <xsl:for-each select="child::*">
-                <xsl:choose>
-                    <xsl:when test="name() = 'skos:prefLabel'">
-                        <xsl:element name="field">
-                            <xsl:attribute name="name">
-                                <xsl:text>heading</xsl:text>
-                            </xsl:attribute>
-                            <xsl:value-of select="normalize-space(.)"/>
-                        </xsl:element>
-                    </xsl:when>
+                <xsl:choose>                    
                     <xsl:when test="name() = 'skos:altLabel'">
                         <xsl:element name="field">
                             <xsl:attribute name="name">
