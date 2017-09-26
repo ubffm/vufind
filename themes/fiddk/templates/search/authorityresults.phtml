@@ -1,9 +1,12 @@
 <?
   // Set up page title:
   $title = $this->driver->getTitle();
+
   $lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $this->params->getDisplayQuery();
   if (strpos($lookfor,  'gnd_') !== FALSE) {
-    $lookfor = 'GND ' . explode('_', $lookfor)[1];
+    $lookfor = ' (GND ' . explode('_', $lookfor)[1] . ')';
+  } else {
+    $lookfor = '';
   }
   if (isset($this->overrideTitle)) {
       $this->headTitle($this->overrideTitle);
@@ -20,7 +23,7 @@
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
-        'lookfor' => $agent->name . ' (' . $lookfor . ')',
+        'lookfor' => isset($agent->name) ? $agent->name . $lookfor : '',
         'searchIndex' => $searchIndex,
         'searchType' => $searchType,
         'searchId' => $this->results->getSearchId(),
@@ -70,7 +73,7 @@
   <nav class="search-header hidden-print">
     <div class="search-stats">
       <? if ($recordTotal > 0): ?>
-        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $agent->name . ' (' . $lookfor . ')', 'recordTotal' => $recordTotal]) ?>
+        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => isset($agent->name) ? $agent->name . $lookfor : '', 'recordTotal' => $recordTotal]) ?>
       <? else: ?>
         <h2><?=$this->transEsc('nohit_heading')?></h2>
       <? endif; ?>
@@ -91,7 +94,7 @@
       <? if (isset($this->overrideEmptyMessage)): ?>
         <?=$this->overrideEmptyMessage?>
       <? else: ?>
-        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($agent->name . ' (' . $lookfor . ')')]); ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml(isset($agent->name) ? $agent->name . $lookfor : '')]); ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>
     </p>

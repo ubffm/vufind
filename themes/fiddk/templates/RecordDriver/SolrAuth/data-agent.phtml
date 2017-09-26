@@ -1,4 +1,4 @@
-<? if ($agent->name) : ?>
+<? if (isset($agent->name)) : ?>
 <div class="agent-container">
 
    <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>

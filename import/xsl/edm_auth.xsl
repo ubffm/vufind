@@ -107,7 +107,7 @@
                             <xsl:value-of select="normalize-space(.)"/>
                         </xsl:element>
                     </xsl:when>
-                    <xsl:when test="name() = 'owl:sameAs'"/>
+                    <xsl:when test="name() = 'owl:sameAs' or name() = 'edm:hasMet'"/>
                 </xsl:choose>
             </xsl:for-each>
 
@@ -199,8 +199,33 @@
                         </xsl:attribute>
                         <xsl:value-of select="normalize-space(.)"/>
                     </xsl:element>
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">
+                            <xsl:text>occupation_facet</xsl:text>
+                        </xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test=". = 'Tänzer' or . = 'Tänzerin'">
+                                <xsl:text>Tänzer*In</xsl:text>
+                            </xsl:when>
+                            <xsl:when test=". = 'Choreograph' or . = 'Choreographin'">
+                                <xsl:text>Choreograf*In</xsl:text>
+                            </xsl:when>
+                            <xsl:when test=". = 'Pädagoge' or . = 'Pädagogin'">
+                                <xsl:text>Pädagog*In</xsl:text>
+                            </xsl:when>
+                            <xsl:when test=". = 'Ballettmeister' or . = 'Ballettmeisterin'">
+                                <xsl:text>Ballettmeister*In</xsl:text>
+                            </xsl:when>
+                            <xsl:when test=". = 'Photograph' or . = 'Photographin' or 'Fotograf' or 'Fotografin'">
+                                <xsl:text>Fotograf*In</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>                                
+                                <xsl:value-of select="normalize-space(.)"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:element>
                 </xsl:when>
-                <xsl:when test="name() = 'rdaGr2:biographicalInformation'">
+                <xsl:when test="name() = 'rdaGr2:biographicalInformation' or name() = 'skos:note'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
                             <xsl:text>bioInfo</xsl:text>
@@ -209,7 +234,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs'">
+                    <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs' and name() != 'edm:hasMet'">
                         <xsl:message>
                             <xsl:value-of select="name()"/>
                             <xsl:value-of select="."/>
@@ -260,7 +285,7 @@
                     </xsl:choose>                    
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs'">
+                    <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs' and name() != 'edm:hasMet'">
                         <xsl:message>
                             New field ? <xsl:value-of select="name()"/>
                         </xsl:message>

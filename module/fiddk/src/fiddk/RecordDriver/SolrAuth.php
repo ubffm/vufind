@@ -38,7 +38,6 @@ namespace fiddk\RecordDriver;
      */
     class SolrAuth extends \fiddk\RecordDriver\SolrEdm
     {
-
         protected $entityLink = "http://hub.culturegraph.org/entityfacts/";
 
         /**
@@ -62,16 +61,6 @@ namespace fiddk\RecordDriver;
             return isset($this->fields['heading']) ? $this->fields['heading'] : '';
         }
 
-        /**
-         * Get the full title of the record.
-         *
-         * @return string
-         */
-        public function getFullRecord()
-        {
-            return isset($this->fields['fullrecord']) ? $this->fields['fullrecord'] : '';
-        }
-
         public function loadEntityFacts($id)
         {
            $id = explode('_', $id)[1];
@@ -89,8 +78,7 @@ namespace fiddk\RecordDriver;
           if (explode('_', $id)[0] == 'gnd') {
             return $this->getEntityFacts($id,$full);
           } else {
-           // $id from provider with info
-           // TODO: load info from index
+            return $this->getFactsFromIndex($id,$full);
           }
         }
 
@@ -151,6 +139,29 @@ namespace fiddk\RecordDriver;
            return $agent;
         }
 
+        public function getFactsFromIndex($id,$full) {
+
+            $agent = new Agent();
+            $agent->name = $this->getTitle();
+
+            $this->getFullRecord();
+            $this->getEDMClasses();
+            $dates = $this->getBirthDeathDate();
+            $agent->birthDate = isset($dates["birthDate"]) ? $dates["birthDate"] : '';
+            $agent->deathDate = isset($dates["deathDate"]) ? $dates["deathDate"] : '';
+
+            $agent->birthPlace = $this->getBirthPlace();
+            $agent->deathPlace = $this->getDeathPlace();
+            $agent->prof = $this->getOccupation();
+
+            if ($full) {
+                $agent->bio = implode('; ',$this->getBioInfo());
+                $agent->variants = $this->getUseFor();
+            }
+
+           return $agent;
+        }
+
         /**
          * Get the see also references for the record.
          *
@@ -161,6 +172,76 @@ namespace fiddk\RecordDriver;
             return isset($this->fields['see_also'])
                 && is_array($this->fields['see_also'])
                 ? $this->fields['see_also'] : [];
+        }
+
+        /**
+         * Get the occupation.
+         *
+         * @return array
+         */
+        public function getOccupation()
+        {
+            return isset($this->fields['occupation'])
+                && is_array($this->fields['occupation'])
+                ? $this->fields['occupation'] : [];
+        }
+
+        /**
+         * Get the biographical info.
+         *
+         * @return array
+         */
+        public function getBioInfo()
+        {
+            return isset($this->fields['bioInfo'])
+                && is_array($this->fields['bioInfo'])
+                ? $this->fields['bioInfo'] : [];
+        }
+
+        /**
+         * Get the birth date
+         *
+         * @return array
+         */
+        public function getBirthDeathDate()
+        {
+            $persons = isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [];
+            $timespans = isset($this->classes["edm:TimeSpan"])? $this->classes["edm:TimeSpan"] : [];
+            $retval = [];
+            foreach ($persons as $person) {
+              foreach ($person as $elem) {
+                 $name = $elem->nodeName;
+                 if ($name == 'rdaGr2:dateOfBirth') {
+                     $retval["birthDate"] = $this->getResourceOrLiteral($elem,$timespans);
+            }
+            if ($name == 'rdaGr2:dateOfDeath') {
+                $retval["deathDate"] = $this->getResourceOrLiteral($elem,$timespans);
+       }
+         }
+      }
+      return $retval;
+        }
+
+        /**
+         * Get the birth place
+         *
+         * @return array
+         */
+        public function getBirthPlace()
+        {
+            return isset($this->fields['birth_place'])
+                ? $this->fields['birth_place'] : '';
+        }
+
+        /**
+         * Get the death place
+         *
+         * @return array
+         */
+        public function getDeathPlace()
+        {
+            return isset($this->fields['death_place'])
+                ? $this->fields['death_place'] : '';
         }
 
         /**
