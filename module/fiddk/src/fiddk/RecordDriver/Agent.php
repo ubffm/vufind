@@ -40,7 +40,7 @@ namespace fiddk\RecordDriver;
     {
 
     public $name,$birthDate,$birthPlace,$deathDate,$deathPlace,$bio,$depiction,$establishment,$termination,
-    $dateOfEstablishment,$dateOfTermination,$placeOfActivity,$placeOfBusiness = '';
+    $dateOfEstablishment,$dateOfTermination,$placeOfActivity,$placeOfBusiness, $provider = '';
     public $prof,$topic,$variants,$sameAs = [];
 
         public function getDepiction() {

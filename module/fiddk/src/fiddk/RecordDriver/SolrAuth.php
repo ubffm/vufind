@@ -85,6 +85,7 @@ namespace fiddk\RecordDriver;
         public function getEntityFacts($id,$full) {
 
             $agent = new Agent();
+            $agent->provider = "entityFacts";
             $obj = $this->loadEntityFacts($id);
             if ($obj) {
                $agent->name = \Normalizer::normalize($obj->preferredName,\Normalizer::NFC);
@@ -142,6 +143,7 @@ namespace fiddk\RecordDriver;
         public function getFactsFromIndex($id,$full) {
 
             $agent = new Agent();
+            $agent->provider = "Tanzarchiv";
             $agent->name = $this->getTitle();
 
             $this->getFullRecord();

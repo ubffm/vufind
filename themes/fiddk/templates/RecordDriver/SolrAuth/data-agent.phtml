@@ -104,6 +104,9 @@
                  </span>
                <? endif; ?>
             <? endif; ?>
+            <? if ($agent->provider == "Tanzarchiv") : ?>
+            <br/><p><b>Quelle:</b> <a href="https://www.sk-kultur.de/tanz/" target="_blank">Deutsches Tanzarchiv Köln</a></p>
+          <? endif; ?>
 
          </div>
 
@@ -116,7 +119,7 @@
                   <hr/>
                <? endif;?>
             <? endforeach; ?>
-             <br/><p><b>Quelle:</b> <a href="http://www.dnb.de/entityfacts.html">Entity Facts</a></p>
+             <br/><p><b>Quelle:</b> <a href="http://www.dnb.de/entityfacts.html" target="_blank">Entity Facts</a></p>
            </div>
           <? endif; ?>
 </div>
