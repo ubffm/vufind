@@ -108,15 +108,16 @@ function initFacetTree(treeNode, inSidebar)
         var results = buildFacetNodes(response.data, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
         treeNode.find('.fa-spinner').parent().remove();
         if (inSidebar) {
-
           treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
             var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
             $(treeItems).addClass('list-group-item');
             $(treeItems).each(function addInfo(i) {
-              if (results[i].dprov) {
-                $(this).append('<a data-lightbox href="/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                if (results[i].dprov) {
+                    $(this).append('<a class="providerInfo" data-lightbox href="/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
               }
             });
+            // reinit lightbox
+            VuFind.register('lightbox');
           });
           treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
             var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
@@ -125,17 +126,19 @@ function initFacetTree(treeNode, inSidebar)
               if (this.id == data.node.id) {
                 // add info to parent node
                 if (results[i].dprov) {
-                  $(this.children[1]).after('<a data-lightbox href="/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                  $(this.children[1]).after('<a class="providerInfo" data-lightbox href="/dprovider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
                 }
                 var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
                 // add info to each child
                 data.node.children.forEach(function(child,j) {
                   if (results[i].children[j].dprov) {
-                    $(treeChildren[j]).append('<a data-lightbox href="/dprovider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                      $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="/dprovider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
                   }
                 });
               }
             });
+            // reinit lightbox
+            VuFind.register('lightbox');
           });
         }
         treeNode.jstree({
