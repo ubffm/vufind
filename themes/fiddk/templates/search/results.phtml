@@ -94,7 +94,11 @@
       <? if (isset($this->overrideEmptyMessage)): ?>
         <?=$this->overrideEmptyMessage?>
       <? else: ?>
+      <? if ($searchClassId == "Solr") : ?>
         <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+      <? else : ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+      <? endif; ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>
     </p>
