@@ -94,7 +94,7 @@
       <? if (isset($this->overrideEmptyMessage)): ?>
         <?=$this->overrideEmptyMessage?>
       <? else: ?>
-        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml(isset($agent->name) ? $agent->name . $lookfor : '')]); ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml(isset($agent->name) ? $agent->name . $lookfor : '')]); ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>
     </p>
