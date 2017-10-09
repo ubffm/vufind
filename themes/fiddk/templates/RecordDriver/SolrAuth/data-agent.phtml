@@ -6,7 +6,7 @@
 
    <? if ($agent->depiction) : ?>
       <? parse_str(parse_url($agent->depiction,PHP_URL_QUERY),$url);?>
-      <div class="agent-column" style="max-width:<?=$url['width']?>px;"><img src="<?=$agent->depiction?>" alt="<?=$this->transEsc('Depiction')?>"/></div>
+      <div class="agent-column media" style="max-width:<?=$url['width']?>px;"><img src="<?=$agent->depiction?>" alt="<?=$this->transEsc('Depiction')?>"/></div>
    <? endif; ?>
 
    <div class="agent-column">
