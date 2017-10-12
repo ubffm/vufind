@@ -306,9 +306,41 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
       if ($descriptions) {
          $contents['dc:description'] = $descriptions;
       }
-      
+
       return $contents;
     }
+
+    /**
+     * Get an array of formats for the record. Don't use the facet field here.
+     *
+     * @return array
+     */
+    public function getFormats()
+    {
+      $chos = isset($this->classes["edm:ProvidedCHO"])? $this->classes["edm:ProvidedCHO"] : [];
+      $concepts = isset($this->classes["skos:Concept"])? $this->classes["skos:Concept"] : [];
+      $contents = [];
+
+      foreach ($chos as $cho) {
+         foreach ($cho as $elem) {
+           if ($elem->nodeName == 'dc:type') {
+             $contents[] = $this->getResourceOrLiteral($elem,$concepts);
+           }
+      }
+    }
+    return $contents;
+  }
+
+  /**
+   * Get parent version of format method.
+   *
+   * @return array
+   */
+  public function getParentFormats()
+  {
+     $formats = array_unique(parent::getFormats());
+    return $formats;
+}
 
     /**
      * Get an array of backlinks to data provider content for the record.
@@ -374,7 +406,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
 
 		try {
 			$edmObject = $this->loader->load($containerID,$containerSource);
-			$str = $edmObject->getTitle() . ' (' . implode(', ',$edmObject->getFormats()) . ')';
+			$str = $edmObject->getTitle() . ' (' . implode(', ',$edmObject->getParentFormats()) . ')';
 			return $str;
 		} catch (\VuFind\Exception\RecordMissing $e) {
 			return '';

@@ -1,8 +1,51 @@
 <table class="table table-inside">
 <? $institution = isset($data["edm:dataProvider"][0]) ? current($data["edm:dataProvider"][0]) : '';?>
 <? foreach ($data as $key => $fields): ?>
+  <? $count = sizeof($fields);?>
   <tr>
     <th><?=$this->transEsc('edm::' . $key);?></th>
+    <? if ($count > 4) : ?>
+      <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+      <? $rest = array_slice($fields, 4); ?>
+      <? $fields = array_slice($fields, 0, 4);?>
+      <td>
+        <? foreach ($fields as $field) : ?>
+         <? foreach ($field as $resource => $seeAlso) : ?>
+           <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
+             <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
+          <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+             <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
+             <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
+          <? else: ?>
+            <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
+          <? endif; ?>
+        <? endforeach; ?>
+      <? endforeach; ?>
+        <? if (!(empty($rest))) : ?>
+        <span class="toggleContainer">
+          <input type="checkbox" class="toggle" id="toggle_<?=$key?>">
+          <span> <? foreach ($rest as $field) : ?>
+            <? foreach ($field as $resource => $seeAlso): ?>
+            <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
+              <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
+           <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+              <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
+              <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
+           <? else: ?>
+             <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
+           <? endif; ?>
+         <? endforeach; ?>
+         <? endforeach; ?>
+        </span>
+        <? if ($lang =='de') : ?>
+         <label for="toggle_<?=$key?>" class="label_de"></label>
+        <? else : ?>
+         <label for="toggle_<?=$key?>" class="label_en"></label>
+        <? endif; ?>
+        </span>
+        <? endif; ?>
+     </td>
+    <? else: ?>
     <td>
       <? foreach ($fields as $field) : ?>
        <? foreach ($field as $resource => $seeAlso) : ?>
@@ -17,6 +60,7 @@
       <? endforeach; ?>
     <? endforeach; ?>
    </td>
+    <? endif; ?>
   </tr>
 <? endforeach; ?>
 </table>
