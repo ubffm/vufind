@@ -112,6 +112,12 @@
                 </xsl:attribute>
                 <xsl:value-of select="normalize-space($dProvider)"/>
             </xsl:element>
+            <xsl:element name="field">
+                <xsl:attribute name="name">
+                    <xsl:text>institutionID</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space(translate(substring-after($dataProvider/@rdf:about,'agent/'),'/','_'))"/>
+            </xsl:element>
             <xsl:choose>
                 <xsl:when
                     test="$dProvider = 'Universitätsbibliothek Frankfurt am Main'">
@@ -372,6 +378,22 @@
             <xsl:element name="field">
                 <xsl:attribute name="name">
                     <xsl:text>title_alt</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:element>
+        </xsl:for-each>
+        <xsl:for-each select="$cho/bibo:isbn">
+            <xsl:element name="field">
+                <xsl:attribute name="name">
+                    <xsl:text>isbn</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:element>
+        </xsl:for-each>
+        <xsl:for-each select="$cho/bibo:issn">
+            <xsl:element name="field">
+                <xsl:attribute name="name">
+                    <xsl:text>issn</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:element>

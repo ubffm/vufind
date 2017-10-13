@@ -164,6 +164,25 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     }
 
     /**
+     * Not using this at the moment
+     *
+     * @return array
+     */
+    public function getOpenUrl($overrideSupportsOpenUrl = false)
+    {
+      return false;
+    }
+
+    /**
+     * Not using this at the moment
+     *
+     * @return array
+     */
+    public function getBookOpenUrlParams()
+    {
+    }
+
+    /**
      * Get an array of lines combining information about place and time.
      *
      *
