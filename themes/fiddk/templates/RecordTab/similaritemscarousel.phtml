@@ -26,7 +26,7 @@
                 <? if ($data->getContainerTitle()) :?>
                   <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
                 <? endif; ?>
-                <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getFormats());?></p>
+                <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
                 <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
               </div>
               </div>
@@ -36,7 +36,7 @@
               <? if ($data->getContainerTitle()) :?>
                 <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
               <? endif; ?>
-              <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getFormats());?></p>
+              <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
               <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
               <? endif; ?>
             </a>
