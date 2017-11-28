@@ -83,6 +83,11 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     */
    public function getEDMClasses()
    {
+     //hotfix
+      if (empty($this->fullRecord)) {
+        $this->fullRecord = $this->getFullRecord();
+      }
+     if (empty($this->classes)) {
        foreach ($this->fullRecord->childNodes[0]->childNodes as $children) {
            $tagName = $children->tagName;
            $about = $children->getAttribute('rdf:about');
@@ -91,6 +96,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
            }
            $this->classes[$tagName][$about] = $children->childNodes;
        }
+     }
 
        return $this->classes;
    }
@@ -225,6 +231,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getDatesPlaces($kind)
     {
+        $this->classes = $this->getEDMClasses();
         $chos = isset($this->classes['edm:ProvidedCHO']) ? $this->classes['edm:ProvidedCHO'] : [];
         $edmPlaces = isset($this->classes['edm:Place']) ? $this->classes['edm:Place'] : [];
         $orgs = isset($this->classes['foaf:Organization']) ? $this->classes['foaf:Organization'] : [];
@@ -287,7 +294,6 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
         if (count(array_filter($datesPlaces)) != 0) {
             $retval[] = $datesPlaces;
         }
-
         return $retval;
     }
 
@@ -298,7 +304,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getAboutObject()
     {
-        $chos = $this->classes['edm:ProvidedCHO'];
+        $chos = isset($this->classes['edm:ProvidedCHO']) ? $this->classes['edm:ProvidedCHO'] : [];
         $contents = [];
 
         foreach ($chos as $cho) {
@@ -396,7 +402,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
      */
     public function getSeeAlso()
     {
-        $aggs = $this->classes['ore:Aggregation'];
+        $aggs = isset($this->classes['ore:Aggregation']) ? $this->classes['ore:Aggregation'] : [];
 
         $webs = isset($this->classes['edm:WebResource']) ? $this->classes['edm:WebResource'] : [];
         $orgs = isset($this->classes['foaf:Organization']) ? $this->classes['foaf:Organization'] : [];
