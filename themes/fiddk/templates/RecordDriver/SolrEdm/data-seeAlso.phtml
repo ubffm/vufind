@@ -3,7 +3,11 @@
 <? foreach ($data as $key => $fields): ?>
   <? $count = sizeof($fields);?>
   <tr>
-    <th><?=$this->transEsc('edm::' . $key);?></th>
+    <th><? if (strpos($key,':')) : ?>
+      <?=$this->transEsc('edm::' . $key);?>
+    <? else : ?>
+      <?=$this->transEsc($key);?>
+    <? endif; ?></th>
     <? if ($count > 4) : ?>
       <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
       <? $rest = array_slice($fields, 4); ?>
@@ -54,6 +58,10 @@
         <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
            <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
+         <? elseif ($key == 'Ask Archive') : ?>
+             <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail')?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$seeAlso?></a>
+         <? elseif ($key == 'child_records') : ?>
+             <a href="<?=$this->recordLink()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
         <? else: ?>
           <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
         <? endif; ?>

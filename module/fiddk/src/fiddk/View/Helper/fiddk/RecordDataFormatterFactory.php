@@ -239,10 +239,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setTemplateLine(
             'Subjects', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml'
         );
-        $spec->setTemplateLine(
-            'child_records', 'getChildRecordCount', 'data-childRecords.phtml',
-            ['allowZero' => false]
-        );
         $spec->setTemplateLine('Online Access', true, 'data-onlineAccess.phtml');
         $spec->setTemplateLine(
             'Related Items', 'getAllRecordLinks', 'data-allRecordLinks.phtml'

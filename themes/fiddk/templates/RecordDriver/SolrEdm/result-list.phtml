@@ -172,8 +172,11 @@
       <? if ($institutions = $this->driver->getInstitutions()): ?>
       <div class="result-institutions">
         <?foreach ($institutions as $inst): ?>
-          <span class="badge"><?=$inst;?></span><br/>
+          <span class="badge"><?=$inst;?></span>
         <? endforeach; ?>
+        <? if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
+          <a class="badge badge-secondary" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
+        <? endif; ?>
       </div>
     <? endif; ?>
 

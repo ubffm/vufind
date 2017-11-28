@@ -44,13 +44,10 @@
     <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> <?=$this->transEsc("Find")?></button>
     <? if ($advSearch): ?>
       <a href="<?=$this->url($advSearch) . ((isset($this->searchId) && $this->searchId) ? '?edit=' . $this->escapeHtmlAttr($this->searchId) : $hiddenFilterParams) ?>" class="btn btn-link" rel="nofollow"><?=$this->transEsc("Advanced")?></a>
+    <? endif; ?>    
+    <? if (!empty($this->checkboxFacets)): ?>
+      <?=$this->render('search/advanced/checkbox-filters.phtml')?>
     <? endif; ?>
-    <? //if (true): ?>
-      <!--  <label class="archiveLabel">
-          <input class="archiveCheckBox" type="checkbox" value="">
-           <?//=$this->transEsc("Suche nur in Archivbeständen")?>
-        </label> -->
-    <? //endif; ?>
     <? if ($geoUrl = $this->geocoords()->getSearchUrl($options)) : ?>
         <a href="<?=$geoUrl ?>" class="btn btn-link"><?=$this->transEsc('Geographic Search')?></a>
     <? endif; ?>

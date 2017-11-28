@@ -18,12 +18,14 @@ class Factory
 {
     public static function getSolrEdm(ServiceManager $sm)
     {
-        return new SolrEdm(
+        $driver = new SolrEdm(
             $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
             null,
             $sm->getServiceLocator()->get('VuFind\Config')->get('searches'),
             $sm->getServiceLocator()->get('VuFind\RecordLoader')
         );
+        $driver->attachSearchService($sm->getServiceLocator()->get('VuFind\Search'));
+        return $driver;
     }
 
     public static function getSolrAuth(ServiceManager $sm)

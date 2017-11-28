@@ -127,6 +127,12 @@
                         </xsl:attribute>
                         <xsl:text>0/Universitätsbibliothek Frankfurt am Main/</xsl:text>
                     </xsl:element>
+                    <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>archive</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>0</xsl:text>
+                            </xsl:element>
                     <xsl:choose>
                         <xsl:when test="starts-with($id,'FUB_OLC_')">
                             <xsl:element name="field">
@@ -135,12 +141,6 @@
                                 </xsl:attribute>
                                 <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Online Contents/</xsl:text>
                             </xsl:element>
-                            <xsl:element name="field">
-                                <xsl:attribute name="name">
-                                    <xsl:text>archive</xsl:text>
-                                </xsl:attribute>
-                                <xsl:text>0</xsl:text>
-                            </xsl:element>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:element name="field">
@@ -148,12 +148,6 @@
                                     <xsl:text>institutionFacet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Bibliotheksbestand/</xsl:text>
-                            </xsl:element>
-                            <xsl:element name="field">
-                                <xsl:attribute name="name">
-                                    <xsl:text>archive</xsl:text>
-                                </xsl:attribute>
-                                <xsl:text>0</xsl:text>
                             </xsl:element>
                         </xsl:otherwise>
                     </xsl:choose>
@@ -252,7 +246,7 @@
                                         <xsl:value-of
                                             select="concat('1/Verbund Deutscher Tanzarchive/', $dProvider, '/')"
                                         />
-                                    </xsl:element>                                    
+                                    </xsl:element>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:element name="field">
@@ -284,6 +278,45 @@
                                 <xsl:value-of
                                     select="concat('1/Verbund Deutscher Tanzarchive/', $dProvider, '/')"
                                 />
+                            </xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="$dProvider = 'Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen'">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">
+                            <xsl:text>institutionFacet</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of select="concat('0/', $dProvider, '/')"/>
+                    </xsl:element>
+                    <xsl:choose>
+                        <xsl:when test="starts-with($id,'TSB_A_')">
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>institutionFacet</xsl:text>
+                                </xsl:attribute>
+                                <xsl:value-of select="concat('1/', $dProvider, '/Bibliotheksbestand/')"/>
+                            </xsl:element>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>archive</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>0</xsl:text>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>institutionFacet</xsl:text>
+                                </xsl:attribute>
+                                <xsl:value-of
+                                    select="concat('1/', $dProvider, '/Archivbestand/')"/>
+                            </xsl:element>
+                            <xsl:element name="field">
+                                <xsl:attribute name="name">
+                                    <xsl:text>archive</xsl:text>
+                                </xsl:attribute>
+                                <xsl:text>1</xsl:text>
                             </xsl:element>
                         </xsl:otherwise>
                     </xsl:choose>
@@ -327,6 +360,20 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
+                <xsl:when test="$dProvider = 'Theatermuseum der Landeshauptstadt Düsseldorf'">
+                  <xsl:element name="field">
+                      <xsl:attribute name="name">
+                          <xsl:text>institutionFacet</xsl:text>
+                      </xsl:attribute>
+                      <xsl:value-of select="concat('0/', $dProvider, '/')"/>
+                  </xsl:element>
+                  <xsl:element name="field">
+                      <xsl:attribute name="name">
+                          <xsl:text>archive</xsl:text>
+                      </xsl:attribute>
+                      <xsl:text>1</xsl:text>
+                  </xsl:element>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
@@ -366,6 +413,14 @@
             </xsl:attribute>
             <xsl:value-of select="normalize-space($cho/dc:title)"/>
         </xsl:element>
+        <xsl:if test="$cho/dc:title">
+            <xsl:element name="field">
+                <xsl:attribute name="name">
+                    <xsl:text>title_sort</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space($cho/dc:title)"/>
+            </xsl:element>
+      </xsl:if>
         <xsl:for-each select="$cho/dm2e:subtitle">
             <xsl:element name="field">
                 <xsl:attribute name="name">
@@ -488,11 +543,13 @@
                         <xsl:with-param name="type"
                             select="exsl:node-set($contextuals)/skos:Concept[@rdf:about = current()/@rdf:resource]/skos:prefLabel"
                         />
+                        <xsl:with-param name="id" select="$id"/>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="mapType">
                         <xsl:with-param name="type" select="."/>
+                        <xsl:with-param name="id" select="$id"/>
                     </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
@@ -578,10 +635,19 @@
                             select="concat('[',substring-before($date,'_'),' TO ',substring-after($date,'_'),']')"
                         />
                     </xsl:element>
+                    <xsl:if test="position() = 1">
+                      <xsl:element name="field">
+                        <xsl:attribute name="name">
+                            <xsl:text>dateSpanSort</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of
+                            select="substring-before($date,'_')"
+                        />
+                      </xsl:element>
+                    </xsl:if>
                 </xsl:when>
-                <xsl:otherwise>
-                    <xsl:message>Date not formatted correctly</xsl:message>
-                </xsl:otherwise>
+                <!-- ignore literal dates in the index -->
+                <xsl:otherwise/>
             </xsl:choose>
         </xsl:for-each>
         <xsl:variable name="topicList">
@@ -711,10 +777,11 @@
 
     <xsl:template name="mapType">
         <xsl:param name="type"/>
+        <xsl:param name="id"/>
         <xsl:variable name="mapType">
             <xsl:choose>
                 <xsl:when
-                    test="contains($type, 'grafik') or contains($type, 'koloriert') or contains($type,'stich') or contains($type,'Radierung') 
+                    test="contains($type, 'grafik') or contains($type, 'koloriert') or contains($type,'stich') or contains($type,'Radierung')
                 or contains($type,'ithographie') or $type = 'Grafik-Konvolut' or $type = 'Punktiermanier' or contains($type,'gravure') or $type = 'Aquatinta'">
                     <xsl:text>Grafik</xsl:text>
                 </xsl:when>
@@ -756,6 +823,14 @@
                     <xsl:text>format</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="$mapType"/>
+            </xsl:element>
+        </xsl:if>
+        <xsl:if test="$mapType = 'Bestandsdokumentation' and starts-with($id,'ADK_A')">
+            <xsl:element name="field">
+                <xsl:attribute name="name">
+                    <xsl:text>is_hierarchy_id</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="$id"/>
             </xsl:element>
         </xsl:if>
     </xsl:template>

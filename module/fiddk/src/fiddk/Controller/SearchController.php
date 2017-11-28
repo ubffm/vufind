@@ -1,6 +1,6 @@
 <?php
 /**
- * Default Controller
+ * Default Controller.
  *
  * PHP version 5
  *
@@ -20,9 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  Controller
+ *
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ *
  * @link     https://vufind.org Main Site
  */
 namespace fiddk\Controller;
@@ -31,14 +32,14 @@ namespace fiddk\Controller;
  * Redirects the user to the appropriate default VuFind action.
  *
  * @category VuFind
- * @package  Controller
+ *
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ *
  * @link     https://vufind.org Main Site
  */
 class SearchController extends \VuFind\Controller\SearchController
 {
-
     /**
      * Results action for authority records.
      *
@@ -62,6 +63,7 @@ class SearchController extends \VuFind\Controller\SearchController
             // tag search, not an exact search like we would when linking to a
             // specific tag name.
             $query = $this->getRequest()->getQuery()->set('fuzzy', 'true');
+
             return $this->forwardTo('Tag', 'Home');
         }
         $view = $this->createViewModel(['driver' => $driver]);
@@ -127,6 +129,24 @@ class SearchController extends \VuFind\Controller\SearchController
           && $config->Site->showBulkOptions;
 
         return $view;
+    }
 
+    /**
+     * Home action.
+     *
+     * @return mixed
+     */
+    public function homeAction()
+    {
+        $view = parent::homeAction();
+        $view->options = $this->serviceLocator
+            ->get('VuFind\SearchOptionsPluginManager')->get($this->searchClassId);
+        $specialFacets = $this->parseSpecialFacetsSetting(
+           $view->options->getSpecialAdvancedFacets()
+        );
+        $view->checkboxFacets = $this->processAdvancedCheckboxes(
+          $specialFacets['checkboxes'], $view->saved
+        );
+        return $view;
     }
 }

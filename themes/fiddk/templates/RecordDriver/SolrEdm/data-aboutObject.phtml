@@ -25,22 +25,22 @@
         <? if ($prefix) : ?>
             <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>
         <? else : ?>
-            <span property="<?=$key?>"><?=$this->escapeHtml($value);?></span><br/>
+            <span property="<?=$key?>"><?=str_replace('&lt;br/&gt;','<br/>',$this->escapeHtml($value));?></span><br/>
         <? endif; ?>
     <? else : ?>
         <? $start = array_slice($words, 0, 30);?>
         <? $rest = array_slice($words, 30);?>
-        <?=implode($start,' ') . ' ';?>
+        <?=str_replace('&lt;br/&gt;','<br/>',$this->escapeHtml(implode($start,' ') . ' '));?>
         <span class="toggleContainer">
           <input type="checkbox" class="toggle" id="toggle_<?=$k?>">
-          <span><?=implode($rest,' ');?></span>
+          <span><?=str_replace('&lt;br/&gt;','<br/>',$this->escapeHtml(implode($rest,' ')));?></span>
           <? if ($lang =='de') : ?>
              <label for="toggle_<?=$k?>" class="label_de"></label>
           <? else : ?>
              <label for="toggle_<?=$k?>" class="label_en"></label>
           <? endif; ?>
         </span><br/>
-  <? endif; ?>
+    <? endif; ?>
   <? else : ?>
     <? if ($prefix) : ?>
     <span property="<?=$key?>"><?=$this->transEsc($prefix . $value);?></span><br/>

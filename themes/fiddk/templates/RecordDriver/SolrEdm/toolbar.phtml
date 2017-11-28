@@ -11,6 +11,9 @@
   <? if ($this->accountCapabilities()->getSmsSetting() !== 'disabled'): ?>
     <li><a class="sms-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'SMS')?>" rel="nofollow"><i class="fa fa-mobile" aria-hidden="true"></i> <?=$this->transEsc('Text this')?></a></li>
   <? endif; ?>
+  <? if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
+    <li><a class="library-record" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc('Availability') . ' KVK'?></a></li>
+  <? endif; ?>
   <? $exportFormats = $this->export()->getFormatsForRecord($this->driver); ?>
   <? if(count($exportFormats) > 0): ?>
     <li class="dropdown">
