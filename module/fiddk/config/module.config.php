@@ -8,6 +8,7 @@ $config = [
       'spages' => 'fiddk\Controller\Factory::getSpagesController',
       'search' => 'fiddk\Controller\Factory::getSearchController',
       'ajax' => 'fiddk\Controller\Factory::getAjaxController',
+      'feedback' => 'fiddk\Controller\Factory::getFeedbackController'
     ],
   ],
   'vufind' => [
