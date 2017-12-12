@@ -3,6 +3,7 @@
 namespace fiddk\Controller;
 
 use Zend\Mail;
+use Zend\Mail\AddressList;
 
 class SpagesController extends \VuFind\Controller\AbstractBase
 {
@@ -83,6 +84,7 @@ class SpagesController extends \VuFind\Controller\AbstractBase
 
     public function newsAction()
     {
+      // TODO use vufind mailer!!
         $display_message = false;
         $message = '';
         // if there is POST process it!
@@ -102,8 +104,15 @@ class SpagesController extends \VuFind\Controller\AbstractBase
                     $mail = new Mail\Message();
                     $mail->setBody($body);
                     $mail->setFrom($config->Feedback->sender_email, $config->Feedback->sender_name);
-                    $mail->addTo($config->Feedback->recipient_email, $config->Feedback->recipient_name);
-                    $mail->setSubject($config->Feedback->recipient_email, $config->Feedback->newsletter_subject);
+                    $list = new AddressList();
+                    foreach (preg_split('/[\s,;]/', $config->Feedback->recipient_email) as $current) {
+                      $current = trim($current);
+                      if (!empty($current)) {
+                        $list->add($current);
+                      }
+                    }
+                    $mail->addTo($list);
+                    $mail->setSubject($config->Feedback->newsletter_subject);
                     $transport = new Mail\Transport\Sendmail();
                     $transport->send($mail);
                     $display_message = true;
