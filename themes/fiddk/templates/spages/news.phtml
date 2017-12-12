@@ -43,18 +43,16 @@ We will send you current information from the <i>SIS</i>, related to research an
 <?
     }
 ?>
-<? if ($display_message) {?>
-<div class="group row" style="background-color:#d9e9ef"><?=$this->transEsc($message);?></div>
-<? } ?>
+<?=$this->flashmessages() ?>
 <form accept-charset="UTF-8"  method="POST" action="<?=$this->url('spages-news')?>">
 
 <input type="radio" id="ein" name="action" value="EINTRAGEN">
-<label style="vertical-align:middle;" for="ein"><?=$this->transEsc("mail subscribe");?></label><br>
+<label style="vertical-align:middle;" for="ein"><?=$this->transEsc("mail_subscribe");?></label><br>
 <input type="radio" id="aus" name="action"  value="AUSTRAGEN">
-<label style="vertical-align:middle;" for="aus"><?=$this->transEsc("mail unsubscribe");?></label><br>
+<label style="vertical-align:middle;" for="aus"><?=$this->transEsc("mail_unsubscribe");?></label><br>
 
-<label for="subscriber"><?=$this->transEsc("mail address"). ':';?></label><br>
+<label for="subscriber"><?=$this->transEsc("mail_address"). ':';?></label><br>
 <input id="subscriber" name="email" size="50" maxlength="100" value="" /><br>
 <br>
-<input class="btn btn-primary" align="left" type="SUBMIT" value="<?=$this->transEsc('Send')?>">
+<input class="btn btn-primary" align="left" name="submit" type="submit" value="<?=$this->transEsc('Send')?>">
 </form>

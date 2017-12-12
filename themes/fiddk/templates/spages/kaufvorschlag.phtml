@@ -23,37 +23,26 @@ prüfen und Ihnen eine Rückmeldung geben.
 <?
     }
 ?>
-<form accept-charset="UTF-8"  method="POST" action="kaufvorschlag">
-<? if ($display_message) {?>
-<div class="group row" style="background-color:#d9e9ef"><?=$this->transEsc($message);?></div>
-<? } ?>
-<p><b><?=$this->transEsc("Suggested Acquisition") . ":";?></b></p>
-<table style="border-collapse: separate; border-spacing: 10px;">
 
+<?=$this->flashmessages() ?>
+<form accept-charset="UTF-8"  method="POST" action="kaufvorschlag">
+<p><b><?=$this->transEsc("Suggestion Buy") . ":";?></b></p>
+<table style="border-collapse: separate; border-spacing: 10px;">
 <tr>
 <td width="250px">
 ISBN/ISSN:
 </td>
 <td>
-<input type="text" name="ISBN" size="13" maxlength="20" value="<?if(isset($inputs['ISBN']))echo $inputs['ISBN'];?>">
+<input type="text" name="isxn" size="13" maxlength="20" value="<?if(isset($this->isxn)) echo $this->isxn;?>">
 </td>
 </tr>
 
 <tr>
 <td>
-<b>*</b><?=$this->transEsc("Author Surname");?>:
+<b>*</b><?=$this->transEsc("Author");?>:
 </td>
 <td>
-<input type="text" name="Name_Autor" size="50" maxlength="100" value="<?if(isset($inputs['Name_Autor']))echo $inputs['Name_Autor'];?>">
-</td>
-</tr>
-
-<tr>
-<td>
-<?=$this->transEsc("Author First Name");?>:
-</td>
-<td>
-<input type="text" name="Vorname_Autor" size="50" maxlength="100" value="<?if(isset($inputs['Vorname_Autor']))echo $inputs['Vorname_Autor'];?>">
+<input type="text" name="author" size="50" maxlength="100" value="<?if(isset($this->author)) echo $this->author;?>">
 </td>
 </tr>
 
@@ -62,8 +51,8 @@ ISBN/ISSN:
 <b>*</b><?=$this->transEsc("Title");?>:
 </td>
 <td>
-<textarea name="Titel" rows="1" cols="47" wrap="" maxlength="300">
-<?if(isset($inputs['Titel']))echo $inputs['Titel'];?></textarea>
+<textarea name="title" rows="1" cols="47" wrap="" maxlength="300">
+<?if(isset($this->title))echo $this->title;?></textarea>
 </td>
 </tr>
 
@@ -72,35 +61,35 @@ ISBN/ISSN:
 <b>*</b><?=$this->transEsc("Publisher");?>:
 </td>
 <td>
-<input type="text" name="Verlag" size="30" maxlength="100" value="<?if(isset($inputs['Verlag']))echo $inputs['Verlag'];?>">
+<input type="text" name="publisher" size="30" maxlength="100" value="<?if(isset($this->publisher))echo $this->publisher;?>">
 </td>
 </tr>
 
 <tr>
 <td>
-<?=$this->transEsc("Place of Publication");?>:
+<?=$this->transEsc("Publication_Place");?>:
 </td>
 <td>
-<input type="text" name="Erscheinungsort" size="30" maxlength="100" value="<?if(isset($inputs['Erscheinungsort']))echo $inputs['Erscheinungsort'];?>">
-</td>
-</tr>
-
-<tr>
-<td>
-<?=$this->transEsc("Date of Publication");?>:
-</td>
-<td>
-<input type="text" name="Erscheinungsjahr" size="4" maxlength="4" value="<?if(isset($inputs['Erscheinungsjahr']))echo $inputs['Erscheinungsjahr'];?>">
+<input type="text" name="placeOfPublication" size="30" maxlength="100" value="<?if(isset($this->placeOfPublication))echo $this->placeOfPublication;?>">
 </td>
 </tr>
 
 <tr>
 <td>
-<?=$this->transEsc("Remarks");?>:
+<?=$this->transEsc("adv_search_year");?>:
 </td>
 <td>
-<textarea name="Anmerkungen" rows="2" cols="50" wrap="" maxlength="1000">
-<?if(isset($inputs['Anmerkungen']))echo $inputs['Anmerkungen'];?></textarea>
+<input type="text" name="dateOfPublication" size="4" maxlength="4" value="<?if(isset($this->dateOfPublication))echo $this->dateOfPublication;?>">
+</td>
+</tr>
+
+<tr>
+<td>
+<?=$this->transEsc("Add a Note");?>:
+</td>
+<td>
+<textarea name="remarks" rows="2" cols="50" wrap="" maxlength="1000">
+<?if(isset($this->remarks))echo $this->remarks;?></textarea>
 </td>
 </tr>
 
@@ -108,7 +97,7 @@ ISBN/ISSN:
 
 <hr size="1">
 
-<p><b><?=$this->transEsc("Request Contact Details");?>:</b></p>
+<p><b><?=$this->transEsc("Contact");?>:</b></p>
 
 <table style="border-collapse: separate;border-spacing: 10px;">
 <tr>
@@ -116,16 +105,7 @@ ISBN/ISSN:
 <b>*</b><?=$this->transEsc("Name");?>:
 </td>
 <td>
-<input type="text" name="Name" size="50" value="<?if(isset($inputs['Name']))echo $inputs['Name'];?>" maxlength="100">
-</td>
-</tr>
-
-<tr>
-<td>
-<b>*</b><?=$this->transEsc("First Name");?>:
-</td>
-<td>
-<input type="text" name="Vorname" size="50" value="<?if(isset($inputs['Vorname']))echo $inputs['Vorname'];?>" maxlength="100">
+<input type="text" name="name" size="50" value="<?if(isset($this->name))echo $this->name;?>" maxlength="100">
 </td>
 </tr>
 
@@ -134,7 +114,7 @@ ISBN/ISSN:
 <b>*</b>E-Mail:
 </td>
 <td>
-<input id="email" name="email" size="30" value="<?if(isset($inputs['email']))echo $inputs['email'];?>" maxlength="100"/>
+<input id="email" name="email" size="30" value="<?if(isset($this->email))echo $this->email;?>" maxlength="100"/>
 </td>
 </tr>
 
@@ -143,7 +123,7 @@ ISBN/ISSN:
 Institution:
 </td>
 <td>
-<input id="institution" name="institution" size="50" value="<?if(isset($inputs['institution']))echo $inputs['institution'];?>" maxlength="100"/>
+<input id="institution" name="institution" size="50" value="<?if(isset($this->institution))echo $this->institution;?>" maxlength="100"/>
 </td>
 </tr>
 
@@ -151,8 +131,8 @@ Institution:
 <td>
 </td>
 <td>
-<input align="left" type="SUBMIT" value="<?=$this->transEsc('Send')?>">
-<input align="right" type="RESET" value="<?=$this->transEsc('Clear')?>">
+<input align="left" type="submit" name="submit" value="<?=$this->transEsc('Send')?>">
+<input align="right" type="reset" name="reset" value="<?=$this->transEsc('Clear')?>">
 </td>
 </tr>
 
