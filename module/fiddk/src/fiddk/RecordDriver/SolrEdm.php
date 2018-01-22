@@ -432,7 +432,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                case 'edm:dataProvider':
                   $seeAlso['edm:dataProvider'][] = $this->getDataProvider($elem, $orgs);
                   if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
-                     $seeAlso['Ask Archive']['Mail'][] = "E-Mail an " . array_values($this->getDataProvider($elem, $orgs))[0];
+                     $seeAlso['Ask Archive']['Mail'][] = 'mail_to ' . array_values($this->getDataProvider($elem, $orgs))[0];
                   }
                   break;
                default:

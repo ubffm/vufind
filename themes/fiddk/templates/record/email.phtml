@@ -10,15 +10,21 @@
 <?
 $institutions = implode(', ',$this->driver->getInstitutions());
 $title = $this->escapeHtml($this->driver->getTitle());
-$formats = implode(", ",$this->driver->getParentFormats());
+$formats = implode(', ',$this->driver->getParentFormats());
 $recordLink = $this->serverUrl($this->recordLink()->getUrl($this->driver));
 ?>
 
 <h2><?=$this->transEsc('AskAboutObject')?>:<br/></h2>
+<? if ($title): ?>
 <?=$this->transEsc('Title')?>: <?=$title?><br/>
+<? endif; ?>
 <?=$this->transEsc('Call Number')?>: <?=$callNumber?><br/>
 <? $link = "mailto:" . $this->to .
-"?subject=Anfrage%20zu%20einem%20Objekt%20aus%20Ihrem%20Bestand%20via%20FID%20Darstellende%20Kunst&body=-----%0D%0ATitel: " . $title .
+ "?subject=Anfrage%20zu%20einem%20Objekt%20aus%20Ihrem%20Bestand%20via%20FID%20Darstellende%20Kunst&body=-----%0D%0ATitel: " . $title .
  "%0D%0ASignatur: " . $callNumber ."%0D%0ALink: " . $recordLink . "%0D%0A%0D%0A" . $this->txt . "%0D%0A-----%0D%0A%0D%0AIhre Anfrage:"?>
-<a href="<?=$link?>" data-lightbox-ignore><i class="fa fa-envelope"></i> <?=$this->transEsc('E-Mail an') . ' ' . $institutions . ' schicken';?></a><br/><br/>
+<a href="<?=$link?>" data-lightbox-ignore><i class="fa fa-envelope"></i> <?=$this->transEsc('mail_to') . ' ' . $institutions?></a><br/><br/>
+<? if ($this->plugin('translate')->getTranslator()->getLocale()=='de') : ?>
 <p><?=$this->text?></p>
+<? else: ?>
+<p><?=$this->text_en?></p>
+<? endif; ?>

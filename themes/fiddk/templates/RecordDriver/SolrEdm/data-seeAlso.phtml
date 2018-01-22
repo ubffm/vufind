@@ -60,7 +60,8 @@
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
          <? elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
        <? elseif ($key == 'Ask Archive' && $type == 'Mail') : ?>
-             <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$seeAlso?></a>
+             <? $trans = $this->transEsc(substr($seeAlso,0,7)) . substr($seeAlso,7);?>
+             <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
          <? elseif ($key == 'child_records') : ?>
              <a href="<?=$this->recordLink()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
         <? else: ?>
