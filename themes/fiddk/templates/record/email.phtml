@@ -1,0 +1,24 @@
+<?
+  // Set page title.
+  $this->headTitle($this->translate('Ask Archive'));
+
+  // Set up breadcrumbs:
+  $this->layout()->breadcrumbs = '<li>' . $this->searchMemory()->getLastSearchLink($this->transEsc('Search'), '', '</li> ')
+    . '<li>' . $this->recordLink()->getBreadcrumb($this->driver) . '</li> '
+    . '<li class="active">' . $this->transEsc('Ask Archive') . '</li>';
+?>
+<?
+$institutions = implode(', ',$this->driver->getInstitutions());
+$title = $this->escapeHtml($this->driver->getTitle());
+$formats = implode(", ",$this->driver->getParentFormats());
+$recordLink = $this->serverUrl($this->recordLink()->getUrl($this->driver));
+?>
+
+<h2><?=$this->transEsc('AskAboutObject')?>:<br/></h2>
+<?=$this->transEsc('Title')?>: <?=$title?><br/>
+<?=$this->transEsc('Call Number')?>: <?=$callNumber?><br/>
+<? $link = "mailto:" . $this->to .
+"?subject=Anfrage%20zu%20einem%20Objekt%20aus%20Ihrem%20Bestand%20via%20FID%20Darstellende%20Kunst&body=-----%0D%0ATitel: " . $title .
+ "%0D%0ASignatur: " . $callNumber ."%0D%0ALink: " . $recordLink . "%0D%0A%0D%0A" . $this->txt . "%0D%0A-----%0D%0A%0D%0AIhre Anfrage:"?>
+<a href="<?=$link?>" data-lightbox-ignore><i class="fa fa-envelope"></i> <?=$this->transEsc('E-Mail an') . ' ' . $institutions . ' schicken';?></a><br/><br/>
+<p><?=$this->text?></p>

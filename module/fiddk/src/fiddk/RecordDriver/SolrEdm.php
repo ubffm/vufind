@@ -408,7 +408,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
         $orgs = isset($this->classes['foaf:Organization']) ? $this->classes['foaf:Organization'] : [];
         $chos = isset($this->classes['edm:ProvidedCHO']) ? $this->classes['edm:ProvidedCHO'] : [];
         $seeAlso = ['edm:dataProvider' => false, 'Ask Archive' => false, 'child_records' => false, 'edm:isShownAt' => false
-          , 'dm2e:hasAnnotatableVersionAt' => false,'edm:hasView' => false, 'edm:isRelatedTo' => false, ];
+          , 'dm2e:hasAnnotatableVersionAt' => false,'edm:hasView' => false, 'edm:isRelatedTo' => false];
 
         foreach ($aggs as $agg) {
             foreach ($agg as $elem) {
@@ -431,9 +431,9 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                   break;
                case 'edm:dataProvider':
                   $seeAlso['edm:dataProvider'][] = $this->getDataProvider($elem, $orgs);
-                  //if ($this->isArchiveRecord() && array_values($this->getDataProvider($elem, $orgs))[0] == "Deutsches Tanzarchiv Köln") {
-                    //$seeAlso['Ask Archive'][] = ["Mail" => "E-Mail an " . array_values($this->getDataProvider($elem, $orgs))[0]];
-                  //}
+                  if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
+                     $seeAlso['Ask Archive']['Mail'][] = "E-Mail an " . array_values($this->getDataProvider($elem, $orgs))[0];
+                  }
                   break;
                default:
                   break;
@@ -448,7 +448,12 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                  $resource = $elem->getAttribute('rdf:resource');
                  $resourceID = explode('/', $resource);
                  $seeAlso['edm:isRelatedTo'][] = [$resource => $this->checkExistenceReturnTitleFormat(end($resourceID), 'Solr')];
-                  break;
+                 break;
+              case 'dm2e:callNumber':
+                 if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
+                   $seeAlso['Ask Archive']['CallNumber'][] = $elem->nodeValue;
+                 }
+                 break;
                default:
                   break;
             }

@@ -8,7 +8,8 @@ $config = [
       'spages' => 'fiddk\Controller\Factory::getSpagesController',
       'search' => 'fiddk\Controller\Factory::getSearchController',
       'ajax' => 'fiddk\Controller\Factory::getAjaxController',
-      'feedback' => 'fiddk\Controller\Factory::getFeedbackController'
+      'feedback' => 'fiddk\Controller\Factory::getFeedbackController',
+      'record' => 'fiddk\Controller\Factory::getRecordController',
     ],
   ],
   'vufind' => [
@@ -30,6 +31,14 @@ $config = [
         ],
       ],
     ],
+];
+
+// Define record view routes -- route name => controller
+$recordRoutes = [
+    'record' => 'Record',
+    'collection' => 'Collection',
+    'missingrecord' => 'MissingRecord',
+    'solrauthrecord' => 'Authority'
 ];
 
 $staticRoutes = [
@@ -60,8 +69,7 @@ $staticRoutes = [
 ];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
-//$routeGenerator->addRecordRoutes($config, $recordRoutes);
-//$routeGenerator->addDynamicRoutes($config, $dynamicRoutes);
+$routeGenerator->addRecordRoutes($config, $recordRoutes);
 $routeGenerator->addStaticRoutes($config, $staticRoutes);
 
 // Add the home route last
