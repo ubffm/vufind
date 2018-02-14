@@ -317,6 +317,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                case 'dcterms:provenance':
                case 'dcterms:tableOfContents':
                case 'dm2e:callNumber':
+               case 'dm2e:shelfmarkLocation':
                   $contents[$elem->nodeName][] = $elem->nodeValue;
                   break;
                default:
@@ -351,6 +352,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
             foreach ($cho as $elem) {
                 switch ($elem->nodeName) {
                case 'dm2e:callNumber':
+               case 'dm2e:shelfmarkLocation':
                   $callNumber = $elem->nodeValue;
                   break;
                default:
@@ -450,6 +452,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                  $seeAlso['edm:isRelatedTo'][] = [$resource => $this->checkExistenceReturnTitleFormat(end($resourceID), 'Solr')];
                  break;
               case 'dm2e:callNumber':
+              case 'dm2e:shelfmarkLocation':
                  if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
                    $seeAlso['Ask Archive']['CallNumber'][] = $elem->nodeValue;
                  }
