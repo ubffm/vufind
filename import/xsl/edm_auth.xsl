@@ -25,7 +25,7 @@
         ################################################################### -->
 
     <xsl:template match="/">
-        <xsl:element name="add">            
+        <xsl:element name="add">
             <xsl:for-each select="/rdf:RDF/foaf:Person | /rdf:RDF/edm:Agent">
                 <xsl:call-template name="doc">
                     <xsl:with-param name="type" select="'Personal Name'"/>
@@ -58,9 +58,9 @@
             <xsl:variable name="fullrecord">
                 <xsl:element name="rdf:RDF">
                     <xsl:copy-of select="."/>
-                    <xsl:for-each select="./rdaGr2:dateOfBirth/@rdf:resource | ./rdaGr2:dateOfDeath/@rdf:resource">
+                    <!-- <xsl:for-each select="./rdaGr2:dateOfBirth/@rdf:resource | ./rdaGr2:dateOfDeath/@rdf:resource">
                         <xsl:copy-of select="../../../edm:TimeSpan[@rdf:about = current()]"/>
-                    </xsl:for-each>
+                    </xsl:for-each> -->
                 </xsl:element>
             </xsl:variable>
             <xsl:element name="field">
@@ -85,27 +85,18 @@
                         <xsl:text>heading</xsl:text>
                     </xsl:attribute>
                     <xsl:value-of select="normalize-space(child::*[name() = 'skos:prefLabel'][1])"/>
-                </xsl:element>            
+                </xsl:element>
 
             <xsl:for-each select="child::*">
-                <xsl:choose>                    
+                <xsl:choose>
                     <xsl:when test="name() = 'skos:altLabel'">
                         <xsl:element name="field">
                             <xsl:attribute name="name">
                                 <xsl:text>use_for</xsl:text>
                             </xsl:attribute>
                             <xsl:value-of select="normalize-space(.)"/>
-                        </xsl:element>                        
-                    </xsl:when>
-                    <xsl:when test="name() = 'dc:date'">
-                        <xsl:element name="field">
-                            <xsl:attribute name="name">
-                                <xsl:text>related_date</xsl:text>
-                            </xsl:attribute>
-                            <xsl:value-of select="normalize-space(.)"/>
                         </xsl:element>
                     </xsl:when>
-                    <xsl:when test="name() = 'owl:sameAs' or name() = 'edm:hasMet'"/>
                 </xsl:choose>
             </xsl:for-each>
 
@@ -133,113 +124,14 @@
         </xsl:element>
 
         <xsl:for-each select="child::*">
-            <xsl:choose>
-                <xsl:when test="name() = 'rdaGr2:placeOfBirth'">
-                    <xsl:element name="field">
-                        <xsl:attribute name="name">
-                            <xsl:text>birth_place</xsl:text>
-                        </xsl:attribute>
-                        <xsl:value-of select="normalize-space(.)"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="name() = 'rdaGr2:placeOfDeath'">
-                    <xsl:element name="field">
-                        <xsl:attribute name="name">
-                            <xsl:text>death_place</xsl:text>
-                        </xsl:attribute>
-                        <xsl:value-of select="normalize-space(.)"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when
-                    test="name() = 'rdaGr2:dateOfBirth' or name() = 'rdaGr2:dateOfEstablishment'">
-                    <xsl:variable name="date"
-                        select="substring-after(@rdf:resource, 'http://performing-arts.eu/timespan/')"/>
-                    <xsl:choose>
-                        <xsl:when test="$date != ''">
-                            <xsl:element name="field">
-                                <xsl:attribute name="name">
-                                    <xsl:text>birth_date</xsl:text>
-                                </xsl:attribute>
-                                <xsl:value-of
-                                    select="concat('[',substring-before($date,'_'),' TO ',substring-after($date,'_'),']')"
-                                />
-                            </xsl:element>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:message>Date not formatted correctly</xsl:message>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-                <xsl:when
-                    test="name() = 'rdaGr2:dateOfDeath' or name() = 'rdaGr2:dateOfTermination'">
-                    <xsl:variable name="date"
-                        select="substring-after(@rdf:resource, 'http://performing-arts.eu/timespan/')"/>
-                    <xsl:choose>
-                        <xsl:when test="$date != ''">
-                            <xsl:element name="field">
-                                <xsl:attribute name="name">
-                                    <xsl:text>death_date</xsl:text>
-                                </xsl:attribute>
-                                <xsl:value-of
-                                    select="concat('[',substring-before($date,'_'),' TO ',substring-after($date,'_'),']')"
-                                />
-                            </xsl:element>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:message>Date not formatted correctly</xsl:message>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-                <xsl:when test="name() = 'rdaGr2:professionOrOccupation'">
+                <xsl:if test="name() = 'rdaGr2:professionOrOccupation'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
                             <xsl:text>occupation</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="normalize-space(.)"/>
                     </xsl:element>
-                    <xsl:element name="field">
-                        <xsl:attribute name="name">
-                            <xsl:text>occupation_facet</xsl:text>
-                        </xsl:attribute>
-                        <xsl:choose>
-                            <xsl:when test=". = 'Tänzer' or . = 'Tänzerin'">
-                                <xsl:text>Tänzer*In</xsl:text>
-                            </xsl:when>
-                            <xsl:when test=". = 'Choreograph' or . = 'Choreographin'">
-                                <xsl:text>Choreograf*In</xsl:text>
-                            </xsl:when>
-                            <xsl:when test=". = 'Pädagoge' or . = 'Pädagogin'">
-                                <xsl:text>Pädagog*In</xsl:text>
-                            </xsl:when>
-                            <xsl:when test=". = 'Ballettmeister' or . = 'Ballettmeisterin'">
-                                <xsl:text>Ballettmeister*In</xsl:text>
-                            </xsl:when>
-                            <xsl:when test=". = 'Photograph' or . = 'Photographin' or 'Fotograf' or 'Fotografin'">
-                                <xsl:text>Fotograf*In</xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>                                
-                                <xsl:value-of select="normalize-space(.)"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="name() = 'rdaGr2:biographicalInformation' or name() = 'skos:note'">
-                    <xsl:element name="field">
-                        <xsl:attribute name="name">
-                            <xsl:text>bioInfo</xsl:text>
-                        </xsl:attribute>
-                        <xsl:value-of select="normalize-space(.)"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs' and name() != 'edm:hasMet'">
-                        <xsl:message>
-                            <xsl:value-of select="name()"/>
-                            <xsl:value-of select="."/>
-                        </xsl:message>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
+                </xslif>
         </xsl:for-each>
 
     </xsl:template>
@@ -280,7 +172,7 @@
                         <xsl:otherwise>
                             <xsl:message>Date not formatted correctly</xsl:message>
                         </xsl:otherwise>
-                    </xsl:choose>                    
+                    </xsl:choose>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:if test="name() != 'skos:prefLabel' and name() != 'skos:altLabel' and name() != 'dc:date' and name() != 'owl:sameAs' and name() != 'edm:hasMet'">
