@@ -1,0 +1,70 @@
+<? $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>  
+  <ul class="list-group random">
+    <li class="list-group-item title">
+      <?=$this->transEsc("Showcase")?>
+    </li>
+      <? $perPage = 1 ?>
+      <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
+      <? for($i=1;$i<count($recommend)/$perPage;$i++): ?>
+        <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
+      <? endfor; ?>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <? foreach ($recommend as $index=>$driver): ?>
+          <div class="carousel-item hover-overlay">
+              <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLink()->getUrl($driver));?>
+              <a class="content" href="<?=$this->recordLink()->getUrl($driver)?>">
+                <div class="contentDarker">
+                  <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
+                  <? if ($driver->getContainerTitle()) :?>
+                    <p><?=$this->transEsc("In") . ': ' . $driver->getContainerTitle();?></p>
+                  <? endif; ?>
+                  <? if ($driver->getParentFormats()) :?>
+                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getParentFormats());?></p>
+                  <? endif; ?>
+                  <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$driver->getInstitutions());?>
+                </div>
+              </a>
+            </div>
+          <? if(($index+1) % $perPage == 0 && $index < count($recommend)-1): ?>
+      </div>
+      <div class="item">
+          <? endif; ?>
+        <? endforeach; ?>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev">
+      <span class="fa fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEsc('Prev') ?>"></span>
+    </a>
+    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next">
+      <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEsc('Next') ?>"></span>
+    </a>
+  </div>
+</ul>
+<? endif; ?>
+<?
+  $script = <<<JS
+var normalizeHeightCount = $('#similar-items-carousel img').length;
+function normalizeHeights() {
+  if(--normalizeHeightCount > 0) return;
+  var tallest = 0;
+  var items = $('#similar-items-carousel .hover-overlay');
+  items.each(function() { //add heights to array
+    if(tallest < $(this).height()) {
+      tallest = $(this).height();
+    }
+  });
+  items.css('min-height', (tallest+25) + 'px');
+}
+$('#similar-items-carousel img').load(normalizeHeights);
+JS;
+?>
+<?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $script, 'SET') ?>

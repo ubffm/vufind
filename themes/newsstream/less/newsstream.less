@@ -1,22 +1,18 @@
 /** newsstream ***/
 
-.stream.well {
-	border: 0;
-	box-shadow: none;
-	background-color: @white;
-	width: 60%;
-	margin-top: 0;
-	padding-left: 0;
-	padding-right: 0;
-	font-weight: bold;
-	.well {
-		background-color: inherit;
-		margin-top: 10px;
+.stream {
+	&.list-group {
+		min-width: 240px;
+	}
+	&.well {
+		background-color: @white;
 	  width: 100%;
-		min-width: 15%;
-		height: 200px;
+		height: 172px;
+		border-top-left-radius: 0px;
 		overflow-y: scroll;
-		font-weight: normal;
+	}
+	.title {
+		font-weight: bold;
 	}
 }
 

@@ -41,22 +41,35 @@ header .banner.container.navbar.search {
     background-color: @lightgrey;
     color: @black;
     text-align: left;
-    width:60%;
-    margin:auto;
-    margin-top: 5em;
-    margin-bottom: 2em;
+    margin-bottom: 50px;
+    min-width: 240px;
 }
 
 #searchForm  {
     width: 100% !important;
 }
 
+#advanced {
+  padding-left: 0px;
+  margin-bottom: 5px;
+}
+
+#searchSubmit {
+  margin-right: 12px;
+  margin-bottom: 5px;
+}
+
 .searchForm_lookfor {
     min-width: 50%;
     max-width: 100% !important;
     padding: 5px;
+    margin-bottom: 5px;
     border: 1px solid #cccccc;
     background-color: @white;
+}
+
+.searchForm_type {
+    margin-bottom: 5px;
 }
 
 .twitter-typeahead {
@@ -115,9 +128,10 @@ footer {
 
 .checkbox-filters {
   display: inline;
+  margin-bottom: 9px;
   label input[type="checkbox"] {
     margin-top: 0px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     vertical-align: middle;
   }
 }
@@ -130,6 +144,11 @@ body {
 .container {
 	background: @white;
 	box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.28);
+}
+
+#content {
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .breadcrumb {
@@ -193,40 +212,44 @@ div#accordion .panel-collapse {
   }
 }
 
-/* Carousel */
-.carousel-control {
-    width: 7%;
-    &.left, &.left:focus {
-      background-image: linear-gradient(to right, rgba(119, 165, 227, 1) 0%, transparent 100%);
-    }
-    &.right, &.right:focus {
-      background-image: linear-gradient(to right, transparent 0%, rgba(119, 165, 227, 1) 100%);
-    }
+/* Homepage Layout */
+.searchHomeContent {
+  overflow: hidden;
+  margin-top: 5em;
 }
 
-#similar-items-carousel {
-  .carousel-indicators {
-    bottom: -20px;
-  }
-  .hover-overlay .content {
-      background-color: rgba(119, 165, 227, 0.2);
-      .contentDarker {
-        background-color: rgba(250, 250, 250, 0.9);
-        color: @brand-primary;
-        padding-top: 5px;
-        padding-left: 5px;
-      }
-  }
-  .hover-overlay {
-      padding-top: 12px;
-      padding-left: 12px;
-      text-align: left;
-  }
-  img[title] {
-      font-weight: bold;
-  }
+#searchAndNews {
+  width: 65%;
+  float:left;
+  padding-right: 40px;
 }
 
+.random {
+  height: auto;
+  width: 100%;
+  max-width: 360px;
+  float:left;
+  .title {
+    font-weight: bold;
+  }
+  #similar-items-carousel {
+    height: 350px;
+    .carousel-item {
+      flex-basis: 100%;
+    }
+    .carousel-indicators {
+      bottom: 0;
+    }
+    .carousel-control {
+        &.left, &.left:focus {
+          background-image: linear-gradient(to right, @lightgreyCarousel 0%, transparent 100%);
+        }
+        &.right, &.right:focus {
+          background-image: linear-gradient(to right, transparent 0%, @lightgreyCarousel 100%);
+        }
+    }
+    }
+}
 
 /* Lightbox Layout */
 /*h2.providerbox {

@@ -27,6 +27,9 @@
  * @link     https://vufind.org Main Site
  */
 namespace fiddk\Controller;
+use \VuFind\Db\AdapterFactory;
+use \Zend\Db\Adapter\Adapter;
+use \Zend\Db\Sql\Sql;
 
 /**
  * Redirects the user to the appropriate default VuFind action.
@@ -147,6 +150,22 @@ class SearchController extends \VuFind\Controller\SearchController
         $view->checkboxFacets = $this->processAdvancedCheckboxes(
           $specialFacets['checkboxes'], $view->saved
         );
+
+        // news
+        $db = new AdapterFactory($this->getConfig());
+        $db = $db->getAdapter();
+        $view->newslist = $db->query(
+                'SELECT * from news WHERE pin!=true AND active=true  AND startdate<=NOW() AND enddate>=NOW() ORDER BY startdate DESC;' , Adapter::QUERY_MODE_EXECUTE
+                );
+        $view->pinnedlist = $db->query(
+                'SELECT * from news WHERE active=true AND pin=true AND startdate<=NOW() AND enddate>=NOW() ORDER BY startdate DESC;' , Adapter::QUERY_MODE_EXECUTE
+                );
+
+        // random records for home page from result set with thumbnails
+        $runner = $this->serviceLocator->get('VuFind\SearchRunner');
+        $request = ['lookfor' => true,'type'=> 'hasThumb'];
+        $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
+
         return $view;
     }
 }

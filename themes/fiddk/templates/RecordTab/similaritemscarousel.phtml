@@ -18,17 +18,19 @@
           <div class="carousel-item">
             <a class="hover-overlay" href="<?=$this->recordLink()->getUrl($data)?>">
               <? $thumb = $this->record($data)->getThumbnail('large'); ?>
-              <img src="<?=$thumb?>" alt="<?=$data->getTitle()?>" title="<?=$data->getTitle() ?>"/>
+              <img src="<?=$thumb?>" alt="<?=str_replace('"','\'',$data->getTitle())?>" title="<?=$data->getTitle() ?>"/>
               <? if ($thumb) :?>
               <div class="content">
                 <div class="contentDarker">
-                <p><b><?=$data->getTitle();?></b></p>
-                <? if ($data->getContainerTitle()) :?>
-                  <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
-                <? endif; ?>
-                <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
-                <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
-              </div>
+                  <p><b><?=$data->getTitle();?></b></p>
+                  <? if ($data->getContainerTitle()) :?>
+                    <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
+                  <? endif; ?>
+                  <? if ($data->getParentFormats()) :?>
+                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
+                  <? endif; ?>
+                  <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+                </div>
               </div>
               <? else: ?>
               <div class="content">
@@ -36,7 +38,9 @@
               <? if ($data->getContainerTitle()) :?>
                 <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
               <? endif; ?>
-              <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
+              <? if ($data->getParentFormats()) :?>
+                <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
+              <? endif; ?>
               <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
               <? endif; ?>
             </a>

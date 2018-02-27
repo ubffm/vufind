@@ -35,13 +35,17 @@ $(document).ready(function() {
 JS;
   ?>
   <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $ilsStatusScript, 'SET'); ?>
-<div class="well well-lg clearfix">
-  <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true, 'checkboxFilters' => $this->checkboxFacets])?>
-  <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
-</div>
-</div>
+  <div id="searchAndNews">
+    <div class="well well-lg clearfix">
+      <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true, 'checkboxFilters' => $this->checkboxFacets])?>
+      <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
+    </div>
+    <?=$this->render("news/stream.phtml")?>
+  </div>
 
-<?=$this->render("news/stream.phtml")?>
+  <?=$this->render("search/random.phtml")?>
+
+</div>
 
 <? if (empty($this->checkboxFacets) && isset($facetList) && is_array($facetList)): ?>
   <div class="search-home-facets">
