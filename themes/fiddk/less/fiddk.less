@@ -38,8 +38,7 @@ header .banner.container.navbar.search {
 /** Searchbar/-box ***/
 
 .well {
-    background-color: @lightgrey;
-    color: @black;
+    background-color: @white;
     text-align: left;
     margin-bottom: 50px;
     min-width: 240px;
@@ -139,6 +138,7 @@ footer {
 /* General Layout */
 body {
     background: @background-color;
+    background-size: 1600px;
 }
 
 .container {
@@ -219,37 +219,6 @@ div#accordion .panel-collapse {
   width: 65%;
   float:left;
   padding-right: 40px;
-}
-
-.random {
-  height: auto;
-  width: 100%;
-  max-width: 360px;
-  float:left;
-  .title {
-    font-weight: bold;
-  }
-  #similar-items-carousel {
-    height: 350px;
-    .item {
-      padding: 0 2em;
-    }
-    .carousel-item {
-      flex-basis: 100%;
-      text-align: center;
-    }
-    .carousel-indicators {
-      bottom: 0;
-    }
-    .carousel-control {
-        &.left, &.left:focus {
-          background-image: linear-gradient(to right, @lightgreyCarousel 0%, transparent 100%);
-        }
-        &.right, &.right:focus {
-          background-image: linear-gradient(to right, transparent 0%, @lightgreyCarousel 100%);
-        }
-    }
-    }
 }
 
 /* Lightbox Layout */

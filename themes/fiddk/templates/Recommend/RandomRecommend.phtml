@@ -1,8 +1,6 @@
-<? $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>  
-  <ul class="list-group random">
-    <li class="list-group-item title">
-      <?=$this->transEsc("Showcase")?>
-    </li>
+<? $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>
+  <div class="random">
+      <p class="title"><?=$this->transEsc("Showcase")?></p>
       <? $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
@@ -48,7 +46,7 @@
       <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEsc('Next') ?>"></span>
     </a>
   </div>
-</ul>
+</div>
 <? endif; ?>
 <?
   $script = <<<JS
