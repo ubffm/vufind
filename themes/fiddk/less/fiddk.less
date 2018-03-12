@@ -42,6 +42,8 @@ header .banner.container.navbar.search {
     text-align: left;
     margin-bottom: 50px;
     min-width: 240px;
+    box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
+    border: none;
 }
 
 #searchForm  {
@@ -135,10 +137,19 @@ footer {
   }
 }
 
-/* General Layout */
+/* General Layout 
 body {
     background: @background-color;
     background-size: 1600px;
+}
+*/
+
+body {
+    background-attachment: fixed;
+    background-image: url("../../images/dk_bg.jpg");
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .container {
@@ -346,6 +357,32 @@ span.toggleContainer {
     color: @brand-primary;
     cursor: pointer;
   }
+}
+.title {
+  margin-top: 10px;
+}
+.random {
+  box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
+  border-radius: 6px;
+}
+a.carousel-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+#similar-items-carousel .carousel-indicators {
+  bottom: -10px !important;
+}
+.stream.well {
+  height: 182px;
+}
+.form-control {
+  padding: 6px;
+}
+#similar-items-carousel .hover-overlay:hover .content {
+ background: none;
+}
+#similar-items-carousel .hover-overlay:hover .contentDarker {
+ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
 }
 
 /* TRAILER */
