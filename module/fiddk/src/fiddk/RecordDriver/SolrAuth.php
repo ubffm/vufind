@@ -148,14 +148,17 @@ namespace fiddk\RecordDriver;
             $agent->birthDate = isset($dates["birthDate"]) ? $dates["birthDate"] : '';
             $agent->deathDate = isset($dates["deathDate"]) ? $dates["deathDate"] : '';
 
-            $agent->birthPlace = $this->getBirthPlace();
-            $agent->deathPlace = $this->getDeathPlace();
+            $places = $this->getBirthDeathPlace();
+            $agent->birthPlace = isset($places["birthPlace"]) ? $places["birthPlace"] : '';
+            $agent->deathPlace = isset($places["deathPlace"]) ? $places["deathPlace"] : '';
+
             $agent->depiction = $this->getDepiction();
-            //$agent->prof = $this->getOccupation();
+            $agent->prof = $this->getOccupation();
 
             if ($full) {
                 $agent->bio = implode('; ',$this->getBioInfo());
                 $agent->variants = $this->getUseFor();
+                $agent->provider = "Tanzarchiv";
             }
 
            return $agent;
@@ -257,14 +260,26 @@ namespace fiddk\RecordDriver;
         }
 
         /**
-         * Get the birth place
+         * Get the birth / death place
          *
          * @return array
          */
-        public function getBirthPlace()
+        public function getBirthDeathPlace()
         {
-            return isset($this->fields['birth_place'])
-                ? $this->fields['birth_place'] : '';
+          $persons = isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [];
+          $retval = [];
+          foreach ($persons as $person) {
+            foreach ($person as $elem) {
+               $name = $elem->nodeName;
+               if ($name == 'rdaGr2:placeOfBirth') {
+                   $retval["birthPlace"] = $this->getResourceOrLiteral($elem,$persons);
+          }
+          if ($name == 'rdaGr2:placeOfDeath') {
+              $retval["deathPlace"] = $this->getResourceOrLiteral($elem,$persons);
+     }
+       }
+    }
+    return $retval;
         }
 
         /**
