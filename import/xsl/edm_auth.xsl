@@ -36,11 +36,11 @@
                     <xsl:with-param name="type" select="'Corporate Name'"/>
                 </xsl:call-template>
             </xsl:for-each>
-            <xsl:for-each select="/rdf:RDF/edm:Event">
+            <!-- <xsl:for-each select="/rdf:RDF/edm:Event">
                 <xsl:call-template name="doc">
                     <xsl:with-param name="type" select="'Event'"/>
                 </xsl:call-template>
-            </xsl:for-each>
+            </xsl:for-each> -->
         </xsl:element>
     </xsl:template>
 
@@ -131,7 +131,15 @@
                         </xsl:attribute>
                         <xsl:value-of select="normalize-space(.)"/>
                     </xsl:element>
-                </xslif>
+                </xsl:if>
+            <xsl:if test="name() = 'foaf:depiction'">
+                <xsl:element name="field">
+                    <xsl:attribute name="name">
+                        <xsl:text>thumbnail</xsl:text>
+                    </xsl:attribute>
+                    <xsl:value-of select="normalize-space(@rdf:resource)"/>
+                </xsl:element>
+            </xsl:if>
         </xsl:for-each>
 
     </xsl:template>

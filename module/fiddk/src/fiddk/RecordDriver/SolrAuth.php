@@ -75,14 +75,14 @@ namespace fiddk\RecordDriver;
         }
 
         public function getAgentFacts($id,$full) {
-          if (explode('_', $id)[0] == 'gnd') {
-            return $this->getEntityFacts($id,$full);
+          if ($full && explode('_', $id)[0] == 'gnd') {
+            return $this->getEntityFacts($id);
           } else {
             return $this->getFactsFromIndex($id,$full);
           }
         }
 
-        public function getEntityFacts($id,$full) {
+        public function getEntityFacts($id) {
 
             $agent = new Agent();
             $agent->provider = "entityFacts";
@@ -103,13 +103,11 @@ namespace fiddk\RecordDriver;
                         \Normalizer::normalize($prof->{"preferredName"},\Normalizer::NFC) : '';
                    }
                }
-                   if ($full) {
                        $agent->bio = isset($obj->biographicalOrHistoricalInformation) ? $obj->biographicalOrHistoricalInformation : '';
                        if (isset($obj->placeOfActivity)) {
                        foreach ($obj->placeOfActivity as $poa) {
                           $agent->placeOfActivity[] = isset($poa->{"preferredName"}) ? $poa->{"preferredName"} : '';
                        }
-                   }
                    }
                } else {
                    $agent->establishment = isset($obj->dateOfEstablishment[0]) ? $obj->dateOfEstablishment[0] : '';
@@ -119,23 +117,22 @@ namespace fiddk\RecordDriver;
                      $agent->topic[] = isset($top->{"preferredName"}) ? \Normalizer::normalize($top->{"preferredName"},\Normalizer::NFC) : '';
                    }
                }
-                   if ($full) {
                      if (isset($obj->placeOfBusiness)) {
                    foreach ($obj->placeOfBusiness as $pob) {
                         $agent->placeOfBusiness[] = \Normalizer::normalize($pob->{"preferredName"},\Normalizer::NFC);
                    }
-                  }
               }
                }
-               if ($full) {
                    foreach ($obj->sameAs as $link) {
                         $id = $link->{"@id"};
                         $name = \Normalizer::normalize($link->collection->name,\Normalizer::NFC);
                         $icon = isset($link->collection->icon) ? $link->collection->icon : '';
                         $agent->sameAs[] = [$id,$icon,$name];
                     }
+                    if ($this->getCHLex()) {
+                      $agent->sameAs[] = $this->getCHLex();
+                    }
                     $agent->variants = isset($obj->variantName) ? $obj->variantName : [];
-               }
              }
            return $agent;
         }
@@ -143,7 +140,6 @@ namespace fiddk\RecordDriver;
         public function getFactsFromIndex($id,$full) {
 
             $agent = new Agent();
-            $agent->provider = "Tanzarchiv";
             $agent->name = $this->getTitle();
 
             $this->getFullRecord();
@@ -154,7 +150,8 @@ namespace fiddk\RecordDriver;
 
             $agent->birthPlace = $this->getBirthPlace();
             $agent->deathPlace = $this->getDeathPlace();
-            $agent->prof = $this->getOccupation();
+            $agent->depiction = $this->getDepiction();
+            //$agent->prof = $this->getOccupation();
 
             if ($full) {
                 $agent->bio = implode('; ',$this->getBioInfo());
@@ -198,6 +195,41 @@ namespace fiddk\RecordDriver;
             return isset($this->fields['bioInfo'])
                 && is_array($this->fields['bioInfo'])
                 ? $this->fields['bioInfo'] : [];
+        }
+
+        /**
+         * Get the biographical info.
+         *
+         * @return array
+         */
+        public function getDepiction()
+        {
+            return isset($this->fields['thumbnail'])
+                ? $this->fields['thumbnail'] : '';
+        }
+
+        /**
+         * Get the birth date
+         *
+         * @return array
+         */
+        public function getCHLex()
+        {
+            $retval = [];
+            $this->getEDMClasses();
+            $persons = isset($this->classes["foaf:Person"])? $this->classes["foaf:Person"] : [];
+            foreach ($persons as $person) {
+              foreach ($person as $elem) {
+                 $name = $elem->nodeName;
+                 if ($name == 'owl:sameAs') {
+                   $resource = $elem->getAttribute('rdf:resource');
+                   if (substr($resource,0,34) === 'http://tls.theaterwissenschaft.ch/') {
+                     $retval = [$resource,'','Theaterlexikon der Schweiz'];
+                   }
+            }
+         }
+      }
+      return $retval;
         }
 
         /**

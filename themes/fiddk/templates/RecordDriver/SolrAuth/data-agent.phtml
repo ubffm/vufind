@@ -114,7 +114,7 @@
            <div class="agent-column">
              <h4><?=$this->transEsc('More Links')?></h4>
              <? foreach ($sameAs as $k => $sa) : ?>
-               <a href="<?=$sa[0]?>" target="_blank"><i class="external-icon"><img src="<?=$sa[1]?>"></i><?=$this->escapeHtml($sa[2]);?></a><br/>
+           <a href="<?=$sa[0]?>" target="_blank"><i class="external-icon"><img src="<?=$sa[1]?>"></i><?=$this->escapeHtml($sa[2]);?></a><br/>
                <? if(array_key_exists($k+1,$sameAs)):?>
                   <hr/>
                <? endif;?>
