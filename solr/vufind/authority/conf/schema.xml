@@ -57,7 +57,7 @@
     <field name="country" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="related_place" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="field_of_activity" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="occupation" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="occupation" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="occupation_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="gender" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -82,4 +82,5 @@
   <copyField source="heading" dest="heading_keywords" />
   <copyField source="use_for" dest="use_for_keywords" />
   <copyField source="see_also" dest="see_also_keywords" />
+  <copyField source="occupation" dest="occupation_facet"/>
 </schema>
