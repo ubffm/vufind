@@ -77,7 +77,7 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
             // Attempt to send the email and show an appropriate flash message:
             try {
                 $mailer = $this->serviceLocator->get('VuFind\Mailer');
-                $mailer->setMaxRecipients(2);
+                $mailer->setMaxRecipients(3);
                 $mailer->send(
                     $mailer->stringToAddressList($recipient_email),
                     new Address($sender_email, $sender_name),
