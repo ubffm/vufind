@@ -192,10 +192,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setTemplateLine(
              'In', 'getContainerTitle', 'data-containerTitle.phtml'
         );
-        $spec->setLine(
-            'Format', 'getFormats', 'RecordHelper',
-            ['helperMethod' => 'getFormatList']
-        );
         // normally only one of the next three is contained in the data
         $spec->setTemplateLine(
             'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'

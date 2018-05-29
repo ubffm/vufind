@@ -215,7 +215,17 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when
-                    test="$dProvider = 'Mime Centrum Berlin' or $dProvider = 'Tanzarchiv Leipzig'">
+                    test="$dProvider = 'Internationales Theaterinstitut/Mime Centrum' or $dProvider = 'Tanzarchiv Leipzig'">
+                    <xsl:variable name="dprov">
+                        <xsl:choose>
+                            <xsl:when test="$dProvider = 'Internationales Theaterinstitut/Mime Centrum'">
+                                <xsl:value-of select="concat(substring-before($dProvider,'/'),' - ',substring-after($dProvider,'/'))"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$dProvider"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>                    
                     <xsl:element name="field">
                         <xsl:attribute name="name">
                             <xsl:text>institutionFacet</xsl:text>
@@ -227,7 +237,7 @@
                             <xsl:text>institutionFacet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of
-                            select="concat('1/Verbund Deutscher Tanzarchive/', $dProvider, '/')"/>
+                            select="concat('1/Verbund Deutscher Tanzarchive/', $dprov, '/')"/>
                     </xsl:element>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
@@ -235,7 +245,7 @@
                         </xsl:attribute>
                         <xsl:choose>
                             <xsl:when
-                                test="$dProvider = 'Mime Centrum Berlin' and $types = 'Druckschrift'">
+                                test="$dProvider = 'Internationales Theaterinstitut/Mime Centrum' and $types = 'Druckschrift'">
                                 <xsl:text>0</xsl:text>
                             </xsl:when>
                             <xsl:when
@@ -492,7 +502,8 @@
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:element>
         </xsl:for-each>
-        <xsl:if test="$cho/dcterms:hasPart">
+        <!-- if also isPartOf is_hierarchy_id is added later on -->
+        <xsl:if test="$cho/dcterms:hasPart and not($cho/dcterms:isPartOf)">
             <xsl:element name="field">
                 <xsl:attribute name="name">
                     <xsl:text>is_hierarchy_id</xsl:text>

@@ -306,6 +306,9 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
     {
         $chos = isset($this->classes['edm:ProvidedCHO']) ? $this->classes['edm:ProvidedCHO'] : [];
         $contents = [];
+        if ($this->getFormats()) {
+          $contents["Format"] = $this->getFormats();
+        }
 
         foreach ($chos as $cho) {
             foreach ($cho as $elem) {
@@ -433,7 +436,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                   break;
                case 'edm:dataProvider':
                   $seeAlso['edm:dataProvider'][] = $this->getDataProvider($elem, $orgs);
-                  if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
+                  if ($this->isArchiveRecord() && (strpos($this->getUniqueId(),"DTK") === 0 || strpos($this->getUniqueId(),"MCB") === 0) && $this->getCallNumber()) {
                      $seeAlso['Ask Archive']['Mail'][] = 'mail_to ' . array_values($this->getDataProvider($elem, $orgs))[0];
                   }
                   break;
@@ -453,7 +456,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
                  break;
               case 'dm2e:callNumber':
               case 'dm2e:shelfmarkLocation':
-                 if ($this->isArchiveRecord() && strpos($this->getUniqueId(),"DTK") === 0) {
+                 if ($this->isArchiveRecord() && (strpos($this->getUniqueId(),"DTK") === 0 || strpos($this->getUniqueId(),"MCB") === 0)) {
                    $seeAlso['Ask Archive']['CallNumber'][] = $elem->nodeValue;
                  }
                  break;

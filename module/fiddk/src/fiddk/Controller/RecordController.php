@@ -63,12 +63,9 @@ class RecordController extends \VuFind\Controller\RecordController
           ? intval($config->Mail->maximum_recipients) : 1;
       $user = $this->getUser();
 
-      list($inst,$recip) = explode('|',$config->Dprovider->dprov_to->toArray()[0]);
-      list($inst,$text,$text_en,$txt) = explode('|',$config->Dprovider->dprov_text->toArray()[0]);
-      $view->to = $recip;
-      $view->text = $text;
-      $view->text_en = $text_en;
-      $view->txt = $txt;
+      $abbr = strtolower(substr($this->driver->getUniqueId(),0,3));
+      $view->to = $config->Dprovider->dprov_to[$abbr];
+      list($view->text,$view->text_en,$view->txt) = explode('|',$config->Dprovider->dprov_text->toArray()[$abbr]);
       // this is not so elegant... change record structure
       $view->callNumber = $this->params()->fromQuery('callNumber');
 

@@ -23,6 +23,11 @@
         ## into Solr's Update XML messages for the import with vufind.
         ## Just XSLT-version 1.0 possible in vufind!!
         ################################################################### -->
+    
+    <!-- <xsl:param name="concepts" select="document('file:/C:/Users/Administrator/vbox_common/data/agents/add/valid_concepts.xml')"/>
+    <xsl:param name="timespans" select="document('file:/C:/Users/Administrator/vbox_common/data/agents/add/valid_timespans.xml')"/> -->
+    <xsl:param name="concepts" select="document('/media/sf_vbox_common/data/agents/add/valid_concepts.xml')"/>
+    <xsl:param name="timespans" select="document('/media/sf_vbox_common/data/agents/add/valid_timespans.xml')"/>
 
     <xsl:template match="/">
         <xsl:element name="add">
@@ -58,9 +63,14 @@
             <xsl:variable name="fullrecord">
                 <xsl:element name="rdf:RDF">
                     <xsl:copy-of select="."/>
-                    <!-- <xsl:for-each select="./rdaGr2:dateOfBirth/@rdf:resource | ./rdaGr2:dateOfDeath/@rdf:resource">
-                        <xsl:copy-of select="../../../edm:TimeSpan[@rdf:about = current()]"/>
-                    </xsl:for-each> -->
+                    <xsl:variable name="dateOfBirth" select="./rdaGr2:dateOfBirth/@rdf:resource"/>                                      
+                    <xsl:if test="$dateOfBirth != ''">
+                        <xsl:copy-of select="$timespans/rdf:RDF/edm:TimeSpan[@rdf:about = $dateOfBirth]"/>
+                    </xsl:if>
+                    <xsl:variable name="dateOfDeath" select="./rdaGr2:dateOfDeath/@rdf:resource"/>                                      
+                    <xsl:if test="$dateOfDeath != ''">
+                        <xsl:copy-of select="$timespans/rdf:RDF/edm:TimeSpan[@rdf:about = $dateOfDeath]"/>
+                    </xsl:if>
                 </xsl:element>
             </xsl:variable>
             <xsl:element name="field">
@@ -71,7 +81,6 @@
                 <xsl:copy-of
                     select="php:function('VuFind::xmlAsText', exsl:node-set($fullrecord)/rdf:RDF)"/>
               </xsl:element>
-
             <!--maybe some key map?
             <xsl:element name="field">
                 <xsl:attribute name="name">
@@ -124,14 +133,26 @@
         </xsl:element>
 
         <xsl:for-each select="child::*">
-                <xsl:if test="name() = 'rdaGr2:professionOrOccupation'">
+                <xsl:if test="name() = 'rdaGr2:professionOrOccupation' and @rdf:resource">
+                    <xsl:variable name="resourceID" select="@rdf:resource"/>
+                    <xsl:variable name="occupation" select="$concepts/rdf:RDF/skos:Concept[@rdf:about = $resourceID]/skos:prefLabel"/>
+                    <xsl:if test="$occupation != ''">
+                        <xsl:element name="field">
+                            <xsl:attribute name="name">
+                                <xsl:text>occupation</xsl:text>
+                            </xsl:attribute>
+                            <xsl:value-of select="normalize-space($occupation)"/>
+                        </xsl:element>
+                    </xsl:if>                    
+                </xsl:if>
+                <xsl:if test="name() = 'rdaGr2:professionOrOccupation' and text() != ''">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
                             <xsl:text>occupation</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="normalize-space(.)"/>
-                    </xsl:element>
-                </xsl:if>
+                    </xsl:element>                                    
+            </xsl:if>
             <xsl:if test="name() = 'foaf:depiction'">
                 <xsl:element name="field">
                     <xsl:attribute name="name">
