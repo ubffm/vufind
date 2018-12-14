@@ -1,14 +1,7 @@
-<? // Set page title.
+<?php // Set page title.
 $this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
 <h2><?=$this->transEsc('Networks')?></h2>
-
-<?
-if ($this->plugin('translate')
-    ->getTranslator()
-    ->getLocale() == 'de')
-    {
-    ?>
 
 <a href="<?=$this->url('content-page', ['page' => 'netzwerke'])?>">Fachgesellschaften und Arbeitskreise</a><br>
 <b>Gedächtnisinstitutionen der Darstellenden Künste</b><br>
@@ -18,6 +11,7 @@ if ($this->plugin('translate')
 <p>In kurzen Portraits werden Ihnen Bibliotheken, Archive und Sammlungen
 	der darstellenden Kunst mit ihren Sammelschwerpunkten vorgestellt.</p>
 
+<div class="card">
 <h4>
 	<a target="_blank" href="http://www.adk.de/de/archiv/archivbestand/darstellende-kunst/">Akademie
 		der Künste Berlin, Archiv Darstellende Kunst</a>
@@ -57,10 +51,10 @@ if ($this->plugin('translate')
 </p>
 
 Webseite: <a target="_blank" href="http://www.adk.de/de/archiv/archivbestand/darstellende-kunst/">www.adk.de/de/archiv/archivbestand/darstellende-kunst</a><br>
-E-Mail: <a href="mailto:archivdarstellendekunst@adk.de">archivdarstellendekunst@adk.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:archivdarstellendekunst@adk.de">archivdarstellendekunst@adk.de</a>
+</div>
 
+<div class="card">
 <h4>
 	<a target="_blank" href="http://www.adk.de/de/archiv/bibliothek">Akademie der Künste
 		Berlin, Bibliothek</a>
@@ -85,10 +79,10 @@ E-Mail: <a href="mailto:archivdarstellendekunst@adk.de">archivdarstellendekunst@
 </p>
 
 Webseite: <a target="_blank" href="http://www.adk.de/de/archiv/bibliothek">www.adk.de/de/archiv/bibliothek</a><br>
-E-Mail: <a href="mailto:Bibliothek@adk.de">Bibliothek@adk.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:Bibliothek@adk.de">Bibliothek@adk.de</a>
+</div>
 
+<div class="card">
 <h4>
 	<a target="_blank" href="http://www.mimecentrum.de">Internationales Theaterinstitut Deutschland, Mime Centrum Berlin, Mediathek für Tanz und Theater</a>
 </h4>
@@ -115,10 +109,10 @@ E-Mail: <a href="mailto:Bibliothek@adk.de">Bibliothek@adk.de</a><br>
 </p>
 
 Webseite: <a target="_blank" href="http://www.mimecentrum.de">www.mimecentrum.de</a><br>
-E-Mail: <a href="mailto:mediathek@mimecentrum.de">mediathek@mimecentrum.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:mediathek@mimecentrum.de">mediathek@mimecentrum.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen/index.html">Freie Universität Berlin, Institut für Theaterwissenschaft,
 	Theaterhistorische Sammlungen</a></h4>
 <p>
@@ -148,10 +142,10 @@ E-Mail: <a href="mailto:mediathek@mimecentrum.de">mediathek@mimecentrum.de</a><b
 </p>
 
 Webseite: <a target="_blank" href="http://www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen/index.html">www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen</a><br>
-E-Mail: <a href="mailto:peter.jammerthal@fu-berlin.de">peter.jammerthal@fu-berlin.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:peter.jammerthal@fu-berlin.de">peter.jammerthal@fu-berlin.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.deutsches-tanzfilminstitut.de/">Deutsches Tanzfilminstitut Bremen</a></h4>
 <p>Das Deutsche Tanzfilminstitut Bremen ist ein nationales
 	Archiv zur Sammlung, Aufbereitung und Produktion von audiovisuellen
@@ -163,10 +157,10 @@ E-Mail: <a href="mailto:peter.jammerthal@fu-berlin.de">peter.jammerthal@fu-berli
 </p>
 
 Webseite: <a target="_blank" href="http://www.deutsches-tanzfilminstitut.de/">www.deutsches-tanzfilminstitut.de</a><br>
-E-Mail: <a href="http://deutsches-tanzfilminstitut.de/web/?page_id=9118">Mailformular</a><br>
-<br>
-<br>
+E-Mail: <a href="http://deutsches-tanzfilminstitut.de/web/?page_id=9118">Mailformular</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="https://www.duesseldorf.de/theatermuseum/">Theatermuseum der Landeshauptstadt Düsseldorf</a></h4>
 <p>  Das
 	Theatermuseum ging aus dem 1938 gegründeten privaten Theaterarchiv des
@@ -183,10 +177,10 @@ E-Mail: <a href="http://deutsches-tanzfilminstitut.de/web/?page_id=9118">Mailfor
 </p>
 
 Webseite: <a target="_blank" href="https://www.duesseldorf.de/theatermuseum/">www.duesseldorf.de/theatermuseum</a><br>
-E-Mail: <a href="mailto:archiv.theatermuseum@duesseldorf.de">archiv.theatermuseum@duesseldorf.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:archiv.theatermuseum@duesseldorf.de">archiv.theatermuseum@duesseldorf.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.ub.uni-frankfurt.de/musik/musik.html ">Universitätsbibliothek Frankfurt am Main -Fachinformationsdienst
 	Darstellende Kunst</a></h4>
 <p>In
@@ -200,10 +194,10 @@ E-Mail: <a href="mailto:archiv.theatermuseum@duesseldorf.de">archiv.theatermuseu
 </p>
 
 Webseite: <a target="_blank" href="http://www.ub.uni-frankfurt.de/musik/musik.html">www.ub.uni-frankfurt.de/musik/musik.html</a><br>
-E-Mail: <a href="mailto:ls-spezialsammlungen@ub.uni-frankfurt.de">ls-spezialsammlungen@ub.uni-frankfurt.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:ls-spezialsammlungen@ub.uni-frankfurt.de">ls-spezialsammlungen@ub.uni-frankfurt.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44">Theatermuseum Hannover</a></h4>
 <p> Der Sammlungsschwerpunkt des Archivs des Theatermuseums
 	Hannover liegt auf den Materialien und Dokumenten zu den Aufführungen
@@ -219,10 +213,10 @@ E-Mail: <a href="mailto:ls-spezialsammlungen@ub.uni-frankfurt.de">ls-spezialsamm
 </p>
 
 Webseite: <a target="_blank" href="http://www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44">www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44</a><br>
-E-Mail: <a href="mailto:theatermuseum@staatstheater-hannover.de">theatermuseum@staatstheater-hannover.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:theatermuseum@staatstheater-hannover.de">theatermuseum@staatstheater-hannover.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.sk-kultur.de/tanz">Deutsches Tanzarchiv Köln- Auszug aus der archivinternen Datenbank
 	des Deutschen Tanzarchivs Köln (TIS-Tanzinformationssystem)</a></h4>
 <p>  Das Archiv beherbergt über 400
@@ -251,10 +245,10 @@ E-Mail: <a href="mailto:theatermuseum@staatstheater-hannover.de">theatermuseum@s
 </p>
 
 Webseite: <a target="_blank" href="http://www.sk-kultur.de/tanz">www.sk-kultur.de/tanz</a><br>
-E-Mail: <a href="mailto:tanzarchiv@sk-kultur.de">tanzarchiv@sk-kultur.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:tanzarchiv@sk-kultur.de">tanzarchiv@sk-kultur.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://tws.phil-fak.uni-koeln.de/21345.html">Theaterwissenschaftliche Sammlung der Universität zu Köln</a></h4>
 
 <p> Die Theaterwissenschaftliche Sammlung der Universität zu
@@ -267,11 +261,10 @@ E-Mail: <a href="mailto:tanzarchiv@sk-kultur.de">tanzarchiv@sk-kultur.de</a><br>
 </p>
 
 Webseite: <a target="_blank" href="http://tws.phil-fak.uni-koeln.de/21345.html">tws.phil-fak.uni-koeln.de/21345.html</a><br>
-E-Mail: <a href="mailto:info-tws@uni-koeln.de">info-tws@uni-koeln.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:info-tws@uni-koeln.de">info-tws@uni-koeln.de</a>
+</div>
 
-
+<div class="card">
 <h4><a href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070">Tanzarchiv Leipzig</a></h4>
 <p>
 	Gegründet 1957 von Kurt Petermann als Sammlung traditionell
@@ -305,10 +298,10 @@ Tanz in seiner Vielfalt; Tanz in Bezug zu anderen
 	Plakate, Programmhefte, Postkarten, Grafiken</p>
 
 Webseite: <a target="_blank" href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070">www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070</a><br>
-E-Mail: <a href="mailto:ruiz@ub.uni-leipzig.de">ruiz@ub.uni-leipzig.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:ruiz@ub.uni-leipzig.de">ruiz@ub.uni-leipzig.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.deutschestheatermuseum.de/">Deutsches Theatermuseum München, Bibliothek</a></h4>
 
 <p> Das Deutsche
@@ -325,10 +318,10 @@ E-Mail: <a href="mailto:ruiz@ub.uni-leipzig.de">ruiz@ub.uni-leipzig.de</a><br>
 </p>
 
 Webseite: <a target="_blank" href="http://www.deutschestheatermuseum.de/">www.deutschestheatermuseum.de</a><br>
-E-Mail: <a href="mailto:bibliothek@deutschestheatermuseum.de">bibliothek@deutschestheatermuseum.de</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:bibliothek@deutschestheatermuseum.de">bibliothek@deutschestheatermuseum.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.theatersammlung.ch">Schweizerische Theatersammlung Bern</a></h4>
 
 <p> Die Schweizerische Theatersammlung ist eine nationale
@@ -346,11 +339,10 @@ E-Mail: <a href="mailto:bibliothek@deutschestheatermuseum.de">bibliothek@deutsch
 </p>
 
 Webseite: <a target="_blank" href="http://www.theatersammlung.ch">www.theatersammlung.ch</a><br>
-E-Mail: <a href="mailto:info@theatersammlung.ch">info@theatersammlung.ch</a><br>
-<br>
-<br>
+E-Mail: <a href="mailto:info@theatersammlung.ch">info@theatersammlung.ch</a>
+</div>
 
-
+<div class="card">
 <h4><a target="_blank" href="http://www.theatermuseum.at">Theatermuseum Wien</a></h4>
 
 <p>Im Gründungsjahr der Theatersammlung der
@@ -366,302 +358,5 @@ E-Mail: <a href="mailto:info@theatersammlung.ch">info@theatersammlung.ch</a><br>
 </p>
 
 Webseite: <a target="_blank" href="http://www.theatermuseum.at">www.theatermuseum.at</a><br>
-E-Mail: <a href="mailto:bibliothek@theatermuseum.at">bibliothek@theatermuseum.at</a><br>
-<br>
-<br>
-
-<?
-} else {
-    ?>
-
-<a href="<?=$this->url('content-page', ['page' => 'netzwerke'])?>">Professional Associations and Research Groups in the Field</a><br>
-<b>Institutions Documenting the History of the Performing Arts</b><br>
-<a href="<?=$this->url('content-page', ['page' => 'netzwerke3'])?>">Associations, Research Groups, etc.</a>
-<br><br>
-
-<p>Libraries, archives and collections of documents related to the performing arts are presented below with
-  their individual focal points in a series of short portraits.
-</p>
-
-<h4>
-	<a target="_blank" href="http://www.adk.de/en/archive/archive-inventory/performing_arts_archive/">Academy of the Arts Berlin, Performing Arts Archive</a>
-</h4>
-<p>
-	The Archive collects, preserves, and catalogues documents and other items belonging
-  to directors and conductors of theatre and musical performances; actors, dancers and
-  choreographers; stage designers; critics; theatre scholars; dramatists; dramatologists;
-  as well as cabarettists and composers working primarily in cabaret. Staging documentation
-  has been used here as a submethod of theatre documentation to record how current stage
-  productions by leading directors in theatre and musical performances came into being. <br>
-  The seed for the Performing Arts Archive was sown in 1951-52, and in 1960 it received
-  its first inherited private collections. The documents and other items it houses represent
-  the period from the 19th century to today. The Archive preserves documents and items belonging
-  to 270 people as well as housing 19 theme-based collections, including about 1,300 staging
-  documentations. This adds up to more than 1,800 metres of archive material, over 25,000
-  oversize pages and more than 35,000 photos.</p>
-<p>Focal points of the collection:
-<ul>
-	<li>Members of the Academy of the Arts</li>
-	<li>Theatre in Berlin</li>
-	<li>Theatre in exile</li>
-	<li>Theatre in the German Democratic Republic</li>
-	<li>Theatre in the Federal Republic of Germany</li>
-	<li>Contemporary theatre</li>
-	<li>Expressionist dance</li>
-	<li>Cabaret</li>
-	<li>Criticism and Theatre Studies</li>
-	<li>Archives owned by theatres and associations</li>
-	<li>Staging documentation of theatre and musical performances</li>
-	<li>Documentation of theatre during the period of German reunification</li>
-</ul>
-</p>
-
-Website: <a target="_blank" href="http://www.adk.de/en/archive/archive-inventory/performing_arts_archive/">www.adk.de/en/archive/archive-inventory/performing_arts_archive/</a><br>
-E-mail: <a href="mailto:archivdarstellendekunst@adk.de">archivdarstellendekunst@adk.de</a><br>
-<br>
-<br>
-
-<h4>
-	<a target="_blank" href="http://www.adk.de/en/archive/the-academy-of-arts-library/">Academy of the Arts Berlin, Library</a>
-</h4>
-<p>
-	The Library houses documents and other items amounting to over 600,000 volumes on all
-  disciplines in the arts. The focal point is the works of the Academy’s members and award
-  winners. The documents and other items are supplemented by numerous special collections,
-  with those on expressionism and literature produced in exile from 1933-1945 being
-  especially noteworthy. <br>
-	In addition, the Library boasts extensive collections of stage manuscripts, national
-  and international exhibition catalogues, rare periodicals and the collections of
-  institutions and artists’ associations.<br>
-	Its unique character is underlined by over 300 private collections left to the Library
-  by leading writers, architects and artists, as well as bibliophiles and members of the
-  cultural establishment in both the German Democratic Republic and the Federal Republic
-  of Germany.<br>
-	For the <i>SIS</i> web portal, private collections in the field of performing arts have been selected,
-  including those of Bertolt Brecht, Bernhard Minetti, Herbert Ihering and Christoph Schlingensief.
-</p>
-
-Website: <a target="_blank" href="http://www.adk.de/en/archive/the-academy-of-arts-library/">www.adk.de/en/archive/the-academy-of-arts-library/</a><br>
-E-mail: <a href="mailto:Bibliothek@adk.de">Bibliothek@adk.de</a><br>
-<br>
-<br>
-
-<h4>
-	<a target="_blank" href="http://www.mimecentrum.de">Federal Republic of Germany Centre of the International Theatre Institute e.V., Mime Centrum Berlin,  Dance and Theatre Media Library</a>
-</h4>
-<p>The Mime Centrum Berlin is a public institute dedicated to documentation, information,
-  research and hands-on work in dance and theatre.<br>
-	With its video studio, a large rehearsal and workshop studio and an extensive media
-  library, the Mime Centre explores the juxtaposition of hands-on and theoretical approaches
-  to questions of bodily expression and types of movement in the performing arts.<br>
-	The Media Library, with its more than 8,000 videos, books and periodicals, provides visitors
-  a view into developments in the performing arts at a national and international level.
-  The media library’s collection of documents and other items is being continually expanded
-  by its own documentations, acquisition of collections, and items on loan from artists,
-  festivals and theatres.<br>
-	The Berlin Dance and Theatre Centre promotes the exchange of ideas between artists, researchers,
-  journalists and others interested in the performing arts. At public events such as film viewings,
-  lectures and discussions, it offers the public the opportunity to learn about significant
-  developments in dance and theatre, both past and present.
-</p>
-
-Website: <a target="_blank" href="http://www.mimecentrum.de">www.mimecentrum.de</a><br>
-E-mail: <a href="mailto:mediathek@mimecentrum.de">mediathek@mimecentrum.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen/index.html">Freie
-  Universität Berlin, Institute of Theatre Studies, Historical Theatre Collections</a></h4>
-<p>
- The Free University’s Institute of Theatre Studies offers courses in Theatre Studies (BA and MA),
- Dance Studies (MA), Film Studies (BA and MA), and Music Studies. The courses are primarily based on
- theoretical, historical, and critical approaches, with the Institute being part of an international
- and interdisciplinary research community, maintaining contact with other institutes in the field
- with both a theoretical and hands-on orientation.<br>
- The Institute’s Historical Theatre Collections include extensive archives, especially on the history
- of theatre in Berlin from the 18th to the 21st centuries, with a focus on the period from 1900-1950.
- They are all open to the public and as part of the Institute’s library, can be viewed free of charge.
- The Institute houses the Walter Unruh Historical Theatre Collection, on permanent loan from the Federal
- State of Berlin, one of the largest formerly private collections of this kind. In addition, the
- Institute’s archive contains additional significant inherited private collections left to it by artists,
- and extensive collections of photos, theatre bulletins and press excerpts. Special attention is being
- paid to continuing the collection of theatre programmes. <br>
- Not all of the documents and other items have been entered into the database. You will find a detailed
- overview of the books and items on the Institute’s homepage:
-</p>
-
-Website: <a target="_blank" href="http://www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen/index.html">www.geisteswissenschaften.fu-berlin.de/we07/institut/sammlungen</a><br>
-E-mail: <a href="mailto:peter.jammerthal@fu-berlin.de">peter.jammerthal@fu-berlin.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.deutsches-tanzfilminstitut.de/">German Institute of Dance Film Bremen</a></h4>
-<p>The German Institute of Dance Video in Bremen is a national archive that collects, processes and produces
-  audiovisual recordings of dance performances. It was founded in 1988 as a non-profit organisation with the
-  aim of supporting the work of choreographers, dance companies, theatres, television production companies
-  and journalists in the field by providing access to its video archive. It also assists in the production,
-  restoration and digitalisation of dance videos and films.
-</p>
-
-Website: <a target="_blank" href="http://www.deutsches-tanzfilminstitut.de/">www.deutsches-tanzfilminstitut.de</a><br>
-E-mail: <a href="http://deutsches-tanzfilminstitut.de/web/?page_id=9118">Mailformular</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="https://www.duesseldorf.de/theatermuseum/">Theatre Museum of the State Capital of Düsseldorf</a></h4>
-
-<p>The Theatre Museum grew out of the private theatre archive of the Düsseldorf Dumont-Lindemann Actors’ Association
-  (1904 - 1933); the archive was founded in 1938. It was donated to the City of Düsseldorf by Gustaf Lindemann in 1947.
-  Today, the focal point of its collections, research, documentation and exhibitions is the history of theatre in
-  Düsseldorf and the surrounding region beginning in the 16th century. The documents and other items include a wide
-  variety of theatre-related collections: photos, the collection of graphic arts, sources on theatre practice,
-  audiovisual media, hand-written manuscripts, the collection of press excerpts, three-dimensional objects and a
-  specialised library on theatre studies. Most of the documents and other items are from the 20th and 21st centuries.
-</p>
-
-Website: <a target="_blank" href="https://www.duesseldorf.de/theatermuseum/">www.duesseldorf.de/theatermuseum</a><br>
-E-mail: <a href="mailto:archiv.theatermuseum@duesseldorf.de">archiv.theatermuseum@duesseldorf.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.ub.uni-frankfurt.de/musik/musik.html ">University Library Frankfurt am Main - Specialised
-  Information Service Performing Arts</a></h4>
-
-<p>This catalogue excerpt issued by the University Library Frankfurt lists books and other materials (audiovisual media,
-  notes, illustrations, etc.) related to theatre and film studies and published beginning in 1986, as well as periodicals
-  and online publications (all years of publication). <br>
-  The documents and other items are being continually added to as part of the <i>Specialised Information Service Performing Arts</i>.
-</p>
-
-Website: <a target="_blank" href="http://www.ub.uni-frankfurt.de/musik/musik.html">www.ub.uni-frankfurt.de/musik/musik.html</a><br>
-E-mail: <a href="mailto:ls-spezialsammlungen@ub.uni-frankfurt.de">ls-spezialsammlungen@ub.uni-frankfurt.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44">Theatre Museum Hanover</a></h4>
-
-<p>The focal point of the Theatre Museum Hanover’s collections is on documents and other materials related to
-  performances staged by the Federal State Capital of Lower Saxony, or, to be more precise, on the stages of
-  the current State Theatre of Hanover (Opernhaus, Schauspielhaus und Ballhof) as well as the institutions that
-  preceded them. The Museum also houses individual materials related to performances in other Hanover theatres
-  or to performances outside Hanover, but these are not collected systematically. The materials related to opera,
-  acting, ballet, and concerts mostly consist of programmes and / or bulletins, role and scene photos or slides,
-  reviews, stage design models and figurines.
-</p>
-
-Website: <a target="_blank" href="http://www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44">www.staatstheater-hannover.de/schauspiel/index.php?m=95&f=07_seiten&ID_Seite=44</a><br>
-E-mail: <a href="mailto:theatermuseum@staatstheater-hannover.de">theatermuseum@staatstheater-hannover.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.sk-kultur.de/tanz/dtk-english.html">German Dance Archives Cologne – Excerpt from the In-house Database of
-  the German Dance Archive Cologne (Dance Information System)</a></h4>
-
-<p>The Archive houses over 400 inherited private libraries and collections once owned by dancers,
-  choreographers, dance teachers and ballet critics (Harald Kreutzberg, Kurt Jooss, the Duncans,
-  the Sacharoffs, Mary Wigman, Dore Hoyer, etc.).<br>
-	The photo collection includes over 300,000 photos and/or negatives as well as inherited photo
-  collections once owned by people in the field (Siegfried Enkelmann, Dietmar Dünhöft, Hans Rama, etc.).<br>
-	In addition, the Archive has an extensive art collection (inherited private collections once owned
-  by Ernst Oppler, Arthur Grunenberg etc.) as well as a collection of costumes and posters.<br>
-	The documentation section archives approximately 650,000 newspaper excerpts beginning in the 1950s and includes
-  articles on specialised topics such as expressionist dance (1920s - 1930s) as well as approximately 30,000 programmes.<br>
-  The library boasts approximately 14,000 titles and about 20,000 periodicals related to the field.<br>
-  The video library houses over 4,500 films, including camera choreographies, filmed stagings, experimental
-  dance films, musicals, documentaries, and stage recordings.<br>
-  The Dance Museum is next door and exhibits the items and collections.</p>
-<p>The Dance Archive was founded in 1948 by the dancer and teacher Kurt Peters. Since 1986 it has been funded
-  and run by the Stiftung Kultur (Cultural Foundation) in cooperation with the City of Cologne as
-  an informational, documentation and research centre for the field of dance.
-</p>
-
-Website: <a target="_blank" href="http://www.sk-kultur.de/tanz/dtk-english.html">www.sk-kultur.de/tanz/dtk-english.html</a><br>
-E-mail: <a href="mailto:tanzarchiv@sk-kultur.de">tanzarchiv@sk-kultur.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://tws.phil-fak.uni-koeln.de/21345.html">Theatre Collection of the University of Cologne</a></h4>
-
-<p>The Theatre Collection of the University of Cologne is an international documentation and research centre
-  for theatre history and media culture. The focal points of the Collection are German-speaking theatre culture
-  – with an extensive archive of reviews and photos, supplemented by a wide-ranging collection of graphic art –
-  and the approaches to theatre and media in various cultures and epochs.
-</p>
-
-Website: <a target="_blank" href="http://tws.phil-fak.uni-koeln.de/21345.html">tws.phil-fak.uni-koeln.de/21345.html</a><br>
-E-mail: <a href="mailto:info-tws@uni-koeln.de">info-tws@uni-koeln.de</a><br>
-<br>
-<br>
-
-
-<h4><a target="_blank" href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070">Dance Archive Leipzig</a></h4>
-
-<p>
-Founded in 1957 as a collection of traditional folkloric items, the Leipzig Dance Archive has since expanded
-to become a documentation centre representing all types of dance. By the time of his death in 1984, Petermann
-had established the Archive as a well-recognized institution contributing to an understanding of dance as a
-cultural phenomenon. In 1975, the Archive became an associate member of the German Democratic Republic’s Academy
-of Arts. Since 1993, the Dance Archive has been run as a non-profit association founded by the University of
-Leipzig and the Felix Mendelssohn Bartholdy Academy of Music and Theatre. In 2011, the Leipzig Dance Archive
-was taken on the University of Leipzig Library. The documents and other items are divided into a specialised
-library and the dance archive collection, which includes film recordings from the second half of the 20th century,
-literary collections, full and partial inherited private collections, posters, photographs, postcards, microfilm
-and other archive material. Some of the documents and other items have been entered into a database which can be
-viewed in the special collections and using University of Leipzig Library computers. </p>
-
-Website: <a target="_blank" href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070">www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070</a><br>
-E-mail: <a href="mailto:ruiz@ub.uni-leipzig.de">ruiz@ub.uni-leipzig.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.deutschestheatermuseum.de/">German Theatre Museum Munich, Library</a></h4>
-
-<p>The German Theatre Museum not only preserves the history of theatre in Munich, but in Germany as a whole.
-  In addition, it documents the ties linking the theatre and cultural scenes in the various European countries.
-  All in all, the collection consists of approximately 250,000 pages of graphics and approximately 500,000
-  original manuscripts. The German Theatre Museum houses an extensive collection of original graphics from
-  the Baroque period, and the most valuable of the 130,000 volumes date back to the Renaissance. In addition,
-  the Museum owns the largest collection of theatre photographs worldwide, including some dating from the dawn
-  of the photographic era.
-</p>
-
-Website: <a target="_blank" href="http://www.deutschestheatermuseum.de/">www.deutschestheatermuseum.de</a><br>
-E-mail: <a href="mailto:bibliothek@deutschestheatermuseum.de">bibliothek@deutschestheatermuseum.de</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.theatersammlung.ch">Swiss Theatre Collection, Bern</a></h4>
-
-<p>The Swiss Theatre Collection is a national documentation institute dedicated to the Swiss theatre
-  and its works. It was founded as a private initiative by theatre actors in 1927 and in 1978 was given
-  into the care of a privately run foundation with headquarters in Bern. Since it was founded, the
-  Theatre Collection has been collecting and cataloguing metadata related to Swiss theatre events
-  and has archived a wide range of documents describing all types of theatre productions during
-  their preparation, announcement, implementation, recording, description and reception phases.
-  The Collection also owns the largest specialised library, with books, periodicals and scripts related
-  to Swiss theatre. A large proportion of the Collection dates from the 20th century and the present.
-</p>
-
-Website: <a target="_blank" href="http://www.theatersammlung.ch">www.theatersammlung.ch</a><br>
-E-mail: <a href="mailto:info@theatersammlung.ch">info@theatersammlung.ch</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.theatermuseum.at/en">Theatre Museum Vienna</a></h4>
-
-<p>In 1922 the Theatre Collection of the Austrian National Library was founded, with the large
-  number of books acquired from the court theatre actor Hugo Thimig’s private collection providing a
-  basis to which other theatre items and non-book materials were then added. The specialised library
-  which has resulted from these beginnings now boasts approximately 100,000 books, volumes of periodicals,
-  stage manuscripts and theatre bulletins, with the focal points being spoken and musical theatre, dance and
-  ballet, puppet theatre, film, television, and audio plays.
-</p>
-
-Website: <a target="_blank" href="http://www.theatermuseum.at/en/">www.theatermuseum.at/en/</a><br>
-E-mail: <a href="mailto:bibliothek@theatermuseum.at">bibliothek@theatermuseum.at</a><br>
-<br>
-<br>
-
-<?
-  }
-?>
+E-Mail: <a href="mailto:bibliothek@theatermuseum.at">bibliothek@theatermuseum.at</a>
+</div>

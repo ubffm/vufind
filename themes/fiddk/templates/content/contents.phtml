@@ -1,12 +1,11 @@
-<? // Set page title.
+<?php // Set page title.
 $this->headTitle($this->translate('Online Contents') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
-<?
-    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
-?>
 
 <h2>Online Contents (OLC) Darstellende Kunst</h2>
 
-<p>Die Datenbank <a target="_blank" href="http://orsprod.rz.uni-frankfurt.de/LNG=DU/DB=3.6/">Online Contents (kurz OLC) Darstellende Kunst</a> erschließt und weist Inhaltsverzeichnisse von fachrelevanten Zeitschriften aus dem Bereich Theater, Tanz und Performancekunst sortiert nach Autor und Artikeltitel nach.
+<div class="card">
+<p>
+Die Datenbank <a target="_blank" href="http://orsprod.rz.uni-frankfurt.de/LNG=DU/DB=3.6/">Online Contents (kurz OLC) Darstellende Kunst</a> erschließt und weist Inhaltsverzeichnisse von fachrelevanten Zeitschriften aus dem Bereich Theater, Tanz und Performancekunst sortiert nach Autor und Artikeltitel nach.
 <br>
 Betreut wird diese kostenlose und frei zugängliche Datenbank von der <a target="_blank" href="http://www.ub.uni-frankfurt.de/">Universitätsbibliothek Frankfurt am Main</a>.
 </p>
@@ -14,26 +13,5 @@ Betreut wird diese kostenlose und frei zugängliche Datenbank von der <a target=
 <b>My Current Contents Darstellende Kunst (myCCDK) </b> <br>
 Sie wählen in <a target="_blank" href="http://mycc.hebis.de/mycc/myCCDK/mycc-start.html">myCCDK</a> einzelne Zeitschriften aus, und wir liefern Ihnen dazu die jeweils
 aktuellen Inhaltsverzeichnisse per E-Mail. Gewünschte Aufsätze, die Sie nicht in Ihrer Bibliothek vor Ort finden, können Sie per Fernleihe oder
-über den kostenpflichtigen Dokumentlieferdienst <a target="_blank" href="http://www.subito-doc.de/">Subito</a> bestellen.
-</p>
-
-<?
-    } else {
-?>
-
-<h2><?=$this->transEsc('Online Contents')?></h2>
-
-<p>The database <a target="_blank" href="http://orsprod.rz.uni-frankfurt.de/LNG=DU/DB=3.6/">Online Contents (OLC) Performing Arts</a> catalogues and lists tables of contents
-  from periodicals dealing with theatre, dance, and performance art, sorted by the author’s name and the title of the article.<br>
-This database, which can be used free of charge, is run by the <a target="_blank" href="http://www.ub.uni-frankfurt.de/">University Library Frankfurt am Main</a>.
-</p>
-<p>We also offer you the following service free of charge:<br>
-<b>My Current Contents Performing Arts (myCCDK)</b> <br>
-You can use <a target="_blank" href="http://mycc.hebis.de/mycc/myCCDK/mycc-start_en.html">myCCDK</a> myCCDK to select individual periodicals and
-we will send you the current table of contents for these periodicals by e-mail. Any essays you wish to read and cannot find on-site
-at your local library can be requested by interlibrary loan or using the document delivery service <a target="_blank" href="https://www.subito-doc.de/?lang=en">Subito</a> for a fee.
-</p>
-
-<?
-    }
-?>
+über den kostenpflichtigen Dokumentlieferdienst <a target="_blank" href="http://www.subito-doc.de/">Subito</a> bestellen.</p>
+</div>

@@ -209,9 +209,7 @@ hr {
 }
 
 div#accordion .panel-collapse {
-  padding-top: 0.5em;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 15px 20px 10px 20px;
   img {
     float: left;
     margin-right: 20px;
@@ -249,11 +247,23 @@ body.template-dir-content {
 div#contacts {
   .left {
     float: left;
-    padding-right: 100px;
+    padding-right: 50px;
   }
   .right {
-    padding-top: 1px;
+    float: left;
+    margin-left: 30px;
   }
+}
+
+.card {
+  border: 1px solid @btn-default-border;
+  padding: 15px 20px 20px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+a[target="_blank"].no-symbol::after {
+  display: none;
 }
 
 /* Agent Layout */

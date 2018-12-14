@@ -1,12 +1,9 @@
-<? // Set page title.
+<?php // Set page title.
 $this->headTitle($this->translate('Interlibrary Loan') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
 <h2><?=$this->transEsc('Interlibrary Loan')?></h2>
 
-<?
-    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
-?>
-
+<div class="card">
 <p>Die UB Frankfurt nimmt am <a target="_blank" href="http://www.hebis.de/de/1fernleihe/index.php">Fernleihverkehr</a> teil. Die Fernleihe (Auswärtiger Leihverkehr)
 ist ein Service, mit dem Medien (Bücher, Zeitschriftenartikel u.a.), die am Ort nicht vorhanden
 sind, von auswärtigen Bibliotheken beschafft werden können. Die UB Frankfurt ist dabei an die
@@ -14,20 +11,4 @@ sind, von auswärtigen Bibliotheken beschafft werden können. Die UB Frankfurt i
 Internationalen Leihverkehr gebunden.</p>
 <p>Benötigen Sie Ihre Bestellung zeitnah? Dann nutzen Sie den kostenpflichtigen Dokumentlieferdienst
 <a target="_blank" href="http://www.subito-doc.de/">Subito</a> für Ihre Bestellungen</p>
-
-<?
-    } else {
-?>
-
-<p>The University Library Frankfurt participates in the <a target="_blank" href="http://www.hebis.de/de/1fernleihe/index.php">interlibrary loan programme</a>.
-  Interlibrary loan is a service which makes it possible to check out media items (books, periodicals articles, etc.)
-  not found at one’s local library from libraries in other regions. The University Library Frankfurt is subject to the
-  <a target="_blank" href="http://www.bibliotheksverband.de/fileadmin/user_upload/DBV/vereinbarungen/Leihverkehrsordnung.pdf">General Terms and Conditions of Loans in Germany (LVO)</a>
-  and to the agreements regarding international loans.</p>
-
-<p>Do you need to receive the books you have requested right away? In this case, you can use the document delivery
-  service <a target="_blank" href="http://www.subito-doc.de/?lang=en">Subito</a> for a fee to make your request and/or order.</p>
-
-<?
-    }
-?>
+</div>

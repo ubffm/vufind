@@ -1,21 +1,20 @@
 <?php // Set page title.
 $this->headTitle($this->translate('News') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
-<h2>Newsstream</h2>
+<h2>News Streaming</h2>
 <div class="card">
-Zusammen mit der <a target="_blank" href="http://www.theater-wissenschaft.de/">Gesellschaft für Theaterwissenschaft</a> betreut der <i>FID Darstellende
-Kunst</i> den Profildienst Darstellende Kunst. Fachrelevante Nachrichten aus der Theater-
-und Tanzwissenschaft werden redaktionell ausgewertet und steht Ihnen als <a href="<?=$this->url('news-rss')?>">RSS-Feed</a>
-zur Verfügung. Sie können diesen in ihrem Browser und in den gängigen Mail-Programmen
-integrieren. Die RSS-Reader-Funktion richten Sie mittels der Hilfe-Funktion ein.<br>
-<a href="<?=$this->url('news-current')?>">Zur News-Übersicht</a>
+The <i>SIS Performing Arts</i> has teamed up with the <a target="_blank" href="http://www.theater-wissenschaft.de/">Society for Theatre Studies</a> to
+operate the Performing Arts News Service, which evaluates and edits news from the world of theatre and dance studies. The sources
+thus provided can be subscribed to via an <a href="<?=$this->url('news-rss')?>">RSS feed</a>. You can integrate this feed into your browser and into
+all common e-mail programmes. To set up an RSS feed, please use the Help function.
+<br>
+<a href="<?=$this->url('news-current')?>">News overview</a>
 </div>
 
 <h2>Newsletter</h2>
 <div class="card">
-Abonnieren Sie unseren Newsletter!<br>
-Wir senden Ihnen drei bis vier Mal im Jahr aktuelle Informationen zum <i>FID</i> bzw. aus der Forschung
-und Lehre der Theater- und Tanzwissenschaft zu. <br>
+Subscribe to our newsletter!<br>
+We will send you current information from the <i>SIS</i>, related to research and teaching in theatre and dance studies, three to four times per year.<br>
 <br>
 <?=$this->flashmessages() ?>
 <form accept-charset="UTF-8"  method="POST" action="<?=$this->url('content-page', ['page' => 'news'])?>">

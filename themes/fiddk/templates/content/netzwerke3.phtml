@@ -1,11 +1,7 @@
-<? // Set page title.
+<?php // Set page title.
 $this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
 <h2><?=$this->transEsc('Networks')?></h2>
-
-<?
-    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
-?>
 
 <a href="<?=$this->url('content-page', ['page' => 'netzwerke'])?>">Fachgesellschaften und Arbeitskreise</a><br>
 <a href="<?=$this->url('content-page', ['page' => 'netzwerke2'])?>">Gedächtnisinstitutionen der Darstellenden Künste</a><br>
@@ -16,7 +12,8 @@ $this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Da
 <br>
 <br> -->
 
-<h4><a target="_blank" href="http://www.tanzarchive.de">Verbund Deutscher Tanzarchive</a></h4>
+<div class="card">
+<h4><a target="_blank" href="http://www.tanzarchive.de/en/home">Verbund Deutscher Tanzarchive</a></h4>
 
 <p>Zum Verbund Deutscher Tanzarchive (VDT) haben sich 2007 die fünf führenden Institutionen zur Bestander¬haltung und Erschließung von Quellen und Dokumenten zur Entwicklungs- und Aufführungsgeschichte der Kunstform Tanz in Deutschland nominell zusammengeschlossen. Diese fünf Institutionen sind:
 <ul>
@@ -27,10 +24,10 @@ $this->headTitle($this->translate('Networks') . ' - ' . $this->translate('FID Da
 <li>Archiv Darstellende Künste der Akademie der Künste</li>
 </ul>
 </p>
-Website: <a target="_blank" href="http://www.tanzarchive.de">www.tanzarchive.de</a><br>
-<br>
-<br>
+Website: <a target="_blank" href="http://www.tanzarchive.de/en/home">www.tanzarchive.de</a>
+</div>
 
+<div class="card">
 <h4><a target="_blank" href="http://www.theaterarchive.de">Runder Tisch der Berliner Theatersammlungen</a></h4>
 
 <p>Der Runde Tisch der Berliner Theatersammlungen gründete sich im Mai 2011 als ein internes
@@ -39,54 +36,5 @@ ihrer Arbeit bemühten Theater und Künstler. Berlin hat nicht nur eine reiche T
 der Materialien der Vielfältigkeit des Theaters. Beides erschwert den Umgang mit den umfangreichen
 und – typisch für die kollektive Kunstform Theater – äußerst unterschiedlichen Materialien, die in den
 einzelnen Archiven aufbewahrt werden.</p>
-Website: <a target="_blank" href="http://www.theaterarchive.de">www.theaterarchive.de</a><br>
-<br>
-<br>
-
-<?
-    } else {
-?>
-
-<a href="<?=$this->url('content-page', ['page' => 'netzwerke'])?>">Professional Associations and Research Groups in the Field</a><br>
-<a href="<?=$this->url('content-page', ['page' => 'netzwerke2'])?>">Institutions Documenting the History of the Performing Arts</a><br>
-<b>Associations, Research Groups, etc.</b>
-<br><br>
-
-<!-- <h4>The Federation of Libraries and Museums of Performing Arts</h4>
-<br>
-<br>-->
-
-<h4><a target="_blank" href="http://www.tanzarchive.de/index.php?id=251">Association of German Dance Archives</a></h4>
-
-<p>The Association of German Dance Archives (VDT) is the umbrella organisation created in 2007 by the five leading institutions
-involved in preserving and cataloguing documents and other sources related to the history of performance and dance in Germany.
-These five institutions are:
-<ul>
-<li>German Dance Archive Cologne</li>
-<li>Dance Archive Leipzig</li>
-<li>German Dance Film Institute Bremen</li>
-<li>Mime Centrum Berlin</li>
-<li>Academy of the Arts Berlin, Performing Arts Archive</li>
-</ul>
-</p>
-Website: <a target="_blank" href="http://www.tanzarchive.de/index.php?id=251">www.tanzarchive.de/index.php?id=251</a><br>
-<br>
-<br>
-
-<h4><a target="_blank" href="http://www.theaterarchive.de">Round Table of Berlin Theatre Collections</a></h4>
-
-<p>The Round Table of Berlin Theatre Collections was founded in May 2011 as a forum for the Berlin institutions
-housing theatre collections, and for theatres and artists who aim to document their own work, to communicate
-and interact with one another. Berlin not only has a rich theatre history; it is also a rich source of artefacts
-that bear witness to this past and which are preserved in very different institutions. This is due to the history
-of the city and also to specific characteristics of theatre. The complexity of the artefacts that have been collected
-mirrors the complexity of the theatre itself, and the variety found therein reflects the wide range of theatre topics.
-Both factors make dealing with the extensive and – as is typical for theatre, which is a collective art form –
-extremely varied materials found in individual archives.</p>
-Website: <a target="_blank" href="http://www.theaterarchive.de">www.theaterarchive.de</a><br>
-<br>
-<br>
-
-<?
-    }
-?>
+Website: <a target="_blank" href="http://www.theaterarchive.de">www.theaterarchive.de</a>
+</div>

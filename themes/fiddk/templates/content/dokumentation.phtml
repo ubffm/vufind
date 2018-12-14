@@ -1,12 +1,10 @@
-<?
+<?php
 // Set page title.
-$this->headTitle($this->translate('Documentation') . ' - ' . $this->translate('FID Darstellende Kunst'));
-
-    if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
-?>
+$this->headTitle($this->translate('Documentation') . ' - ' . $this->translate('FID Darstellende Kunst'));?>
 
 <h2>Projektdokumentation</h2>
 
+<div class="card">
 <p>
 Die Materialien zu Projektdokumentationen stellen wir Ihnen zur Nachnutzung frei zur Verfügung.
 </p>
@@ -19,12 +17,15 @@ Inszenierungsartefakten“ vom 8./9. Oktober 2015</a></li>
   Bibliotheken und Museen für Darstellende Künste e.V. vom 5./6. September 2016</a></li>
 <li><a target="_blank" href="https://github.com/FID-Darstellende-Kunst"><i>FID</i> Quellcodes auf der kollaborativen Entwicklerplattform GitHub</a></li>
 </ul>
+</div>
 
+<div class="card">
 <p>
 Der Suchschlitz des <i>FID</i> kann in den eigenen Webauftritt eingebunden werden. Sie können den benötigten HTML-Codesausschnitt hier downloaden:
 <form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
   <input type="submit" value="Download"/>
 </form>
+<br>
 </p>
 <p>Der Suchschlitz ist responsiv und sieht wie folgt aus:</p>
 <div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
@@ -41,6 +42,7 @@ Der Suchschlitz des <i>FID</i> kann in den eigenen Webauftritt eingebunden werde
     </form>
   </div>
 </div>
+</div>
 
 <!--
 <h2>Materialien</h2>
@@ -48,50 +50,3 @@ Der Suchschlitz des <i>FID</i> kann in den eigenen Webauftritt eingebunden werde
 Im Bereich <b>Materialien</b> haben wir Dokumente anderer Institutionen zusammengefasst, die für Forschung und Lehre der Theater- und Tanzwissenschaft relevant sein können.
 </p>
 -->
-<?
-    } else {
-?>
-
-<h2>Project Documentation</h2>
-
-<p>Materials related to project documentation may be used subsequently at no charge.</p>
-
-<ul>
-
-<li><a target="_blank" href="<?=$this->imageLink('Dokumentenmappe_Workshop.pdf')?>">Document file on the <i>SIS</i> workshop entitled “Preservation and Maintenance:
-  Managing Stage Artefacts” and held on the 8th and 9th Oct. 2015 (in German)</a></li>
-  <li><a target="_blank" href="<?=$this->imageLink('Ergebnismappe_Bundesverband_05-09-2016.pdf')?>">Document file on the workshop of the Bundesverband der
-    Bibliotheken und Museen für Darstellende Künste e.V. held on 5th and 6th Sept. 2016 (in German)</a></li>
-<li><a target="_blank" href="https://github.com/FID-Darstellende-Kunst"><i>SIS</i> source codes on the collaborative development platform GitHub</a></li>
-</ul>
-
-<p>
-In order to embed the <i>SIS</i> searchbox in your own website, you can download the HTML code snippet:
-<form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
-  <input type="submit" value="Download"/>
-</form>
-</p>
-<p>The searchbox is responsive and looks like the following representation:</p>
-<div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
- <div style="float:left;padding-bottom:5px;">
-   <a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_logo.gif')?>" style="max-width:300px;"></a>
- </div>
- <div class="well well-lg clearfix" style="float:left;margin-top:0;margin-bottom:0;min-width:300px;margin-left:20px;max-width:400px;overflow:hidden;">
-    <form class="searchForm navbar-form flip" method="get" action="http://performing-arts.eu/Search/Results" name="searchForm" style="margin:0 auto;padding:0px;">
-      <div class="form-group">
-          <input type="text" name="lookfor" value="" class="searchForm_lookfor form-control autocomplete searcher:Solr typeSelector:searchForm_type" style="min-width:240px;"/>
-        </div>
-          <button type="submit" class="btn btn-primary" style="color:#FFF;background-color:#4f81bd;">
-          <i class="fa fa-search" style="padding-right:4px;"></i>Find</button>
-    </form>
-  </div>
-</div>
-<!--
-<h2>Materials</h2>
-<p>
-In the <b>Materials</b> section, we have provided an overview of documents housed by other institutions which could be relevant to research and university teaching in theatre and dance studies.
-</p>
--->
-<?
-    }
-?>

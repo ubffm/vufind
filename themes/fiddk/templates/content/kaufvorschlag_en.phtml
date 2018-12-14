@@ -1,0 +1,17 @@
+<?php // Set page title.
+$this->headTitle($this->translate('Suggestion Buy') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2>Suggestions for New Acquisitions</h2>
+<p>To do justice to the entire range of literature in the field of performing arts, we need your help! If you
+  have been unable to find a title you need using the SIS web portal, or if you are unable to obtain it using
+  the interlibrary loan programme, please send your suggestion for a new acquisition to the SIS editorial team.
+  We will evaluate your suggestion and send you a response. </p><br>
+
+<div class="card">
+<?=$this->flashmessages() ?>
+<?=$this->render('content/kaufvorschlag_form.phtml') ?>
+<br><br>
+<p>Please note that the suggestions for new acquistions must be in line with
+  <a href="<?=$this->url('content-page', ['page' => 'neuerwerb'])?>"><i>SIS</i>'s acquisition strategy</a>.
+An asterisk (*) denotes information that must be entered if we are to process your request.</p>
+</div>
