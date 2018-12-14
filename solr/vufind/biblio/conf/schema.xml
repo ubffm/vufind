@@ -112,6 +112,8 @@
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
     <!-- add geo field to handle geographic search and display capabilities -->
     <fieldType name="geo" class="solr.SpatialRecursivePrefixTreeFieldType" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees" />
+    <!-- add range field to represent edm timespans -->
+    <fieldType name="range" class="solr.DateRangeField" omitNorms="true"/>
   </types>
  <fields>
    <!-- Required by Solr 4.x -->
@@ -122,8 +124,8 @@
    <field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="allfields" type="text" indexed="true" stored="false" multiValued="true"/>
    <field name="allfields_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
-   <field name="fulltext" type="text" indexed="true" stored="false"/>
-   <field name="fulltext_unstemmed" type="textProper" indexed="true" stored="false"/>
+   <!-- <field name="fulltext" type="text" indexed="true" stored="false"/>
+   <field name="fulltext_unstemmed" type="textProper" indexed="true" stored="false"/> -->
    <field name="spelling" type="textSpell" indexed="true" stored="true" multiValued="true"/>
    <field name="spellingShingle" type="textSpellShingle" indexed="true" stored="true" multiValued="true"/>
    <!-- Institutional Fields -->
@@ -152,10 +154,22 @@
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publishDateSort" type="string" indexed="true" stored="false"/>
    <field name="edition" type="string" indexed="true" stored="true"/>
-   <field name="description" type="text" indexed="true" stored="true"/>
+   <field name="description" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="url" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="thumbnail" type="string" indexed="false" stored="true"/>
+   <!-- fid specific fields -->
+   <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="institution_facet" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="agent" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="agent_id" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
+   <field name="related_to" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="pperformanceDates" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="date_span_sort" type="date" indexed="true" stored="false"/>
+   <field name="container_facet" type="string" indexed="true" stored="false"/>
+
+   <field name="archive" type="boolean" indexed="true" stored="false"/>
    <!-- Catalog Specific Fields -->
    <field name="lccn" type="string" indexed="true" stored="true"/>
    <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -187,7 +201,7 @@
    <field name="title_alt" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_old" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_new" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="dateSpan" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="date_span" type="range" indexed="true" stored="true" multiValued="true"/>
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -266,7 +280,7 @@
  <copyField source="publisher" dest="publisherStr"/>
  <copyField source="topic" dest="topic_unstemmed"/>
  <copyField source="allfields" dest="allfields_unstemmed"/>
- <copyField source="fulltext" dest="fulltext_unstemmed"/>
+ <!--<copyField source="fulltext" dest="fulltext_unstemmed"/>-->
  <!-- CopyFields for Alphabetic Browse -->
  <copyField source="topic" dest="topic_browse"/>
  <copyField source="author" dest="author_browse"/>
@@ -278,4 +292,6 @@
  <!-- CopyFields for call numbers -->
  <copyField source="dewey-raw" dest="dewey-search"/>
  <copyField source="callnumber-raw" dest="callnumber-search"/>
+ <!-- CopyFields for containers -->
+ <copyField source="container_title" dest="container_facet"/>
 </schema>
