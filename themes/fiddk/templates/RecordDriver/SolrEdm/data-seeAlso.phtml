@@ -18,7 +18,7 @@
            <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
              <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
           <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
-             <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
+             <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
              <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
           <? else: ?>
             <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
@@ -33,7 +33,7 @@
             <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
               <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
            <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
-              <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
+              <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
               <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
            <? else: ?>
              <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
@@ -56,7 +56,7 @@
          <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
            <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
         <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
-           <a href="<?=$this->url('spages-licensed') . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
+           <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
          <? elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
        <? elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>

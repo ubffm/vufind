@@ -44,7 +44,7 @@ We will send you current information from the <i>SIS</i>, related to research an
     }
 ?>
 <?=$this->flashmessages() ?>
-<form accept-charset="UTF-8"  method="POST" action="<?=$this->url('spages-news')?>">
+<form accept-charset="UTF-8"  method="POST" action="<?=$this->url('content-page', ['page' => 'news'])?>">
 
 <input type="radio" id="ein" name="action" value="EINTRAGEN">
 <label style="vertical-align:middle;" for="ein"><?=$this->transEsc("mail_subscribe");?></label><br>

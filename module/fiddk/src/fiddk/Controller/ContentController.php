@@ -6,7 +6,7 @@ use Zend\Mail;
 use Zend\Mail\Address;
 use Zend\Mail\AddressList;
 
-class SpagesController extends \VuFind\Controller\AbstractBase
+class ContentController extends \VuFind\Controller\ContentController
 {
     protected $link = '';
 
@@ -14,61 +14,6 @@ class SpagesController extends \VuFind\Controller\AbstractBase
      *
      * @return \Zend\View\Model\ViewModel
      */
-
-    public function uberAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function beiratAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function netzwerkeAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function netzwerke2Action()
-    {
-        return $this->createViewModel();
-    }
-
-    public function netzwerke3Action()
-    {
-        return $this->createViewModel();
-    }
-
-    public function dokumentationAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function trailerAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function downloadsAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function kontaktAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function suchenAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function faqAction()
-    {
-        return $this->createViewModel();
-    }
 
     public function licensedAction()
     {
@@ -135,26 +80,6 @@ class SpagesController extends \VuFind\Controller\AbstractBase
           }
         }
         return $view;
-    }
-
-    public function themenAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function contentsAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function neuerwerbAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function fernleiheAction()
-    {
-        return $this->createViewModel();
     }
 
     public function kaufvorschlagAction()
@@ -232,35 +157,10 @@ class SpagesController extends \VuFind\Controller\AbstractBase
         return $view;
     }
 
-    public function impressumAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function copyrightAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function verweiseAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function datenschutzAction()
-    {
-        return $this->createViewModel();
-    }
-
-    public function haftungAction()
-    {
-        return $this->createViewModel();
-    }
-
     public function licenceLink($licenceLink=null)
     {
       $config = $this->getConfig();
-      $link = $config->Site->url.'/spages/licensed?link='.$licenceLink;
+      $link = $config->Site->url.'/Content/licensed?link='.$licenceLink;
       return $link;
     }
 

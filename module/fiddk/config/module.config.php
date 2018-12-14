@@ -4,23 +4,19 @@ namespace fiddk\Module\Configuration;
 $config = [
   'controllers' => [
     'factories' => [
-      'dprovider' => 'fiddk\Controller\Factory::getDproviderController',
-      'spages' => 'fiddk\Controller\Factory::getSpagesController',
-      'search' => 'fiddk\Controller\Factory::getSearchController',
+      'fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
+      'fiddk\Controller\DproviderController' => 'VuFind\Controller\AbstractBaseFactory',
       'ajax' => 'fiddk\Controller\Factory::getAjaxController',
       'feedback' => 'fiddk\Controller\Factory::getFeedbackController',
       'record' => 'fiddk\Controller\Factory::getRecordController',
     ],
+    'aliases' => [
+      // Overrides
+      'VuFind\Controller\ContentController' => 'fiddk\Controller\ContentController',
+      'VuFind\Controller\SearchController' => 'fiddk\Controller\SearchController'
+    ]
   ],
   'vufind' => [
-    'plugin_managers' => [
-      'recorddriver' => [
-        'factories' => [
-          'solredm' => 'fiddk\RecordDriver\Factory::getSolrEdm',
-          'solrauth' => 'fiddk\RecordDriver\Factory::getSolrAuth',
-        ],
-      ],
-    ],
       'recorddriver_tabs' => [
         'fiddk\RecordDriver\SolrEdm' => [
           'tabs' => [
@@ -42,29 +38,6 @@ $recordRoutes = [
 ];
 
 $staticRoutes = [
-        'spages/uber',
-        'spages/beirat',
-        'spages/netzwerke',
-        'spages/netzwerke2',
-        'spages/netzwerke3',
-        'spages/dokumentation',
-        'spages/trailer',
-        'spages/downloads',
-        'spages/kontakt',
-        'spages/suchen',
-        'spages/faq',
-        'spages/news',
-        'spages/themen',
-        'spages/contents',
-        'spages/neuerwerb',
-        'spages/fernleihe',
-        'spages/licensed',
-        'spages/kaufvorschlag',
-        'spages/impressum',
-        'spages/copyright',
-        'spages/verweise',
-        'spages/datenschutz',
-        'spages/haftung',
         'Search/AuthorityResults'
 ];
 
@@ -74,7 +47,7 @@ $routeGenerator->addStaticRoutes($config, $staticRoutes);
 
 // Add the home route last
 $config['router']['routes']['home'] = [
-    'type' => 'Zend\Mvc\Router\Http\Literal',
+    'type' => 'Zend\Router\Http\Literal',
     'options' => [
         'route'    => '/',
         'defaults' => [
