@@ -1,6 +1,6 @@
 <?php
 
-namespace fiddk\Controller;
+namespace Fiddk\Controller;
 
 use Zend\Mail;
 use Zend\Mail\Address;

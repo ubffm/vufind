@@ -26,7 +26,7 @@
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
  */
-namespace fiddk\View\Helper\fiddk;
+namespace Fiddk\View\Helper\Fiddk;
 use VuFind\RecordDriver\AbstractBase as RecordDriver;
 use Zend\View\Helper\AbstractHelper;
 

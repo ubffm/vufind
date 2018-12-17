@@ -1,24 +1,23 @@
 <?php
-namespace fiddk\Module\Configuration;
+namespace Fiddk\Module\Configuration;
 
 $config = [
   'controllers' => [
     'factories' => [
-      'fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
-      'fiddk\Controller\DproviderController' => 'VuFind\Controller\AbstractBaseFactory',
-      'ajax' => 'fiddk\Controller\Factory::getAjaxController',
-      'feedback' => 'fiddk\Controller\Factory::getFeedbackController',
-      'record' => 'fiddk\Controller\Factory::getRecordController',
+      'Fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\DproviderController' => 'VuFind\Controller\AbstractBaseFactory',
+      //'ajax' => 'fiddk\Controller\Factory::getAjaxController',
+      //'record' => 'fiddk\Controller\Factory::getRecordController',
     ],
     'aliases' => [
       // Overrides
-      'VuFind\Controller\ContentController' => 'fiddk\Controller\ContentController',
-      'VuFind\Controller\SearchController' => 'fiddk\Controller\SearchController'
+      'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
+      //'VuFind\Controller\SearchController' => 'fiddk\Controller\SearchController'
     ]
   ],
   'vufind' => [
       'recorddriver_tabs' => [
-        'fiddk\RecordDriver\SolrEdm' => [
+        'Fiddk\RecordDriver\SolrEdm' => [
           'tabs' => [
             'Description' => null,
             'Similar' => 'SimilarItemsCarousel',

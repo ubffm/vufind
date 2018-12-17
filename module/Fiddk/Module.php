@@ -25,7 +25,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development
  */
-namespace fiddk;
+namespace Fiddk;
 use Zend\ModuleManager\ModuleManager,
     Zend\Mvc\MvcEvent;
 

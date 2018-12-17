@@ -25,7 +25,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-namespace fiddk\RecordDriver;
+namespace Fiddk\RecordDriver;
 
     /**
      * Model for Solr authority records.
@@ -36,7 +36,7 @@ namespace fiddk\RecordDriver;
      * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
      * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
      */
-    class SolrAuth extends \fiddk\RecordDriver\SolrEdm
+    class SolrAuth extends \Fiddk\RecordDriver\SolrEdm
     {
         protected $entityLink = "http://hub.culturegraph.org/entityfacts/";
 

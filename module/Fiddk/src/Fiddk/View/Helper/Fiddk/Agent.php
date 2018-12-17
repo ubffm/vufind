@@ -25,7 +25,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
-namespace fiddk\View\Helper\fiddk;
+namespace Fiddk\View\Helper\Fiddk;
 use VuFind\Cover\Router as CoverRouter;
 use Zend\View\Exception\RuntimeException, Zend\View\Helper\AbstractHelper;
 
@@ -40,5 +40,5 @@ use Zend\View\Exception\RuntimeException, Zend\View\Helper\AbstractHelper;
  */
 class Agent
 {
-    
+
 }

@@ -26,7 +26,7 @@
  *
  * @link     https://vufind.org Main Site
  */
-namespace fiddk\Controller;
+namespace Fiddk\Controller;
 use \VuFind\Db\AdapterFactory;
 use \Zend\Db\Adapter\Adapter;
 use \Zend\Db\Sql\Sql;

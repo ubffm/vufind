@@ -11,7 +11,7 @@
  * @package  RecordDrivers
  * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  */
-namespace fiddk\RecordDriver;
+namespace Fiddk\RecordDriver;
 use Zend\ServiceManager\ServiceManager;
 
 class Factory

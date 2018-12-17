@@ -26,7 +26,7 @@
  *
  * @link     https://vufind.org Main Site
  */
-namespace fiddk\Controller;
+namespace Fiddk\Controller;
 
 /**
  * Record Controller.

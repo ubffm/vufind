@@ -26,7 +26,7 @@
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
  */
-namespace fiddk\View\Helper\fiddk;
+namespace Fiddk\View\Helper\Fiddk;
 
 /**
  * Factory for record driver data formatting view helper

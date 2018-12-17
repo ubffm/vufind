@@ -1,6 +1,6 @@
 <?php
 
-namespace fiddk\Controller;
+namespace Fiddk\Controller;
 
 class DproviderController extends \VuFind\Controller\AbstractBase
 {

@@ -1,10 +1,8 @@
 <?php
 /**
- * Factory for Root view helpers.
+ * Model for EDM records in Solr.
  *
  * PHP version 5
- *
- * Copyright (C) Villanova University 2014.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -20,43 +18,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  View_Helpers
+ *
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Ere Maijala <ere.maijala@helsinki.fi>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
+ *
+ * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-namespace fiddk\View\Helper\fiddk;
-use Zend\ServiceManager\ServiceManager;
+namespace Fiddk\RecordDriver;
 
 /**
- * Factory for Root view helpers.
+ * Model for EDM records in Solr.
  *
  * @category VuFind
- * @package  View_Helpers
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
  *
- * @codeCoverageIgnore
+ * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Ere Maijala <ere.maijala@helsinki.fi>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ *
+ * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class Factory extends \VuFind\View\Helper\Root\Factory
+class SolrEdm extends \VuFind\RecordDriver\SolrDefault
 {
-    /**
-     * Construct the Record helper.
-     *
-     * @param ServiceManager $sm Service manager.
-     *
-     * @return Record
-     */
-    public static function getRecord(ServiceManager $sm)
-    {
-        $helper = new Record(
-            $sm->getServiceLocator()->get('VuFind\Config')->get('config')
-        );
-        $helper->setCoverRouter(
-            $sm->getServiceLocator()->get('VuFind\Cover\Router')
-        );
-        return $helper;
-    }
-
+  use EdmReaderTrait;
+  //use EdmAdvancedTrait;
 }

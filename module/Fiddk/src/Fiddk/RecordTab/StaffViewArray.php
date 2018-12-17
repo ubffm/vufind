@@ -1,10 +1,10 @@
 <?php
 /**
- * Specification builder for record driver data formatting view helper
+ * Staff view (array dump) tab
  *
  * PHP version 5
  *
- * Copyright (C) Villanova University 2016.
+ * Copyright (C) Villanova University 2010.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -20,23 +20,39 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  View_Helpers
+ * @package  RecordTabs
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
+ * @link     https://vufind.org/wiki/development:plugins:record_tabs Wiki
  */
-namespace fiddk\View\Helper\fiddk\RecordDataFormatter;
+namespace Fiddk\RecordTab;
 
 /**
- * Specification builder for record driver data formatting view helper
+ * Staff view (array dump) tab
  *
  * @category VuFind
- * @package  View_Helpers
+ * @package  RecordTabs
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
+ * @link     https://vufind.org/wiki/development:plugins:record_tabs Wiki
  */
-class SpecBuilder extends \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder
+class StaffViewArray extends \VuFind\RecordTab\AbstractBase
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->accessPermission = 'access.StaffViewTab';
+    }
 
+    /**
+     * Get the on-screen description for this tab.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'DM2E View';
+    }
 }
