@@ -142,7 +142,7 @@
    <field name="author_sort" type="string" indexed="true" stored="true"/>
    <field name="title" type="text" indexed="true" stored="true"/>
    <field name="title_sort" type="string" indexed="true" stored="true"/>
-   <field name="title_sub" type="text" indexed="true" stored="true"/>
+   <field name="title_sub" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_short" type="text" indexed="true" stored="true"/>
    <field name="title_full" type="text" indexed="true" stored="true"/>
    <field name="title_full_unstemmed" type="textProper" indexed="true" stored="true"/>
@@ -165,7 +165,7 @@
    <field name="agent_id" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
    <field name="related_to" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="pperformanceDates" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="performanceDates" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="date_span_sort" type="date" indexed="true" stored="false"/>
    <field name="container_facet" type="string" indexed="true" stored="false"/>
 

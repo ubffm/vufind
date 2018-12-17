@@ -116,7 +116,7 @@
             </xsl:element>
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>institutionID</xsl:text>
+                    <xsl:text>institution_id</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of
                     select="normalize-space(translate(substring-after($dataProvider/@rdf:about,'agent/'),'/','_'))"
@@ -126,7 +126,7 @@
                 <xsl:when test="$dProvider = 'Universitätsbibliothek Frankfurt am Main'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:text>0/Universitätsbibliothek Frankfurt am Main/</xsl:text>
                     </xsl:element>
@@ -140,7 +140,7 @@
                         <xsl:when test="starts-with($id,'FUB_OLC_')">
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Online Contents/</xsl:text>
                             </xsl:element>
@@ -148,7 +148,7 @@
                         <xsl:otherwise>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>1/Universitätsbibliothek Frankfurt am Main/Bibliotheksbestand/</xsl:text>
                             </xsl:element>
@@ -159,7 +159,7 @@
                     test="$dProvider = 'Theaterwissenschaftliche Sammlung der Universität zu Köln'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:text>0/Theaterwissenschaftliche Sammlung der Universität zu Köln/</xsl:text>
                     </xsl:element>
@@ -167,7 +167,7 @@
                         <xsl:when test="starts-with($id,'SLW_A_')">
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>1/Theaterwissenschaftliche Sammlung der Universität zu Köln/Archivbestand/</xsl:text>
                             </xsl:element>
@@ -181,7 +181,7 @@
                         <xsl:otherwise>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>1/Theaterwissenschaftliche Sammlung der Universität zu Köln/Bibliotheksbestand/</xsl:text>
                             </xsl:element>
@@ -197,13 +197,13 @@
                 <xsl:when test="$dProvider = 'Akademie der Künste Berlin, Bibliothek'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:text>0/Akademie der Künste Berlin/</xsl:text>
                     </xsl:element>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:text>1/Akademie der Künste Berlin/Bibliotheksbestand/</xsl:text>
                     </xsl:element>
@@ -225,16 +225,16 @@
                                 <xsl:value-of select="$dProvider"/>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:variable>                    
+                    </xsl:variable>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:text>0/Verbund Deutscher Tanzarchive/</xsl:text>
                     </xsl:element>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of
                             select="concat('1/Verbund Deutscher Tanzarchive/', $dprov, '/')"/>
@@ -283,13 +283,13 @@
                                     test="$id = 'ADK_A_BK_1254' or $id = 'ADK_A_BK_5822' or $parentid = 'ADK_A_BK_1254' or $parentid = 'ADK_A_BK_5822'">
                                     <xsl:element name="field">
                                         <xsl:attribute name="name">
-                                            <xsl:text>institutionFacet</xsl:text>
+                                            <xsl:text>institution_facet</xsl:text>
                                         </xsl:attribute>
                                         <xsl:text>0/Verbund Deutscher Tanzarchive/</xsl:text>
                                     </xsl:element>
                                     <xsl:element name="field">
                                         <xsl:attribute name="name">
-                                            <xsl:text>institutionFacet</xsl:text>
+                                            <xsl:text>institution_facet</xsl:text>
                                         </xsl:attribute>
                                         <xsl:value-of
                                             select="concat('1/Verbund Deutscher Tanzarchive/', $dProvider, '/')"
@@ -299,13 +299,13 @@
                                 <xsl:otherwise>
                                     <xsl:element name="field">
                                         <xsl:attribute name="name">
-                                            <xsl:text>institutionFacet</xsl:text>
+                                            <xsl:text>institution_facet</xsl:text>
                                         </xsl:attribute>
                                         <xsl:text>0/Akademie der Künste Berlin/</xsl:text>
                                     </xsl:element>
                                     <xsl:element name="field">
                                         <xsl:attribute name="name">
-                                            <xsl:text>institutionFacet</xsl:text>
+                                            <xsl:text>institution_facet</xsl:text>
                                         </xsl:attribute>
                                         <xsl:text>1/Akademie der Künste Berlin/Archivbestand/</xsl:text>
                                     </xsl:element>
@@ -315,13 +315,13 @@
                         <xsl:otherwise>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:text>0/Verbund Deutscher Tanzarchive/</xsl:text>
                             </xsl:element>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:value-of
                                     select="concat('1/Verbund Deutscher Tanzarchive/', $dProvider, '/')"
@@ -334,7 +334,7 @@
                     test="$dProvider = 'Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="concat('0/', $dProvider, '/')"/>
                     </xsl:element>
@@ -342,7 +342,7 @@
                         <xsl:when test="starts-with($id,'TSB_A_')">
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:value-of
                                     select="concat('1/', $dProvider, '/Bibliotheksbestand/')"/>
@@ -357,7 +357,7 @@
                         <xsl:otherwise>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:value-of select="concat('1/', $dProvider, '/Archivbestand/')"/>
                             </xsl:element>
@@ -373,7 +373,7 @@
                 <xsl:when test="$dProvider = 'Schweizerische Theatersammlung'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="concat('0/', $dProvider, '/')"/>
                     </xsl:element>
@@ -381,7 +381,7 @@
                         <xsl:when test="starts-with($id,'STS_A_')">
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:value-of select="concat('1/', $dProvider, '/Archivbestand/')"/>
                             </xsl:element>
@@ -395,7 +395,7 @@
                         <xsl:otherwise>
                             <xsl:element name="field">
                                 <xsl:attribute name="name">
-                                    <xsl:text>institutionFacet</xsl:text>
+                                    <xsl:text>institution_facet</xsl:text>
                                 </xsl:attribute>
                                 <xsl:value-of
                                     select="concat('1/', $dProvider, '/Bibliotheksbestand/')"/>
@@ -412,7 +412,7 @@
                 <xsl:when test="$dProvider = 'Theatermuseum der Landeshauptstadt Düsseldorf'">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="concat('0/', $dProvider, '/')"/>
                     </xsl:element>
@@ -426,7 +426,7 @@
                 <xsl:otherwise>
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>institutionFacet</xsl:text>
+                            <xsl:text>institution_facet</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of select="concat('0/', $dProvider, '/')"/>
                     </xsl:element>
@@ -514,7 +514,7 @@
         <xsl:for-each select="$cho/dcterms:hasPart/@rdf:resource">
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>relatedTo</xsl:text>
+                    <xsl:text>related_to</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="normalize-space(substring-after(., 'Record/'))"/>
             </xsl:element>
@@ -614,7 +614,7 @@
             </xsl:element>
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>hasThumb</xsl:text>
+                    <xsl:text>has_thumb</xsl:text>
                 </xsl:attribute>
                 <xsl:text>true</xsl:text>
             </xsl:element>
@@ -623,7 +623,7 @@
             select="exsl:node-set($contextuals)/*[starts-with(@rdf:about,'http://performing-arts.eu/agent/')]/@rdf:about">
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>agentID</xsl:text>
+                    <xsl:text>agent_id</xsl:text>
                 </xsl:attribute>
                 <xsl:choose>
                     <xsl:when test="contains(.,'agent/gnd/')">
@@ -684,7 +684,7 @@
                 <xsl:when test="$date != ''">
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>dateSpan</xsl:text>
+                            <xsl:text>date_span</xsl:text>
                         </xsl:attribute>
                         <xsl:value-of
                             select="concat('[',substring-before($date,'_'),' TO ',substring-after($date,'_'),']')"
@@ -693,7 +693,7 @@
                     <xsl:if test="position() = 1">
                         <xsl:element name="field">
                             <xsl:attribute name="name">
-                                <xsl:text>dateSpanSort</xsl:text>
+                                <xsl:text>date_span_sort</xsl:text>
                             </xsl:attribute>
                             <xsl:value-of select="substring-before($date,'_')"/>
                         </xsl:element>
@@ -768,7 +768,7 @@
         <xsl:for-each select="$premierDates">
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>pDates</xsl:text>
+                    <xsl:text>performanceDates</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:element>
@@ -776,7 +776,7 @@
         <xsl:for-each select="$cho/edm:isRelatedTo/@rdf:resource">
             <xsl:element name="field">
                 <xsl:attribute name="name">
-                    <xsl:text>relatedTo</xsl:text>
+                    <xsl:text>related_to</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="normalize-space(substring-after(., 'Record/'))"/>
             </xsl:element>
