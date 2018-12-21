@@ -1,0 +1,59 @@
+<div class="news_article">
+  <? if ($article) : ?>
+  <div class="news_meta">
+    <b><?if ($article->startdate!=null) echo date_format(date_create($article->startdate), "d.m.Y");?> - <?=$this->transEsc('news::'.$article->category)?></b><br/>
+    <? preg_match("/.+\((.+)\)/",$article->author,$match); ?>
+    <?=htmlentities($match[1])?>
+  </div>
+  <? if ($article->enclosure!=null || $article->enclosure='') :?>
+    <div class="news_pic">
+      <img src="<?=$this->imageLink($article->enclosure)?>">
+    </div>
+  <? endif; ?>
+
+  <div class="news_fulltext">
+    <h2><?=htmlentities($article->title);?></h2>
+    <p><?=html_entity_decode($article->text);?></p>
+    <br/>
+    <p><strong><?=$this->transEsc("Source")?>:</strong></p>
+    <ul>
+      <li><a href="<?=$article->source?>" target="_blank">» <?=htmlentities($article->source)?></a></li>
+    </ul>
+    <? if (($article->dlname1 != null && $article->dlname1 != '') ||
+        ($article->dlname2 != null && $article->dlname2 != '') ||
+        ($article->dlname3 != null && $article->dlname3 != '')) { ?>
+        <p><strong>Downloads:</strong></p>
+        <ul>
+          <? if ($article->dlname1 != null && $article->dlname1 != '') { ?>
+            <li><a href="<?=$this->imageLink("news/".$article->dl1)?>">» <?=htmlentities($article->dlname1)?></a></li>
+          <?}?>
+          <? if ($article->dlname2 != null && $article->dlname2 != '') { ?>
+            <li><a href="<?=$this->imageLink("news/".$article->dl2)?>">» <?=htmlentities($article->dlname2)?></a></li>
+          <?}?>
+          <? if ($article->dlname3 != null && $article->dlname3 != '') { ?>
+            <li><a href="<?=$this->imageLink("news/".$article->dl3)?>">» <?=htmlentities($article->dlname3)?></a></li>
+          <?}?>
+        </ul>
+    <?}?>
+
+    <? if (($article->urlname1 != null && $article->urlname1 != '') ||
+        ($article->urlname2 != null && $article->urlname2 != '') ||
+        ($article->urlname3 != null && $article->urlname3 != '')) { ?>
+        <p class="further"><strong>Weiterführende Links:</strong></p>
+        <ul>
+          <? if ($article->urlname1 != null && $article->urlname1 != '') { ?>
+            <li><a href="<?=$article->url1?>" target="_blank">» <?=htmlentities($article->urlname1)?></a></li>
+          <?}?>
+          <? if ($article->urlname2 != null && $article->urlname2 != '') { ?>
+            <li><a href="<?=$article->url2?>" target="_blank">» <?=htmlentities($article->urlname2)?></a></li>
+          <?}?>
+          <? if ($article->urlname3 != null && $article->urlname3 != '') { ?>
+            <li><a href="<?=$article->url3?>" target="_blank">» <?=htmlentities($article->urlname3)?></a></li>
+          <?}?>
+        </ul>
+    <?}?>
+  </div>
+  <? else : ?>
+    <div class="alert alert-danger">Sorry, we could not find this article!</div>
+  <? endif; ?>
+</div>

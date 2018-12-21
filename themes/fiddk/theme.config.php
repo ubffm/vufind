@@ -1,18 +1,19 @@
 <?php
-return array(
-    'extends' => 'newsstream',
-    'css' => array(
-      //'fiddk.css:screen, projection',
-    ),
-    'less' => array(
+return [
+    'extends' => 'news',
+    'less' => [
         'active' => false,
         'compiled.less'
-    ),
+    ],
     'favicon' => 'fid-dk_favicon.png',
-    'helpers' => array(
-      'factories' => array(
-        'record' => 'fiddk\View\Helper\fiddk\Factory::getRecord',
-        'recorddataformatter' => 'fiddk\View\Helper\fiddk\RecordDataFormatterFactory',
-      ),
-    ),
-);
+    'helpers' => [
+      'factories' => [
+        'Fiddk\View\Helper\Fiddk\RecordDataFormatter' => 'Fiddk\View\Helper\Fiddk\RecordDataFormatterFactory',
+      ],
+      'aliases' => [
+        // Overrides
+        //'VuFind\View\Helper\Root\Record' => 'Fiddk\View\Helper\Fiddk\Record',
+        'VuFind\View\Helper\Root\RecordDataFormatter' => 'Fiddk\View\Helper\Fiddk\RecordDataFormatter',
+      ],
+    ],
+];

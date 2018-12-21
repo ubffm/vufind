@@ -1,0 +1,39 @@
+<div class="stream">
+  <p class="title"><?=$this->transEsc("Newsstream")?></p>
+  <div class="stream well well-lg clearfix">
+    <? foreach ($pinnedlist as $pin) : ?>
+      <div class="pinned_news">
+        <? if ($pin->enclosure!=null || $pin->enclosure!='') : ?>
+          <div class="news_pic">
+            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60">
+          </div>
+        <? endif; ?>
+        <span class="newsdate">
+          <? if ($pin->startdate!=null) : ?>
+            <?=date_format(date_create($pin->startdate), "d.m.Y") . ' - ' . $this->transEsc('news::'.$pin->category)?>
+          <? endif; ?>
+        </span><br/>
+        <b><?=htmlentities($pin->title)?></b><br/>
+        <?=htmlentities(substr($pin->description,0, 200)).'...'?><br/>
+        <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+      </div>
+    <? endforeach; ?>
+    <? foreach ($newslist as $news) : ?>
+      <div class="news">
+        <? if ($news->enclosure!=null || $news->enclosure!='') : ?>
+          <div class="news_pic">
+            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto">
+          </div>
+        <? endif; ?>
+        <span class="newsdate">
+          <? if ($news->startdate!=null) : ?>
+           <?=date_format(date_create($news->startdate), "d.m.Y") . ' - ' . $this->transEsc('news::'.$news->category)?>
+          <? endif; ?>
+        </span><br/>
+        <b><?=htmlentities($news->title)?></b><br/>
+        <?=htmlentities(substr($news->description,0, 200)).'...'?><br/>
+        <a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+      </div>
+    <? endforeach; ?>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<h2><?=$this->transEsc("news::CurrentNews")?></h2>
+<a class="link" href="<?=$this->url('news-archive')?>"><?=$this->transEsc("news::ArchivedNews")?></a>
+
+<? foreach ($pinnedlist as $pin) : ?>
+  <div class="pinned_news">
+    <img src="/vufind/themes/news/images/unpin.png"><span class="newsdate"><?if ($pin->startdate!=null) echo date_format(date_create($pin->startdate), "d.m.Y");?> - <?=htmlentities($pin->category)?><br>
+    <? preg_match("/.+\((.+)\)/",$pin->author,$match); ?>
+    <b><?=htmlentities($match[1])?></b><br></span>
+    <a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=htmlentities($pin->title)?></a><br>
+    <?=htmlentities($pin->description)?><br>
+    <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+  </div>
+<? endforeach; ?>
+
+<? foreach ($newslist as $news) : ?>
+<div class="news">
+<span class="newsdate"><?if ($news->startdate!=null) echo date_format(date_create($news->startdate), "d.m.Y");?> - <?=htmlentities($news->category)?><br>
+<? preg_match("/.+\((.+)\)/",$news->author,$match); ?>
+<b><?=htmlentities($match[1])?></b><br></span>
+<a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a><br>
+<?=htmlentities($news->description)?><br>
+<a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+</div>
+
+<? endforeach; ?>

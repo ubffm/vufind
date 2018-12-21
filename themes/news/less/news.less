@@ -13,6 +13,11 @@
 	.title {
 		font-weight: bold;
 	}
+	.news_pic {
+		width: 125px;
+		padding-top: 0px;
+		padding-right: 0px;
+	}
 }
 
 .news_menu {
@@ -61,22 +66,20 @@ form.newsEdit {
 	padding-bottom: 10px;
 	h2 {
 		margin-top: 10px;
-		clear: left;
 	}
 	ul{
-		list-style-type: none;
+		list-style: none;
 	}
 	.news_meta {
-		float: left;
 		padding-bottom: 20px;
 	}
 	.news_fulltext {
-		white-space: pre-wrap;
-	}
-	.news_pic {
-		margin-top: 0;
-		width: auto;
-		max-width: 300px;
+		border: 1px solid @btn-default-border;
+		border-radius: 5px;
+		padding: 20px;
+		p {
+			white-space: pre-wrap;
+		}
 	}
 }
 
@@ -91,17 +94,16 @@ form.newsEdit {
 	border-top: 1px solid #cdcdcd;
 }
 
+.news_pic {
+	max-width: 300px;
+	padding: 20px;
+	float:right;
+}
+
 .news_A {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	border-bottom: 1px solid #cdcdcd;
-}
-
-.news_pic {
-	margin-left: 15px;
-	margin-top: 22px;
-	width: 95px;
-	float:right;
 }
 
 .pinned_news {
