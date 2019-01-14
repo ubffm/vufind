@@ -1,0 +1,7 @@
+User-agent: *
+
+Disallow: /AJAX
+Disallow: /Alphabrowse
+Disallow: /Browse
+Disallow: /Combined
+Disallow: /Search/Results
