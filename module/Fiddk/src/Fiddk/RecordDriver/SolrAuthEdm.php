@@ -1,6 +1,6 @@
 <?php
 /**
- * Model for EDM records in Solr.
+ * Model for EDM authority records in Solr.
  *
  * PHP version 5
  *
@@ -40,9 +40,35 @@ namespace Fiddk\RecordDriver;
  *
  * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrEdm extends \VuFind\RecordDriver\SolrDefault
+class SolrAuthEdm extends \VuFind\RecordDriver\SolrAuthDefault
 {
   use EdmReaderTrait;
-  use EdmBasicTrait;
-  use EdmAdvancedTrait;
-}
+  /**
+     * Get the occupation of the person.
+     *
+     * @return array
+     */
+    public function getOccupation()
+    {
+        return isset($this->fields['occupation'])
+            ? $this->fields['occupation'] : [];
+    }
+
+    /**
+     * Returns the thumbnail url or []
+     */
+     public function getThumbnail($size = 'small')
+     {
+         return isset($this->fields['thumbnail'])
+               ? $this->fields['thumbnail'] : [];
+     }
+
+     /**
+      * Returns all owl:sameAs links
+      */
+      public function getsameAs()
+      {
+          return isset($this->fields['thumbnail'])
+                ? $this->fields['thumbnail'] : [];
+      }
+  }
