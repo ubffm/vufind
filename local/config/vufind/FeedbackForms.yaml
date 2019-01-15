@@ -12,7 +12,6 @@
 #   useCaptcha (boolean) Should the form use Captcha validation? Requires the "feedback"
 #                        option to be turned on in the config.ini [Captcha] form setting.
 #                        (default = true, if Captcha turned on for feedback overall).
-#   reportReferrer (boolean) Should the form report the page from which it was invoked?
 #   title (string) Form title (translation key)
 #   onlyForLoggedUsers (boolean) Require the user to be logged in to see the form
 #                                (default = false)
@@ -25,19 +24,8 @@
 #                    [Feedback] section)
 #     email (string) Recipient email address (default = recipient_email setting from
 #                    config.ini [Feedback] section)
-#
-#   Multiple recipients can be configured using a list:
-#
-#   recipient:
-#     - name: Recipient 1
-#       email: recipient1@email
-#     - name: Recipient 2
-#       email: recipient2@email
-#
 #   response (string) Reponse after form submit (translation key)
-#   senderInfoRequired (boolean)  Require sender to fill out name and email fields - deprecated
-#   senderEmailRequired (boolean) Require sender to fill out email field
-#   senderNameRequired (boolean)  Require sender to fill out name field
+#   senderInfoRequired (boolean)  Require sender to fill out name and email fields
 #
 #   help
 #     pre (string)  Help text displayed at the beginning of the form (translation key).
@@ -55,47 +43,15 @@
 #     type (string)      Element type (text|textarea|email|url|select)
 #     help (string)      Element help text (translation key)
 #
-#     help (string)      Element help text (translation key) that is displayed before the element.
-#                        To include HTML formatting, use a translation key ending
-#                        in '_html' here, and define markup in the language files.
-#
-#       or
-#
-#     help (array)
-#      pre (string)      Like above.
-#      post (string)     Like above but the help text is displayed after the element.
-#
-#
-#     And for select, radio and checkbox elements:
+#     And for select elements one of:
 #
 #     options (array) List of select values (translation keys)
-#                     or a list of options with 'value' and 'label' (translation) keys.
-#                       Examples:
-#                         options:
-#                           - option-1
-#                           - option-2
 #
-#                         or
-#
-#                         options:
-#                           - value: value-1
-#                             label: label-1
-#                           - value: value-2
-#                             label: label-2
-#
-#     or for select elements alternatively:
+#     or
 #
 #     optionGroups (array) List of option groups with keys:
 #       label (string) Group label (translation key)
-#       options (array) List of select values (see above)
-#
-#     placeholder (string) Placeholder label (translation key). Used to instruct or force
-#       (when combined with 'required' attribute) the user to make a selection from the
-#       options-list. Only select elements with 'options' are supported.
-#       For text, textarea, email and url elements, a placeholder text (translation key)
-#       can be configured by adding a HTML-attribute via 'settings', for example:
-#       settings:
-#         - [placeholder, Please select...]
+#       options (array) List of select values (translation keys)
 #
 #-----------------------------------------------------------------------------------
 
@@ -107,7 +63,6 @@ forms:
     title: Send us your feedback!
     enabled: true
     useCaptcha: true
-    reportReferrer: false
     #recipient:
     #  name: Your Library
     #  email: feedback@myuniversity.edu
@@ -115,8 +70,7 @@ forms:
     onlyForLoggedUsers: false
     emailSubject: FID Feedback
     response: Thank you for your feedback.
-    senderEmailRequired: true
-    senderNameRequired: true
+    senderInfoRequired: true
 
     #help:
     #  pre: feedback_help_pre
@@ -137,9 +91,8 @@ forms:
     title: Acquisition Request
     onlyForLoggedUsers: false
     emailSubject: FID Kaufvorschlag
-    senderEmailRequired: true
-    senderNameRequired: true
-    response: Thank you for your acquisition request.
+    title: Acquisition Request,
+    response: Thank you for your feedback.
 
     #recipient:
     #  name: Your Library
@@ -150,6 +103,11 @@ forms:
       post: acquisition_request_info_post
 
     fields:
+      - name: isbn/issn
+        type: text
+        label: ISBN/ISSN
+        required: false
+
       - name: title
         type: text
         label: Title
@@ -165,12 +123,7 @@ forms:
         label: Publisher
         required: true
 
-      - name: isbn/issn
-        type: text
-        label: ISBN/ISSN
-        required: false
-
-      - name: Publication_Place
+      - name: placeOfPublication
         type: text
         label: Place of Publication
         required: false
@@ -181,60 +134,6 @@ forms:
         required: false
 
       - name: note
-        type: textarea
-        label: Add a Note
+        type: text
+        label: Add a note
         required: false
-
-  AskArchiveDTK:
-    enabled: true
-    title: AskAboutResource
-    onlyForLoggedUsers: false
-    senderEmailRequired: true
-    senderNameRequired: true
-    emailSubject: Anfrage zu einer Ressource aus Ihrem Bestand via FID Darstellende Kunst
-    response: Thank you for your request.
-
-    recipient:
-      name: Deutsches Tanzarchiv Köln
-      email: tanzarchiv@sk-kultur.de
-
-    help:
-      pre: askArchiveDTK_info_pre
-
-    fields:
-      - name: Request
-        type: textarea
-        label: Your Request
-        required: true
-
-      - name: CallNumber
-        type: text
-        label: edm::bf:shelfMark
-        required: true
-
-  AskArchiveMCB:
-    enabled: true
-    title: AskAboutResource
-    onlyForLoggedUsers: false
-    senderEmailRequired: true
-    senderNameRequired: true
-    emailSubject: Anfrage zu einer Ressource aus Ihrem Bestand via FID Darstellende Kunst
-    response: Thank you for your request.
-
-    recipient:
-      name: Christine Henniger
-      email: c.henniger@iti-germany.de
-
-    help:
-      pre: askArchiveMCB_info_pre
-
-    fields:
-      - name: Request
-        type: textarea
-        label: Your Request
-        required: true
-
-      - name: CallNumber
-        type: text
-        label: edm::bf:shelfMark
-        required: true
