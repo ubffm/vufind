@@ -1,0 +1,37 @@
+<?php $this->info = $this->recommend->getAuthorityInfo(); ?>
+<?php if (!empty($this->info)):
+   $title = $this->info['preferredName'];
+   //TODO: There can be more than one thumbnail??
+   $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
+   $authFields = isset($this->info['professionOrOccupation'])
+   || isset($this->info['variantName'])
+   || isset($this->info['placeOfBusiness'])
+   || isset($this->info['biographicalOrHistoricalInformation'])
+   || isset($this->info['dateOfBirth'])
+   || isset($this->info['dateOfDeath'])
+   || isset($this->info['placeOfBirth'])
+   || isset($this->info['placeOfDeath'])
+   || isset($this->info['publication'])
+   || isset($this->info['precedingCorporateBody'])
+   || isset($this->info['dateOfEstablishment'])
+   || isset($this->info['homepage'])
+   || isset($this->info['spatialAreaOfActivity']);
+   ?>
+
+<div class="card clearfix">
+  <h2><?=$title?></h2>
+  <div class="flex-content flex-start">
+  <?php if (!empty($thumbnail)): ?>
+    <div class="authority-meta thumb">
+      <img class="pull-left flip" src="<?=$thumbnail ?>" alt="<?=$title?>"/>
+    </div>
+  <?php endif; ?>
+  <?php if (!empty($authFields)): ?>
+    <?=$this->render('Recommend/data-authFields.phtml');?>
+  <?php endif; ?>
+  <?php if (!empty($this->info['sameAs'])): ?>
+    <?=$this->render('Recommend/data-sameAs.phtml');?>
+  <?php endif; ?>
+  </div>
+</div>
+<?php endif;?>

@@ -164,11 +164,9 @@
 #-----------------------------------------------------------------------------------
 
 # These searches use Dismax when possible:
-Agent:
+Author:
   DismaxFields:
-    - author^150
-    - topic_unstemmed^100
-    - topic^50
+    - author^100
     - author_additional
     - author_corporate
     - author_variant
@@ -255,7 +253,6 @@ AllFields:
     - title_sub^100
     - series^50
     - series2^30
-    - container_title^50
     - author^300
     - author_fuller^150
     - contents^10
@@ -292,17 +289,10 @@ ParentID:
     hierarchy_parent_id:
       - [onephrase, ~]
 
-Event:
-  QueryFields:
-    event_id:
-      - [onephrase, 50]
-    topic_id:
-      - [onephrase, 50]
-
-Agent:
+Authority:
   QueryFields:
     author_id:
-      - [onephrase, 100]
+      - [onephrase, 50]
     institution_id:
       - [onephrase, ~]
     intermediate_id:

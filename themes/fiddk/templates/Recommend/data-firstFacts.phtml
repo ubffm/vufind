@@ -1,0 +1,38 @@
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+<?php if (isset($this->info['professionOrOccupation'])) : ?>
+  <span property="professionOrOccupation">
+    <?=implode(', ',array_column($this->info['professionOrOccupation'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['dateOfBirth']) || isset($this->info['placeOfBirth'])) : ?>
+  <?=$this->transEsc('born')?>
+  <?php if (isset($this->info['dateOfBirth'])) : ?>
+    <span property="birthDate">
+      <?=implode('/',array_map(function($item) use($lang) {
+          return $this->recommend->formatDisplayDate($item, $lang); },$this->info['dateOfBirth']))?>
+    </span>
+  <?php endif; ?>
+  <?php if (isset($this->info['placeOfBirth'])) : ?>
+    <?=$this->transEsc('in')?>
+    <span property="birthPlace">
+      <?=implode('/',array_column($this->info['placeOfBirth'],'label'))?>
+    </span>
+  <?php endif; ?>
+  <br />
+<?php endif; ?>
+<?php if (isset($this->info['dateOfDeath']) || isset($this->info['placeOfDeath'])) : ?>
+  <?=$this->transEsc('died')?>
+  <?php if (isset($this->info['dateOfDeath'])) : ?>
+    <span property="deathDate">
+      <?=implode('/',array_map(function($item) use($lang) {
+          return $this->recommend->formatDisplayDate($item, $lang); },$this->info['dateOfDeath']))?>
+    </span>
+  <?php endif; ?>
+  <?php if (isset($this->info['placeOfDeath'])) : ?>
+    <?=$this->transEsc('in')?>
+    <span property="deathPlace">
+      <?=implode('/',array_column($this->info['placeOfDeath'],'label'))?>
+    </span>
+  <?php endif; ?>
+  <br />
+<?php endif; ?>

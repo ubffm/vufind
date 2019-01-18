@@ -1,0 +1,36 @@
+<b><?=$this->transEsc('BiographicalDetails')?></b><br />
+<?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
+  <span property="biographicalInformation">
+    <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['affiliation'])) : ?>
+  <br/><?=$this->transEsc('Affiliation') . ': '?>
+  <span property="affiliation">
+    <?=implode('/',array_column($this->info['affiliation'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['placeOfActivity'])) : ?>
+  <?=$this->transEsc('placeOfActivity') . ': '?>
+  <span property="placeOfActivity">
+    <?=implode('/',array_column($this->info['placeOfActivity'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['publication'])) : ?>
+  <?=$this->transEsc('Publications') . ':'?><br />
+  <div class="publications">
+    <?=implode(' | ',$this->info['publication'])?>
+  </div>
+<?php endif; ?>
+<?php if (isset($this->info['familialRelationship'])) : ?>
+<br/><b><?=$this->transEsc('Familial Relationship')?></b><br />
+  <span property="familialRelationship">
+    <?=implode('; ',array_column($this->info['familialRelationship'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['professionalRelationship'])) : ?>
+<br/><b><?=$this->transEsc('Professional Relationship')?></b><br />
+  <span property="professionalRelationship">
+    <?=implode('; ',array_column($this->info['professionalRelationship'],'label'))?>
+  </span><br/>
+<?php endif; ?>

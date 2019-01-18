@@ -1,0 +1,42 @@
+<?php if (isset($this->info['dateOfEstablishment'])) : ?>
+  <?=$this->transEsc('established')?>
+  <span property="dateOfEstablishment">
+    <?=implode('; ',$this->info['dateOfEstablishment'])?>
+  </span><br />
+<?php endif; ?>
+<?php if (isset($this->info['placeOfBusiness'])) : ?>
+  <?=$this->transEsc('placeOfBusiness') . ' in '?>
+  <span property="placeOfBusiness">
+    <?=implode('; ',array_column($this->info['placeOfBusiness'],'label'))?>
+  </span><br />
+<?php endif; ?>
+<?php if (isset($this->info['homepage'])) : ?>
+  <?php foreach($this->info['homepage'] as $homepage) : ?>
+    <span property="homepage">
+      <a href="<?=$homepage['id']?>" target="_blank"><?=$homepage['label']?></a>
+    </span><br />
+  <?php endforeach; ?>
+<?php endif; ?>
+<?php if (isset($this->info['spatialAreaOfActivity'])) : ?>
+  <?=$this->transEsc('spatialAreaOfActivity') . ': '?>
+  <span property="spatialAreaOfActivity">
+    <?=implode('; ',array_column($this->info['spatialAreaOfActivity'],'label'))?>
+  </span><br />
+<?php endif; ?>
+<?php if (isset($this->info['broaderTermInstantial']) || isset($this->info['gndSubjectCategory'])) : ?>
+  <?php $categories = isset($this->info['broaderTermInstantial']) ?
+  (isset($this->info['gndSubjectCategory']) ?
+    array_merge($this->info['gndSubjectCategory'],$this->info['broaderTermInstantial'])
+    : $this->info['broaderTermInstantial'])
+  : $this->info['gndSubjectCategory']?>
+  <?=$this->transEsc('Category') . ': '?>
+  <span property="Category">
+    <?=implode(', ',array_column($categories,'label'))?>
+  </span><br />
+<?php endif; ?>
+<?php if (isset($this->info['precedingCorporateBody'])) : ?>
+  <?=$this->transEsc('precedingCorporateBody') . ': '?>
+  <span property="precedingCorporateBody">
+    <?=implode('; ',array_column($this->info['precedingCorporateBody'],'label'))?>
+  </span><br />
+<?php endif; ?>

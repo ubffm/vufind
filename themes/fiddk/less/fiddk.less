@@ -81,6 +81,15 @@ header .banner.container.navbar.search {
   margin: 0px;
 }
 
+/* Tabs */
+.tab-content {
+  padding: 10px 4px;
+}
+
+.feedback-content {
+  padding: 10px 15px;
+}
+
 /* SEARCH_TABS */
 .loader {
   display: none;
@@ -137,6 +146,14 @@ footer {
   }
 }
 
+a.facet {
+  span.text {
+    padding-left: 8px;
+    padding-right: 8px;
+    word-break: break-all;
+  }
+}
+
 /* General Layout
 body {
     background: @background-color;
@@ -153,9 +170,17 @@ body {
     background-size: cover;
 }
 
+.media-left {
+  padding-right: 15px;
+}
+
+.result .media-left, .media-right, .media-body {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
 .container {
-	background: @white;
-	box-shadow: 10px 10px 11px 0px rgba(0,0,0,0.28);
+  background: @white;
 }
 
 .breadcrumb {
@@ -166,23 +191,27 @@ body {
     }
 }
 
+.facet .badge {
+  line-height: normal;
+}
+
 .badge {
     color: @grey;
     border: 1px solid @grey;
     background-color: @white;
     border-radius: 10px;
 }
-.badge-secondary {
-  color: @white;
-  background-color: @grey;
+
+a.badge-secondary {
+  color: @brand-primary;
+  &:hover {
+    color: @darkprimary-color;
+    text-decoration: underline;
+  }
 }
 
 .label {
   background-color: @brand-primary;
-}
-
-.table-striped th {
-    width: 20%;
 }
 
 a[target="_blank"]:after {
@@ -190,6 +219,10 @@ a[target="_blank"]:after {
     content: "\f08e";
     display: inline-block;
     padding-left: 7px;
+}
+
+h3[property="context"] {
+  font-style: italic;
 }
 
 .highlight,
@@ -220,14 +253,11 @@ div#accordion .panel-collapse {
 /* Homepage Layout */
 .searchHomeContent {
   overflow: hidden;
-  padding-left: 45px;
-  padding-right: 45px;
-  margin-top: 5em;
+  margin-top: 3em;
 }
 
 #searchAndNews {
-  width: 65%;
-  //float:left;
+  width: 60%;
   margin: auto;
   padding-right: 40px;
 }
@@ -255,45 +285,55 @@ div#contacts {
   }
 }
 
-.card {
+div.card {
   border: 1px solid @btn-default-border;
   padding: 15px 20px 20px 20px;
   margin-bottom: 20px;
   border-radius: 5px;
+  .table {
+    table-layout: auto;
+    margin-bottom: 10px;
+  }
+  .table-striped th {
+    width: 25%;
+  }
+  h2 {
+    margin-top: 5px;
+  }
 }
 
 a[target="_blank"].no-symbol::after {
   display: none;
 }
 
-/* Agent Layout */
-
-.agent-container {
-    display: flex;
-    flex-flow: row wrap;
-    max-width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 3px solid @brand-primary;
-
-    .agent-column {
-        flex: 0 1 425px;
-        padding: 15px;
-
-        .external-icon img {
-            width: 16px;
-            margin-right: 0.5em;
-        }
-
-        h2#agentName {
-              margin-top: 10px;
-        }
+div.flex-content {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 100%;
+  &.flex-between {
+    justify-content: space-between;
+  }
+  &.flex-start {
+    padding-right: 10px;
+    justify-content: flex-start;
+  }
+  .authority-meta {
+    flex: 0 1 405px;
+    padding: 15px;
+    &.thumb {
+      max-width: 270px;
+      padding: 15px 15px 15px 0px;
     }
-}
-
-body.template-dir-authority .result {
-  .media-left {
-    width: 10%;
+    .external-icon img {
+      width: 16px;
+      margin-right: 0.5em;
+    }
+    .publications {
+      padding-left: 20px;
+    }
+    h4 {
+      margin-top: 0px;
+    }
   }
 }
 
@@ -304,24 +344,12 @@ body.template-dir-authority .result {
   .media-left {
     width: 30%;
   }
+  .media {
+    padding: 10px 0px 20px 0px;
+  }
   .medium > a {
     width: 100%;
   }
-}
-
-table.table-inside {
-    margin: initial;
-    background-color: inherit !important;
-    tr th, tr td {
-      padding-left: 0px;
-    }
-    th {
-      width: 25%;
-    }
-    tr:first-child td, tr:first-child th {
-      border-top: 0;
-      padding-top: 0px;
-    }
 }
 
 /* Toggle MORE/LESS without js */
@@ -397,6 +425,19 @@ a.carousel-control:focus {
  box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
 }
 
+/* Data View */
+th.edm-tag, td.edm-tag {
+  color: blue;
+}
+
+div.edm-attr {
+  color: DarkOrange;
+}
+
+div.breaking {
+  word-break:break-all;
+}
+
 /* TRAILER */
 video {
   width: 75% !important;
@@ -409,4 +450,11 @@ div#trailer-container {
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
+}
+
+/* License Frame */
+iframe#fid-license-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 700px;
 }
