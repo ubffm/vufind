@@ -1,28 +1,30 @@
-<?
+<?php
     // Set page title.
     $this->headTitle($this->translate('Staff View') . ': ' . $this->driver->getBreadcrumb());
+
+    $edm = $this->driver->getXML('edm');
 ?>
-<table class="citation table table-striped">
-  <? foreach ($this->driver->getRawData() as $field => $values): ?>
+<!-- pre><?//=$edm?></pre -->
+<?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
+
+<div class="solrTab"><table class="citation table table-striped">
+  <?php foreach ($this->driver->getRawData() as $field => $values): ?>
     <tr>
       <th><?=$this->escapeHtml($field)?></th>
       <td>
-        <!-- display full record field as indented xml string -->
-      <? if ($field == "fullrecord"): ?>
-           <pre><?=formatXML($values);?></pre>
-      <? else : ?>
-        <? if (!is_array($values)) { $values = [$values]; } ?>
-        <? foreach ($values as $value): ?>
+        <?php foreach ((array)$values as $value): ?>
           <?=$this->escapeHtml(is_array($value) ? print_r($value, true) : $value)?><br />
-        <? endforeach; ?>
-      <? endif; ?>
+        <?php endforeach; ?>
       </td>
     </tr>
-  <? endforeach; ?>
-</table>
+  <?php endforeach;?>
+</table></div>
+
+<!-- do this with a view helper!
+           <pre><?//=formatXML($values);?></pre>  -->
 
 <!-- Formats the full record field to a structured, highlighted, indented xml string to make debugging easier -->
-<? function formatXML($value) {
+<? /**function formatXML($value) {
 
      $xml = new SimpleXMLElement($value);
      $dom = new DOMDocument("1.0","UTF-8");
@@ -43,5 +45,5 @@
         '<span style="color:'.$tag.';">$1</span>');
      return preg_replace($find, $replace, $str);
 }
-
+*/
 ?>

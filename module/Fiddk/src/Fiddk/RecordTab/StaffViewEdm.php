@@ -1,6 +1,6 @@
 <?php
 /**
- * Staff view (array dump) tab
+ * Staff view (array dump) tab for EDM Records
  *
  * PHP version 5
  *
@@ -33,10 +33,11 @@ namespace Fiddk\RecordTab;
  * @category VuFind
  * @package  RecordTabs
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:record_tabs Wiki
  */
-class StaffViewArray extends \VuFind\RecordTab\AbstractBase
+class StaffViewEdm extends \VuFind\RecordTab\AbstractBase
 {
     /**
      * Constructor
@@ -53,6 +54,6 @@ class StaffViewArray extends \VuFind\RecordTab\AbstractBase
      */
     public function getDescription()
     {
-        return 'DM2E View';
+        return 'Data View';
     }
 }

@@ -1,70 +1,66 @@
 <h4><?=$this->transEsc('Similar Items')?></h4>
-<? $similarRecords = $this->tab->getResults(); ?>
-<? if (!empty($similarRecords)): ?>
-  <? $perPage = 4 ?>
+<?php $similarRecords = $this->tab->getResults(); ?>
+<?php if (!empty($similarRecords)): ?>
+  <?php $perPage = 4 ?>
   <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
-      <? for($i=1;$i<count($similarRecords)/$perPage;$i++): ?>
+      <?php for($i = 1;$i < count($similarRecords) / $perPage;$i++): ?>
         <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
-      <? endfor; ?>
+      <?php endfor; ?>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <? foreach ($similarRecords as $index=>$data): ?>
+        <?php foreach ($similarRecords as $index => $data): ?>
           <div class="carousel-item">
             <a class="hover-overlay" href="<?=$this->recordLink()->getUrl($data)?>">
-              <? $thumb = $this->record($data)->getThumbnail('large'); ?>
-              <img src="<?=$thumb?>" alt="<?=str_replace('"','\'',$data->getTitle())?>" title="<?=$data->getTitle() ?>"/>
-              <? if ($thumb) :?>
+              <?php $thumb = $this->record($data)->getThumbnail('large'); ?>
+              <?php if ($thumb) :?>
+              <img src="<?=$thumb ?>" alt="<?=$data->getTitle() ?>" title="<?=$data->getTitle() ?>"/>
               <div class="content">
                 <div class="contentDarker">
-                  <p><b><?=$data->getTitle();?></b></p>
-                  <? if ($data->getContainerTitle()) :?>
-                    <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
-                  <? endif; ?>
-                  <? if ($data->getParentFormats()) :?>
-                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
-                  <? endif; ?>
-                  <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+                <?php $formats = $data->getFormats(); ?>
+                <b><?=$this->escapeHtml($data->getTitle())?></b>
+                <?php if ($data->getFormats()) :?>
+                  <p><?=implode(', ',$data->getFormats());?></p>
+                <?php endif; ?>
+                <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
                 </div>
               </div>
-              <? else: ?>
-              <div class="content">
-              </div>
-              <? if ($data->getContainerTitle()) :?>
-                <p><?=$this->transEsc("In") . ': ' . $data->getContainerTitle();?></p>
-              <? endif; ?>
-              <? if ($data->getParentFormats()) :?>
-                <p><?=$this->transEsc("Format") . ': ' . implode(', ',$data->getParentFormats());?></p>
-              <? endif; ?>
-              <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
-              <? endif; ?>
+            <?php else: ?>
+            <div class="content">
+            </div>
+            <p><?=$data->getTitle();?></p>
+            <?php if ($data->getFormats()) :?>
+              <p><?=implode(', ',$data->getFormats());?></p>
+            <?php endif; ?>
+            <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+          <?php endif; ?>
             </a>
           </div>
-          <? if(($index+1) % $perPage == 0 && $index < count($similarRecords)-1): ?>
+          <?php if(($index + 1) % $perPage == 0 && $index < count($similarRecords) - 1): ?>
       </div>
       <div class="item">
-          <? endif; ?>
-        <? endforeach; ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
       </div>
     </div>
 
     <!-- Controls -->
-    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev">
+    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev" aria-label="<?=$this->transEsc('Prev') ?>">
       <span class="fa fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEsc('Prev') ?>"></span>
     </a>
-    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next">
+    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next" aria-label="<?=$this->transEsc('Next') ?>">
       <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEsc('Next') ?>"></span>
     </a>
   </div>
-<? else: ?>
+<?php else: ?>
   <p><?=$this->transEsc('Cannot find similar records')?></p>
-<? endif; ?>
-<?
+<?php endif; ?>
+<?php
   $script = <<<JS
 var normalizeHeightCount = $('#similar-items-carousel img').length;
 function normalizeHeights() {

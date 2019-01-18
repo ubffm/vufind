@@ -1,0 +1,17 @@
+<?php
+    // Set page title.
+    $this->headTitle($this->translate('Table of Contents'));
+    $tocs = $this->driver->getTOC();
+    //TODO: What to do when toc is a url?
+?>
+<?php if (!empty($tocs)):
+  foreach ($tocs as $toc) :
+    $content = array_filter(explode('--', $toc), 'trim'); ?>
+    <h4><?=$this->translate('Table of Contents')?></h4>
+      <ul class="toc">
+        <?php foreach ($content as $line): ?>
+          <li><?=$this->escapeHtml($line)?></li>
+        <?php endforeach; ?>
+      </ul>
+  <?php endforeach; ?>
+<?php endif; ?>
