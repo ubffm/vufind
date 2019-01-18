@@ -91,8 +91,8 @@ forms:
     title: Acquisition Request
     onlyForLoggedUsers: false
     emailSubject: FID Kaufvorschlag
-    title: Acquisition Request,
-    response: Thank you for your feedback.
+    senderInfoRequired: true
+    response: Thank you for your acquisition request.
 
     #recipient:
     #  name: Your Library
@@ -103,11 +103,6 @@ forms:
       post: acquisition_request_info_post
 
     fields:
-      - name: isbn/issn
-        type: text
-        label: ISBN/ISSN
-        required: false
-
       - name: title
         type: text
         label: Title
@@ -123,7 +118,12 @@ forms:
         label: Publisher
         required: true
 
-      - name: placeOfPublication
+      - name: isbn/issn
+        type: text
+        label: ISBN/ISSN
+        required: false
+
+      - name: Publication_Place
         type: text
         label: Place of Publication
         required: false
@@ -134,6 +134,28 @@ forms:
         required: false
 
       - name: note
-        type: text
-        label: Add a note
+        type: textarea
+        label: Add a Note
         required: false
+
+  AskArchive:
+    enabled: true
+    title: AskAboutObject
+    onlyForLoggedUsers: false
+    senderInfoRequired: true
+    emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
+    response: Thank you for your request.
+
+    #recipient:
+      #name: Deutsches Tanzarchiv Köln
+      #email: tanzarchiv@sk-kultur.de
+
+    help:
+      pre: askArchive_info_pre
+      post: askArchive_info_post
+
+    fields:
+      - name: Request
+        type: textarea
+        label: Your Request
+        required: true
