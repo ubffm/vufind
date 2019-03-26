@@ -1,24 +1,11 @@
-<?
- $link=htmlentities($_GET['link']);
- ?>
-<head>
-  <meta charset="utf-8"/>
-  <title>FID DK Lizenzen</title>
-</head>
-<body>
-<a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_logo.gif')?>" style="width:400px;padding-right:20px;float:left;"></a>
-<table class="table" style="text-align:center;font-family:arial,sans-serif;font-size:20px;">
-  <tbody>
-    <tr>
-      <td colspan="4"><?=$this->transEsc('LoginForLicensedContent');?></td>
-    </tr>
-    <tr>
-      <td><a href="http://darstellende-kunst.fid-lizenzen.de/" target="_blank"><?=$this->transEsc('NotRegistered');?></a></td>
-      <td><a href="http://darstellende-kunst.fid-lizenzen.de/mail_password_form" target="_blank"><?=$this->transEsc('ForgotPassword');?></a></td>
-      <td><a href="http://darstellende-kunst.fid-lizenzen.de/kfl-mail-account" target="_blank"><?=$this->transEsc('ForgotUsername');?></a></td>
-      <td><a href="<?=$link?>" target="_blank"><?=$this->transEsc('NoContent');?></a></td>
-    </tr>
-  </tbody>
-</table>
-<iframe id="fid-license-frame" style="width:100%;height:100%;" src="<?=$link?>"></iframe>
-</body>
+<?php $link=htmlentities($_GET['link']);?>
+<div class="card">
+  <div class="flex-content flex-between">
+    <div><a href="https://darstellende-kunst.fid-lizenzen.de/kfllogin" target="_blank"><?=$this->transEsc('NotRegistered');?></a></div>
+    <div><a href="<?=$link?>" target="_blank"><?=$this->transEsc('NoContent');?></a></div>
+    <div><a href="https://darstellende-kunst.fid-lizenzen.de/mail_password_form" target="_blank"><?=$this->transEsc('ForgotPassword');?></a></div>
+    <div><a href="https://darstellende-kunst.fid-lizenzen.de/kfl-mail-account" target="_blank"><?=$this->transEsc('ForgotUsername');?></a></div>
+    <div><a href="<?=$link?>" target="_blank"><?=$this->transEsc('FullScreen');?></a></div>
+  </div>
+</div>
+<iframe id="fid-license-frame" src="<?=$link?>"></iframe>

@@ -11,9 +11,9 @@
     </button>
     <? $account = $this->auth()->getManager(); ?>
     <? if (is_object($account) && $account->isLoggedIn()): ?>
-      <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('search-home')?>"></a>
+      <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('search-home')?>" aria-label="Home Button"></a>
     <? else : ?>
-      <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>"></a>
+      <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>" aria-label="Home Button"></a>
     <? endif; ?>
   </div>
   <? if (!isset($this->layout()->renderingError)): ?>
@@ -22,7 +22,7 @@
         <ul role="navigation" class="nav navbar-nav navbar-right flip">
           <? if ($this->feedback()->tabEnabled()): ?>
             <li>
-              <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
+              <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><?=$this->transEsc("Feedback")?>&nbsp;<i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
             </li>
           <? endif; ?>
           <? $cart = $this->cart(); if ($cart->isActive()): ?>

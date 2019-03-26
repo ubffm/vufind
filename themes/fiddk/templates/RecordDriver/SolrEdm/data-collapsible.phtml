@@ -1,0 +1,23 @@
+<?php foreach ($data as $n => $field):
+  $words = preg_split('/\s(?!\/>)/', $field);
+  if (sizeof($words) <= 28) : ?>
+    <?=nl2br(str_replace("&lt;br /&gt;","\n",$this->escapeHtml($field)));?><br/>
+  <?php else :
+    $lang = $this->plugin('translate')->getTranslator()->getLocale();
+    $start = array_slice($words, 0, 28);
+    $rest = array_slice($words, 28);?>
+    <?=nl2br(str_replace("&lt;br /&gt;","\n",$this->escapeHtml(implode($start,' ') . ' ')));?>
+    <span class="toggleContainer">
+      <input type="checkbox" class="toggle" id="toggle_<?=$n?>">
+      <span><?=nl2br(str_replace("&lt;br /&gt;","\n",$this->escapeHtml(implode($rest,' '))));?></span>
+      <?php if ($lang =='de') : ?>
+        <label for="toggle_<?=$n?>" class="label_de"></label>
+      <?php else : ?>
+        <label for="toggle_<?=$n?>" class="label_en"></label>
+      <?php endif; ?>
+      </span><br/>
+  <?php endif; ?>
+  <?php if ($n < sizeof($data)-1): ?>
+    <hr/>
+  <?php endif; ?>
+<?php endforeach; ?>

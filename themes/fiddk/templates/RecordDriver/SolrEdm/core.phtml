@@ -1,65 +1,77 @@
-<? $title = $this->driver->getTitle();
-   $this->headTitle($title);?>
-
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
-  <?
+  <?php
     $QRCode = $this->record($this->driver)->getQRCode("core");
-    $thumbnail = $this->record($this->driver)->getThumbnail('large');
-    if ($thumbnail) :
-    $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $thumbnail);
+    $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $this->record($this->driver)->getThumbnail('large'));
     $cover = $coverDetails['html'];
     $preview = $this->record($this->driver)->getPreviews();
   ?>
-  <? if ($QRCode || $cover || $preview): ?>
+  <?php if ($QRCode || $cover || $preview): ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
-      <? /* Display thumbnail if appropriate: */ ?>
-      <? if($cover): ?>
+      <?php /* Display thumbnail if appropriate: */ ?>
+      <?php if($cover): ?>
         <?=$cover?>
-      <? endif; ?>
+      <?php endif; ?>
 
-      <? /* Display qrcode if appropriate: */ ?>
-      <? if($QRCode): ?>
+      <?php /* Display qrcode if appropriate: */ ?>
+      <?php if($QRCode): ?>
         <span class="hidden-xs">
           <br/><img alt="<?=$this->transEsc('QR Code')?>" class="qrcode" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
         </span>
-      <? endif; ?>
+      <?php endif; ?>
 
-      <? // if you have a preview tab but want to move or remove the preview link
+      <?php // if you have a preview tab but want to move or remove the preview link
          // from this area of the record view, this can be split into
          // getPreviewData() (should stay here) and
          // getPreviewLink() (can go in your desired tab) ?>
-      <? if ($preview): ?>
+      <?php if ($preview): ?>
         <div class="record-previews">
           <?=$preview?>
         </div>
-      <? endif; ?>
+      <?php endif; ?>
     </div>
-  <? endif; ?>
-<? else : ?>
-  <div class="media-left">
-  </div>
-<? endif; ?>
+  <?php endif; ?>
   <div class="media-body">
 
-    <? if ($this->userlist()->getMode() !== 'disabled'): ?>
-      <? /* Display the lists that this record is saved to */ ?>
-      <div class="savedLists">
-        <strong><?=$this->transEsc("Saved in")?>:</strong>
-      </div>
-    <? endif; ?>
-
-    <?/* Display Main Details */?>
-    <?
+    <?php /* Display Main Details */ ?>
+    <?php
       $formatter = $this->recordDataFormatter();
       $coreFields = $formatter->getData($driver, $formatter->getDefaults('core'));
+      $eventFields = $formatter->getData($driver, $formatter->getDefaults('event'));
+      $seeAlsoFields = $formatter->getData($driver, $formatter->getDefaults('seeAlso'));
     ?>
-    <? if (!empty($coreFields)): ?>
-      <table class="table table-striped" summary="<?=$this->transEsc('Bibliographic Details')?>">
-        <? foreach ($coreFields as $key => $current): ?>
-          <tr><th><?=$this->transEsc($key)?>:</th><td><?=$current['value']?></td></tr>
-        <? endforeach; ?>
-      </table>
-    <? endif; ?>
-    <?/* End Main Details */?>
+    <?php if (!empty($coreFields)): ?>
+      <div class="card">
+        <h3 property="name"><?=$this->escapeHtml($this->driver->getTitle())?></h3>
+        <table class="table table-striped">
+          <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
+          <?php foreach ($coreFields as $current): ?>
+            <tr><th><?=$this->transEsc('edm::' .$current['label'])?>:</th><td><?=$current['value']?></td></tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+    <?php endif; ?>
+    <?php if (!empty($eventFields)): ?>
+      <div class="card">
+        <h3 property="context"><?=$this->transEsc("Event")?></h3>
+        <table class="table table-striped">
+          <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
+          <?php foreach ($eventFields as $current): ?>
+            <tr><th><?=$this->transEsc('edm::' .$current['label'])?>:</th><td><?=$current['value']?></td></tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+    <?php endif; ?>
+    <?php if (!empty($seeAlsoFields)): ?>
+      <div class="card">
+        <h3 property="context"><?=$this->transEsc("See also")?></h3>
+        <table class="table table-striped">
+          <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
+          <?php foreach ($seeAlsoFields as $current): ?>
+            <tr><th><?=$this->transEsc('edm::' .$current['label'])?>:</th><td><?=$current['value']?></td></tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+    <?php endif; ?>
+    <?php /* End Main Details */ ?>
   </div>
 </div>

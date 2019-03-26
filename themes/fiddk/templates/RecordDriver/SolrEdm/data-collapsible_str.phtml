@@ -1,0 +1,17 @@
+<?php if (sizeof($data) > 10) :
+    $lang = $this->plugin('translate')->getTranslator()->getLocale();
+    $rest = array_slice($data, 10);
+    $data = array_slice($data, 0, 10);
+  endif;?>
+  <?=implode('; ',$data);?>
+<?php if (!(empty($rest))) : ?>
+<span class="toggleContainer">
+  <input type="checkbox" class="toggle" id="toggle_subject">
+  <span><?=implode($rest,'; ');?></span>
+  <?php if ($lang =='de') : ?>
+     <label for="toggle_subject" class="label_de"></label>
+  <?php else : ?>
+     <label for="toggle_subject" class="label_en"></label>
+  <?php endif; ?>
+</span><br/>
+<?php endif; ?>

@@ -28,6 +28,13 @@ class ContentController extends \VuFind\Controller\ContentController
       return $licenseView;
     }
 
+    public function licenceLink($licenceLink=null)
+    {
+      $config = $this->getConfig();
+      $link = $config->Site->url.'/Content/licensed?link='.$licenceLink;
+      return $link;
+    }
+
     public function newsAction()
     {
       $view = $this->createViewModel();
@@ -156,13 +163,5 @@ class ContentController extends \VuFind\Controller\ContentController
         }
         return $view;
     }
-
-    public function licenceLink($licenceLink=null)
-    {
-      $config = $this->getConfig();
-      $link = $config->Site->url.'/Content/licensed?link='.$licenceLink;
-      return $link;
-    }
-
 
 }

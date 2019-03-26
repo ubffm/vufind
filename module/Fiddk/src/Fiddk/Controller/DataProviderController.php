@@ -45,7 +45,7 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
      *
      * @return Zend\View\Model\ViewModel
      */
-    public function dataproviderAction()
+    public function dataProviderAction()
     {
         $page = $this->params()->fromRoute('page');
         $themeInfo = $this->serviceLocator->get('VuFindTheme\ThemeInfo');

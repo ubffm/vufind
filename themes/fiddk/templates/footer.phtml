@@ -19,10 +19,13 @@
     <li><a href="<?=$this->url('content-page', ['page' => 'suchen'])?>"><?=$this->transEsc('Search in SIS Portal')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'faq'])?>"><?=$this->transEsc('FAQ')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'news'])?>"><?=$this->transEsc('News')?></a>&ensp;<font color="#4f81bd">/</font>&ensp;
-      <a target="_blank" href="https://www.facebook.com/Fachinformationsdienst-Darstellende-Kunst-1740840716155321"><span class="fa fa-facebook-square"></span></a></li>
+      <a target="_blank" href="https://www.facebook.com/Fachinformationsdienst-Darstellende-Kunst-1740840716155321" aria-label="Facebook Link">
+        <span class="fa fa-facebook-square"></span>
+      </a>
+    </li>
       <? if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
         <li class="logoutOptions<? if(!$account->isLoggedIn()): ?> hidden<? endif ?>">
-          <a href="<?//=$this->url('news-list', array(), array('query' => array('redirect' => 0)))?>"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?=$this->transEsc("News")?></a>
+          <a href="<?=$this->url('news-list', array(), array('query' => array('redirect' => 0)))?>"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?=$this->transEsc("News")?></a>
         </li>
         <li class="logoutOptions<? if(!$account->isLoggedIn()): ?> hidden<? endif ?>">
           <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>
@@ -43,7 +46,7 @@
         <li><a href="<?=$this->url('content-page', ['page' => 'contents'])?>"><?=$this->transEsc('Online Contents')?></a></li>
         <li><a href="<?=$this->url('content-page', ['page' => 'neuerwerb'])?>"><?=$this->transEsc('Acquisition Strategy')?></a></li>
         <li><a href="<?=$this->url('content-page', ['page' => 'fernleihe'])?>"><?=$this->transEsc('Interlibrary Loan')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'kaufvorschlag'])?>"><?=$this->transEsc('Suggestion Buy')?></a></li>
+        <li><a href="<?=$this->url('feedback-form', ['id' => 'AcquisitionRequest'])?>"><?=$this->transEsc('Acquisition Request')?></a></li>
       </ul>
     </div>
     <div class="footer-column">

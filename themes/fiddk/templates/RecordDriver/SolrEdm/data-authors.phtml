@@ -1,0 +1,49 @@
+<?php
+$formatProperty = function ($datafield, $name, $label) {
+    if (count($datafield) == 0) {
+        return '';
+    }
+    $that = $this;
+    $translate = function ($str) use ($that, $label) {
+        return $that->transEsc($label . $str);
+    };
+    return '<span class="author-property-' . $name . '">(' . implode(', ', array_unique(array_map($translate, $datafield))) . ')</span>';
+};
+$formattedAuthors = [];
+?>
+<?php if (!empty($data[$type])): ?>
+  <?php foreach ($data[$type] as $author => $dataFields): ?>
+    <?php ob_start();
+      // an authority link exists and that document exists in SolrAuth
+      if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0],"SolrAuth")) :
+        $authorityLookfor = $this->record($this->driver)->getLink('authority', $dataFields['id'][0]);
+      else :
+        //TODO: do we want that for literal persons? Or using authority path?
+        $authorityLookfor = $this->record($this->driver)->getLink('author', $author);
+      endif; ?>
+    <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
+      <a href="<?=$authorityLookfor?>">
+        <?=$this->escapeHtml($author)?>
+      </a>
+      <?php
+        // Display additional data using the appropriate translation prefix
+        // (for example, to render author roles correctly):
+        if (!empty($requiredDataFields)) {
+          foreach ($requiredDataFields as $field) {
+              $name = $field['name'];
+              $prefix = $field['prefix'] ?? '';
+              if (isset($dataFields[$name])) {
+                  echo $formatProperty($dataFields[$name], $name, $prefix);
+              }
+          }
+        }
+      ?>
+    </span>
+    <?php
+      // Strip whitespace before close tags to avoid spaces in front of commas:
+      $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
+      ob_end_clean();
+    ?>
+  <?php endforeach; ?>
+<?php endif; ?>
+<?=implode(', ', $formattedAuthors)?>

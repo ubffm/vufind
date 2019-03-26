@@ -39,6 +39,9 @@ namespace Fiddk\RecordDriver;
  */
 trait EdmBasicTrait
 {
+  public function getInstitution() {
+    return isset($this->fields['institution']) ? $this->fields['institution'] : '';
+  }
 
     public function getExtent() {
       return $this->getEdmRecord()->getPropValues("dcterms:extent");
@@ -105,7 +108,7 @@ public function getPlaceDateDetails()
 
     public function getLicenseLink() {
       $licenseLinks = [];
-      $inst = $this->getInstitutions()[0];
+      $inst = $this->getInstitution();
       if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press') {
         $licenseLinks = $this->getEdmRecord()->getPropValues("edm:isShownAt");
       }
@@ -113,7 +116,7 @@ public function getPlaceDateDetails()
     }
 
     public function getInstitutionsLinked() {
-      return $this->getEdmRecord()->getLinkedPropValues("edm:dataProvider","skos:prefLabel", "foaf:homepage");
+      return '';//$this->getEdmRecord()->getLinkedPropValues("edm:dataProvider","skos:prefLabel", "foaf:homepage");
     }
 
     public function getDigitalCopies() {
@@ -197,6 +200,70 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
         });
       }
       return $retVal;
-}
+    }
+
+    /**
+     * Get all subject headings associated with this record.  Each heading is
+     * returned as an array of chunks, increasing from least specific to most
+     * specific.
+     * Ignore geographic, era and genre. We don't use them as subjects.
+     *
+     * @param bool $extended Whether to return a keyed array with the following
+     * keys:
+     * - heading: the actual subject heading
+     * - type: heading type (Agent, Place, Concept, Timespan)
+     * - source: source vocabulary -> link (gnd)
+     *
+     * @return array
+     */
+    public function getAllSubjectHeadings($extended = true)
+    {
+        $retVal = [];
+        $headings = isset($this->fields['topic']) ? $this->fields['topic'] : [];
+
+        if ($extended) {
+          $subjects = $this->getEdmRecord()->getLinkedPropValues("dc:subject","skos:prefLabel","");
+          foreach ($subjects as $link => $subject) {
+            $linkparts = explode('/',$link);
+            if (isset($linkparts[3]) && $linkparts[3] == 'agent') {
+              $retVal[] = [
+                'heading' => $subject,
+                'type' => 'agent',
+                'source' => $linkparts[4] . '_' . $linkparts[5]
+              ];
+            } else {
+              $retVal[] = [
+                'heading' => $subject,
+                'type' => 'subject',
+                'source' => ''
+              ];
+            }
+          }
+        }
+
+        return $retVal;
+
+        /* $callback = function ($i) use ($extended) {
+            return $extended
+                ? ['heading' => [$i], 'type' => '', 'source' => '']
+                : [$i];
+        };
+        return array_map($callback, array_unique($headings)); */
+    }
+
+    /**
+     * Return a thumbnail if it exists.
+     * If there is none, don't try to generate a thumbnail.
+     *
+     * @param string $size Size of thumbnail (small, medium or large -- small is
+     * default).
+     *
+     * @return array
+     */
+    public function getThumbnail($size = 'small')
+    {
+      return isset($this->fields['thumbnail']) ?
+          $this->fields['thumbnail'] : [];
+    }
 
 }

@@ -1,0 +1,17 @@
+<?php foreach ($data as $field):
+  $place = $field->getPlace();
+  $date = $field->getDate(); ?>
+  <span property="publisher" typeof="Organization">
+  <?php if (!empty($place)): ?>
+    <span property="location"><?=$this->escapeHtml($place)?></span>
+  <?php endif; ?>
+  <?php if (!empty($date)):
+    if (!empty($place)): ?>
+      : <span property="date"><?=$this->escapeHtml($date)?></span>
+    <?php else: ?>
+      <span property="date"><?=$this->escapeHtml($date)?></span>
+    <?php endif; ?>
+  <?php endif; ?>
+  </span>
+  <br/>
+<?php endforeach; ?>

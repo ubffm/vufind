@@ -2,7 +2,7 @@
 /**
  * Factory for record driver data formatting view helper
  *
- * PHP version 5
+ * PHP version 7
  *
  * Copyright (C) Villanova University 2016.
  *
@@ -27,7 +27,8 @@
  * Wiki
  */
 namespace Fiddk\View\Helper\Fiddk;
-
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for record driver data formatting view helper
  *
@@ -40,141 +41,42 @@ namespace Fiddk\View\Helper\Fiddk;
  */
 class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
 {
-    /**
-     * Create the helper.
-     *
-     * @return RecordDataFormatter
-     */
-    public function __invoke()
-    {
-        $helper = new RecordDataFormatter();
-        $helper->setDefaults(
-            'collection-info', [$this, 'getDefaultCollectionInfoSpecs']
-        );
-        $helper->setDefaults(
-            'collection-record', [$this, 'getDefaultCollectionRecordSpecs']
-        );
-        $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
-        $helper->setDefaults('result', [$this, 'getDefaultResultSpecs']);
-        return $helper;
-    }
+  /**
+      * Create an object
+      *
+      * @param ContainerInterface $container     Service manager
+      * @param string             $requestedName Service being created
+      * @param null|array         $options       Extra options (optional)
+      *
+      * @return object
+      *
+      * @throws ServiceNotFoundException if unable to resolve the service.
+      * @throws ServiceNotCreatedException if an exception is raised when
+      * creating a service.
+      * @throws ContainerException if any other error occurs
+      *
+      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+      */
+     public function __invoke(ContainerInterface $container, $requestedName,
+         array $options = null
+     ) {
+         if (!empty($options)) {
+             throw new \Exception('Unexpected options sent to factory.');
+         }
+         $helper = new $requestedName();
+         $helper->setDefaults(
+             'collection-info', [$this, 'getDefaultCollectionInfoSpecs']
+         );
+         $helper->setDefaults(
+             'collection-record', [$this, 'getDefaultCollectionRecordSpecs']
+         );
+         $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
+         $helper->setDefaults('event', [$this, 'getDefaultEventSpecs']);
+         $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
+         $helper->setDefaults('authority-results', [$this, 'getDefaultAuthSpecs']);
+         return $helper;
+     }
 
-    /**
-     * Get default specifications for displaying data in collection-info metadata.
-     *
-     * @return array
-     */
-    public function getDefaultCollectionInfoSpecs()
-    {
-        $spec = new RecordDataFormatter\SpecBuilder();
-        $spec->setTemplateLine(
-            'Main Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'labelFunction' => function ($data) {
-                    return count($data['main']) > 1
-                        ? 'Main Authors' : 'Main Author';
-                },
-                'context' => ['type' => 'main', 'schemaLabel' => 'author'],
-            ]
-        );
-        $spec->setTemplateLine(
-            'Corporate Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'labelFunction' => function ($data) {
-                    return count($data['corporate']) > 1
-                        ? 'Corporate Authors' : 'Corporate Author';
-                },
-                'context' => ['type' => 'corporate', 'schemaLabel' => 'creator'],
-            ]
-        );
-        $spec->setTemplateLine(
-            'Other Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'context' => [
-                    'type' => 'secondary', 'schemaLabel' => 'contributor'
-                ],
-            ]
-        );
-        $spec->setLine('Summary', 'getSummary');
-        $spec->setLine(
-            'Format', 'getFormats', 'RecordHelper',
-            ['helperMethod' => 'getFormatList']
-        );
-        $spec->setLine('Language', 'getLanguages');
-        $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
-        );
-        $spec->setLine(
-            'Edition', 'getEdition', null,
-            ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
-        );
-        $spec->setTemplateLine('Series', 'getSeries', 'data-series.phtml');
-        $spec->setTemplateLine(
-            'Subjects', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml'
-        );
-        $spec->setTemplateLine('Online Access', true, 'data-onlineAccess.phtml');
-        $spec->setTemplateLine(
-            'Related Items', 'getAllRecordLinks', 'data-allRecordLinks.phtml'
-        );
-        $spec->setLine('Notes', 'getGeneralNotes');
-        $spec->setLine('Production Credits', 'getProductionCredits');
-        $spec->setLine('ISBN', 'getISBNs');
-        $spec->setLine('ISSN', 'getISSNs');
-        return $spec->getArray();
-    }
-
-    /**
-     * Get default specifications for displaying data in collection-record metadata.
-     *
-     * @return array
-     */
-    public function getDefaultCollectionRecordSpecs()
-    {
-        $spec = new RecordDataFormatter\SpecBuilder();
-        $spec->setLine('Summary', 'getSummary');
-        $spec->setTemplateLine(
-            'Main Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'labelFunction' => function ($data) {
-                    return count($data['main']) > 1
-                        ? 'Main Authors' : 'Main Author';
-                },
-                'context' => ['type' => 'main', 'schemaLabel' => 'author'],
-            ]
-        );
-        $spec->setTemplateLine(
-            'Corporate Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'labelFunction' => function ($data) {
-                    return count($data['corporate']) > 1
-                        ? 'Corporate Authors' : 'Corporate Author';
-                },
-                'context' => ['type' => 'corporate', 'schemaLabel' => 'creator'],
-            ]
-        );
-        $spec->setTemplateLine(
-            'Other Authors', 'getDeduplicatedAuthors', 'data-authors.phtml',
-            [
-                'useCache' => true,
-                'context' => [
-                    'type' => 'secondary', 'schemaLabel' => 'contributor'
-                ],
-            ]
-        );
-        $spec->setLine('Language', 'getLanguages');
-        $spec->setLine(
-            'Format', 'getFormats', 'RecordHelper',
-            ['helperMethod' => 'getFormatList']
-        );
-        $spec->setLine('Access', 'getAccessRestrictions');
-        $spec->setLine('Related Items', 'getRelationshipNotes');
-        return $spec->getArray();
-    }
 
     /**
      * Get default specifications for displaying data in core metadata.
@@ -183,116 +85,141 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
      */
     public function getDefaultCoreSpecs()
     {
-        $spec = new RecordDataFormatter\SpecBuilder();
-        $spec->setLine(
-            'Title', 'getTitle', null, ['recordLink' => 'title']
-        );
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setLine('Subtitle', 'getSubtitle');
         $spec->setLine('Alternative Title', 'getAlternativeTitles');
-        $spec->setTemplateLine(
-             'In', 'getContainerTitle', 'data-containerTitle.phtml'
+        $spec->setLine(
+            'New Title', 'getNewerTitles', null, ['recordLink' => 'title']
         );
-        // normally only one of the next three is contained in the data
-        $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
-        );
-        $spec->setTemplateLine(
-            'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
+        $spec->setLine(
+            'Previous Title', 'getPreviousTitles', null, ['recordLink' => 'title']
         );
         $spec->setTemplateLine(
-            'DatesPlaces', 'getOtherDatesPlaces', 'data-datesPlaces.phtml',[
-                'labelFunction' => function ($data) {
-                $placeFound = false;
-                $dateFound = false;
-                  foreach ($data as $entry) {
-                    if (!empty($entry['dates'])) {
-                      $dateFound = true;
-                    }
-                    if (!empty($entry['places'])) {
-                      $placeFound = true;
-                    }
-                  }
-                  if ($dateFound && $placeFound) {
-                    return 'DatesPlaces';
-                  } elseif ($dateFound) {
-                    return 'Date';
-                  } else {
-                    return 'Place';
-                  }
-            },]
+            'In', 'getContainerTitle', 'data-containerTitle.phtml'
         );
         $spec->setTemplateLine(
-            'AboutObject', 'getAboutObject', 'data-aboutObject.phtml'
+            'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
         );
         $spec->setTemplateLine(
-            'Contributors', 'getAgents', 'data-agents.phtml'
+            'DatesPlaces', 'getPlaceDateDetails', 'data-placeDateDetails.phtml'
         );
+        $spec->setLine(
+            'dc:type', 'getFormats', 'RecordHelper',
+            ['helperMethod' => 'getFormatList']
+        );
+        $spec->setLine('dcterms:extent', 'getExtent');
+        $spec->setLine('dm2e:callNumber', 'getCallNumber');
+        $spec->setLine('dcterms:provenance', 'getProvenance');
+        $spec->setMultiLine(
+            'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
+          );
+        $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-1::']);
+        $spec->setTemplateLine('dc:description', 'getSummary', 'data-collapsible.phtml');
+        $spec->setLine('ISBN', 'getISBNs');
+        $spec->setLine('ISSN', 'getISSNs');
         $spec->setLine(
             'Edition', 'getEdition', null,
             ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
         );
         $spec->setTemplateLine('Series', 'getSeries', 'data-series.phtml');
         $spec->setTemplateLine(
-            'Subjects', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml'
+            'dc:subject', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml', ['context' => ['extended' => true]]
+        );
+        $spec->setTemplateLine(
+            'dcterms:hasPart', 'getChildRecordCount', 'data-childRecords.phtml',
+            ['allowZero' => false]
         );
         $spec->setTemplateLine('Online Access', true, 'data-onlineAccess.phtml');
-        $spec->setTemplateLine(
-            'Related Items', 'getAllRecordLinks', 'data-allRecordLinks.phtml'
-        );
         $spec->setTemplateLine('Tags', true, 'data-tags.phtml');
-        $spec->setTemplateLine(
-            'See also', 'getSeeAlso', 'data-seeAlso.phtml'
-        );
         return $spec->getArray();
     }
 
     /**
-     * Get default specifications for displaying data in the description tab.
+     * Get default specifications for displaying event metadata.
      *
      * @return array
      */
-    public function getDefaultResultSpecs()
+    public function getDefaultEventSpecs()
     {
-        $spec = new RecordDataFormatter\SpecBuilder();
-        $spec->setTemplateLine(
-            'Contributors', 'getAgent', 'data-agent.phtml',[
-                'labelFunction' => function ($data) {
-                    return key($data);
-                }]
-        );
-        // normally only one of the next three is contained in the data
-        $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-datesPlaces.phtml'
-        );
-        $spec->setTemplateLine(
-            'Performed', 'getEventDetails', 'data-datesPlaces.phtml'
-        );
-        $spec->setTemplateLine(
-            'DatesPlaces', 'getOtherDatesPlaces', 'data-datesPlaces.phtml',[
-                'labelFunction' => function ($data) {
-                $placeFound = false;
-                $dateFound = false;
-                  foreach ($data as $entry) {
-                    if (!empty($entry['dates'])) {
-                      $dateFound = true;
-                    }
-                    if (!empty($entry['places'])) {
-                      $placeFound = true;
-                    }
-                  }
-                  if ($dateFound && $placeFound) {
-                    return 'DatesPlaces';
-                  } elseif ($dateFound) {
-                    return 'Date';
-                  } else {
-                    return 'Place';
-                  }
-            },]
-        );
-        $spec->setTemplateLine(
-          'edm:isShownAt','getLicenceLink','data-licenceLink'
-        );
-        return $spec->getArray();
+      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+      //$spec->setMultiLine(
+      //    'Contributors', 'getDeduplicatedAuthors', $this->getAuthorFunction()
+      //);
+      return $spec->getArray();
     }
 
+    /**
+     * Get default specifications for displaying see also metadata.
+     *
+     * @return array
+     */
+    public function getDefaultSeeAlsoSpecs()
+    {
+      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+      $spec->setTemplateLine('edm:dataProvider', 'getInstitutionsLinked','data-externalLink.phtml');
+      $spec->setTemplateLine('Ask Archive', 'askArchive','data-askArchive.phtml');
+      $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink','data-licenseLink.phtml');
+      $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink','data-externalLink.phtml');
+      $spec->setTemplateLine('edm:hasView', 'getDigitalCopies','data-collapsible_.phtml');
+      $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks','data-internalLink.phtml');
+      return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying authority metadata.
+     *
+     * @return array
+     */
+    public function getDefaultAuthSpecs()
+    {
+      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+      $spec->setLine('none', 'getOccupation', null, ['separator' => ', ']);
+      $spec->setTemplateLine('skos:altLabel', 'getUseFor', 'data-collapsible_str.phtml');//, ['separator' => '; ']);
+      return $spec->getArray();
+    }
+
+    /**
+ * Get the callback function for processing authors.
+ *
+ * @return Callable
+ */
+protected function getAuthorFunction()
+{
+    return function ($data, $options) {
+        // Lookup array of singular/plural labels (note that Other is always
+        // plural right now due to lack of translation strings).
+        $labels = [
+            'primary' => 'dc:contributor',
+            'corporate' => 'Corporate Author',
+        ];
+        // Lookup array of schema labels.
+        $schemaLabels = [
+            'primary' => 'author',
+            'corporate' => 'creator'
+        ];
+        // Lookup array of sort orders.
+        $order = ['primary' => 1, 'corporate' => 2];
+        // Sort the data:
+        $final = [];
+        foreach ($data as $type => $values) {
+            $final[] = [
+                'label' => $labels[$type],
+                'values' => [$type => $values],
+                'options' => [
+                    'pos' => $options['pos'] + $order[$type],
+                    'renderType' => 'RecordDriverTemplate',
+                    'template' => 'data-authors.phtml',
+                    'context' => [
+                        'type' => $type,
+                        'schemaLabel' => $schemaLabels[$type],
+                        'requiredDataFields' => [
+                            ['name' => 'role', 'prefix' => 'edm::']
+                        ],
+                    ],
+                ],
+            ];
+        }
+        return $final;
+    };
+}
 }

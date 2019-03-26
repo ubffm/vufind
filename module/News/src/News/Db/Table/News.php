@@ -93,7 +93,7 @@ class News extends \VuFind\Db\Table\Gateway
     {
       $callback = function ($select) use ($searchTerm) {
         $select->columns(['*']);
-        $select->where->like('title','%'.$searchTerm.'%')->or->like('text','%'.$searchTerm.'%');
+        $select->where->like('title',"%$searchTerm%")->or->like('text',"%$searchTerm%");
         $select->order('news.startdate DESC');
       };
       return $this->select($callback);

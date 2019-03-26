@@ -17,6 +17,16 @@ $config = [
                   ]
               ],
           ],
+          'showcase' => [
+            'type' => 'Zend\Router\Http\Literal',
+            'options' => [
+              'route'    => '/Showcase',
+            'defaults' => [
+              'controller' => 'Showcase',
+              'action'     => 'Home',
+            ]
+          ]
+],
       ],
   ],
   'controllers' => [
@@ -25,12 +35,15 @@ $config = [
       'Fiddk\Controller\DataProviderController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\AuthorityController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
-      'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory'
+      'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\ShowcaseController' => 'VuFind\Controller\AbstractBaseFactory',
       //'record' => 'fiddk\Controller\Factory::getRecordController',
     ],
     'aliases' => [
       'DataProvider' => 'Fiddk\Controller\DataProviderController',
       'dataprovider' => 'Fiddk\Controller\DataProviderController',
+      'Showcase' => 'Fiddk\Controller\ShowcaseController',
+      'showcase' => 'Fiddk\Controller\ShowcaseController',
 
       // Overrides
       'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',

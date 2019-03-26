@@ -2,9 +2,12 @@
 
   .carousel-inner {
     height: 100%;
+    border: 1px solid @btn-default-border;
+    border-radius: 5px;
+    padding-bottom: 25px;
   }
   .carousel-indicators {
-    bottom: -20px;
+    bottom: -5px;
   }
   .hover-overlay .content {
       background-color: rgba(119, 165, 227, 0.2);
@@ -19,6 +22,12 @@
       padding-top: 12px;
       padding-left: 12px;
       text-align: left;
+      &:hover .content {
+        background: none;
+      }
+      &:hover .contentDarker {
+        box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
+      }
   }
   img[title] {
       font-weight: bold;
@@ -28,23 +37,25 @@
 .tab-content {
     /* Controls */
   .carousel-control {
-      width: 7%;
+      width: 6%;
+      border-radius: 5px;
       &.left, &.left:focus {
         background-image: linear-gradient(to right, rgba(119, 165, 227, 1) 0%, transparent 100%);
       }
       &.right, &.right:focus {
         background-image: linear-gradient(to right, transparent 0%, rgba(119, 165, 227, 1) 100%);
       }
-      border-bottom-right-radius: 4px;
-      border-bottom-left-radius: 4px;
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
   }
 }
 
 .random {
   height: auto;
   width: 100%;
-  max-width: 360px;
-  float:left;
+  padding: 10px 30px;
   .title {
     font-weight: bold;
     text-align: center;
@@ -52,7 +63,7 @@
   #similar-items-carousel {
     height: 350px;
     .item {
-      padding: 0 2em;
+      padding: 2em 2em;
     }
     .carousel-item {
       flex-basis: 100%;
@@ -61,8 +72,11 @@
     .carousel-control {
       background-image: none;
     }
-    .hover-overlay .content {
-        top: 25%;
+    .imgDescr {
+      float: right;
+      height: 100%;
+      max-width: 320px;
+      margin-right: 70px;
     }
   }
 }

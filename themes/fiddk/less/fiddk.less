@@ -52,25 +52,18 @@ header .banner.container.navbar.search {
 
 #advanced {
   padding-left: 0px;
-  margin-bottom: 5px;
 }
 
 #searchSubmit {
   margin-right: 12px;
-  margin-bottom: 5px;
 }
 
 .searchForm_lookfor {
     min-width: 50%;
     max-width: 100% !important;
     padding: 5px;
-    margin-bottom: 5px;
     border: 1px solid #cccccc;
     background-color: @white;
-}
-
-.searchForm_type {
-    margin-bottom: 5px;
 }
 
 .twitter-typeahead {
@@ -83,7 +76,7 @@ header .banner.container.navbar.search {
 
 /* Tabs */
 .tab-content {
-  padding: 10px 4px;
+  padding: 10px 0px;
 }
 
 .feedback-content {
@@ -154,6 +147,19 @@ a.facet {
   }
 }
 
+.facet-group {
+  .title {
+    border-radius: 5px 5px 0px 0px;
+  }
+  .collapse {
+    border-radius: 0px 0px 5px 5px;
+  }
+}
+
+.facet-loading-overlay {
+  background-color: rgba(79,129,189,0.3);
+}
+
 /* General Layout
 body {
     background: @background-color;
@@ -174,9 +180,11 @@ body {
   padding-right: 15px;
 }
 
-.result .media-left, .media-right, .media-body {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+div.mainbody > div.result:not(.last) {
+  .media-left, .media-right, .media-body {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
 }
 
 .container {
@@ -193,6 +201,10 @@ body {
 
 .facet .badge {
   line-height: normal;
+}
+
+.facet-group .title {
+  background: @background-color;
 }
 
 .badge {
@@ -401,28 +413,12 @@ span.toggleContainer {
 .title {
   margin-top: 10px;
 }
-.random {
-  box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
-  border-radius: 6px;
-}
-a.carousel-control:focus {
-  outline: none;
-  box-shadow: none;
-}
-#similar-items-carousel .carousel-indicators {
-  bottom: -10px !important;
-}
+
 .stream.well {
   height: 182px;
 }
 .form-control {
   padding: 6px;
-}
-#similar-items-carousel .hover-overlay:hover .content {
- background: none;
-}
-#similar-items-carousel .hover-overlay:hover .contentDarker {
- box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
 }
 
 /* Data View */

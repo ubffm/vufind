@@ -1,0 +1,29 @@
+<?php foreach ($data as $field):
+  $pubPlace = $field->getPlace();
+  $pubName = $field->getName();
+  $pubDate = $field->getDate(); ?>
+  <span property="publisher" typeof="Organization">
+  <?php if (!empty($pubPlace)): ?>
+    <span property="location"><?=$this->escapeHtml($pubPlace)?></span>
+  <?php endif; ?>
+  <?php  if (!empty($pubName)):
+    if (!empty($pubPlace) && !empty($pubDate)): ?>
+      : <span property="name"><?=$this->escapeHtml($pubName)?></span>,
+    <?php elseif (!empty($pubPlace)): ?>
+      : <span property="name"><?=$this->escapeHtml($pubName)?></span>
+    <?php elseif (!empty($pubDate)): ?>
+      <span property="name"><?=$this->escapeHtml($pubName)?></span>,
+    <?php else: ?>
+      <span property="name"><?=$this->escapeHtml($pubName)?></span>
+    <?php endif;?>
+  <?php endif; ?>
+  </span>
+  <?php if (!empty($pubDate)):
+    if (empty($pubName) && !empty($pubPlace)): ?>
+      : <span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+    <?php else: ?>
+      <span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+    <?php endif; ?>
+  <?php endif; ?>
+  <br />
+<?php endforeach; ?>

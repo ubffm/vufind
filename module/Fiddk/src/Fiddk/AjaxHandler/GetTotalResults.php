@@ -104,9 +104,10 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
       $paramsObj = $results->getParams();
       $paramsObj->initFromRequest(new Parameters($params->fromQuery()));
       $resultTotal = $results->getResultTotal();
-      //$localized = $this->renderer->plugin('localizednumber');
+      $localizedTotal = $this->renderer
+            ->render('ajax/resultTotal.phtml',['resultTotal' => $resultTotal]);
 
-      return $this->formatResponse(compact('resultTotal'));
+      return $this->formatResponse(compact('localizedTotal'));
 
     }
 

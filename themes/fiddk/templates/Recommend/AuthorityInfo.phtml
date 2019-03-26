@@ -19,7 +19,6 @@
    ?>
 
 <div class="card clearfix">
-  <h2><?=$title?></h2>
   <div class="flex-content flex-start">
   <?php if (!empty($thumbnail)): ?>
     <div class="authority-meta thumb">
@@ -27,7 +26,10 @@
     </div>
   <?php endif; ?>
   <?php if (!empty($authFields)): ?>
-    <?=$this->render('Recommend/data-authFields.phtml');?>
+    <div class="authority-meta">
+      <h2><?=$title?></h2>
+      <?=$this->render('Recommend/data-authFields.phtml');?>
+    </div>
   <?php endif; ?>
   <?php if (!empty($this->info['sameAs'])): ?>
     <?=$this->render('Recommend/data-sameAs.phtml');?>

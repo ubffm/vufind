@@ -2,7 +2,7 @@
 /**
  * Record driver data formatting view helper
  *
- * PHP version 5
+ * PHP version 7
  *
  * Copyright (C) Villanova University 2016.
  *
@@ -27,6 +27,7 @@
  * Wiki
  */
 namespace Fiddk\View\Helper\Fiddk;
+
 use VuFind\RecordDriver\AbstractBase as RecordDriver;
 use Zend\View\Helper\AbstractHelper;
 
@@ -42,54 +43,5 @@ use Zend\View\Helper\AbstractHelper;
  */
 class RecordDataFormatter extends \VuFind\View\Helper\Root\RecordDataFormatter
 {
-    /**
-     * Create formatted key/value data based on a record driver and field spec.
-     *
-     * @param RecordDriver $driver Record driver object.
-     * @param array        $spec   Formatting specification
-     *
-     * @return array
-     */
-    public function getData(RecordDriver $driver, array $spec)
-    {
-        $result = [];
-
-        // Sort the spec into order by position:
-        uasort($spec, [$this, 'specSortCallback']);
-        $driver->getFullRecord();
-        $driver->getEDMClasses();
-
-        // Apply the spec:
-        foreach ($spec as $field => $current) {
-            // Extract the relevant data from the driver.
-            $data = $this->extractData($driver, $current);
-            $allowZero = isset($current['allowZero']) ? $current['allowZero'] : true;
-            if (!empty($data) || ($allowZero && ($data === 0 || $data === '0'))) {
-                // Determine the rendering method to use with the second element
-                // of the current spec.
-                $renderMethod = empty($current['renderType'])
-                    ? 'renderSimple' : 'render' . $current['renderType'];
-
-                // Add the rendered data to the return value if it is non-empty:
-                if (is_callable([$this, $renderMethod])) {
-                    $text = $this->$renderMethod($driver, $data, $current);
-                    if (!$text && (!$allowZero || ($text !== 0 && $text !== '0'))) {
-                        continue;
-                    }
-                    // Allow dynamic label override:
-                    if (isset($current['labelFunction'])
-                        && is_callable($current['labelFunction'])
-                    ) {
-                        $field = call_user_func($current['labelFunction'], $data);
-                    }
-                    $context = isset($current['context']) ? $current['context'] : [];
-                    $result[$field] = [
-                        'value' => $text,
-                        'context' => $context
-                    ];
-                }
-            }
-        }
-        return $result;
-    }
+  
 }

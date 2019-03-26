@@ -34,10 +34,12 @@ class EdmRecord
       "dm2e:publishedAt" => "edm:ProvidedCHO",
       "dm2e:callNumber" => "edm:ProvidedCHO",
       "dcterms:issued" => "edm:ProvidedCHO",
+      "dcterms:temporal" => "edm:ProvidedCHO",
       "dcterms:extent" => "edm:ProvidedCHO",
       "dcterms:tableOfContents" => "edm:ProvidedCHO",
       "dcterms:spatial" => "edm:ProvidedCHO",
       "dc:date" => "edm:ProvidedCHO",
+      "dc:subject" => "edm:ProvidedCHO",
       "dcterms:provenance" => "edm:ProvidedCHO",
       "eclap:performancePlace" => "edm:Event",
     ];
@@ -139,7 +141,7 @@ class EdmRecord
       $vals = [];
       $attrVal = $this->getAttributeVal($prop,"rdf","resource");
       if ($fieldName) {
-        $matchingProps = $this->record->xpath('/rdf:RDF/*[@rdf:about="'.$attrVal.'"]/' . $fieldName);
+        $matchingProps = array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="'.$attrVal.'"]/' . $fieldName));
         if ($matchingProps) {
           foreach ($matchingProps as $matchingProp) {
             if ($matchingProp->__toString()) {

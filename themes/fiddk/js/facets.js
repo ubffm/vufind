@@ -1,4 +1,27 @@
 /*global VuFind */
+var dprovs = {
+  'Akademie der Künste Berlin':'adk',
+  'Akademie der Künste Berlin, Archiv Darstellende Kunst':'adka',
+  'Alexander Street Press':'asp',
+  'Deutsches Tanzfilminstitut Bremen':'dtb',
+  'Deutsches Tanzarchiv Köln':'dtk',
+  'Deutsches Theatermuseum München':'dtm',
+  'Universitäts- und Landesbibliothek Düsseldorf':'dtz',
+  'Universitätsbibliothek Frankfurt am Main':'fub',
+  'Don Juan Archiv Wien':'kom',
+  'Mime Centrum Berlin':'mcb',
+  'Online Contents':'olc',
+  'Theaterwissenschaftliche Sammlung der Universität zu Köln':'slw',
+  'Schweizerische Theatersammlung':'sts',
+  'Tanzarchiv Leipzig':'tal',
+  'Teatro Español del Siglo de Oro':'tes',
+  'Tanzfonds Erbe':'tfe',
+  'Theatermuseum der Landeshauptstadt Düsseldorf':'tmd',
+  'transcript Verlag':'tra',
+  'Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen':'tsb',
+  'Verbund Deutscher Tanzarchive':'vdt'
+};
+
 /*exported collapseTopFacets, initFacetTree */
 function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, dprovs)
 {
@@ -12,8 +35,8 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, 
       .attr('role', 'menuitem')
       .attr('title', this.displayText);
 
-    var $i = $('<i/>').addClass('fa');
-    /*if (this.operator === 'OR') {
+    /* var $i = $('<i/>').addClass('fa');
+    if (this.operator === 'OR') {
       if (this.isApplied) {
         $i.addClass('fa-check-square-o').attr('title', VuFind.translate('Selected'));
       } else {
@@ -21,12 +44,11 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, 
       }
       $i.appendTo($item);
       $item.append(' ');
-    }*/
-     if (this.isApplied) {
+    } else if (this.isApplied) {
       $i.addClass('fa-check pull-right').attr('title', VuFind.translate('Selected'));
       $i.appendTo($item);
       $item.append(' ');
-    }
+    } */
 
     $item.append(this.displayText);
     $item.appendTo($html);
@@ -70,14 +92,67 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, 
         'opened': this.hasAppliedChildren
       },
       'li_attr': this.isApplied ? { 'class': 'active' } : {},
+      'dprov': dprov,
       'data': {
         'url': url.replace(/&amp;/g, '&')
-      },
-      'dprov': dprov
+      }
     });
   });
 
   return json;
+}
+
+function buildFacetTree(treeNode, facetData, inSidebar) {
+  // Enable keyboard navigation also when a screen reader is active
+  treeNode.bind('select_node.jstree', VuFind.sideFacets.showLoadingOverlay);
+
+  var currentPath = treeNode.data('path');
+  var allowExclude = treeNode.data('exclude');
+  var excludeTitle = treeNode.data('exclude-title');
+
+  var results = buildFacetNodes(facetData, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
+  treeNode.find('.fa-spinner').parent().remove();
+  if (inSidebar) {
+    treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
+      var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
+      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
+      $(treeItems).addClass('list-group-item');
+      $(treeItems).each(function addInfo(i) {
+          if (results[i].dprov) {
+              $(this).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+        }
+      });
+      // reinit lightbox
+      VuFind.init('lightbox');
+    });
+    treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
+      var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
+      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
+      $(treeItems).addClass('list-group-item');
+      $(treeItems).each(function addInfo(i) {
+        if (this.id == data.node.id) {
+          // add info to parent node
+          if (results[i].dprov) {
+            $(this.children[1]).after('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+          }
+          var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
+          // add info to each child
+          data.node.children.forEach(function(child,j) {
+            if (results[i].children[j].dprov) {
+                $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+            }
+          });
+        }
+      });
+      // reinit lightbox
+      VuFind.init('lightbox');
+    });
+  }
+  treeNode.jstree({
+    'core': {
+      'data': results
+    }
+  });
 }
 
 function initFacetTree(treeNode, inSidebar)
@@ -88,20 +163,9 @@ function initFacetTree(treeNode, inSidebar)
   }
   treeNode.data('loaded', true);
 
-  // Enable keyboard navigation also when a screen reader is active
-  treeNode.bind('select_node.jstree', function selectNode(event, data) {
-    $(this).closest('.collapse').html('<div class="facet">' + VuFind.translate('loading') + '...</div>');
-    window.location = data.node.data.url;
-    event.preventDefault();
-    return false;
-  });
-
   var source = treeNode.data('source');
   var facet = treeNode.data('facet');
   var operator = treeNode.data('operator');
-  var currentPath = treeNode.data('path');
-  var allowExclude = treeNode.data('exclude');
-  var excludeTitle = treeNode.data('exclude-title');
   var sort = treeNode.data('sort');
   var query = window.location.href.split('?')[1];
 
@@ -119,75 +183,7 @@ function initFacetTree(treeNode, inSidebar)
       facetOperator: operator
     },
     function getFacetData(response/*, textStatus*/) {
-      var dprovs = {
-        'Akademie der Künste Berlin':'adk',
-        'Akademie der Künste Berlin, Archiv Darstellende Kunst':'adka',
-        'Alexander Street Press':'asp',
-        'Deutsches Tanzfilminstitut Bremen':'dtb',
-        'Deutsches Tanzarchiv Köln':'dtk',
-        'Deutsches Theatermuseum München':'dtm',
-        'Universitäts- und Landesbibliothek Düsseldorf':'dtz',
-        'Universitätsbibliothek Frankfurt am Main':'fub',
-        'Don Juan Archiv Wien':'kom',
-        'Mime Centrum Berlin':'mcb',
-        'Online Contents':'olc',
-        'Theaterwissenschaftliche Sammlung der Universität zu Köln':'slw',
-        'Schweizerische Theatersammlung':'sts',
-        'Tanzarchiv Leipzig':'tal',
-        'Teatro Español del Siglo de Oro':'tes',
-        'Tanzfonds Erbe':'tfe',
-        'Theatermuseum der Landeshauptstadt Düsseldorf':'tmd',
-        'transcript Verlag':'tra',
-        'Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen':'tsb',
-        'Verbund Deutscher Tanzarchive':'vdt'
-      };
-      var results = buildFacetNodes(response.data.facets, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
-      treeNode.find('.fa-spinner').parent().remove();
-      if (inSidebar) {
-        treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
-          var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
-          $(treeItems).addClass('list-group-item');
-          $(treeItems).each(function addInfo(i) {
-              if (results[i].dprov) {
-                  $(this).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
-            }
-          });
-          // reinit lightbox
-          VuFind.register('lightbox_facets');
-        });
-        treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
-          var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
-          $(treeItems).addClass('list-group-item');
-          $(treeItems).each(function addInfo(i) {
-            if (this.id == data.node.id) {
-              // add info to parent node
-              if (results[i].dprov) {
-                $(this.children[1]).after('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
-              }
-              var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
-              // add info to each child
-              data.node.children.forEach(function(child,j) {
-                if (results[i].children[j].dprov) {
-                    $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
-                }
-              });
-            }
-          });
-          treeNode.find('a.exclude').click(function excludeLinkClick(e) {
-            $(this).closest('.collapse').html('<div class="facet">' + VuFind.translate('loading') + '...</div>');
-            window.location = this.href;
-            e.preventDefault();
-            return false;
-          });
-          // reinit lightbox
-          VuFind.register('lightbox_facets');
-        });
-      }
-      treeNode.jstree({
-        'core': {
-          'data': results
-        }
-      });
+      buildFacetTree(treeNode, response.data.facets, inSidebar);
     }
   );
 }
@@ -205,6 +201,135 @@ function collapseTopFacets() {
     });
   });
 }
+
+/* --- Side Facets --- */
+VuFind.register('sideFacets', function SideFacets() {
+  function showLoadingOverlay(e, data) {
+    e.preventDefault();
+    var overlay = '<div class="facet-loading-overlay">'
+      + '<span class="facet-loading-overlay-label">' + VuFind.translate('loading')
+      + "...</span></div>";
+    $(this).closest(".collapse").append(overlay);
+    // This callback operates both as a click handler and a JSTree callback;
+    // if the data element is undefined, we assume we are handling a click.
+    var href = typeof data === "undefined" || typeof data.node.data.url === "undefined"
+      ? $(this).attr('href') : data.node.data.url;
+    window.location.assign(href);
+    return false;
+  }
+
+  function activateFacetBlocking(context) {
+    var finalContext = (typeof context === "undefined") ? $(document.body) : context;
+    finalContext.find('a.facet:not(.narrow-toggle),.facet a').click(showLoadingOverlay);
+  }
+
+  function loadAjaxSideFacets() {
+    var $container = $('.side-facets-container-ajax');
+    if ($container.length === 0) {
+      return;
+    }
+
+    var facetList = [];
+    var $facets = $container.find('div.collapse.in[data-facet], .checkbox-filter[data-facet]');
+    $facets.each(function addFacet() {
+      if (!$(this).data('loaded')) {
+        facetList.push($(this).data('facet'));
+      }
+    });
+    if (facetList.length === 0) {
+      return;
+    }
+    var urlParts = window.location.href.split('?');
+    var query = urlParts.length > 1 ? urlParts[1] : '';
+    var request = {
+      method: 'getSideFacets',
+      searchClassId: $container.data('searchClassId'),
+      location: $container.data('location'),
+      configIndex: $container.data('configIndex'),
+      query: query,
+      enabledFacets: facetList
+    };
+    $container.find('.facet-load-indicator').removeClass('hidden');
+    $.getJSON(VuFind.path + '/AJAX/JSON?' + query, request)
+      .done(function onGetSideFacetsDone(response) {
+        $.each(response.data.facets, function initFacet(facet, facetData) {
+          var containerSelector = typeof facetData.checkboxCount !== 'undefined'
+            ? '.checkbox-filter' : ':not(.checkbox-filter)';
+          var $facetContainer = $container.find(containerSelector + '[data-facet="' + facet + '"]');
+          $facetContainer.data('loaded', 'true');
+          if (typeof facetData.checkboxCount !== 'undefined') {
+            if (facetData.checkboxCount !== null) {
+              $facetContainer.find('.avail-count').text(
+                facetData.checkboxCount.toString().replace(/\B(?=(\d{3})+\b)/g, VuFind.translate('number_thousands_separator'))
+              );
+            }
+          } else if (typeof facetData.html !== 'undefined') {
+            $facetContainer.html(facetData.html);
+            activateFacetBlocking($facetContainer);
+          } else {
+            var treeNode = $facetContainer.find('.jstree-facet');
+            VuFind.emit('VuFind.sidefacets.treenodeloaded', {node: treeNode});
+
+            buildFacetTree(treeNode, facetData.list, true);
+          }
+          $facetContainer.find('.facet-load-indicator').remove();
+        });
+        VuFind.lightbox.bind($('.sidebar'));
+        VuFind.emit('VuFind.sidefacets.loaded');
+      })
+      .fail(function onGetSideFacetsFail() {
+        $container.find('.facet-load-indicator').remove();
+        $container.find('.facet-load-failed').removeClass('hidden');
+      });
+  }
+
+  function facetSessionStorage(e) {
+    var source = $('#result0 .hiddenSource').val();
+    var id = e.target.id;
+    var key = 'sidefacet-' + source + id;
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, document.getElementById(id).className);
+    } else {
+      sessionStorage.removeItem(key);
+    }
+  }
+
+  function init() {
+    // Display "loading" message after user clicks facet:
+    activateFacetBlocking();
+
+    // Side facet status saving
+    $('.facet-group .collapse').each(function openStoredFacets(index, item) {
+      var source = $('#result0 .hiddenSource').val();
+      var storedItem = sessionStorage.getItem('sidefacet-' + source + item.id);
+      if (storedItem) {
+        var saveTransition = $.support.transition;
+        try {
+          $.support.transition = false;
+          if ((' ' + storedItem + ' ').indexOf(' in ') > -1) {
+            $(item).collapse('show');
+          } else {
+            $(item).collapse('hide');
+          }
+        } finally {
+          $.support.transition = saveTransition;
+        }
+      }
+    });
+    $('.facet-group').on('shown.bs.collapse', facetSessionStorage);
+    $('.facet-group').on('hidden.bs.collapse', facetSessionStorage);
+
+    // Side facets loaded with AJAX
+    $('.side-facets-container-ajax')
+      .find('div.collapse[data-facet]:not(.in)')
+      .on('shown.bs.collapse', function expandFacet() {
+        loadAjaxSideFacets();
+      });
+    loadAjaxSideFacets();
+  }
+
+  return { init: init, showLoadingOverlay: showLoadingOverlay };
+});
 
 /* --- Lightbox Facets --- */
 VuFind.register('lightbox_facets', function LightboxFacets() {

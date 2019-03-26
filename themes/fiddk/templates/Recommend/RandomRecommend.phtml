@@ -1,6 +1,5 @@
 <? $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>
-  <div class="random">
-      <p class="title"><?=$this->transEsc("Showcase")?></p>
+<div class="random">
       <? $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
@@ -15,18 +14,18 @@
     <div class="carousel-inner">
       <div class="item active">
         <? foreach ($recommend as $index=>$driver): ?>
-          <div class="carousel-item hover-overlay">
+          <div class="carousel-item">
               <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLink()->getUrl($driver));?>
               <a class="content" href="<?=$this->recordLink()->getUrl($driver)?>">
-                <div class="contentDarker">
+                <div class="imgDescr card">
                   <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
                   <? if ($driver->getContainerTitle()) :?>
                     <p><?=$this->transEsc("In") . ': ' . $driver->getContainerTitle();?></p>
                   <? endif; ?>
-                  <? if ($driver->getParentFormats()) :?>
-                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getParentFormats());?></p>
+                  <? if ($driver->getFormats()) :?>
+                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getFormats());?></p>
                   <? endif; ?>
-                  <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$driver->getInstitutions());?>
+                  <p><?=$this->transEsc("Institution") . ': ' . $driver->getInstitution();?>
                 </div>
               </a>
             </div>

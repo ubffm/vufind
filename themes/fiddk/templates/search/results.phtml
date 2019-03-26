@@ -56,8 +56,8 @@
 
   $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
-  $hiddenFilters = $this->searchtabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $searchTabs = $this->searchtabs()->getTabConfig($searchClassId, $lookfor, $searchIndex, $searchType, $hiddenFilters);
+  $hiddenFilters = $this->searchTabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
+  $searchTabs = $this->searchTabs()->getTabConfig($searchClassId, $lookfor, $searchIndex, $searchType, $hiddenFilters);
   $recordTotal = $this->results->getResultTotal();
 ?>
 

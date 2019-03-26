@@ -1,12 +1,11 @@
-<div class="authority-meta">
-  <?php if (isset($this->info['professionOrOccupation']) || isset($this->info['dateOfBirth'])
+<?php if (isset($this->info['professionOrOccupation']) || isset($this->info['dateOfBirth'])
   || isset($this->info['dateOfDeath']) || isset($this->info['placeOfBirth'])
   || isset($this->info['placeOfDeath'])) : ?>
     <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
   <?php endif; ?>
   <?php if (isset($this->info['biographicalOrHistoricalInformation'])
     || isset($this->info['publication']) || isset($this->info['placeOfActivity'])
-    || isset($this->info['affiliation'])) : ?>
+    || isset($this->info['affiliation']) || isset($this->info['familialRelationship'])) : ?>
     <?=$this->render('Recommend/data-moreFacts.phtml');?><br/>
   <?php endif; ?>
   <?php if (isset($this->info['placeOfBusiness']) || isset($this->info['dateOfEstablishment'])
@@ -22,5 +21,4 @@
   <?php endif; ?><br/>
   <?php if (empty($this->info['sameAs'])): ?>
     <?=$this->render('Recommend/data-source.phtml');?>
-  <?php endif; ?>
-</div>
+<?php endif; ?>

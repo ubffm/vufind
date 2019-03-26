@@ -27,7 +27,7 @@
     <!-- Core Fields  -->
     <field name="id" type="string" indexed="true" stored="true"/>
     <field name="fullrecord" type="string" indexed="false" stored="true"/>
-    <field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/>
+    <!-- <field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/> -->
     <field name="allfields" type="text" indexed="true" stored="false"/>
     <field name="record_format" type="string" indexed="true" stored="true"/>
 
@@ -56,7 +56,7 @@
     <field name="country" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="related_place" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="field_of_activity" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="occupation" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="occupation" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="gender" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
     <!-- additional authority fields-->

@@ -1,6 +1,6 @@
-<b><?=$this->transEsc('BiographicalDetails')?></b><br />
+<b><?=$this->transEsc('BiographicalDetails')?></b>
 <?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
-  <span property="biographicalInformation">
+  <br/><span property="biographicalInformation">
     <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
   </span><br/>
 <?php endif; ?>

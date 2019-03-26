@@ -1,37 +1,40 @@
-<? if (count($searchTabs) > 0): ?>
+<?php if (count($searchTabs) > 0): ?>
   <ul class="nav nav-tabs">
-    <? foreach ($searchTabs as $tab): ?>
-        <li id="<?=$tab["id"]?>"<?=$tab['selected'] ? ' class="active"' : ''?>>
+    <?php foreach ($searchTabs as $tab): ?>
+      <?php if ($this->permission()->allowDisplay($tab['permission'])): ?>
+        <li id="<?=$tab['id']?>"<?=$tab['selected'] ? ' class="active"' : ''?>>
           <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>>
             <!--<div class="loader"></div>--> <?=$this->transEsc($tab['label']); ?></a>
-        <? if ($tab["id"] === "SolrAuth" && !$tab['selected']) :
-            $url = str_replace("/Authority/Search", "/AJAX/json", $tab["url"]);
+        <?php if ($tab['id'] === "SolrAuth" && !$tab['selected']) :
+            $url = str_replace("/Authority/Search", "/AJAX/json", $tab['url']);
             $var = <<<JS
     var url = "{$url}";
     $(document).ready(function() {
-      $.getJSON(url, {method: "getResultTotal",searchClassId: "{$tab['id']}"},
+      $.getJSON(url, {method: "GetTotalResults",searchClassId: "{$tab['id']}"},
       function (data) {
-        $("#SolrAuth > a").append(" <small>("+data["data"]+")</small>");
+        $("#SolrAuth > a").append(data['data']['localizedTotal']);
       });
     });
 JS;
         $this->headScript()->appendScript($var); ?>
 
-        <? elseif  ($tab['id'] === "Solr" && !$tab['selected']): ?>
-            <? $url = str_replace("/Search/Results", "/AJAX/json", $tab["url"]);
+      <?php elseif  ($tab['id'] === "Solr" && !$tab['selected']): ?>
+            <?php $url = str_replace("/Search/Results", "/AJAX/json", $tab['url']);
                 $var = <<<JS
                     var url = "{$url}";
                     $(document).ready(function() {
-                      $.getJSON(url, {method: "getResultTotal",searchClassId: "{$tab['id']}"},
+                      $.getJSON(url, {method: "GetTotalResults",searchClassId: "{$tab['id']}"},
                         function (data) {
-                          $("#Solr > a").append(" <small>("+data["data"]+")</small>");
+                          $("#Solr > a").append(data['data']['localizedTotal']);
                         });
                       });
 JS;
             $this->headScript()->appendScript($var); ?>
-        <? endif; ?>
-
-</li>
-    <? endforeach; ?>
+        <?php endif; ?>
+      </li>
+      <?php elseif ($block = $this->permission()->getAlternateContent($tab['permission'])): ?>
+            <?=$block?>
+      <?php endif; ?>
+    <?php endforeach; ?>
   </ul>
-<? endif; ?>
+<?php endif; ?>

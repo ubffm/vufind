@@ -19,7 +19,7 @@
             <a class="hover-overlay" href="<?=$this->recordLink()->getUrl($data)?>">
               <?php $thumb = $this->record($data)->getThumbnail('large'); ?>
               <?php if ($thumb) :?>
-              <img src="<?=$thumb ?>" alt="<?=$data->getTitle() ?>" title="<?=$data->getTitle() ?>"/>
+              <img src="<?=$thumb ?>" alt="<?=$this->escapeHtml($data->getTitle()) ?>" title="<?=$this->escapeHtml($data->getTitle()) ?>"/>
               <div class="content">
                 <div class="contentDarker">
                 <?php $formats = $data->getFormats(); ?>
@@ -27,7 +27,7 @@
                 <?php if ($data->getFormats()) :?>
                   <p><?=implode(', ',$data->getFormats());?></p>
                 <?php endif; ?>
-                <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+                <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
                 </div>
               </div>
             <?php else: ?>
@@ -37,7 +37,7 @@
             <?php if ($data->getFormats()) :?>
               <p><?=implode(', ',$data->getFormats());?></p>
             <?php endif; ?>
-            <p><?=$this->transEsc("Institution") . ': ' . implode(', ',$data->getInstitutions());?></p>
+            <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
           <?php endif; ?>
             </a>
           </div>

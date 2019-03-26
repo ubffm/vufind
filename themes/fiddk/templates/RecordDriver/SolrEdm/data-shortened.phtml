@@ -1,0 +1,6 @@
+<?php $words = preg_split('/\s(?!\/>)/', $data); ?>
+<?php if (sizeof($words) >= 20) : ?>
+  <?=implode(' ', array_slice($words,0,20)) . ' [...]'; ?>
+<?php else: ?>
+  <?= $data ?>
+<?php endif; ?>
