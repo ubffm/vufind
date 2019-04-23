@@ -40,13 +40,13 @@ header .banner.container.navbar.search {
 .well {
     background-color: @lightgrey;
     text-align: left;
-    margin-bottom: 50px;
+    margin-bottom: 5em;
     min-width: 240px;
     box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
-    border: none;
+    border: 1px solid @btn-default-border;
 }
 
-#searchForm  {
+.searchForm  {
     width: 100% !important;
 }
 
@@ -160,20 +160,20 @@ a.facet {
   background-color: rgba(79,129,189,0.3);
 }
 
-/* General Layout
-body {
-    background: @background-color;
-    background-size: 1600px;
-}
-*/
+/* General Layout */
 
 body {
-    background: @background-color;
+    background: #fff;
     background-attachment: fixed;
-    //background-image: url("../../images/dk_bg.jpg");
     background-position: right top;
     background-repeat: no-repeat;
     background-size: cover;
+    &.template-name-home {
+      background-image: url("../../images/bw_6.jpg");
+      div.container {
+        background: none;
+      }
+    }
 }
 
 .media-left {
@@ -182,13 +182,14 @@ body {
 
 div.mainbody > div.result:not(.last) {
   .media-left, .media-right, .media-body {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid @btn-default-border;
     padding-bottom: 10px;
   }
 }
 
 .container {
-  background: @white;
+  background: #fff;
+  border-radius: 6px;
 }
 
 .breadcrumb {
@@ -197,10 +198,6 @@ div.mainbody > div.result:not(.last) {
   & > .active {
       color: @black;
     }
-}
-
-.facet .badge {
-  line-height: normal;
 }
 
 .facet-group .title {
@@ -215,7 +212,8 @@ div.mainbody > div.result:not(.last) {
 }
 
 a.badge-secondary {
-  color: @brand-primary;
+  color: @grey;
+  border: 1px solid @grey;
   &:hover {
     color: @darkprimary-color;
     text-decoration: underline;
@@ -223,7 +221,7 @@ a.badge-secondary {
 }
 
 .label {
-  background-color: @brand-primary;
+  background-color: @grey;
 }
 
 a[target="_blank"]:after {
@@ -265,13 +263,18 @@ div#accordion .panel-collapse {
 /* Homepage Layout */
 .searchHomeContent {
   overflow: hidden;
-  margin-top: 3em;
+  margin-top: 6em;
+  margin-bottom: 2em;
 }
 
 #searchAndNews {
   width: 60%;
   margin: auto;
   padding-right: 40px;
+
+  .well.searchForm {
+    margin-bottom: 10px;
+  }
 }
 
 /* Lightbox Layout */
@@ -414,9 +417,6 @@ span.toggleContainer {
   margin-top: 10px;
 }
 
-.stream.well {
-  height: 182px;
-}
 .form-control {
   padding: 6px;
 }
