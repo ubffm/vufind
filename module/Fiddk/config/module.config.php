@@ -33,25 +33,33 @@ $config = [
     'factories' => [
       'Fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\DataProviderController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\AuthorityController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\AgentSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\EventSearchController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\ShowcaseController' => 'VuFind\Controller\AbstractBaseFactory',
-      //'record' => 'fiddk\Controller\Factory::getRecordController',
     ],
     'aliases' => [
       'DataProvider' => 'Fiddk\Controller\DataProviderController',
       'dataprovider' => 'Fiddk\Controller\DataProviderController',
       'Showcase' => 'Fiddk\Controller\ShowcaseController',
       'showcase' => 'Fiddk\Controller\ShowcaseController',
+      'AgentSearch' => 'Fiddk\Controller\AgentSearchController',
+      'agentsearch' => 'Fiddk\Controller\AgentSearchController',
+      'Agent' => 'Fiddk\Controller\AgentController',
+      'agent' => 'Fiddk\Controller\AgentController',
+      'EventSearch' => 'Fiddk\Controller\EventSearchController',
+      'eventsearch' => 'Fiddk\Controller\EventSearchController',
+      'Event' => 'Fiddk\Controller\EventController',
+      'event' => 'Fiddk\Controller\EventController',
 
       // Overrides
       'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
       'VuFind\Controller\RecordController' => 'Fiddk\Controller\RecordController',
-      'VuFind\Controller\AuthorityController' => 'Fiddk\Controller\AuthorityController',
+      'VuFind\Controller\AuthorController' => 'Fiddk\Controller\AgentSearchController',
       'VuFind\Controller\SearchController' => 'Fiddk\Controller\SearchController',
-
-      //'record' => 'Fiddk\Controller\RecordController',
     ]
   ],
   'vufind' => [
@@ -67,47 +75,62 @@ $config = [
       ],
       'recommend' => [
         'factories' => [
-          'Fiddk\Recommend\AuthorityInfo' => 'Fiddk\Recommend\Factory::getAuthorityInfo',
+          'Fiddk\Recommend\EventInfo' => 'Fiddk\Recommend\Factory::getEventInfo',
         ],
         'aliases' => [
-          'authorityinfo' => 'Fiddk\Recommend\AuthorityInfo',
+          'eventinfo' => 'Fiddk\Recommend\EventInfo',
+        ],
+      ],
+      'search_backend' => [
+        'factories' => [
+          'SolrEvent' => 'Fiddk\Search\Factory\SolrEventBackendFactory',
+          'SolrAuthor' => 'Fiddk\Search\Factory\SolrAuthorBackendFactory',
         ],
       ],
       'search_options' => [
         'factories' => [
-          'Fiddk\Search\SolrAuthorityInfo\Options' => 'VuFind\Search\Options\OptionsFactory',
+          'Fiddk\Search\SolrAuthor\Options' => 'VuFind\Search\Options\OptionsFactory',
+          'Fiddk\Search\SolrEvent\Options' => 'VuFind\Search\Options\OptionsFactory',
           ],
         'aliases' => [
-          'solrauthorityinfo' => 'Fiddk\Search\SolrAuthorityInfo\Options',
+          'VuFind\Search\SolrAuthor\Options' => 'Fiddk\Search\SolrAuthor\Options',
+          'solrevent' => 'Fiddk\Search\SolrEvent\Options',
           ],
       ],
       'search_params' => [
         'factories' => [
-          'Fiddk\Search\SolrAuthorityInfo\Params' => 'VuFind\Search\Solr\ParamsFactory',
+          'Fiddk\Search\SolrAuthor\Params' => 'VuFind\Search\Solr\ParamsFactory',
+          'Fiddk\Search\SolrEvent\Params' => 'VuFind\Search\Solr\ParamsFactory',
           ],
         'aliases' => [
-          'solrauthorityinfo' => 'Fiddk\Search\SolrAuthorityInfo\Params',
+          'VuFind\Search\SolrAuthor\Params' => 'Fiddk\Search\SolrAuthor\Params',
+          'solrevent' => 'Fiddk\Search\SolrEvent\Params',
           ],
       ],
       'search_results' => [
         'factories' => [
-          'Fiddk\Search\SolrAuthorityInfo\Results' => 'VuFind\Search\Solr\ResultsFactory',
+          'Fiddk\Search\SolrAuthor\Results' => 'VuFind\Search\Solr\ResultsFactory',
+          'Fiddk\Search\SolrEvent\Results' => 'VuFind\Search\Solr\ResultsFactory',
           ],
         'aliases' => [
-          'solrauthorityinfo' => 'Fiddk\Search\SolrAuthorityInfo\Results',
+          'VuFind\Search\SolrAuthor\Results' => 'Fiddk\Search\SolrAuthor\Results',
+          'solrevent' => 'Fiddk\Search\SolrEvent\Results',
           ],
       ],
       'recorddriver' => [
         'factories' => [
           'Fiddk\RecordDriver\SolrEdm' =>
               'VuFind\RecordDriver\SolrDefaultFactory',
-          'Fiddk\RecordDriver\SolrAuthEdm' =>
-              'VuFind\RecordDriver\SolrDefaultWithoutSearchServiceFactory',
+          'Fiddk\RecordDriver\SolrAuthor' =>
+              'VuFind\RecordDriver\SolrDefaultFactory',
+          'Fiddk\RecordDriver\SolrEvent' =>
+              'VuFind\RecordDriver\SolrDefaultFactory',
+
         ],
         'aliases' => [
           'solredm' => 'Fiddk\RecordDriver\SolrEdm',
-          'solrauthedm' => 'Fiddk\RecordDriver\SolrAuthEdm',
-          'solrauth' => 'Fiddk\RecordDriver\SolrAuthEdm',
+          'solrauthor' => 'Fiddk\RecordDriver\SolrAuthor',
+          'solrevent' => 'Fiddk\RecordDriver\SolrEvent',
         ],
       ],
       'recordtab' => [
@@ -128,6 +151,16 @@ $config = [
         ],
         'defaultTab' => null,
         ],
+      'Fiddk\RecordDriver\SolrEvent' => [
+        'tabs' => [
+        ],
+        'defaultTab' => null,
+        ],
+      'Fiddk\RecordDriver\SolrAuthor' => [
+        'tabs' => [
+        ],
+        'defaultTab' => null,
+        ],
       ],
     ],
 ];
@@ -135,10 +168,16 @@ $config = [
 // Define record view routes -- route name => controller
 $recordRoutes = [
     'record' => 'Record',
+    'eventrecord' => 'Event',
+    'solreventrecord' => 'Event',
     'collection' => 'Collection',
     'missingrecord' => 'MissingRecord',
-    'solrauthrecord' => 'Authority'
+    'agentrecord' => 'Agent',
+    'solrauthorrecord' => 'Agent',
 ];
+
+$staticRoutes = ['EventSearch/Home','EventSearch/Results',
+                 'AgentSearch/Home','AgentSearch/Results'];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);

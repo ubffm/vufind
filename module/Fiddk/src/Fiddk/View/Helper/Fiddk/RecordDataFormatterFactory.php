@@ -71,8 +71,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
              'collection-record', [$this, 'getDefaultCollectionRecordSpecs']
          );
          $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
-         $helper->setDefaults('event', [$this, 'getDefaultEventSpecs']);
          $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
+         $helper->setDefaults('event', [$this, 'getEventSpecs']);
          $helper->setDefaults('authority-results', [$this, 'getDefaultAuthSpecs']);
          return $helper;
      }
@@ -97,22 +97,22 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setTemplateLine(
             'In', 'getContainerTitle', 'data-containerTitle.phtml'
         );
+        $spec->setLine(
+            'dc:type', 'getFormats', 'RecordHelper',
+            ['helperMethod' => 'getFormatList']
+        );
         $spec->setTemplateLine(
             'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
         );
         $spec->setTemplateLine(
             'DatesPlaces', 'getPlaceDateDetails', 'data-placeDateDetails.phtml'
         );
-        $spec->setLine(
-            'dc:type', 'getFormats', 'RecordHelper',
-            ['helperMethod' => 'getFormatList']
-        );
         $spec->setLine('dcterms:extent', 'getExtent');
         $spec->setLine('dm2e:callNumber', 'getCallNumber');
         $spec->setLine('dcterms:provenance', 'getProvenance');
-        $spec->setMultiLine(
-            'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
-          );
+        //$spec->setMultiLine(
+        //    'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
+        //  );
         $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-1::']);
         $spec->setTemplateLine('dc:description', 'getSummary', 'data-collapsible.phtml');
         $spec->setLine('ISBN', 'getISBNs');
@@ -135,20 +135,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
     /**
-     * Get default specifications for displaying event metadata.
-     *
-     * @return array
-     */
-    public function getDefaultEventSpecs()
-    {
-      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-      //$spec->setMultiLine(
-      //    'Contributors', 'getDeduplicatedAuthors', $this->getAuthorFunction()
-      //);
-      return $spec->getArray();
-    }
-
-    /**
      * Get default specifications for displaying see also metadata.
      *
      * @return array
@@ -156,11 +142,12 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function getDefaultSeeAlsoSpecs()
     {
       $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-      $spec->setTemplateLine('edm:dataProvider', 'getInstitutionsLinked','data-externalLink.phtml');
+      $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked','data-provLink.phtml');
       $spec->setTemplateLine('Ask Archive', 'askArchive','data-askArchive.phtml');
       $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink','data-licenseLink.phtml');
       $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink','data-externalLink.phtml');
       $spec->setTemplateLine('edm:hasView', 'getDigitalCopies','data-collapsible_.phtml');
+      $spec->setTemplateLine('edm:wasPresentAt', 'getEvents','link-event.phtml');
       $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks','data-internalLink.phtml');
       return $spec->getArray();
     }
@@ -175,6 +162,20 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
       $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
       $spec->setLine('none', 'getOccupation', null, ['separator' => ', ']);
       $spec->setTemplateLine('skos:altLabel', 'getUseFor', 'data-collapsible_str.phtml');//, ['separator' => '; ']);
+      return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying authority metadata.
+     *
+     * @return array
+     */
+    public function getEventSpecs()
+    {
+      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+      $spec->setLine('Type of Event', 'getEventType', null, ['separator' => ', ']);
+      $spec->setLine('DateOfEvent', 'getEventDate');
+      $spec->setLine('PlaceOfEvent', 'getEventPlace');
       return $spec->getArray();
     }
 

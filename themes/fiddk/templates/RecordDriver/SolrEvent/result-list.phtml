@@ -1,0 +1,25 @@
+<?php
+  $heading = $this->driver->getTitle();
+  if (empty($heading)) {
+    $heading = $this->translate('Heading unavailable.');
+  } ?>
+
+<div class="media">
+  <div class="media-body">
+    <div class="resultItemLine1">
+      <a href="<?=$this->url('eventrecord')?><?=urlencode($this->driver->getUniqueId())?>" class="title"><?=$this->escapeHtml($heading)?></a>
+    </div>
+    <?php $eventType = $this->driver->getEventType();?>
+    <div class="resultItemLine2">
+      <?php foreach ($eventType as $type): ?>
+        <?=$this->escapeHtml($type)?>
+      <?php endforeach; ?>
+    </div>
+    <?php $place = $this->driver->getEventPlace();?>
+    <?php if ($place != ''): ?>
+      <div class="resultItemLine3">
+        <?=$this->escapeHtml($place)?>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
