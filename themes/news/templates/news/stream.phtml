@@ -1,6 +1,6 @@
 <div class="stream">
-  <p class="title"><?=$this->transEsc("Newsstream")?></p>
   <div class="stream well well-lg clearfix">
+    <p class="title"><?=$this->transEsc("Newsstream")?></p>
     <? foreach ($pinnedlist as $pin) : ?>
       <div class="pinned_news">
         <? if ($pin->enclosure!=null || $pin->enclosure!='') : ?>
