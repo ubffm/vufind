@@ -69,7 +69,7 @@ fi
 
 if [ -z "$SOLR_HEAP" ]
 then
-  SOLR_HEAP="1G"
+  SOLR_HEAP="3G"
 fi
 
 if [ -z "$SOLR_PORT" ]
