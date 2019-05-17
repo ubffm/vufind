@@ -14,12 +14,11 @@ $formattedAuthors = [];
 <?php if (!empty($data[$type])): ?>
   <?php foreach ($data[$type] as $author => $dataFields): ?>
     <?php ob_start();
-      // an authority link exists and that document exists in SolrAuth
+      // an authority link exists and that document exists in SolrAuthor
       if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0],"SolrAuth")) :
-        $authorityLookfor = $this->record($this->driver)->getLink('authority', $dataFields['id'][0]);
+        $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
       else :
-        //TODO: do we want that for literal persons? Or using authority path?
-        $authorityLookfor = $this->record($this->driver)->getLink('author', $author);
+        $authorityLookfor = $this->record($this->driver)->getLink('name', $author);
       endif; ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
       <a href="<?=$authorityLookfor?>">

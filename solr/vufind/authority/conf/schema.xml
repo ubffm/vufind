@@ -20,6 +20,8 @@
         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
       </analyzer>
     </fieldType>
+    <!-- add range field to represent edm timespans -->
+    <fieldType name="range" class="solr.DateRangeField" omitNorms="true"/>
   </types>
   <fields>
     <!-- Required by Solr 4.x -->
@@ -60,6 +62,9 @@
     <field name="gender" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
     <!-- additional authority fields-->
+    <field name="date" type="range" indexed="true" stored="true"/>
+    <field name="place" type="string" indexed="true" stored="true"/>
+    <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
     <field name="occupation_facet" type="string" indexed="true" stored="true" multiValued="true"/>

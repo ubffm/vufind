@@ -31,29 +31,43 @@
       </div>
 
       <div>
-        <?php if($this->driver->isCollection()): ?>
-          <?=implode('<br>', array_map([$this, 'escapeHtml'], $this->driver->getSummary())); ?>
-        <?php else: ?>
-          <?php $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
-          <?php if (!empty($journalTitle)): ?>
+          <?php $journalTitles = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
+          <?php if (!empty($journalTitles)): ?>
             <?=$this->transEsc('In')?>
             <?php $containerSource = $this->driver->getSourceIdentifier(); ?>
-            <?php $containerID = $this->driver->getContainerRecordID(); ?>
-            <?php /* TODO: handle highlighting more elegantly here: */?>
-            <a href="<?=($containerID ? $this->recordLink()->getUrl("$containerSource|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
+            <?php $containerIDs = $this->driver->getContainerRecordID(); ?>
+            <?php if ($containerIDs) :
+              $containers = array_combine($containerIDs,$journalTitles);
+              $containerLinks = [];
+              foreach ($containers as $containerID => $containerTitle) :
+                ob_start();
+                $link = $containerID
+                  ? $this->recordLink()->getUrl("$containerSource|$containerID")
+                  : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $containerTitle)); ?>
+                  <?php /* TODO: handle highlighting more elegantly here: */?>
+                <a href="<?=$link?>"><?=$this->highlight($containerTitle)?></a>
+                <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
+                  ob_end_clean();
+              endforeach;?>
+              <?=implode(', ', $containerLinks)?>
+            <?php endif;?>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
           <?php elseif (!empty($summDate)): ?>
-            <?=!empty($summAuthors) ? '<br />' : ''?>
             <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
           <?php endif; ?>
           <?php $summAuthors = array_slice($this->driver->getPrimaryAuthorsWithHighlighting(),0,3); if (!empty($summAuthors)): ?>
-            <?=!empty($journalTitle) ? '<br />' : ''?>
-            <?php $roles = $this->driver->getPrimaryAuthorsRoles();?>
-            <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
-              <?php if ($i != 2) : ?>
-                <a href="<?=$this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
-                <?='(' . $this->transEsc('edm::' . $roles[$i]) .')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
-              <?php endif; ?>
+           <?=!empty($journalTitles) ? '<br />' : ''?>
+           <?php $roles = $this->driver->getPrimaryAuthorsRoles();?>
+           <?php $ids = $this->driver->getPrimaryAuthorsIds();?>
+           <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
+             <?php if ($i != 2) : ?>
+               <?php if (isset($ids[$i]) && $ids[$i] != ''): ?>
+                 <a href="<?=$this->record($this->driver)->getLink('author', $ids[$i])?>"><?=$this->highlight($summAuthor)?></a>
+               <?php else : ?>
+                 <a href="<?=$this->record($this->driver)->getLink('name', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
+               <?php endif; ?>
+               <?='(' . $this->transEsc('edm::' . $roles[$i]) .')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
+             <?php endif; ?>
           <?php endforeach; ?>
         <?php endif; ?>
           <?php $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
@@ -68,27 +82,26 @@
           <?php endif; ?>
           <?php $pubDetails = $this->driver->getPublicationDetails();?>
           <?php if (!empty($pubDetails)): ?>
-            <?=!empty($journalTitle || $summAuthors) ? '<br />' : ''?>
-            <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml',['data' => $pubDetails]);?>
+            <?=!empty($journalTitles || $summAuthors) ? '<br />' : ''?>
+            <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml',['data' => $pubDetails,'driver' => $this->driver]);?>
           <?php endif; ?>
           <?php if (empty($this->driver->getTitle())): ?>
             <?php if (!empty($this->driver->getSummary())): ?>
-              <?=!empty($journalTitle || $summAuthors) ? '<br />' : ''?>
+              <?=!empty($journalTitles || $summAuthors) ? '<br />' : ''?>
               <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml',['data' => $this->driver->getSummary()[0]]);?>
             <?php endif; ?>
           <?php endif; ?>
           <?php $placeDetails = $this->driver->getPlaceDateDetails();?>
           <?php if (empty($pubDetails) && !empty($placeDetails)): ?>
-            <?=!empty($journalTitle || $summAuthors || (empty($this->driver->getTitle())
+            <?=!empty($journalTitles || $summAuthors || (empty($this->driver->getTitle())
               && !empty($this->driver->getSummary()))) ? '<br />' : ''?>
             <?=implode('; ',$placeDetails);?>
           <?php endif; ?>
           <?php $extent = $this->driver->getExtent();?>
           <?php if (!empty($extent)): ?>
-            <?=!empty($journalTitle || $summAuthors) || !empty($placeDetails) ? '<br />' : ''?>
+            <?=!empty($journalTitles || $summAuthors) || !empty($placeDetails) ? '<br />' : ''?>
             <?=implode('; ',$extent);?>
           <?php endif; ?>
-        <?php endif; ?>
       </div>
 
       <?php if(!$this->driver->isCollection()): ?>

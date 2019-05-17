@@ -4,12 +4,12 @@
       <?php if ($this->permission()->allowDisplay($tab['permission'])): ?>
         <li id="<?=$tab['id']?>"<?=$tab['selected'] ? ' class="active"' : ''?>>
           <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>>
-            <!--<div class="loader"></div>--> <?=$this->transEsc($tab['label']); ?></a>
-        <?php if (!$tab['selected'] && strpos($tab['id'],"SolrEvent") !== FALSE) :
+            <?=$this->transEsc($tab['label']); ?></a>
+        <?php if ($tab['id'] == "SolrEvent" && !$tab['selected']) :
                 $url = str_replace("/EventSearch/Results", "/AJAX/json", $tab['url']);
-              elseif  (!$tab['selected'] && $tab['id'] === "SolrAuthor"):
+              elseif  ($tab['id'] === "SolrAuthor" && !$tab['selected']):
                 $url = str_replace("/AgentSearch/Results", "/AJAX/json", $tab['url']);
-              elseif  (!$tab['selected'] && $tab['id'] === "Solr"):
+              elseif  ($tab['id'] === "Solr" && !$tab['selected']):
                 $url = str_replace("/Search/Results", "/AJAX/json", $tab['url']);
               endif;
               if (isset($url) && !$tab['selected']) {

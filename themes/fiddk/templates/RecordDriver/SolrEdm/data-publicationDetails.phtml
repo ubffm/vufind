@@ -20,9 +20,9 @@
   </span>
   <?php if (!empty($pubDate)):
     if (empty($pubName) && !empty($pubPlace)): ?>
-      : <span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+      : <span property="publicationDate"><?=$this->driver->translateDate($pubDate,'de')?></span>
     <?php else: ?>
-      <span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+      <span property="publicationDate"><?=$this->driver->translateDate($pubDate,'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
   <br />

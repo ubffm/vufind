@@ -163,17 +163,19 @@ a.facet {
 /* General Layout */
 
 body {
-    background: #fff;
+    background: @background-color;
     background-attachment: fixed;
     background-position: right top;
     background-repeat: no-repeat;
     background-size: cover;
-    &.template-name-home {
+
+    /*
+    &.template-name-home:not(.template-dir-showcase) {
       background-image: url("../../images/bw_6.jpg");
       div.container {
         background: none;
       }
-    }
+    }*/
 }
 
 .media-left {

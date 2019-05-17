@@ -2,12 +2,13 @@
   $heading = $this->driver->getTitle();
   if (empty($heading)) {
     $heading = $this->translate('Heading unavailable.');
-  } ?>
+  }
+  $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 
 <div class="media">
   <div class="media-body">
     <div class="resultItemLine1">
-      <a href="<?=$this->url('eventrecord')?><?=urlencode($this->driver->getUniqueId())?>" class="title"><?=$this->escapeHtml($heading)?></a>
+      <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
     <?php $eventType = $this->driver->getEventType();?>
     <div class="resultItemLine2">
@@ -15,10 +16,18 @@
         <?=$this->escapeHtml($type)?>
       <?php endforeach; ?>
     </div>
-    <?php $place = $this->driver->getEventPlace();?>
-    <?php if ($place != ''): ?>
+    <?php $place = $this->driver->getEventPlace(); $date = $this->driver->getEventDate();?>
+    <?php if ($place != "" || $date != ""): ?>
       <div class="resultItemLine3">
-        <?=$this->escapeHtml($place)?>
+        <?php if ($place != "" && $date != ""): ?>
+          <?=$this->escapeHtml($place) . ', ' . $this->driver->translateDate($date,$lang)?>
+        <?php else : ?>
+        <?php if ($place != ""): ?>
+          <?=$this->escapeHtml($place)?>
+        <?php else: ?>
+          <?=$this->driver->translateDate($date,$lang)?>
+        <?php endif; ?>
+      <?php endif; ?>
       </div>
     <?php endif; ?>
   </div>

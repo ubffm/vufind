@@ -100,4 +100,49 @@ trait EdmReaderTrait
         return parent::getXML($format, $baseUrl, $recordLink);
     }
 
+    /* this should be a helper instead! */
+    public function translateDate($date,$lang) {
+      // FIXME
+      if (substr($date,0,4) == "http") {
+        $dateParts = explode("_",substr($date,35));
+      }
+      else {
+        $dateParts = explode(" ",str_replace(["[","]","TO "],"",$date));
+      }
+      $start = isset($dateParts[0]) ? substr($dateParts[0],0,10) : "";
+      $end = isset($dateParts[1]) ? substr($dateParts[1],0,10) : "";
+      if ($start == $end) {
+        // exact date
+        return $this->formatToDate($start,$lang);
+      } else {
+        // is same year?
+        if (substr($start,0,4) == substr($end,0,4)) {
+          // is whole year?
+          if (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31") {
+             return substr($start,0,4);
+          } else {
+            // two exact dates in same year
+            return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
+          }
+        } else {
+          // season
+          if (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31"
+          && intval(substr($start,0,4)) + 1 == intval(substr($end,0,4))) {
+            return substr($start,0,4) . "/" . substr($end,0,4);
+          } else {
+          // two exact dates
+          return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
+        }
+        }
+      }
+    }
+
+    public function formatToDate($date,$lang) {
+      if ($lang == 'en') {
+        return $date;
+      } else {
+        return substr($date,8,2) . "." . substr($date,5,2) . "." . substr($date,0,4);
+      }
+    }
+
 }

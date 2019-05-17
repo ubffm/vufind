@@ -1,33 +1,25 @@
 <?
   // Set up page title:
-  $title = $this->driver->getTitle();
-
   $lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $this->params->getDisplayQuery();
-  if (strpos($lookfor,  'gnd_') !== FALSE) {
-    $lookfor = ' (GND ' . explode('_', $lookfor)[1] . ')';
-  } else {
-    $lookfor = '';
-  }
   if (isset($this->overrideTitle)) {
       $this->headTitle($this->overrideTitle);
   } else {
-      $this->headTitle($this->translate('Search Results') . (empty($title) ? '' : " - {$title}"));
+      $this->headTitle($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
   }
 
   $searchIndex = $this->params->getSearchHandler();
   $searchType = $this->params->getSearchType();
   $searchClassId = $this->params->getsearchClassId();
-  $agent = $this->driver->getAgentFacts($this->driver->getUniqueID(),true);
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
-        'lookfor' => isset($agent->name) ? $agent->name . $lookfor : '',
+        'lookfor' => $lookfor,
         'searchIndex' => $searchIndex,
         'searchType' => $searchType,
         'searchId' => $this->results->getSearchId(),
-        'searchClassId' => $searchClassId,
+        'searchClassId' => 'Solr', // don't make Authority show up
         'checkboxFilters' => $this->params->getCheckboxFacets(),
         'filterList' => $this->params->getFilters(),
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
@@ -36,6 +28,13 @@
         'ignoreHiddenFilterMemory' => isset($this->ignoreHiddenFilterMemory) ? $this->ignoreHiddenFilterMemory : false,
       ]
   );
+
+  // Set up breadcrumbs:
+  if (isset($this->overrideTitle)) {
+    $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($this->overrideTitle) . '</li>';
+  } else {
+    $this->layout()->breadcrumbs .= '<li class="active">' . $this->transEsc('Search') . ': ' . $this->escapeHtml($lookfor) . '</li>';
+  }
 
   // Enable cart if appropriate:
   $this->showBulkOptions = $this->params->getOptions()->supportsCart() && $this->showBulkOptions;
@@ -58,22 +57,19 @@
   $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
   $hiddenFilters = $this->searchTabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $searchTabs = $this->searchTabs()->getTabConfig($searchClassId, $lookfor, $searchIndex, $searchType, $hiddenFilters);
-  $recordTotal = $this->results->getResultTotal();?>
-
-  <?=$this->context($this)->renderInContext('RecordDriver/SolrAuth/data-agent.phtml', ['agent' => $agent])?>
-
+  $recordTotal = $this->results->getResultTotal();
+?>
+<?// always display these at the very top! ?>
+<?=$this->render('Recommend/EventInfo.phtml')?>
+<? foreach ($this->results->getRecommendations('top') as $current): ?>
+  <?=$this->recommend($current)?>
+<? endforeach; ?>
 <div class="<?=$this->layoutClass('mainbody')?>">
-  <? if ($recordTotal > 0): // only display these at very top if we have results ?>
-    <? foreach ($this->results->getRecommendations('top') as $current): ?>
-      <?=$this->recommend($current)?>
-    <? endforeach; ?>
-  <? endif; ?>
   <?=$this->flashmessages()?>
   <nav class="search-header hidden-print">
     <div class="search-stats">
       <? if ($recordTotal > 0): ?>
-        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => isset($agent->name) ? $agent->name . $lookfor : '', 'recordTotal' => $recordTotal]) ?>
+        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
       <? else: ?>
         <h2><?=$this->transEsc('nohit_heading')?></h2>
       <? endif; ?>
@@ -94,7 +90,11 @@
       <? if (isset($this->overrideEmptyMessage)): ?>
         <?=$this->overrideEmptyMessage?>
       <? else: ?>
-        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml(isset($agent->name) ? $agent->name . $lookfor : '')]); ?>
+      <? if ($searchClassId == "Solr") : ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+      <? else : ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+      <? endif; ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>
     </p>

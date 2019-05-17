@@ -106,7 +106,6 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
       $resultTotal = $results->getResultTotal();
       $localizedTotal = $this->renderer
             ->render('ajax/resultTotal.phtml',['resultTotal' => $resultTotal]);
-
       return $this->formatResponse(compact('localizedTotal'));
 
     }

@@ -1,8 +1,12 @@
 <div class="authority-meta">
   <h4><?=$this->transEsc('More Links')?></h4>
+  <? // bug in lobid creates dublicates! ?>
+  <?php $dub = []; ?>
   <?php foreach ($this->info['sameAs'] as $k => $current):
       if (isset($current['id']) && isset($current['collection'])) :
         $abbr = isset($current['collection']['abbr']) ? $current['collection']['abbr'] : '';
+        if (!(in_array($abbr,$dub))) :
+        $dub[] = $abbr;
         $name = isset($current['collection']['name']) ? $current['collection']['name'] : '';
         $icon = isset($current['collection']['icon']) ? $current['collection']['icon'] : '';
         ?>
@@ -10,9 +14,10 @@
         <i class="external-icon"><img src="<?=$icon?>" alt="<?=$abbr?>"></i>
         <?=$name?>
       </a><br />
-      <? if(array_key_exists($k+1,$this->info['sameAs'])):?>
+      <?php if(array_key_exists($k+1,$this->info['sameAs'])):?>
          <hr/>
-      <? endif;?>
+      <?php endif;?>
+      <?php endif; ?>
     <?php endif; ?>
   <?php endforeach; ?><br />
   <?=$this->render('Recommend/data-source.phtml');?>

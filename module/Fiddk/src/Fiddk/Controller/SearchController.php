@@ -40,7 +40,6 @@ namespace Fiddk\Controller;
  */
 class SearchController extends \VuFind\Controller\SearchController
 {
-
     /**
      * Home action.
      *

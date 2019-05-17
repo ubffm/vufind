@@ -164,11 +164,12 @@
    <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_type" type="string" indexed="false" stored="true" multiValued="true"/>
+   <field name="event" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="event_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
    <field name="related_to" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="performanceDates" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="date_span_sort" type="date" indexed="true" stored="false"/>
-   <field name="container_facet" type="string" indexed="true" stored="false"/>
+   <field name="container_facet" type="string" indexed="true" stored="false" multiValued="true"/>
 
    <field name="archive" type="boolean" indexed="true" stored="false"/>
    <!-- Catalog Specific Fields -->
@@ -222,7 +223,7 @@
    <field name="long_lat_display" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="long_lat_label" type="string" indexed="false" stored="true" multiValued="true"/>
    <!-- Container fields (i.e. for describing journal containing an article) -->
-   <field name="container_title" type="text" indexed="true" stored="true"/>
+   <field name="container_title" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="container_volume" type="text" indexed="true" stored="true"/>
    <field name="container_issue" type="text" indexed="true" stored="true"/>
    <field name="container_start_page" type="text" indexed="true" stored="true"/>

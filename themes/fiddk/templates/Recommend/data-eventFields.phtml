@@ -1,0 +1,22 @@
+<?php $eventType = $this->driver->getEventType();
+      $eventDate = $this->driver->getEventDate();
+      $eventPlace = $this->driver->getEventPlace();
+      $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
+<?php if (!empty($eventType)) : ?>
+  <b><?=$this->transEsc('Type of Event') . ':'?></b>
+  <span property="performingArtsType">
+    <?=implode($eventType,', ')?>
+  </span><br />
+<?php endif; ?>
+<?php if (!empty($eventDate)) : ?>
+  <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
+  <span property="edm:occuredAt">
+     <?=$this->driver->translateDate($eventDate,$lang)?>
+  </span><br />
+<?php endif; ?>
+<?php if (!empty($eventPlace)) : ?>
+  <b><?=$this->transEsc('PlaceOfEvent') . ':'?></b>
+  <span property="edm:happenedAt">
+    <?=$eventPlace?>
+  </span><br />
+<?php endif; ?>

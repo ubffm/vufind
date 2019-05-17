@@ -1,3 +1,8 @@
+<?php if (isset($this->info['broaderTermInstantial'])) : ?>
+  <span property="broaderTermInstantial">
+    <?=implode(', ',array_column($this->info['broaderTermInstantial'],'label'))?>
+  </span><br />
+<?php endif; ?>
 <?php if (isset($this->info['dateOfEstablishment'])) : ?>
   <?=$this->transEsc('established')?>
   <span property="dateOfEstablishment">
@@ -23,15 +28,10 @@
     <?=implode('; ',array_column($this->info['spatialAreaOfActivity'],'label'))?>
   </span><br />
 <?php endif; ?>
-<?php if (isset($this->info['broaderTermInstantial']) || isset($this->info['gndSubjectCategory'])) : ?>
-  <?php $categories = isset($this->info['broaderTermInstantial']) ?
-  (isset($this->info['gndSubjectCategory']) ?
-    array_merge($this->info['gndSubjectCategory'],$this->info['broaderTermInstantial'])
-    : $this->info['broaderTermInstantial'])
-  : $this->info['gndSubjectCategory']?>
-  <?=$this->transEsc('Category') . ': '?>
+<?php if (isset($this->info['gndSubjectCategory'])) : ?>
+  <?=$this->transEsc('Subject') . ': '?>
   <span property="Category">
-    <?=implode(', ',array_column($categories,'label'))?>
+    <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
   </span><br />
 <?php endif; ?>
 <?php if (isset($this->info['precedingCorporateBody'])) : ?>

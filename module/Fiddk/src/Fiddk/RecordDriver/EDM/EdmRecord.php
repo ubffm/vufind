@@ -31,6 +31,7 @@ class EdmRecord
       "dm2e:hasAnnotatableVersionAt" => "ore:Aggregation",
       "edm:hasView" => "ore:Aggregation",
       "edm:isRelatedTo" => "edm:ProvidedCHO",
+      "edm:wasPresentAt" => "edm:ProvidedCHO",
       "dm2e:publishedAt" => "edm:ProvidedCHO",
       "dm2e:callNumber" => "edm:ProvidedCHO",
       "dcterms:issued" => "edm:ProvidedCHO",
@@ -93,7 +94,19 @@ class EdmRecord
     }
 
     function getAttributeVal($elem = null, $ns = "", $attr = "") {
-      return $elem->attributes($ns,true)->$attr->__toString();
+      $attr = $elem->attributes($ns,true)->$attr;
+      return isset($attr) ? $attr->__toString() : "";
+    }
+
+    function getAttrVal($str = "") {
+      $attrs = [];
+      $props = $this->record->xpath("/rdf:RDF/edm:ProvidedCHO/".$str);
+      foreach ($props as $prop) {
+        $attr = $prop->attributes("rdf",true);
+        $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
+
+      }
+      return $attrs;
     }
 
     function getValuesOf($props = null, $propType = "", $fieldName = "") {

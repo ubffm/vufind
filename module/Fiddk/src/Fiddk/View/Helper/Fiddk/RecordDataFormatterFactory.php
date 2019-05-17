@@ -72,8 +72,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
          );
          $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
          $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
-         $helper->setDefaults('event', [$this, 'getEventSpecs']);
-         $helper->setDefaults('authority-results', [$this, 'getDefaultAuthSpecs']);
          return $helper;
      }
 
@@ -110,9 +108,9 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('dcterms:extent', 'getExtent');
         $spec->setLine('dm2e:callNumber', 'getCallNumber');
         $spec->setLine('dcterms:provenance', 'getProvenance');
-        //$spec->setMultiLine(
-        //    'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
-        //  );
+        $spec->setMultiLine(
+            'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
+          );
         $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-1::']);
         $spec->setTemplateLine('dc:description', 'getSummary', 'data-collapsible.phtml');
         $spec->setLine('ISBN', 'getISBNs');
@@ -153,33 +151,6 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
     /**
-     * Get default specifications for displaying authority metadata.
-     *
-     * @return array
-     */
-    public function getDefaultAuthSpecs()
-    {
-      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-      $spec->setLine('none', 'getOccupation', null, ['separator' => ', ']);
-      $spec->setTemplateLine('skos:altLabel', 'getUseFor', 'data-collapsible_str.phtml');//, ['separator' => '; ']);
-      return $spec->getArray();
-    }
-
-    /**
-     * Get default specifications for displaying authority metadata.
-     *
-     * @return array
-     */
-    public function getEventSpecs()
-    {
-      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-      $spec->setLine('Type of Event', 'getEventType', null, ['separator' => ', ']);
-      $spec->setLine('DateOfEvent', 'getEventDate');
-      $spec->setLine('PlaceOfEvent', 'getEventPlace');
-      return $spec->getArray();
-    }
-
-    /**
  * Get the callback function for processing authors.
  *
  * @return Callable
@@ -191,15 +162,17 @@ protected function getAuthorFunction()
         // plural right now due to lack of translation strings).
         $labels = [
             'primary' => 'dc:contributor',
+            'secondary' => 'dc:contributor',
             'corporate' => 'Corporate Author',
         ];
         // Lookup array of schema labels.
         $schemaLabels = [
             'primary' => 'author',
+            'secondary' => 'author',
             'corporate' => 'creator'
         ];
         // Lookup array of sort orders.
-        $order = ['primary' => 1, 'corporate' => 2];
+        $order = ['primary' => 1, 'secondary' => 2, 'corporate' => 3];
         // Sort the data:
         $final = [];
         foreach ($data as $type => $values) {

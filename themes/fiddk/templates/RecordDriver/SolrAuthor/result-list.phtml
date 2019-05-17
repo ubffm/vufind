@@ -24,7 +24,7 @@
 
   <div class="media-body">
     <div class="resultItemLine1">
-      <a href="<?=$this->url('agentrecord')?><?=urlencode($this->driver->getUniqueId())?>" class="title"><?=$this->escapeHtml($heading)?></a>
+      <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
   <?php if ($authType == "Personal Name"): ?>
     <?php $prof = $this->driver->getOccupation();?>

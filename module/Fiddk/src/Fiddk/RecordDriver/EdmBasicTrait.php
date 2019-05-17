@@ -60,7 +60,7 @@ trait EdmBasicTrait
     }
 
     public function getHumanReadablePublicationDates() {
-        return $this->getEdmRecord()->getPropValues("dcterms:issued");
+        return $this->getEdmRecord()->getAttrVal("dcterms:issued");
     }
 
     public function getHumanReadableDates() {
@@ -77,6 +77,29 @@ trait EdmBasicTrait
 
     public function getPerformancePlaces() {
         return $this->getEdmRecord()->getPropValues("eclap:performancePlace");
+    }
+
+    /**
+     * Get the titles of parent titles.
+     *
+     * @return array
+     */
+    public function getContainerTitle()
+    {
+        return isset($this->fields['container_title'])
+            ? $this->fields['container_title'] : [];
+    }
+
+    /**
+     * Get the container record ids.
+     *
+     * @return array Container record id (empty string if none)
+     */
+    public function getContainerRecordID()
+    {
+        return $this->containerLinking
+            && !empty($this->fields['hierarchy_parent_id'])
+            ? $this->fields['hierarchy_parent_id'] : [];
     }
 
     /**
@@ -115,8 +138,11 @@ public function getPlaceDateDetails()
       return $licenseLinks;
     }
 
-    public function getInstitutionsLinked() {
-      return '';//$this->getEdmRecord()->getLinkedPropValues("edm:dataProvider","skos:prefLabel", "foaf:homepage");
+    public function getInstitutionLinked() {
+      $inst = $this->getInstitution();
+      $dprovConf = $this->mainConfig->DataProvider;
+      $instkey = str_replace([' ',',','/'],'',$inst);
+      return [$inst => explode(',',$dprovConf[$instkey])];
     }
 
     public function getDigitalCopies() {
@@ -142,22 +168,6 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
     foreach (['primary', 'corporate'] as $type) {
         $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
     }
-    // deduplicate
-    $dedup = function (&$array1, &$array2) {
-        if (!empty($array1) && !empty($array2)) {
-            $keys = array_keys($array1);
-            foreach ($keys as $author) {
-                if (isset($array2[$author])) {
-                    $array1[$author] = array_merge(
-                        $array1[$author],
-                        $array2[$author]
-                    );
-                    unset($array2[$author]);
-                }
-            }
-        }
-    };
-    $dedup($authors['primary'], $authors['corporate']);
     $dedup_data = function (&$array) {
         foreach ($array as $author => $data) {
             foreach ($data as $field => $values) {
@@ -181,6 +191,19 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
     {
         return isset($this->fields['author_id']) ?
             $this->fields['author_id'] : [];
+    }
+
+    /**
+     * Get related events
+     *
+     * @return array
+     */
+    public function getEvents() {
+      $eventTitles = isset($this->fields['event']) ?
+          $this->fields['event'] : [];
+      $eventIds = isset($this->fields['event_id']) ?
+          $this->fields['event_id'] : [];
+      return array_combine($eventIds,$eventTitles);
     }
 
   /**
@@ -222,8 +245,8 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
         $headings = isset($this->fields['topic']) ? $this->fields['topic'] : [];
 
         if ($extended) {
-          $subjects = $this->getEdmRecord()->getLinkedPropValues("dc:subject","skos:prefLabel","");
-          foreach ($subjects as $link => $subject) {
+          //$subjects = $this->getEdmRecord()->getLinkedPropValues("dc:subject","skos:prefLabel","");
+          /*foreach ($subjects as $link => $subject) {
             $linkparts = explode('/',$link);
             if (isset($linkparts[3]) && $linkparts[3] == 'agent') {
               $retVal[] = [
@@ -231,13 +254,14 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
                 'type' => 'agent',
                 'source' => $linkparts[4] . '_' . $linkparts[5]
               ];
-            } else {
-              $retVal[] = [
-                'heading' => $subject,
-                'type' => 'subject',
-                'source' => ''
-              ];
             }
+          }*/
+          foreach ($headings as $heading) {
+            $retVal[] = [
+              'heading' => $heading,
+              'type' => 'subject',
+              'source' => ''
+            ];
           }
         }
 

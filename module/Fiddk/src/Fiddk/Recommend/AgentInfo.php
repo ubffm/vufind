@@ -43,7 +43,7 @@ use VuFindSearch\Query\Query;
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  * @view     AuthorInfoFacets.phtml
  */
-class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
+class AgentInfo implements \VuFind\Recommend\RecommendInterface
 {
 
     /**
@@ -162,11 +162,12 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
     }
 
     /**
-     * Returns info from lobid gnd to the view
+     * Checks if it is a gnd or a normal authority search and returns
+     * either info from lobid gnd to the view or info from the index
      *
      * @return array info
      */
-    public function getAuthorityInfo()
+    public function getAgentInfo()
     {
         $gnd = $this->getGnd();
         return !empty($gnd)
@@ -202,28 +203,14 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
     }
 
     /**
-     * Normalize an author name using VIAF.
-     *
-     * @param string $author Author name
-     *
-     * @return string
-     */
-    protected function normalizeNameWithViaf($author)
-    {
-        // Do authority search:
-        $auth = $this->resultsManager->get('SolrAuth');
-        $auth->getParams()->setBasicSearch('"' . $author . '"', 'MainHeading');
-        $results = $auth->getResults();
-    }
-
-    /**
-     * Takes the search term and extracts a normal name from it
+     * Takes the search term and extracts the gnd from it
      *
      * @return string
      */
     protected function getGnd()
     {
         $search = $this->searchObject->getParams()->getQuery();
+        //var_dump($search);
         if ($search instanceof Query) {
           $gnd = substr($search->getString(),4);
           return $gnd;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Agent Record Controller
+ * Agent "Record" Controller (which is a Search Controller with Recommendation)
  *
  * PHP version 7
  *
@@ -31,7 +31,7 @@ namespace Fiddk\Controller;
 use Zend\Config\Config;
 use Zend\ServiceManager\ServiceLocatorInterface;
 /**
- * Event Record Controller
+ * Agent "Record" Controller (which is a Search Controller with Recommendation)
  *
  * @category VuFind
  * @package  Controller
@@ -40,18 +40,49 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class AgentController extends \VuFind\Controller\RecordController
+class AgentController extends \VuFind\Controller\AbstractSearch
 {
-    /**
-     * Constructor
-     *
-     * @param ServiceLocatorInterface $sm Service locator
-     */
-    public function __construct(ServiceLocatorInterface $sm, Config $config)
+    protected $driver = null;
+
+    public function homeAction()
     {
-        // Override search class:
-        $this->searchClassId = 'SolrAuthor';
-        // Call standard record controller initialization:
-        parent::__construct($sm,$config);
+      $this->searchClassId = 'SolrAuthor';
+      $this->driver = $this->loadRecord();
+      $id = $this->driver->getUniqueID();
+      // take driver to results view?
+      //$title = $this->driver->getTitle();
+      $this->searchClassId = 'SolrAuthority';
+      $this->getRequest()->getQuery()->set('id', $id);
+      $this->getRequest()->getQuery()->set('type', 'Agent');
+      return !empty($id) ?
+        $this->forwardTo('Agent', 'Results') : $this->forwardTo('Search', 'Home');
     }
+    /**
+     * Load the record requested by the user; note that this is not done in the
+     * init() method since we don't want to perform an expensive search twice
+     * when homeAction() forwards to another method.
+     *
+     * @return AbstractRecordDriver
+     */
+    protected function loadRecord()
+    {
+        // Only load the record if it has not already been loaded.  Note that
+        // when determining record ID, we check both the route match (the most
+        // common scenario) and the GET parameters (a fallback used by some
+        // legacy routes).
+        if (!is_object($this->driver)) {
+            $recordLoader = $this->getRecordLoader();
+            $cacheContext = $this->getRequest()->getQuery()->get('cacheContext');
+            if (isset($cacheContext)) {
+                $recordLoader->setCacheContext($cacheContext);
+            }
+            $this->driver = $recordLoader->load(
+                $this->params()->fromRoute('id', $this->params()->fromQuery('id')),
+                $this->searchClassId,
+                false
+            );
+        }
+        return $this->driver;
+    }
+
 }

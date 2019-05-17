@@ -20,7 +20,7 @@
                 <div class="imgDescr card">
                   <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
                   <? if ($driver->getContainerTitle()) :?>
-                    <p><?=$this->transEsc("In") . ': ' . $driver->getContainerTitle();?></p>
+                    <p><?=$this->transEsc("In") . ': ' . implode(', ',$driver->getContainerTitle());?></p>
                   <? endif; ?>
                   <? if ($driver->getFormats()) :?>
                     <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getFormats());?></p>

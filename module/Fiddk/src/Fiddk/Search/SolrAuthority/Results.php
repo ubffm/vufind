@@ -1,6 +1,6 @@
 <?php
 /**
- * Author Controller
+ * Author aspect of the Search Multi-class (Results)
  *
  * PHP version 7
  *
@@ -20,57 +20,47 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  Controller
+ * @package  Search_SolrAuthor
  * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-namespace Fiddk\Controller;
-
-use Zend\ServiceManager\ServiceLocatorInterface;
-
+namespace Fiddk\Search\SolrAuthority;
+use VuFind\Record\Loader;
+use VuFind\Search\Solr\Results as SolrResults;
+use VuFindSearch\Service as SearchService;
 /**
- * Authority Controller
+ * Author Search Options
  *
  * @category VuFind
- * @package  Controller
+ * @package  Search_SolrAuthor
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class AgentSearchController extends \VuFind\Controller\AuthorController
+class Results extends SolrResults
 {
   /**
-   * Constructor
-   *
-   * @param ServiceLocatorInterface $sm Service locator
-   */
-  public function __construct(ServiceLocatorInterface $sm)
-  {
-      $this->searchClassId = 'SolrAuthor';
-      parent::__construct($sm);
-  }
-
-  /**
-     * Sets the configuration for performing an author search
-     *
-     * @return mixed
-     */
-    public function searchAction()
-    {
-        return parent::resultsAction();
-    }
-
-
-  /**
-    * Displays the proper page for a search action
-    *
-    * @return mixed
-    */
-    public function homeAction()
-    {
-      return $this->forwardTo('AgentSearch', 'Results');
-    }
+ * Constructor
+ *
+ * @param \VuFind\Search\Base\Params $params        Object representing user
+ * search parameters.
+ * @param SearchService              $searchService Search service
+ * @param Loader                     $recordLoader  Record loader
+ */
+public function __construct(\VuFind\Search\Base\Params $params,
+    SearchService $searchService, Loader $recordLoader
+) {
+    parent::__construct($params, $searchService, $recordLoader);
+}
+/**
+ * Options for UrlQueryHelper
+ *
+ * @return array
+ */
+protected function getUrlQueryHelperOptions()
+{
+    return ['basicSearchParam' => 'id'];
+}
 
 }

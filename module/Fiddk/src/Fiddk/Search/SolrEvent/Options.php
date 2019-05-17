@@ -72,5 +72,4 @@ public function getAdvancedSearchAction()
     // Not currently supported:
     return false;
 }
-
 }
