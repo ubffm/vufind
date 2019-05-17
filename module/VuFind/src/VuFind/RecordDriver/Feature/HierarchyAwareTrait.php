@@ -222,8 +222,9 @@ trait HierarchyAwareTrait
      */
     public function getHierarchyType()
     {
-        if (isset($this->fields['hierarchy_top_id'])) {
-            $hierarchyType = $this->fields['hierarchytype'] ?? false;
+        if (isset($this->fields['hierarchy_top_id']) || isset($this->fields['hierarchy_parent_id'])) {
+            $hierarchyType = isset($this->fields['hierarchytype'])
+                ? $this->fields['hierarchytype'] : false;
             if (!$hierarchyType) {
                 $hierarchyType = $this->mainConfig->Hierarchy->driver ?? false;
             }
