@@ -3,8 +3,13 @@
 # Make sure VUFIND_HOME is set:
 if [ -z "$VUFIND_HOME" ]
 then
-  echo "Please set the VUFIND_HOME environment variable."
-  exit 1
+  # set VUFIND_HOME to the absolute path of the directory containing this script
+  # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
+  VUFIND_HOME="$(cd "$(dirname "$0")" && pwd -P)"/..
+  if [ "$VUFIND_HOME" = /.. ]
+  then
+    exit 1
+  fi
 fi
 
 SKIP_OPTIMIZE=0
@@ -45,7 +50,7 @@ then
 fi
 
 # Check if the path is valid:
-BASEPATH="$FIDDK_DATA_DIR/$1"
+BASEPATH="/var/lib/fiddk/data/authority/$1"
 if [ ! -d $BASEPATH ]
 then
   BASEPATH="$VUFIND_HOME/harvest/$1"
@@ -89,7 +94,7 @@ done
 # Optimize the index now that we are done (if necessary):
 if [ "$OPTIMIZE" -eq "1" ]
 then
-  cd $VUFIND_HOME/util
+  cd $VUFIND_HOME/../util
   echo "Optimizing index..."
-  php optimize.php
+  php optimize.php authority
 fi

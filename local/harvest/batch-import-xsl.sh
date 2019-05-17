@@ -50,7 +50,7 @@ then
 fi
 
 # Check if the path is valid:
-BASEPATH="/var/lib/fiddk/data/title/edm/$1"
+BASEPATH="/var/lib/fiddk/data/title/$1"
 if [ ! -d $BASEPATH ]
 then
   BASEPATH="$VUFIND_HOME/harvest/$1"
