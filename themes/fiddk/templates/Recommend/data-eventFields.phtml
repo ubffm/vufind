@@ -1,6 +1,6 @@
 <?php $eventType = $this->driver->getEventType();
-      $eventDate = $this->driver->getEventDate();
-      $eventPlace = $this->driver->getEventPlace();
+      $eventDates = $this->driver->getEventDate();
+      $eventPlaces = $this->driver->getEventPlace();
       $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 <?php if (!empty($eventType)) : ?>
   <b><?=$this->transEsc('Type of Event') . ':'?></b>
@@ -8,15 +8,21 @@
     <?=implode($eventType,', ')?>
   </span><br />
 <?php endif; ?>
-<?php if (!empty($eventDate)) : ?>
+<?php if (!empty($eventDates)) : ?>
   <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
+  <?php $normDates = [];?>
+  <?php foreach ($eventDates as $eventDate): ?>
+    <? $normDates[] = $this->driver->translateDate($eventDate,$lang)?>
+  <?php endforeach; ?>
   <span property="edm:occuredAt">
-     <?=$this->driver->translateDate($eventDate,$lang)?>
+    <?=$this->escapeHtml(implode($normDates,', '))?>
   </span><br />
 <?php endif; ?>
-<?php if (!empty($eventPlace)) : ?>
+<?php if (!empty($eventPlaces)) : ?>
   <b><?=$this->transEsc('PlaceOfEvent') . ':'?></b>
-  <span property="edm:happenedAt">
-    <?=$eventPlace?>
-  </span><br />
+  <?php foreach($eventPlaces as $eventPlace): ?>
+    <span property="edm:happenedAt">
+      <?=$eventPlace?>
+    </span><br />
+  <?php endforeach; ?>
 <?php endif; ?>

@@ -65,6 +65,17 @@ class SolrAuthor extends \VuFind\RecordDriver\SolrAuthDefault
      }
 
      /**
+        * Get the occupation of the person.
+        *
+        * @return array
+        */
+       public function getOrgaDomain()
+       {
+           return isset($this->fields['orga_domain'])
+               ? $this->fields['orga_domain'] : [];
+       }
+
+     /**
       * Returns the thumbnail url or []
       */
       public function getThumbnail($size = 'small')

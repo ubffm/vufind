@@ -100,11 +100,15 @@ class EdmRecord
 
     function getAttrVal($str = "") {
       $attrs = [];
-      $props = $this->record->xpath("/rdf:RDF/edm:ProvidedCHO/".$str);
-      foreach ($props as $prop) {
-        $attr = $prop->attributes("rdf",true);
-        $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
+      try {
+        $props = $this->record->xpath("/rdf:RDF/edm:ProvidedCHO/".$str);
+        foreach ($props as $prop) {
+          $attr = $prop->attributes("rdf",true);
+          $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
 
+        }
+      } catch (\Exception $e) {
+        return [];
       }
       return $attrs;
     }
@@ -152,8 +156,9 @@ class EdmRecord
 
     function findMatchingPropVals($prop = null, $fieldName = "") {
       $vals = [];
+      $matchingProps = [];
       $attrVal = $this->getAttributeVal($prop,"rdf","resource");
-      if ($fieldName) {
+      if ($fieldName && $attrVal) {
         $matchingProps = array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="'.$attrVal.'"]/' . $fieldName));
         if ($matchingProps) {
           foreach ($matchingProps as $matchingProp) {

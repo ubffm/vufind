@@ -16,4 +16,13 @@
         ob_end_clean();
     endforeach;?>
     <?=implode(', ', $containerLinks)?>
+  <?php elseif($data): ?>
+    <?php foreach ($data as $containerTitle):
+      ob_start();
+      $link = $this->record($this->driver)->getLink('journaltitle', $containerTitle); ?>
+      <a href="<?=$link?>"><?=$this->escapeHtml($containerTitle)?></a>
+      <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
+        ob_end_clean();
+    endforeach; ?>
+    <?=implode(', ', $containerLinks)?>
   <?php endif;?>

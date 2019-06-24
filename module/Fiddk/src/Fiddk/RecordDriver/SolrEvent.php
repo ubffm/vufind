@@ -59,7 +59,7 @@ class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
      public function getEventDate()
      {
          return isset($this->fields['date'])
-               ? $this->fields['date'] : '';
+               ? $this->fields['date'] : [];
      }
 
      /**
@@ -68,7 +68,7 @@ class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
       public function getEventPlace()
       {
           return isset($this->fields['place'])
-                ? $this->fields['place'] : '';
+                ? $this->fields['place'] : [];
       }
 
   }

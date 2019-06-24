@@ -59,6 +59,14 @@
       </div>
     <?php endif; ?>
   <?php elseif ($authType == "Corporate Name"): ?>
+    <?php $domain = $this->driver->getOrgaDomain();?>
+    <?php if (!empty($domain)): ?>
+      <div class="resultItemLine2">
+      <?php foreach ($domain as $current): ?>
+        <a href="<?=$this->url('author-search')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
+      <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   <?php endif; ?>
   </div>
 </div>

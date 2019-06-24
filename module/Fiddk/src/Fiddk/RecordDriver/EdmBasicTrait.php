@@ -133,7 +133,7 @@ public function getPlaceDateDetails()
       $licenseLinks = [];
       $inst = $this->getInstitution();
       if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press') {
-        $licenseLinks = $this->getEdmRecord()->getPropValues("edm:isShownAt");
+        $licenseLinks = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","dc:description","");
       }
       return $licenseLinks;
     }

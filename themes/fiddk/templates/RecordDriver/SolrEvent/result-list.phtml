@@ -16,16 +16,24 @@
         <?=$this->escapeHtml($type)?>
       <?php endforeach; ?>
     </div>
-    <?php $place = $this->driver->getEventPlace(); $date = $this->driver->getEventDate();?>
-    <?php if ($place != "" || $date != ""): ?>
+    <?php $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();?>
+    <?php if ($places || $dates): ?>
       <div class="resultItemLine3">
-        <?php if ($place != "" && $date != ""): ?>
-          <?=$this->escapeHtml($place) . ', ' . $this->driver->translateDate($date,$lang)?>
+        <?php if ($places && $dates): ?>
+          <?php $normDates = [];?>
+          <?php foreach ($dates as $date): ?>
+            <? $normDates[] = $this->driver->translateDate($date,$lang)?>
+          <?php endforeach; ?>
+          <?=$this->escapeHtml(implode($places,', ')) . ', ' . $this->escapeHtml(implode($normDates,', '))?>
         <?php else : ?>
-        <?php if ($place != ""): ?>
-          <?=$this->escapeHtml($place)?>
+        <?php if ($places): ?>
+          <?=$this->escapeHtml(implode($places,', '))?>
         <?php else: ?>
-          <?=$this->driver->translateDate($date,$lang)?>
+          <?php $normDates = [];?>
+          <?php foreach ($dates as $date): ?>
+            <? $normDates[] = $this->driver->translateDate($date,$lang)?>
+          <?php endforeach; ?>
+          <?=$this->escapeHtml(implode($normDates,', '))?>
         <?php endif; ?>
       <?php endif; ?>
       </div>
