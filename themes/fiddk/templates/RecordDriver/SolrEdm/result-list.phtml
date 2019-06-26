@@ -64,7 +64,7 @@
           <?php elseif (!empty($summDate)): ?>
             <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate)?>
           <?php endif; ?>
-          <?php $summAuthors = array_slice($this->driver->getPrimaryAuthorsWithHighlighting(),0,3); if (!empty($summAuthors)): ?>
+          <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()),0,3); if (!empty($summAuthors)): ?>
            <?=!empty($journalTitles) ? '<br />' : ''?>
            <?php $roles = $this->driver->getPrimaryAuthorsRoles();?>
            <?php $ids = $this->driver->getPrimaryAuthorsIds();?>

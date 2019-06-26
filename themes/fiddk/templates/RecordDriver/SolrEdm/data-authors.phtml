@@ -13,6 +13,7 @@ $formattedAuthors = [];
 ?>
 <?php if (!empty($data[$type])): ?>
   <?php foreach ($data[$type] as $author => $dataFields): ?>
+    <?php if (!empty($author)): ?>
     <?php ob_start();
       // an authority link exists and that document exists in SolrAuthor
       if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0],"SolrAuth")) :
@@ -43,6 +44,7 @@ $formattedAuthors = [];
       $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
       ob_end_clean();
     ?>
+  <?php endif; ?>
   <?php endforeach; ?>
 <?php endif; ?>
 <?=implode(', ', $formattedAuthors)?>
