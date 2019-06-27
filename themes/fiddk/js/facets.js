@@ -1,25 +1,26 @@
 /*global VuFind */
 var dprovs = {
-  'Akademie der Künste Berlin':'adk',
-  'Akademie der Künste Berlin, Archiv Darstellende Kunst':'adka',
-  'Alexander Street Press':'asp',
-  'Deutsches Tanzfilminstitut Bremen':'dtb',
-  'Deutsches Tanzarchiv Köln':'dtk',
-  'Deutsches Theatermuseum München':'dtm',
-  'Universitäts- und Landesbibliothek Düsseldorf':'dtz',
-  'Universitätsbibliothek Frankfurt am Main':'fub',
-  'Don Juan Archiv Wien':'kom',
-  'Mime Centrum Berlin':'mcb',
-  'Online Contents':'olc',
-  'Theaterwissenschaftliche Sammlung der Universität zu Köln':'slw',
-  'Schweizerische Theatersammlung':'sts',
-  'Tanzarchiv Leipzig':'tal',
-  'Teatro Español del Siglo de Oro':'tes',
-  'Tanzfonds Erbe':'tfe',
-  'Theatermuseum der Landeshauptstadt Düsseldorf':'tmd',
-  'transcript Verlag':'tra',
-  'Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen':'tsb',
-  'Verbund Deutscher Tanzarchive':'vdt'
+  'AkademiederKünsteBerlin':'adk',
+  'AkademiederKünsteBerlin,Archivbestand':'adka',
+  'AkademiederKünsteBerlin,ArchivDarstellendeKunst':'adka',
+  'AlexanderStreetPress':'asp',
+  'DeutschesTanzfilminstitutBremen':'dtb',
+  'DeutschesTanzarchivKöln':'dtk',
+  'DeutschesTheatermuseumMünchen':'dtm',
+  'Universitäts-undLandesbibliothekDüsseldorf':'dtz',
+  'UniversitätsbibliothekFrankfurtamMain':'fub',
+  'DonJuanArchivWien':'kom',
+  'InternationalesTheaterinstitut-MimeCentrum':'mcb',
+  'OnlineContents':'olc',
+  'TheaterwissenschaftlicheSammlungderUniversitätzuKöln':'slw',
+  'SchweizerischeTheatersammlung':'sts',
+  'TanzarchivLeipzig':'tal',
+  'TeatroEspañoldelSiglodeOro':'tes',
+  'TanzfondsErbe':'tfe',
+  'TheatermuseumderLandeshauptstadtDüsseldorf':'tmd',
+  'transcriptVerlag':'tra',
+  'FreieUniversitätBerlin,InstitutfürTheaterwissenschaft,TheaterhistorischeSammlungen':'tsb',
+  'VerbundDeutscherTanzarchive':'vdt'
 };
 
 /*exported collapseTopFacets, initFacetTree */
@@ -80,8 +81,9 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, 
     }
 
     var dprov = '';
-    if (dprovs.hasOwnProperty(this.displayText)) {
-      dprov = dprovs[this.displayText];
+    var normText = this.displayText.replace(/(\n|\s)/gm,"");
+    if (dprovs.hasOwnProperty(normText)) {
+      dprov = dprovs[normText];
     }
 
     json.push({
