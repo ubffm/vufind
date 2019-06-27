@@ -41,6 +41,11 @@ JS;
       <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
     </div>
     <?=$this->render("news/stream.phtml")?>
+    <div class="alert alert-info">
+      <?=$this->transEsc("Infotextstart")?>
+      <a href="http://localhost/vufind/EventSearch/Results?lookfor=König+Lear&type=AllFields&limit=20"><?=$this->transEsc("Infotextmid")?></a>
+      <?=$this->transEsc("Infotextend")?>
+    </div>
   </div>
 
 </div>

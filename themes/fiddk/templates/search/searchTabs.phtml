@@ -29,4 +29,9 @@ JS;
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
+  <?php if ($searchTabs[2]["selected"]) : ?>
+    <div class="alert alert-info" style="margin:10px 0px;">
+      <?=$this->transEsc("EventInfoText")?>
+    </div>
+  <?php endif; ?>
 <?php endif; ?>
