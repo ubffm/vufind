@@ -141,7 +141,7 @@ public function getPlaceDateDetails()
     public function getInstitutionLinked() {
       $inst = $this->getInstitution();
       $dprovConf = $this->mainConfig->DataProvider;
-      $instkey = str_replace([' ',',','/'],'',$inst);
+      $instkey = preg_replace( "/\r|\n|\s|,|\//", "", $inst );
       return [$inst => explode(',',$dprovConf[$instkey])];
     }
 
