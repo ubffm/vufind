@@ -203,7 +203,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
           $this->fields['event'] : [];
       $eventIds = isset($this->fields['event_id']) ?
           $this->fields['event_id'] : [];
-      if ($eventTitles[0]) {
+      if (isset($eventTitles[0])) {
         return array_combine($eventIds,$eventTitles);
       } else {
         return [];
