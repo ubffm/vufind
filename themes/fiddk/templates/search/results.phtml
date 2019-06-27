@@ -96,8 +96,10 @@
       <? else: ?>
       <? if ($searchClassId == "Solr") : ?>
         <? $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <? else : ?>
+      <? elseif ($searchClassId == "SolrAuthor") : ?>
         <? $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
+      <? else : ?>
+        <? $this->layout()->srmessage = $this->translate('nohit_lookfor_events_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
       <? endif; ?>
         <?=$this->layout()->srmessage ?>
       <? endif; ?>

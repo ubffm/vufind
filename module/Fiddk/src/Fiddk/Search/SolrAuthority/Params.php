@@ -76,6 +76,8 @@ class Params extends \VuFind\Search\Solr\Params
        $q = parent::getDisplayQuery();
        if (strpos($q,'gnd_') === 0) {
          $q = '(GND ' . substr($q,4) . ')';
+       } else {
+         $q = '';
        }
        return $q;
 }
