@@ -32,6 +32,7 @@ JS;
   <?php if ($searchTabs[2]["selected"]) : ?>
     <div class="alert alert-info" style="margin:10px 0px;">
       <?=$this->transEsc("EventInfoText")?>
+      <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><?=$this->transEsc("Feedback")?>&nbsp;<i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
     </div>
   <?php endif; ?>
 <?php endif; ?>
