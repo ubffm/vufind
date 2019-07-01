@@ -121,7 +121,7 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
       $(treeItems).addClass('list-group-item');
       $(treeItems).each(function addInfo(i) {
           if (results[i].dprov) {
-              $(this).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+              $(this).append('<a class="providerInfo" data-lightbox href="/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
         }
       });
       // reinit lightbox
@@ -135,13 +135,13 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
         if (this.id == data.node.id) {
           // add info to parent node
           if (results[i].dprov) {
-            $(this.children[1]).after('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+            $(this.children[1]).after('<a class="providerInfo" data-lightbox href="/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
           }
           var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
           // add info to each child
           data.node.children.forEach(function(child,j) {
             if (results[i].children[j].dprov) {
-                $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="/vufind/DataProvider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+                $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="/DataProvider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
             }
           });
         }
