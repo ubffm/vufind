@@ -39,6 +39,7 @@ $config = [
       'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\FeedbackController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\ShowcaseController' => 'VuFind\Controller\AbstractBaseFactory',
     ],
     'aliases' => [
@@ -54,12 +55,15 @@ $config = [
       'eventsearch' => 'Fiddk\Controller\EventSearchController',
       'Event' => 'Fiddk\Controller\EventController',
       'event' => 'Fiddk\Controller\EventController',
+      'Feedback' => 'Fiddk\Controller\FeedbackController',
+      'feedback' => 'Fiddk\Controller\FeedbackController',
 
       // Overrides
       'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
       'VuFind\Controller\RecordController' => 'Fiddk\Controller\RecordController',
       'VuFind\Controller\AuthorController' => 'Fiddk\Controller\AgentSearchController',
       'VuFind\Controller\SearchController' => 'Fiddk\Controller\SearchController',
+      'VuFind\Controller\FeedbackController' => 'Fiddk\Controller\FeedbackController',
     ]
   ],
   'vufind' => [

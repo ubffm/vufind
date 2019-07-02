@@ -146,9 +146,9 @@ forms:
     emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
     response: Thank you for your request.
 
-    #recipient:
-      #name: Deutsches Tanzarchiv Köln
-      #email: tanzarchiv@sk-kultur.de
+    recipient:
+      name: Deutsches Tanzarchiv Köln
+      email: tanzarchiv@sk-kultur.de
 
     help:
       pre: askArchiveDTK_info_pre
@@ -159,6 +159,11 @@ forms:
         label: Your Request
         required: true
 
+      - name: CallNumber
+        type: text
+        label: edm::dm2e:callNumber
+        required: true
+
   AskArchiveMCB:
     enabled: true
     title: AskAboutObject
@@ -167,9 +172,9 @@ forms:
     emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
     response: Thank you for your request.
 
-    #recipient:
-      #name: Deutsches Tanzarchiv Köln
-      #email: tanzarchiv@sk-kultur.de
+    recipient:
+      name: Christine Henniger
+      email: c.henniger@iti-germany.de
 
     help:
       pre: askArchiveMCB_info_pre
@@ -178,4 +183,9 @@ forms:
       - name: Request
         type: textarea
         label: Your Request
+        required: true
+
+      - name: CallNumber
+        type: text
+        label: edm::dm2e:callNumber
         required: true
