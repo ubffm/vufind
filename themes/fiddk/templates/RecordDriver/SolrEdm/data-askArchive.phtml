@@ -1,1 +1,9 @@
-<a class="mail-record" data-lightbox href="<?=$this->url('feedback-form', ['id' => 'AskArchive']) . '?callNumber='. $data ?>" rel="nofollow"><?=$this->transEsc('mail_to') . ' ' .$this->driver->getInstitution();?> <i class="fa fa-envelope" aria-hidden="true"></i></a>
+<?php
+  $institution = $this->driver->getInstitution();
+  if ($institution == "Deutsches Tanzarchiv Köln") {
+    $archive = 'AskArchiveDTK';
+  } else {
+    $archive = 'AskArchiveMCB';
+  }
+  ?>
+<a class="mail-record" data-lightbox href="<?=$this->url('feedback-form', ['id' => $archive]) . '?callNumber='. $data ?>" rel="nofollow"><?=$this->transEsc('mail_to') . ' ' .$institution?> <i class="fa fa-envelope" aria-hidden="true"></i></a>

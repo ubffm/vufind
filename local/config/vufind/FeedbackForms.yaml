@@ -138,7 +138,7 @@ forms:
         label: Add a Note
         required: false
 
-  AskArchive:
+  AskArchiveDTK:
     enabled: true
     title: AskAboutObject
     onlyForLoggedUsers: false
@@ -151,8 +151,28 @@ forms:
       #email: tanzarchiv@sk-kultur.de
 
     help:
-      pre: askArchive_info_pre
-      post: askArchive_info_post
+      pre: askArchiveDTK_info_pre
+
+    fields:
+      - name: Request
+        type: textarea
+        label: Your Request
+        required: true
+
+  AskArchiveMCB:
+    enabled: true
+    title: AskAboutObject
+    onlyForLoggedUsers: false
+    senderInfoRequired: true
+    emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
+    response: Thank you for your request.
+
+    #recipient:
+      #name: Deutsches Tanzarchiv Köln
+      #email: tanzarchiv@sk-kultur.de
+
+    help:
+      pre: askArchiveMCB_info_pre
 
     fields:
       - name: Request
