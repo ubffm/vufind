@@ -28,42 +28,41 @@
     </div>
   <?php if ($authType == "Personal Name"): ?>
     <?php $prof = $this->driver->getOccupation();?>
-    <?php if (!empty($prof)): ?>
+    <?php $birth = $this->driver->getBirthDate();?>
+    <?php $death = $this->driver->getDeathDate();?>
+    <?php if (!empty($prof) || !empty($birth) || !empty($death)): ?>
       <div class="resultItemLine2">
+      <?php if ($birth || $death) : ?>
+          <? if (!$death) : ?>
+              <?='* ' . $this->driver->translateDate($birth,'de')?><br/>
+          <? elseif(!$birth) : ?>
+              <?='† ' . $this->driver->translateDate($death,'de')?><br/>
+          <? else : ?>
+              <?='* ' . $this->driver->translateDate($birth,'de') . ' - † ' . $this->driver->translateDate($death,'de')?><br/>
+          <? endif; ?>
+      <? endif; ?>
       <?php foreach ($prof as $current): ?>
-        <a href="<?=$this->url('author-search')?>?filter[]=occupation_facet%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
+        <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation_facet%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
       <?php endforeach; ?>
-      <? /* <div class="resultItemLine2">
-        <? if ($establishment or $termination) : ?>
-              <? if (!$termination) : ?>
-                 <?=$this->transEsc('since') . ' ' . $establishment?><br/>
-              <? elseif(!$establishment) : ?>
-                 <?=$this->transEsc('until') . ' ' . $establishment?><br/>
-              <? else : ?>
-                 <?=$establishment . ' - ' . $termination?><br/>
-            <? endif; ?>
-        <? endif; ?>
-        <? if ($birthDate or $deathDate) : ?>
-              <? if (!$deathDate) : ?>
-                 <?='* ' . $birthDate?><br/>
-              <? elseif(!$birthDate) : ?>
-                 <?='† ' . $deathDate?><br/>
-              <? else : ?>
-                 <?='* ' . $birthDate . ' - † ' . $deathDate?><br/>
-            <? endif; ?>
-        <? endif; ?>
-        <? if ($topic) : ?>
-              <?=implode($topic,', ');?><br/>
-            <? endif; ?>
-      </div> */ ?>
       </div>
-    <?php endif; ?>
+  <?php endif; ?>
   <?php elseif ($authType == "Corporate Name"): ?>
     <?php $domain = $this->driver->getOrgaDomain();?>
+    <?php $birth = $this->driver->getBirthDate();?>
+    <?php $death = $this->driver->getDeathDate();?>
     <?php if (!empty($domain)): ?>
       <div class="resultItemLine2">
+        <?php if ($birth || $death) : ?>
+            <? if (!$death) : ?>
+                <?=$this->transEsc('since') . ' ' . $this->driver->translateDate($birth,'de')?><br/>
+            <? elseif(!$birth) : ?>
+                <?=$this->transEsc('until') . ' ' . $this->driver->translateDate($death,'de')?><br/>
+            <? else : ?>
+                <?=$this->driver->translateDate($birth,'de') . ' - ' . $this->driver->translateDate($death,'de')?><br/>
+            <? endif; ?>
+        <? endif; ?>
       <?php foreach ($domain as $current): ?>
-        <a href="<?=$this->url('author-search')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
+        <a href="<?=$this->url('agentsearch-results')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
       <?php endforeach; ?>
       </div>
     <?php endif; ?>

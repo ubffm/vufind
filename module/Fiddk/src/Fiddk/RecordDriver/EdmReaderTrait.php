@@ -107,7 +107,7 @@ trait EdmReaderTrait
         $dateParts = explode("_",substr($date,35));
       }
       else {
-        $dateParts = explode(" ",str_replace(["[","]","TO "],"",$date));
+        $dateParts = explode("_",str_replace(["[","]","TO "],"",$date));
       }
       $start = isset($dateParts[0]) ? substr($dateParts[0],0,10) : "";
       $end = isset($dateParts[1]) ? substr($dateParts[1],0,10) : "";

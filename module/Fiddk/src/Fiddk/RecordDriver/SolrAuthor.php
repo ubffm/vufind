@@ -47,41 +47,63 @@ class SolrAuthor extends \VuFind\RecordDriver\SolrAuthDefault
   /**
    * Returns the authority type (Personal Name, Corporate Name or Event)
    */
-   public function getAuthType()
-   {
-       return isset($this->fields['record_type'])
-             ? $this->fields['record_type'] : '';
-   }
+  public function getAuthType()
+  {
+     return isset($this->fields['record_type'])
+           ? $this->fields['record_type'] : '';
+  }
 
-   /**
-      * Get the occupation of the person.
-      *
-      * @return array
-      */
-     public function getOccupation()
-     {
-         return isset($this->fields['occupation'])
-             ? $this->fields['occupation'] : [];
-     }
+  /**
+  * Get the occupation of the person.
+  *
+  * @return array
+  */
+  public function getOccupation()
+  {
+     return isset($this->fields['occupation'])
+         ? $this->fields['occupation'] : [];
+  }
 
-     /**
-        * Get the occupation of the person.
-        *
-        * @return array
-        */
-       public function getOrgaDomain()
-       {
-           return isset($this->fields['orga_domain'])
-               ? $this->fields['orga_domain'] : [];
-       }
+  /**
+   * Get domain of organization.
+   *
+   * @return array
+   */
+  public function getOrgaDomain()
+  {
+     return isset($this->fields['orga_domain'])
+         ? $this->fields['orga_domain'] : [];
+  }
 
-     /**
-      * Returns the thumbnail url or []
-      */
-      public function getThumbnail($size = 'small')
-      {
-          return isset($this->fields['thumbnail'])
-                ? $this->fields['thumbnail'] : [];
-      }
+  /**
+   * Get birth date of person or date of establishment of organization.
+   *
+   * @return string
+   */
+  public function getBirthDate()
+  {
+     return isset($this->fields['birth_date'])
+         ? $this->fields['birth_date'] : "";
+  }
+
+  /**
+   * Get death date of person or date of termination of organization.
+   *
+   * @return string
+   */
+  public function getDeathDate()
+  {
+     return isset($this->fields['death_date'])
+         ? $this->fields['death_date'] : "";
+  }
+
+  /**
+   * Returns the thumbnail url or []
+   */
+  public function getThumbnail($size = 'small')
+  {
+    return isset($this->fields['thumbnail'])
+        ? $this->fields['thumbnail'] : [];
+  }
 
 }
