@@ -168,7 +168,6 @@
    <field name="event_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
    <field name="related_to" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="date_span_sort" type="date" indexed="true" stored="false"/>
    <field name="container_facet" type="string" indexed="true" stored="false" multiValued="true"/>
 
    <field name="archive" type="boolean" indexed="true" stored="false"/>
@@ -203,7 +202,8 @@
    <field name="title_alt" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_old" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_new" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="date_span" type="range" indexed="true" stored="true" multiValued="true"/>
+   <field name="date_span" type="range" indexed="true" stored="true" multiValued="true"/>   
+   <field name="date_span_sort" type="date" indexed="true" stored="false"/>
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
