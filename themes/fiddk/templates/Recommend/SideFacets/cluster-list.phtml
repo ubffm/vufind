@@ -39,9 +39,9 @@
         $moreUrl .= '&amp;baseUriExtra=' . urlencode($this->baseUriExtra);
       }
     ?>
-    <?php if ($this->facet = "orga_domain" || $this->facet = "occupation_facet"):
+    <?php if ($this->facet == "orga_domain" || $this->facet == "occupation_facet"):
         $moreUrl = str_replace("Search","AgentSearch",$moreUrl);
-        elseif ($this->facet = "event_type" || $this->facet = "place") :
+        elseif ($this->facet == "event_type" || $this->facet == "place") :
         $moreUrl = str_replace("Search","EventSearch",$moreUrl);
      endif; ?>
     <a class="facet narrow-toggle <?=$moreClass ?>" data-lightbox href="<?=$moreUrl ?>" rel="nofollow">
