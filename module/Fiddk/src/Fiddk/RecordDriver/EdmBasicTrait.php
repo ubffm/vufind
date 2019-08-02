@@ -51,6 +51,14 @@ trait EdmBasicTrait
       return $this->getEdmRecord()->getPropValues("dm2e:callNumber");
     }
 
+    public function getAlternativeTitles() {
+      return $this->getEdmRecord()->getPropValues("dcterms:alternative");
+    }
+
+    public function getVolume() {
+      return $this->getEdmRecord()->getPropValues("bibo:volume");
+    }
+
     public function getProvenance() {
       return $this->getEdmRecord()->getPropValues("dcterms:provenance");
     }

@@ -35,6 +35,8 @@ class EdmRecord
       "dm2e:publishedAt" => "edm:ProvidedCHO",
       "dm2e:callNumber" => "edm:ProvidedCHO",
       "dcterms:issued" => "edm:ProvidedCHO",
+      "dcterms:alternative" => "edm:ProvidedCHO",
+      "bibo:volume" => "edm:ProvidedCHO",
       "dcterms:temporal" => "edm:ProvidedCHO",
       "dcterms:extent" => "edm:ProvidedCHO",
       "dcterms:tableOfContents" => "edm:ProvidedCHO",
@@ -42,7 +44,6 @@ class EdmRecord
       "dc:date" => "edm:ProvidedCHO",
       "dc:subject" => "edm:ProvidedCHO",
       "dcterms:provenance" => "edm:ProvidedCHO",
-      "eclap:performancePlace" => "edm:Event",
     ];
 
     /**
