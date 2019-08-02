@@ -1,76 +1,76 @@
 <table class="table table-inside">
-<? $institution = isset($data["edm:dataProvider"][0]) ? current($data["edm:dataProvider"][0]) : '';?>
-<? foreach ($data as $key => $fields): ?>
-  <? $count = sizeof($fields);?>
+<?php $institution = isset($data["edm:dataProvider"][0]) ? current($data["edm:dataProvider"][0]) : '';?>
+<?php foreach ($data as $key => $fields): ?>
+  <?php $count = sizeof($fields);?>
   <tr>
-    <th><? if (strpos($key,':')) : ?>
+    <th><?php if (strpos($key,':')) : ?>
       <?=$this->transEsc('edm::' . $key);?>
-    <? else : ?>
+    <?php else : ?>
       <?=$this->transEsc($key);?>
-    <? endif; ?></th>
-    <? if ($count > 4) : ?>
-      <? $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
-      <? $rest = array_slice($fields, 4); ?>
-      <? $fields = array_slice($fields, 0, 4);?>
+    <?php endif; ?></th>
+    <?php if ($count > 4) : ?>
+      <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+      <?php $rest = array_slice($fields, 4); ?>
+      <?php $fields = array_slice($fields, 0, 4);?>
       <td>
-        <? foreach ($fields as $field) : ?>
-         <? foreach ($field as $resource => $seeAlso) : ?>
-           <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
+        <?php foreach ($fields as $field) : ?>
+         <?php foreach ($field as $resource => $seeAlso) : ?>
+           <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
              <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-          <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+          <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
              <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
              <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
-          <? else: ?>
+          <?php else: ?>
             <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
-          <? endif; ?>
-        <? endforeach; ?>
-      <? endforeach; ?>
-        <? if (!(empty($rest))) : ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
+      <?php endforeach; ?>
+        <?php if (!(empty($rest))) : ?>
         <span class="toggleContainer">
           <input type="checkbox" class="toggle" id="toggle_<?=$key?>">
-          <span> <? foreach ($rest as $field) : ?>
-            <? foreach ($field as $resource => $seeAlso): ?>
-            <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
+          <span> <?php foreach ($rest as $field) : ?>
+            <?php foreach ($field as $resource => $seeAlso): ?>
+            <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
               <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-           <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+           <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
               <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
               <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
-           <? else: ?>
+           <?php else: ?>
              <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
-           <? endif; ?>
-         <? endforeach; ?>
-         <? endforeach; ?>
+           <?php endif; ?>
+         <?php endforeach; ?>
+         <?php endforeach; ?>
         </span>
-        <? if ($lang =='de') : ?>
+        <?php if ($lang =='de') : ?>
          <label for="toggle_<?=$key?>" class="label_de"></label>
-        <? else : ?>
+        <?php else : ?>
          <label for="toggle_<?=$key?>" class="label_en"></label>
-        <? endif; ?>
+        <?php endif; ?>
         </span>
-        <? endif; ?>
+        <?php endif; ?>
      </td>
-    <? else: ?>
+    <?php else: ?>
     <td>
-      <? foreach ($fields as $type => $field) : ?>
-       <? foreach ($field as $resource => $seeAlso) : ?>
-         <? if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
+      <?php foreach ($fields as $type => $field) : ?>
+       <?php foreach ($field as $resource => $seeAlso) : ?>
+         <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
            <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-        <? elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+        <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
            <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
-         <? elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
-       <? elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>
-             <? $trans = $this->transEsc(substr($seeAlso,0,7)) . substr($seeAlso,7);?>
+         <?php elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
+       <?php elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>
+             <?php $trans = $this->transEsc(substr($seeAlso,0,7)) . substr($seeAlso,7);?>
              <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
-         <? elseif ($key == 'child_records') : ?>
+         <?php elseif ($key == 'child_records') : ?>
              <a href="<?=$this->recordLink()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
-        <? else: ?>
+        <?php else: ?>
           <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
-        <? endif; ?>
-      <? endforeach; ?>
-    <? endforeach; ?>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
    </td>
-    <? endif; ?>
+    <?php endif; ?>
   </tr>
-<? endforeach; ?>
+<?php endforeach; ?>
 </table>

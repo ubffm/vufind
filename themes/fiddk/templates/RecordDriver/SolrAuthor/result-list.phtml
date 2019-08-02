@@ -33,14 +33,14 @@
     <?php if (!empty($prof) || !empty($birth) || !empty($death)): ?>
       <div class="resultItemLine2">
       <?php if ($birth || $death) : ?>
-          <? if (!$death) : ?>
+          <?php if (!$death) : ?>
               <?='* ' . $this->driver->translateDate($birth,'de')?><br/>
-          <? elseif(!$birth) : ?>
+          <?php elseif(!$birth) : ?>
               <?='† ' . $this->driver->translateDate($death,'de')?><br/>
-          <? else : ?>
+          <?php else : ?>
               <?='* ' . $this->driver->translateDate($birth,'de') . ' - † ' . $this->driver->translateDate($death,'de')?><br/>
-          <? endif; ?>
-      <? endif; ?>
+          <?php endif; ?>
+      <?php endif; ?>
       <?php foreach ($prof as $current): ?>
         <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation_facet%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
       <?php endforeach; ?>
@@ -53,14 +53,14 @@
     <?php if (!empty($domain)): ?>
       <div class="resultItemLine2">
         <?php if ($birth || $death) : ?>
-            <? if (!$death) : ?>
+            <?php if (!$death) : ?>
                 <?=$this->transEsc('since') . ' ' . $this->driver->translateDate($birth,'de')?><br/>
-            <? elseif(!$birth) : ?>
+            <?php elseif(!$birth) : ?>
                 <?=$this->transEsc('until') . ' ' . $this->driver->translateDate($death,'de')?><br/>
-            <? else : ?>
+            <?php else : ?>
                 <?=$this->driver->translateDate($birth,'de') . ' - ' . $this->driver->translateDate($death,'de')?><br/>
-            <? endif; ?>
-        <? endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
       <?php foreach ($domain as $current): ?>
         <a href="<?=$this->url('agentsearch-results')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
       <?php endforeach; ?>

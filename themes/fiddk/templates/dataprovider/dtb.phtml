@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Deutsches Tanzfilminstitut Bremen');
 ?>
@@ -11,7 +11,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   der gesammelten Materialien die Arbeit von Choreografen, Tanzkompanien, Theatern,
   Fachjournalisten und Fernsehanstalten und hilft bei der Produktion,  Restauration
   und Digitalisierung von Tanzvideos und Filmen.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('German Institute of Dance Film Bremen');
 ?>
@@ -24,4 +24,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     choreographers, dance companies, theatres, television production companies and
     journalists in the field by providing access to its video archive. It also assists
     in the production, restoration and digitalisation of dance videos and films.</p>
-<? } ?>
+<?php } ?>

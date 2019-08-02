@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Theatermuseum der Landeshauptstadt Düsseldorf');
 ?>
@@ -14,7 +14,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   Sammlung, Quellen zur Theaterpraxis, audiovisuelle Medien, Handschriften, die
   Presseausschnittsammlung, dreidimensionale Objekte und eine wissenschaftliche
   Spezialbibliothek, wobei die Bestände vorwiegend aus dem 20. und 21. Jahrhundert stammen.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('Theatre Museum of the State Capital of Düsseldorf');
 ?>
@@ -31,4 +31,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   audiovisual media, hand-written manuscripts, the collection of press excerpts,
   three-dimensional objects and a specialised library on theatre studies. Most of
   the documents and other items are from the 20th and 21st centuries.</p>
-<? } ?>
+<?php } ?>

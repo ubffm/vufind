@@ -1,4 +1,4 @@
-<? if ($admin) : ?>
+<?php if ($admin) : ?>
     <?=$this->headTitle('News');?>
     <h2><?=$this->transEsc('News')?></h2>
 
@@ -21,7 +21,7 @@
         </form>
     </div>
 
-    <? if (isset($searchlist)) : ?>
+    <?php if (isset($searchlist)) : ?>
         <h3><?=$this->transEsc('Results') . ' (' . count($searchlist) . ')'?></h3>
 
         <table class="newstable table-striped">
@@ -35,22 +35,22 @@
                 <th><?=$this->transEsc('news::Active')?></th>
                 <th><?=$this->transEsc('news::Pin')?></th>
             </tr>
-            <? foreach ($searchlist as $news) : ?>
+            <?php foreach ($searchlist as $news) : ?>
             <tr>
               <td><a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a></td>
               <td><?=$news->user?></td>
-              <td><?if ($news->startdate!=null) { echo date_format(date_create($news->startdate), "d.m.Y");}?></td>
-              <td><?if ($news->enddate!=null) { echo date_format(date_create($news->enddate), "d.m.Y");}?></td>
+              <td><?php if ($news->startdate!=null) { echo date_format(date_create($news->startdate), "d.m.Y");}?></td>
+              <td><?php if ($news->enddate!=null) { echo date_format(date_create($news->enddate), "d.m.Y");}?></td>
               <td><a href="<?=$this->url('news-edit')?>?id=<?=$news->id?>"><i class="fa fa-pencil"></i></a></td>
               <td><a href="<?=$this->url('news-list')?>?do=del&amp;id=<?=$news->id?>"><i class="fa fa-trash-o"></i></a></td>
-              <td><a href="<?=$this->url('news-list')?>?do=act&amp;id=<?=$news->id?>"><?if ($news->active==true){?><i class="fa fa-check"></i><?}else{?><i class="fa fa-ban"></i><?}?></a></td>
-              <td><a href="<?=$this->url('news-list')?>?do=pin&amp;id=<?=$news->id?>"><?if ($news->pin==true){?><i class="fa fa-ban"></i><?}else{?><i class="fa fa-check"></i><?}?></a></td>
+              <td><a href="<?=$this->url('news-list')?>?do=act&amp;id=<?=$news->id?>"><?php if ($news->active==true):?><i class="fa fa-check"></i><?php else: ?><i class="fa fa-ban"></i><?php endif;?></a></td>
+              <td><a href="<?=$this->url('news-list')?>?do=pin&amp;id=<?=$news->id?>"><?php if ($news->pin==true):?><i class="fa fa-ban"></i><?php else: ?><i class="fa fa-check"></i><?php endif; ?></a></td>
             </tr>
-            <? endforeach; ?>
+            <?php endforeach; ?>
         </table>
-    <? endif; ?>
+    <?php endif; ?>
 
-    <? if (isset($newslist)) : ?>
+    <?php if (isset($newslist)) : ?>
     <h3><?=$this->transEsc('List')?></h3>
     <table class="newstable table-striped">
         <tr>
@@ -63,21 +63,21 @@
             <th><?=$this->transEsc('news::Active')?></th>
             <th><?=$this->transEsc('news::Pin')?></th>
         </tr>
-        <? foreach ($newslist as $news) : ?>
+        <?php foreach ($newslist as $news) : ?>
         <tr>
           <td><a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a></td>
           <td><?=$news->user?></td>
-          <td><?if ($news->startdate!=null) { echo date_format(date_create($news->startdate), "d.m.Y");}?></td>
-          <td><?if ($news->enddate!=null) { echo date_format(date_create($news->enddate), "d.m.Y");}?></td>
+          <td><?php if ($news->startdate!=null) { echo date_format(date_create($news->startdate), "d.m.Y");}?></td>
+          <td><?php if ($news->enddate!=null) { echo date_format(date_create($news->enddate), "d.m.Y");}?></td>
           <td><a href="<?=$this->url('news-edit')?>?id=<?=$news->id?>"><i class="fa fa-pencil"></i></a></td>
           <td><a href="<?=$this->url('news-list')?>?do=del&amp;id=<?=$news->id?>" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-o"></i></a></td>
-          <td><a href="<?=$this->url('news-list')?>?do=act&amp;id=<?=$news->id?>"><?if ($news->active==true){?><i class="fa fa-check"></i><?}else{?><i class="fa fa-ban"></i><?}?></a></td>
-          <td><a href="<?=$this->url('news-list')?>?do=pin&amp;id=<?=$news->id?>"><?if ($news->pin==true){?><i class="fa fa-ban"></i><?}else{?><i class="fa fa-check"></i><?}?></a></td>
+          <td><a href="<?=$this->url('news-list')?>?do=act&amp;id=<?=$news->id?>"><?php if ($news->active==true) : ?><i class="fa fa-check"></i><?php else:?><i class="fa fa-ban"></i><?php endif; ?></a></td>
+          <td><a href="<?=$this->url('news-list')?>?do=pin&amp;id=<?=$news->id?>"><?php if ($news->pin==true) : ?><i class="fa fa-ban"></i><?php else: ?><i class="fa fa-check"></i><?php endif; ?></a></td>
         </tr>
-      <? endforeach; ?>
+      <?php endforeach; ?>
     </table>
-  <? endif; ?>
+  <?php endif; ?>
 
-<? else : ?>
+<?php else : ?>
   <h1> You don't have permission to be here!</h1>
-<? endif; ?>
+<?php endif; ?>

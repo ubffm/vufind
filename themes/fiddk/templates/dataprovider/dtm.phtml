@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Deutsches Theatermuseum München, Bibliothek');
 ?>
@@ -13,7 +13,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     ca. 500.000 Autographen und ca. 4,3 Millionen Theaterfotografien. Die Bibliothek des Deutschen Theatermuseums
     ist eine Präsenzbibliothek und nimmt nur eingeschränkt am Fernleihverkehr teil.
     Eine umfassende Recherche ist daher nur vor Ort möglich.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('German Theatre Museum Munich, Library');
 ?>
@@ -26,4 +26,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   manuscripts. The German Theatre Museum houses an extensive collection of original graphics from the Baroque period,
   and the most valuable of the 130,000 volumes date back to the Renaissance. In addition, the Museum owns the largest
   collection of theatre photographs worldwide, including some dating from the dawn of the photographic era.</p>
-<? } ?>
+<?php } ?>

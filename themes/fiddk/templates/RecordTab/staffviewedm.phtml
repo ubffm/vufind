@@ -4,7 +4,7 @@
 
     $edm = $this->driver->getXML('edm');
 ?>
-<!-- pre><?//=$edm?></pre -->
+<!-- pre><?php //=$edm?></pre -->
 <?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
 
 <div class="solrTab"><table class="citation table table-striped">
@@ -21,10 +21,10 @@
 </table></div>
 
 <!-- do this with a view helper!
-           <pre><?//=formatXML($values);?></pre>  -->
+           <pre><?php //=formatXML($values);?></pre>  -->
 
 <!-- Formats the full record field to a structured, highlighted, indented xml string to make debugging easier -->
-<? /**function formatXML($value) {
+<?php /**function formatXML($value) {
 
      $xml = new SimpleXMLElement($value);
      $dom = new DOMDocument("1.0","UTF-8");

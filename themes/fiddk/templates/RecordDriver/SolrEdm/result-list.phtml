@@ -34,32 +34,7 @@
           <?php $journalTitles = $this->driver->getContainerTitle(); $summDate = isset($this->driver->getPublicationDates()[0]) ? $this->driver->getPublicationDates()[0] : ""; ?>
           <?php if (!empty($journalTitles)): ?>
             <?=$this->transEsc('In')?>
-            <?php $containerSource = $this->driver->getSourceIdentifier(); ?>
-            <?php $containerIDs = $this->driver->getContainerRecordID(); ?>
-            <?php if ($containerIDs) :
-              $containers = array_combine($containerIDs,$journalTitles);
-              $containerLinks = [];
-              foreach ($containers as $containerID => $containerTitle) :
-                ob_start();
-                $link = $containerID
-                  ? $this->recordLink()->getUrl("$containerSource|$containerID")
-                  : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $containerTitle)); ?>
-                  <?php /* TODO: handle highlighting more elegantly here: */?>
-                <a href="<?=$link?>"><?=$this->highlight($containerTitle)?></a>
-                <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
-                  ob_end_clean();
-              endforeach;?>
-              <?=implode(', ', $containerLinks)?>
-            <?php elseif($journalTitles): ?>
-              <?php foreach ($journalTitles as $containerTitle):
-                ob_start();
-                $link = $this->record($this->driver)->getLink('journaltitle', $containerTitle); ?>
-                <a href="<?=$link?>"><?=$this->escapeHtml($containerTitle)?></a>
-                <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
-                  ob_end_clean();
-              endforeach; ?>
-              <?=implode(', ', $containerLinks)?>
-            <?php endif;?>
+            <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml',['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate) . ')' : ''?>
           <?php elseif (!empty($summDate)): ?>
             <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate)?>
@@ -191,14 +166,14 @@
         <?php endif; ?>
       </div>
 
-      <? if ($institution = $this->driver->getInstitution()): ?>
+      <?php if ($institution = $this->driver->getInstitution()): ?>
       <div class="result-institutions">
           <span class="badge"><?=$institution;?></span>
-        <? if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
+        <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
           <a class="badge badge-secondary" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
-        <? endif; ?>
+        <?php endif; ?>
       </div>
-    <? endif; ?>
+    <?php endif; ?>
 
       <div class="result-previews">
         <?=$this->record($this->driver)->getPreviews()?>

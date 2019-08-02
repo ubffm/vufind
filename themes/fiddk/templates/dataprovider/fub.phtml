@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Universitätsbibliothek Frankfurt am Main - Fachinformationsdienst Darstellende Kunst');
 ?>
@@ -16,7 +16,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     relevanten Bücher und Nichtbuchmaterialien (AV-Medien, Noten, Illustrationen etc.) ab Erscheinungsjahr
     1986 sowie Print- und Online-Zeitschriften (alle Erscheinungsjahre). Der Bestand wird im Rahmen des
     Fachinformationsdienstes Darstellende Kunst fortlaufend ergänzt.</p>
-<? } else {
+<?php } else {
  // Set page title
  $this->headTitle('Johann Christian Senckenberg University Library - Specialised Information Service (SIS) of the Performing Arts');
 ?>
@@ -30,4 +30,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     the Frankfurt University Library for over sixty years, from 1950 to 2014. The SIS, which we began
     setting up in 2015, has profited from these decades of experience and expertise. It is subsidised
     by the German Research Foundation (DFG).</p>
-<? } ?>
+<?php } ?>

@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Akademie der Künste Berlin, Archiv Darstellende Kunst');
 ?>
@@ -11,7 +11,7 @@
     vorrangig für den Bereich Kabarett. Mit Hilfe der Methode der Inszenierungsdokumentation
     werden im Bereich Theaterdokumentation Arbeitsprozesse und -ergebnisse aktueller Inszenierungen
     führender Regisseure des Sprech- und Musiktheaters festgehalten.</p>
-<? } else {
+<?php } else {
       // Set page title
       $this->headTitle('Academy of the Arts, Berlin, Performing Arts Archive');
   ?>
@@ -26,4 +26,4 @@
   and musical performances came into being. The seed for the Performing Arts Archive was sown in
   1951-52, and in 1960 it received its first inherited private collections. The documents and other
   items it houses represent the period from the 19th century to today. </p>
-<? } ?>
+<?php } ?>

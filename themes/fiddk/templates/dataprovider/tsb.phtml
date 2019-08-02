@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Freie Universität Berlin, Institut für Theaterwissenschaft, Theaterhistorische Sammlungen');
 ?>
@@ -13,7 +13,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   ehemaligen Privatsammlungen dieser Art. Darüber hinaus finden sich im Institutsarchiv weitere
   bedeutende Künstlernachlässe sowie umfangreiche Foto-, Theaterzettel- und Presseausschnittsammlungen.
   Insbesondere die Programmheftsammlung wird aktiv weitergeführt.</p>
-<? } else {
+<?php } else {
     // Set page title
     $this->headTitle('Freie Universität Berlin, Institute of Theatre Studies, Historical Theatre Collections');
 ?>
@@ -27,4 +27,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   formerly private collections of this kind. In addition, the Institute’s archive contains additional significant
   inherited private collections left to it by artists, and extensive collections of photos, theatre bulletins and
   press excerpts. Special attention is being paid to continuing the collection of theatre programmes.</p>
-<? } ?>
+<?php } ?>

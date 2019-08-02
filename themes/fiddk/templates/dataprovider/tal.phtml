@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Tanzarchiv Leipzig e.V.');
 ?>
@@ -18,7 +18,7 @@
   Fotografien, Postkarten, Mikrofilme und Archivmaterial. Die Bestände sind teilweise in
   einer Datenbank erschlossen, die in den Sondersammlungen und an den Computern in der
   UBL benutzt werden kann.</p>
-  <? } else {
+  <?php } else {
     // Set page title
     $this->headTitle('Dance Archive Leipzig');
   ?>
@@ -37,4 +37,4 @@
   collections, full and partial inherited private collections, posters, photographs, postcards, microfilm
   and other archive material. Some of the documents and other items have been entered into a database
   which can be viewed in the special collections and using University of Leipzig Library computers.</p>
-<? } ?>
+<?php } ?>

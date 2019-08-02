@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Deutsches Tanzarchiv Köln: Auszug aus der archivinternen Datenbank des Deutschen Tanzarchivs Köln (TIS-Tanzinformationssystem)');
 ?>
@@ -16,7 +16,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
 <p>Die Bibliothek umfasst ca. 14.000 Titel und rund 20.000 Fachzeitschriftenhefte.
   Die Videothek betreut über 4.500 Filme: Kamera-Choreographien, filmische Inszenierungen,
   experimentelle Tanzfilme, Musicals, Dokumentationen, Bühnenaufzeichnungen.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('German Dance Archives Cologne – Excerpt from the In-house Database of the German Dance Archive Cologne (Dance Information System)');
 ?>
@@ -33,4 +33,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
 <p>The library boasts approximately 14,000 titles and about 20,000 periodicals related to the field.
   The video library houses over 4,500 films, including camera choreographies, filmed stagings,
   experimental dance films, musicals, documentaries, and stage recordings.</p>
-<? } ?>
+<?php } ?>

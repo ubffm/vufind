@@ -1,39 +1,39 @@
-<? $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>
+<?php $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>
 <div class="random">
-      <? $perPage = 1 ?>
+      <?php $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
-      <? for($i=1;$i<count($recommend)/$perPage;$i++): ?>
+      <?php for($i=1;$i<count($recommend)/$perPage;$i++): ?>
         <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
-      <? endfor; ?>
+      <?php endfor; ?>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <? foreach ($recommend as $index=>$driver): ?>
+        <?php foreach ($recommend as $index=>$driver): ?>
           <div class="carousel-item">
               <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLink()->getUrl($driver));?>
               <a class="content" href="<?=$this->recordLink()->getUrl($driver)?>">
                 <div class="imgDescr card">
                   <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
-                  <? if ($driver->getContainerTitle()) :?>
+                  <?php if ($driver->getContainerTitle()) :?>
                     <p><?=$this->transEsc("In") . ': ' . implode(', ',$driver->getContainerTitle());?></p>
-                  <? endif; ?>
-                  <? if ($driver->getFormats()) :?>
+                  <?php endif; ?>
+                  <?php if ($driver->getFormats()) :?>
                     <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getFormats());?></p>
-                  <? endif; ?>
+                  <?php endif; ?>
                   <p><?=$this->transEsc("Institution") . ': ' . $driver->getInstitution();?>
                 </div>
               </a>
             </div>
-          <? if(($index+1) % $perPage == 0 && $index < count($recommend)-1): ?>
+          <?php if(($index+1) % $perPage == 0 && $index < count($recommend)-1): ?>
       </div>
       <div class="item">
-          <? endif; ?>
-        <? endforeach; ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
       </div>
     </div>
 
@@ -46,8 +46,8 @@
     </a>
   </div>
 </div>
-<? endif; ?>
-<?
+<?php endif; ?>
+<?php
   $script = <<<JS
 var normalizeHeightCount = $('#similar-items-carousel img').length;
 function normalizeHeights() {

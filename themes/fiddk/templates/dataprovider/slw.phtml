@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Theaterwissenschaftliche Sammlung der Universität zu Köln');
 ?>
@@ -18,7 +18,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   lässt sich der Teilbestand bis Erwerbungsjahr 2012 über den
   <a href="http://www.ub.uni-koeln.de/bibliotheken/38_429/" target="_blank" data-lightbox-ignore>Online-Katalog der
     Fachbibliothek Medienkultur und Theater</a> recherchieren.</p>
-<? } else {
+<?php } else {
   // Set page title //
   $this->headTitle('Theatre Collection of the University of Cologne');
 ?>
@@ -30,4 +30,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
       are German-speaking theatre culture – with an extensive archive of reviews and photos,
       supplemented by a wide-ranging collection of graphic art – and the approaches to theatre
       and media in various cultures and epochs.</p>
-<? } ?>
+<?php } ?>

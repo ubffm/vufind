@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Verbund deutscher Tanzarchive (VdT)');
 ?>
@@ -9,7 +9,7 @@
   der Akademie der Künste Berlin, das Deutsche Tanzarchiv Köln, das Deutsche Tanzfilminstitut Bremen, das Mime Centrum Berlin
   und das Tanzarchiv Leipzig e.V.  – zur Bestanderhaltung und Erschließung von Quellen und Dokumenten zur Entwicklungs- und
   Aufführungsgeschichte der Kunstform Tanz in Deutschland nominell zusammengeschlossen.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('Association of German Dance Archives (VDT)');
 ?>
@@ -20,4 +20,4 @@
    – the Performing Arts Archive of the Berlin Academy of the Arts, the German Dance Archive in Cologne, the German Dance Film
    Institute in Bremen, the Leipzig Dance Archive, and the Berlin Mime Centrum – with the aim of preserving and cataloguing
    documents and other sources related to the history and development of dance as an art form in Germany. </p>
-<? } ?>
+<?php } ?>

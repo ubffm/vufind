@@ -1,6 +1,7 @@
 <?php
   $containerSource = $this->driver->getSourceIdentifier();
   $containerIDs = $this->driver->getContainerRecordID();
+  $volume = implode($this->driver->getVolume(),', ');
   $ref = $this->driver->getContainerReference();
   if ($containerIDs) :
     $containers = array_combine($containerIDs,$data);
@@ -9,8 +10,11 @@
       ob_start();
       $link = $containerID
         ? $this->recordLink()->getUrl("$containerSource|$containerID")
-        : $this->record($this->driver)->getLink('journaltitle', $containerTitle); ?>
-      <a href="<?=$link?>"><?=$this->escapeHtml($containerTitle)?></a>
+        : (isset($highlight) ? $this->record($this->driver)->getLink('journaltitle', $containerTitle)
+        : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $containerTitle)));
+      $containerTitle = isset($highlight) ? $this->highlight($containerTitle) : $this->escapeHtml($containerTitle); ?>
+      <a href="<?=$link?>"><?=$containerTitle?></a>
+      <?=empty($volume) ? '' : '[' . $this->escapeHtml($volume) . ']'?>
       <?=empty($ref) ? '' : $this->escapeHtml($ref)?>
       <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
         ob_end_clean();
@@ -21,6 +25,7 @@
       ob_start();
       $link = $this->record($this->driver)->getLink('journaltitle', $containerTitle); ?>
       <a href="<?=$link?>"><?=$this->escapeHtml($containerTitle)?></a>
+      <?=empty($volume) ? '' : '[' . $this->escapeHtml($volume) . ']'?>
       <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
         ob_end_clean();
     endforeach; ?>

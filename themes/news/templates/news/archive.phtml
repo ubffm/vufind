@@ -1,14 +1,14 @@
 <h2><?=$this->transEsc("news::ArchivedNews")?></h2>
 <a class="link" href="<?=$this->url('news-current')?>"><?=$this->transEsc("news::CurrentNews")?></a>
 
-<? foreach ($newslist as $news) : ?>
+<?php foreach ($newslist as $news) : ?>
   <div class="news_A">
     <span class="newsdate">
-      <?if ($news->startdate!=null) echo date_format(date_create($news->startdate), "d.m.Y");?> - <?=htmlentities($news->category)?><br/>
-      <? preg_match("/.+\((.+)\)/",$news->author,$match); ?>
+      <?php if ($news->startdate!=null) echo date_format(date_create($news->startdate), "d.m.Y");?> - <?=htmlentities($news->category)?><br/>
+      <?php preg_match("/.+\((.+)\)/",$news->author,$match); ?>
       <b><?=htmlentities($match[1])?></b><br/></span>
     <a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a><br/>
     <?=htmlentities($news->description)?><br/>
     <a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
   </div>
-<? endforeach; ?>
+<?php endforeach; ?>

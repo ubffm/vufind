@@ -22,7 +22,7 @@
         <?php if ($places && $dates): ?>
           <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>
-            <? $normDates[] = $this->driver->translateDate($date,$lang)?>
+            <?php $normDates[] = $this->driver->translateDate($date,$lang)?>
           <?php endforeach; ?>
           <?=$this->escapeHtml(implode($places,', ')) . ', ' . $this->escapeHtml(implode($normDates,', '))?>
         <?php else : ?>
@@ -31,7 +31,7 @@
         <?php else: ?>
           <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>
-            <? $normDates[] = $this->driver->translateDate($date,$lang)?>
+            <?php $normDates[] = $this->driver->translateDate($date,$lang)?>
           <?php endforeach; ?>
           <?=$this->escapeHtml(implode($normDates,', '))?>
         <?php endif; ?>

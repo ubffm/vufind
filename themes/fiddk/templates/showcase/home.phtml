@@ -3,6 +3,6 @@ $this->headTitle($this->translate('Showcase') . ' - ' . $this->translate('FID Da
 
 <h2><?=$this->transEsc('Showcase')?></h2>
 
-<? foreach ($this->results->getRecommendations('side') as $current):?>
+<?php foreach ($this->results->getRecommendations('side') as $current):?>
   <?=$this->recommend($current);?>
-<?endforeach;?>
+<?php endforeach;?>

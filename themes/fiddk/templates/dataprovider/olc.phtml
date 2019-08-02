@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Aufsatzdatenbanken/Online Contents Darstellende Kunst');
 ?>
@@ -12,7 +12,7 @@
     Betreut wird diese kostenlose und frei zugängliche Datenbank von der
     <a href="http://www.ub.uni-franfurt.de" target="_blank" data-lightbox-ignore>Universitätsbibliothek Frankfurt am Main</a>.</p>
 
-<? } else {
+<?php } else {
     // Set page title
     $this->headTitle('Online Contents (OLC) Performing Arts');
 ?>
@@ -26,4 +26,4 @@
   This database, which can be used free of charge, is run by the
   <a href="http://www.ub.uni-franfurt.de" target="_blank" data-lightbox-ignore>University Library Frankfurt am Main</a>.</p>
 
-<? } ?>
+<?php } ?>

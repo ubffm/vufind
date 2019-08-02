@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Akademie der Künste Berlin');
 ?>
@@ -11,7 +11,7 @@
     Darstellende Kunst, Film- und Medienkunst derzeit insgesamt 418 Mitglieder. Mit über
     1200 Künstlernachlässen und einer umfangreichen Kunstsammlung und Bibliothek zählt
     das Archiv der Akademie zu den bedeutendsten interdisziplinären Archiven zur Kunst des 20. Jahrhunderts.</p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('Academy of Arts Berlin');
 ?>
@@ -23,4 +23,4 @@
   in its six Sections (Visual Arts, Architecture, Music, Literature, Performing Arts, Film and
   Media Arts). With over 1,200 bequests by artists and an extensive art collection and library,
   the Archive is one of the most important interdisciplinary archives of 20th century art.</p>
-<? } ?>
+<?php } ?>

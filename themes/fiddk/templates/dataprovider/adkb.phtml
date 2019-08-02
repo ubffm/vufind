@@ -1,4 +1,4 @@
-<?
+<?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Akademie der Künste Berlin, Bibliothek');
 ?>
@@ -15,7 +15,7 @@
     Fachinformationsdienstes Darstellende Kunst wurden fachspezifische Nachlass- und
     Sammlungsbibliotheken ausgewählt, darunter z.B. Bertolt Brecht, Bernhard Minetti,
     Herbert Ihering und Christoph Schlingensief. </p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('Academy of the Arts Berlin, Library');
 ?>
@@ -31,4 +31,4 @@
   For the SIS Performing Arts web portal were selected subject specific inherited and collection
   libraries including, e.g. Bertolt Brecht, Bernhard Minetti, Herbert Ihering und Christoph Schlingensief.
  </p>
-<? } ?>
+<?php } ?>

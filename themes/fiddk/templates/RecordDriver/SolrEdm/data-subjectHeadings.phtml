@@ -4,7 +4,7 @@
     <?php if($field['type'] == 'agent'): ?>
       <a href="<?=$this->record($this->driver)->getLink('authority', $field['source']);?>"><?=$field['heading']?></a>
       <?php else: ?>
-      <?$field['heading'] = explode('--', $field['heading']); ?>
+      <?php $field['heading'] = explode('--', $field['heading']); ?>
       <?php $i = 0; foreach ($field['heading'] as $subfield): ?>
         <?=($i++ == 0) ? '' : ' &gt; '?>
       <?php $subject = trim($subject . ' ' . $subfield); ?>

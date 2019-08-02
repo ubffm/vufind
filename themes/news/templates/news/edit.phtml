@@ -36,7 +36,7 @@
       <label class="form-check-label">
         <input type="radio" class="form-check-input" name="author" id="fid"
         value="redaktion@performing-arts.eu (Fachinformationsdienst Darstellende Kunst)"
-        <?if ($article['author'] == 'redaktion@performing-arts.eu (Fachinformationsdienst Darstellende Kunst)') {echo 'checked';}?>>
+        <?php if ($article['author'] == 'redaktion@performing-arts.eu (Fachinformationsdienst Darstellende Kunst)') {echo 'checked';}?>>
         Fachinformationsdienst Darstellende Kunst
       </label>
     </div>
@@ -44,7 +44,7 @@
     <label class="form-check-label">
         <input type="radio" class="form-check-input" name="author" id="gtw"
         value="info@theater-wissenschaft.de (Gesellschaft fuer Theaterwissenschaft)"
-        <?if ($article['author'] == 'info@theater-wissenschaft.de (Gesellschaft fuer Theaterwissenschaft)') {echo 'checked';}?>>
+        <?php if ($article['author'] == 'info@theater-wissenschaft.de (Gesellschaft fuer Theaterwissenschaft)') {echo 'checked';}?>>
         Gesellschaft für Theaterwissenschaft
       </label>
     </div>
@@ -55,14 +55,14 @@
     <div class="form-check">
       <label class="form-check-label">
         <input type="radio" class="form-check-input" name="enclosure" value="fid-dk_logo.gif"
-        <?if ($article['enclosure'] == 'fid-dk_logo.gif') {echo 'checked';}?>>
+        <?php if ($article['enclosure'] == 'fid-dk_logo.gif') {echo 'checked';}?>>
         <img src="<?=$this->imageLink('fid-dk_logo.gif')?>" width="250px" height="auto">
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="radio" class="form-check-input" name="enclosure" value="gtw_logo.png"
-        <?if ($article['enclosure'] == 'gtw_logo.png') {echo 'checked';}?>>
+        <?php if ($article['enclosure'] == 'gtw_logo.png') {echo 'checked';}?>>
         <img src="<?=$this->imageLink('gtw_logo.png')?>" width="150px" height="auto">
       </label>
     </div>
@@ -85,42 +85,42 @@
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Call for Papers / Participation"
-        <?if ($article['category']=='Call for Papers / Participation') {echo 'checked';}?>>
+        <?php if ($article['category']=='Call for Papers / Participation') {echo 'checked';}?>>
         Call for Papers / Participation
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Events"
-        <?if ($article['category']=='Events') {echo 'checked';}?>>
+        <?php if ($article['category']=='Events') {echo 'checked';}?>>
         <?=$this->transEsc("Events");?>
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Announcements"
-        <?if ($article['category']=='Announcements') {echo 'checked';}?>>
+        <?php if ($article['category']=='Announcements') {echo 'checked';}?>>
         <?=$this->transEsc("Announcements");?>
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Jobs"
-        <?if ($article['category']=='Jobs') {echo 'checked';}?>>
+        <?php if ($article['category']=='Jobs') {echo 'checked';}?>>
         <?=$this->transEsc("Jobs");?>
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Book Reviews"
-        <?if ($article['category']=='Book Reviews') {echo 'checked';}?>>
+        <?php if ($article['category']=='Book Reviews') {echo 'checked';}?>>
         <?=$this->transEsc("Book Reviews");?>
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="category" value="Other"
-        <?if ($article['category']=='Other') {echo 'checked';}?>>
+        <?php if ($article['category']=='Other') {echo 'checked';}?>>
         <?=$this->transEsc("Other");?>
       </label>
     </div>
@@ -128,9 +128,9 @@
 
 <fieldset class="form-group">
   <legend><?=$this->transEsc("URLs")?></legend>
-  <? for ($i=1; $i < 4; $i++) : ?>
-  <? $name = 'urlname' . $i; ?>
-  <? $url = 'url' . $i; ?>
+  <?php for ($i=1; $i < 4; $i++) :
+    $name = 'urlname' . $i;
+    $url = 'url' . $i; ?>
   <div class="form-group">
     <label><?=$this->transEsc("URL Name") . ' ' . $i?></label>
     <input class="form-control" type="text" name="<?=$name?>" maxlength="100" value="<?=htmlentities($article[$name])?>">
@@ -139,14 +139,14 @@
     <label><?=$this->transEsc("URL") . ' ' . $i?></label>
     <input class="form-control" type="text" name="<?=$url?>" maxlength="200" value="<?=htmlentities($article[$url])?>">
   </div>
-  <? endfor;?>
+  <?php endfor;?>
 </fieldset>
 
 <fieldset class="form-group">
   <legend><?=$this->transEsc("Downloads") ." (" . $this->transEsc("File size") . " <= 3MB)"?></legend>
-  <? for ($i=1; $i < 4; $i++) : ?>
-  <? $name = 'dlname' . $i; ?>
-  <? $url = 'dl' . $i; ?>
+  <?php for ($i=1; $i < 4; $i++) :
+     $name = 'dlname' . $i;
+     $url = 'dl' . $i; ?>
   <div class="form-group">
     <label><?=$this->transEsc("Download Name") . ' ' . $i?></label>
     <input class="form-control" type="text" name="<?=$name?>" maxlength="100" value="<?=htmlentities($article[$name])?>">
@@ -155,7 +155,7 @@
     <label><?=$this->transEsc("Download") . ' ' . $i?></label>
     <input type="file" data-upload name="<?=$url?>">
   </div>
-  <? endfor;?>
+  <?php endfor;?>
 </fieldset>
 
 <div class="form-group row">
@@ -164,9 +164,9 @@
 
 </form>
 
-<? if(isset($article->lastedit)) : ?>
+<?php if(isset($article->lastedit)) : ?>
 <div><?=$this->transEsc("Last edited") . ': ' . date_format(date_create($article->lastedit), "d.m.Y - H:i:s");?>
-  <? if(isset($article->user)) : ?>
+  <?php if(isset($article->user)) : ?>
     <?=' ' . $this->transEsc("by") . ' ' . $article->user;?>
-  <? endif; ?></div><br/>
-<? endif; ?>
+  <?php endif; ?></div><br/>
+<?php endif; ?>

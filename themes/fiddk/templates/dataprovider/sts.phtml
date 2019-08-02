@@ -1,4 +1,4 @@
-<?
+<?php
 if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
     $this->headTitle('Schweizerische Theatersammlung Bern');
 ?>
@@ -23,7 +23,7 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   zum <a href="http://www.theatersammlung.ch/?q=search_berufstheater" target="_blank" data-lightbox-ignore>Berufstheater</a> und zum
   <a href="http://www.theatersammlung.ch/?q=search_amateure" target="_blank" data-lightbox-ignore>Amateurtheater</a> online recherchiert werden.
 </p>
-<? } else {
+<?php } else {
   // Set page title
   $this->headTitle('Swiss Theatre Collection, Bern');
 ?>
@@ -40,4 +40,4 @@ if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
   on <a href="http://www.theatersammlung.ch/?q=search_berufstheater" target="_blank" data-lightbox-ignore>professional theatre</a> and
   <a href="http://www.theatersammlung.ch/?q=search_amateure" target="_blank" data-lightbox-ignore>amateur theatre</a> can be searched online.
 </p>
-<? } ?>
+<?php } ?>

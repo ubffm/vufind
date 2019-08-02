@@ -1,7 +1,7 @@
-<?
+<?php
  $this->headTitle('Teatro Español del Siglo de Oro'); ?>
  <h2>Teatro Español del Siglo de Oro</h2>
- <?
+ <?php
  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
 ?>
 <p><a href="http://www.nationallizenzen.de/angebote/nlproduct.2006-03-10.7433818373"
@@ -12,7 +12,7 @@
   zeichnet ein internationales Herausgeberteam verantwortlich.<br />
   Die Suche kann wahlweise über eine englische oder eine spanische Oberfläche erfolgen.
 </p>
-<? } else {
+<?php } else {
 ?>
 <p><a href="http://teso.chadwyck.co.uk/english/home/home"
   target="_blank" data-lightbox-ignore>Direct to this website</a></p>
@@ -23,4 +23,4 @@
   and artistic achievements in Spain. <br />
   The search can be made optionally via an English or a Spanish web interface.
 </p>
-<? } ?>
+<?php } ?>

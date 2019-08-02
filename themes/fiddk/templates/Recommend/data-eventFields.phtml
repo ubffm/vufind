@@ -12,7 +12,7 @@
   <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
   <?php $normDates = [];?>
   <?php foreach ($eventDates as $eventDate): ?>
-    <? $normDates[] = $this->driver->translateDate($eventDate,$lang)?>
+    <?php $normDates[] = $this->driver->translateDate($eventDate,$lang)?>
   <?php endforeach; ?>
   <span property="edm:occuredAt">
     <?=$this->escapeHtml(implode($normDates,', '))?>
