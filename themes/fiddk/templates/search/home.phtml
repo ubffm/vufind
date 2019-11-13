@@ -17,13 +17,8 @@
       <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
     </div>
     <?=$this->render("news/stream.phtml")?>
-    <div class="alert alert-info">
-      <?=$this->transEsc("Infotextstart")?>
-      <a href="http://performing-arts.eu/EventSearch/Results?lookfor=König+Lear&type=AllFields&limit=20"><?=$this->transEsc("Infotextmid")?></a>
-      <?=$this->transEsc("Infotextend")?>
-      <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><?=$this->transEsc("Feedback")?>&nbsp;<i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
-    </div>
-  </div>
+  </div>  
+  <?=$this->render("dataprovider/logoCarousel.phtml")?>
 </div>
 
 <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>

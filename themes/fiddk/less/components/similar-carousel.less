@@ -81,3 +81,61 @@
     }
   }
 }
+
+#logo-carousel {
+
+  .carousel-inner {
+    height: 80px;
+    padding-bottom: 25px;
+    margin: 0px 30px;
+  }
+  .carousel-inner .item.left.active {
+    transform: translateX(-33%);
+  }
+  .carousel-inner .item.right.active {
+    transform: translateX(33%);
+  }
+  .carousel-inner .item.next {
+    transform: translateX(33%)
+  }
+  .carousel-inner .item.prev {
+    transform: translateX(-33%)
+  }
+
+  .carousel-inner .item.right,
+  .carousel-inner .item.left {
+    transform: translateX(0);
+  }
+
+  .carousel-item {
+    vertical-align: middle;
+    display: table-cell;
+    height: 80px;
+    width: 225px;
+    text-align: center;
+  }
+
+  .carousel-control {
+      width: 1%;
+      &.left, &.left:focus {
+        background-image: none;
+      }
+      &.right, &.right:focus {
+        background-image: none;
+      }
+  }
+  .item {
+    &.prev,
+    &.active,
+    &.next { display: block; }
+
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    a[target="_blank"]:after {
+        content: none;
+    }
+  }
+}
