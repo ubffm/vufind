@@ -66,6 +66,15 @@ $config = [
       'VuFind\Controller\FeedbackController' => 'Fiddk\Controller\FeedbackController',
     ]
   ],
+  'service_manager' => [
+    'allow_override' => true,
+    'factories' => [
+      'Fiddk\ContentBlock\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+    ],
+    'aliases' => [
+      'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager'
+    ]
+  ],
   'vufind' => [
     'plugin_managers' => [
       'ajaxhandler' => [
