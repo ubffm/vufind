@@ -1,0 +1,16 @@
+<div class="flex-statistics">
+<?php foreach ($this->statistics as $key => $amount): ?>
+  <?php if ($key == "Objects") {
+          $url = $this->url('search-results');
+        } elseif ($key == "Agents") {
+          $url = $this->url('agentsearch-results');
+        } else {
+          $url = $this->url('eventsearch-results');
+        }?>
+  <div class="card">
+    <a href="<?=$url?>">
+      <?=$this->localizedNumber($amount) . ' ' . $this->transEsc($key)?>
+    </a>
+  </div>
+<?php endforeach; ?>
+</div>
