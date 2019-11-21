@@ -168,7 +168,6 @@
 <?php
   $script = <<<JS
 $('.carousel .item').each(function(){
-  console.log($(this));
   var next = $(this).next();
   if (!next.length) {
     next = $(this).siblings(':first');
