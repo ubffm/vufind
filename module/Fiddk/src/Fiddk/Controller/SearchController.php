@@ -57,9 +57,12 @@ class SearchController extends \VuFind\Controller\SearchController
           $specialFacets['checkboxes'], $view->saved
         );
 
-        $news = $this->getTable('news');
-        $view->newslist= $news->getCurrentArticles();
-        $view->pinnedlist= $news->getPinnedArticles();
+        try {
+          $news = $this->getTable('news');
+          $view->newslist= $news->getCurrentArticles();
+          $view->pinnedlist= $news->getPinnedArticles();
+        } catch (\Exception $e) {
+        }
 
         return $view;
     }

@@ -1,3 +1,4 @@
+<?php if ($newslist || $pinnedlist) : ?>
 <div class="stream">
   <div class="stream well well-lg clearfix">
     <p class="title"><?=$this->transEsc("Newsstream")?></p>
@@ -37,3 +38,4 @@
     <?php endforeach; ?>
   </div>
 </div>
+<?php endif; ?>
