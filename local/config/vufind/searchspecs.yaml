@@ -255,6 +255,7 @@ AllFields:
     - title_sub^100
     - series^50
     - series2^30
+    - container_title^50
     - author^300
     - author_fuller^150
     - contents^10
