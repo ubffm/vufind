@@ -43,7 +43,8 @@ $staticRoutes = [
   'news/rss',
   'news/article',
   'news/archive',
-  'news/current'
+  'news/current',
+  'news/stream'
 ];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();

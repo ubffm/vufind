@@ -49,6 +49,12 @@
             </li>
           <?php endif; ?>
 
+          <?php if($this->layout()->searchbox): ?>
+            <li>
+              <a data-lightbox href="<?=$this->url('news-stream') ?>"><?=$this->transEsc("News")?>&nbsp;<i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i></a>
+            </li>
+          <?php endif; ?>
+
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
             <li class="language dropdown">
               <form method="post" name="langForm" id="langForm">

@@ -1,4 +1,4 @@
-<?php if ($newslist || $pinnedlist) : ?>
+<?php if (isset($newslist)):?>
 <div class="stream">
   <div class="stream well well-lg clearfix">
     <p class="title"><?=$this->transEsc("Newsstream")?></p>
@@ -16,7 +16,7 @@
         </span><br/>
         <b><?=htmlentities($pin->title)?></b><br/>
         <?=htmlentities(substr($pin->description,0, 200)).'...'?><br/>
-        <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+        <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>" data-lightbox-ignore><?=$this->transEsc("news::FurtherInfo")?></a>
       </div>
     <?php endforeach; ?>
     <?php foreach ($newslist as $news) : ?>
@@ -33,7 +33,7 @@
         </span><br/>
         <b><?=htmlentities($news->title)?></b><br/>
         <?=htmlentities(substr($news->description,0, 200)).'...'?><br/>
-        <a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
+        <a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>" data-lightbox-ignore><?=$this->transEsc("news::FurtherInfo")?></a>
       </div>
     <?php endforeach; ?>
   </div>

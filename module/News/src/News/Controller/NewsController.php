@@ -266,9 +266,13 @@ class NewsController extends \VuFind\Controller\AbstractBase
         return $this->currentAction();
     }
 
+    public function streamAction()
+    {
+        return $this->currentAction();
+    }
+
     public function archiveAction()
     {
-
       $news = $this->getTable('news');
       $newslist = $news->getArchivedArticles();
 
