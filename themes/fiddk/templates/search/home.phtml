@@ -16,8 +16,10 @@
       <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true, 'checkboxFilters' => $this->checkboxFacets])?>
       <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
     </div>
-    <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>
+    <div class="homeinfo">
     <?=$this->render("news/stream.phtml")?>
+    <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>
+    </div>
   </div>
   <?=$this->render("dataprovider/logoCarousel.phtml")?>
 </div>
