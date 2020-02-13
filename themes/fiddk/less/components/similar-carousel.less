@@ -66,8 +66,13 @@
     .item {
       padding: 2em 2em;
     }
+    .carousel-inner {
+      border: None;
+    }
     .carousel-item {
+      display: flex;
       flex-basis: 100%;
+      justify-content: space-evenly;
       text-align: center;
     }
     .carousel-control {
@@ -77,14 +82,13 @@
       float: right;
       height: 100%;
       max-width: 320px;
-      margin-right: 70px;
     }
   }
 }
 
 #logo-carousel {
 
-  margin-top: 4em;
+  margin: 3em 0em;
 
   .carousel-inner {
     height: 80px;
