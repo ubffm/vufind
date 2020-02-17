@@ -1,17 +1,18 @@
 <div class="flex-statistics card">
+  <div><?=$this->transEsc("Researching")?></div>
 <?php foreach ($this->statistics as $key => $amount): ?>
   <?php if ($key == "Objects") {
           $url = $this->url('search-results');
-          $icon = "fa-cubes";
+          //$icon = "fa-cubes";
         } elseif ($key == "Agents") {
           $url = $this->url('agentsearch-results');
-          $icon = "fa-users";
+          //$icon = "fa-users";
         } else {
           $url = $this->url('eventsearch-results');
-          $icon = "fa-star-o";
+          //$icon = "fa-star-o";
         }?>
   <div>
-    <i class="fa <?=$icon?> fa-2x" aria-hidden="true" style="padding-right: 10px;"></i> <a href="<?=$url?>">
+    <a href="<?=$url?>">
       <?=$this->localizedNumber($amount) . ' ' . $this->transEsc($key)?>
     </a>
   </div>

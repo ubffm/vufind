@@ -3,13 +3,6 @@ header .navbar {
   padding-bottom: 20px;
   border: 0;
 
-  .navbar-brand {
-    background: @logo no-repeat scroll left center transparent;
-    float: left;
-    height: 115px;
-    width: 310px;
-    margin-top: 1em;
-  }
   .navbar-form {
       width: 100%;
       margin-top: 15px;
@@ -29,10 +22,24 @@ header .banner.container.navbar {
   ul {
     margin-top: 5px;
   }
+  .navbar-brand {
+    background: @claim no-repeat scroll left center transparent;
+    width: 500px;
+    height: 100px;
+    margin-top: 1em;
+  }
 }
 
 header .banner.container.navbar.search {
   padding-bottom: 0px;
+
+  .navbar-brand {
+    background: @logo no-repeat scroll left center transparent;
+    float: left;
+    height: 115px;
+    width: 310px;
+    margin-top: 1em;
+  }
 }
 
 /** Searchbar/-box ***/
@@ -281,14 +288,18 @@ div#accordion .panel-collapse {
   }
   .homeinfo {
      display: flex;
+     @media (max-width: 767px) {
+       flex-wrap: wrap;
+     }
 
     .flex-statistics {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       flex-wrap: wrap;
+      flex-basis: 50%;
       div {
         min-width: 140px;
-        text-align: center;
         padding: 10px;
         //box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
       }
