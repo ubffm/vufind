@@ -1,6 +1,5 @@
 /* HEADER */
 header .navbar {
-  padding-bottom: 20px;
   border: 0;
 
   .navbar-form {
@@ -18,7 +17,7 @@ header .banner.container.navbar {
     margin-top: 5px;
   }
   .navbar-brand {
-    background: @claim no-repeat scroll left center transparent;
+    background: @logo no-repeat scroll left center transparent;
     width: 500px;
     height: 100px;
     margin-top: 1em;
@@ -26,22 +25,9 @@ header .banner.container.navbar {
   }
 }
 
-header .banner.container.navbar.search {
-  padding-bottom: 0px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-
-  .navbar-brand {
-    background: @logo no-repeat scroll left center transparent;
-    float: left;
-    height: 115px;
-    width: 310px;
-    margin-top: 1em;
-  }
-}
-
-div.container.navbar.search {
-  border-radius: 0px;
+header .banner.container.navbar.search + div.container.navbar.search {
+    border-radius: 0px;
+    padding-bottom: 20px;
 }
 
 /** Searchbar/-box ***/
@@ -283,7 +269,7 @@ div#accordion .panel-collapse {
 /* Homepage Layout */
 .searchHomeContent {
   overflow: hidden;
-  margin-top: 4em;
+  margin-top: 5em;
   margin-bottom: 2em;
 }
 
