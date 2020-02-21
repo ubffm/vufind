@@ -43,7 +43,7 @@ use VuFindSearch\Query\Query;
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  * @view     AuthorInfoFacets.phtml
  */
-class AgentInfo implements \VuFind\Recommend\RecommendInterface
+class AuthInfo implements \VuFind\Recommend\RecommendInterface
 {
 
     /**
@@ -167,7 +167,7 @@ class AgentInfo implements \VuFind\Recommend\RecommendInterface
      *
      * @return array info
      */
-    public function getAgentInfo()
+    public function getAuthInfo()
     {
         $gnd = $this->getGnd();
         return !empty($gnd)

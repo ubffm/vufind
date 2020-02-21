@@ -1,0 +1,28 @@
+<?php if (isset($this->info['dateOfConferenceOrEvent'])) : ?>
+  <b><?=$this->transEsc('DateOfEvent') . ':'?></b><span property="dateOfConferenceOrEvent">
+    <?=implode(', ',$this->info['dateOfConferenceOrEvent'])?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['placeOfConferenceOrEvent'])) : ?>
+ <b><?=$this->transEsc('PlaceOfEvent') . ':'?></b><span property="placeOfConferenceOrEvent">
+     <?=implode(', ',array_column($this->info['placeOfConferenceOrEvent'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['spatialAreaOfActivity'])) : ?>
+  <?=$this->transEsc('placeOfActivity') . ': '?>
+  <span property="placeOfActivity">
+    <?=implode('/',array_column($this->info['spatialAreaOfActivity'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['gndSubjectCategory'])) : ?>
+  <?=$this->transEsc('Subject') . ': '?>
+  <span property="Category">
+    <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
+  </span><br />
+<?php endif; ?>
+<?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
+  <br/><b><?=$this->transEsc('Description')?></b>
+  <br/><span property="description">
+    <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
+  </span><br/><br/>
+<?php endif; ?>

@@ -88,12 +88,10 @@ $config = [
       ],
       'recommend' => [
         'factories' => [
-          'Fiddk\Recommend\AgentInfo' => 'Fiddk\Recommend\AgentInfoFactory',
-          'Fiddk\Recommend\EventInfo' => 'Fiddk\Recommend\EventInfoFactory',
+          'Fiddk\Recommend\AuthInfo' => 'Fiddk\Recommend\AuthInfoFactory',
         ],
         'aliases' => [
-          'agentinfo' => 'Fiddk\Recommend\AgentInfo',
-          'eventinfo' => 'Fiddk\Recommend\EventInfo',
+          'authinfo' => 'Fiddk\Recommend\AuthInfo',
         ],
       ],
       'search_backend' => [

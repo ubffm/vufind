@@ -60,7 +60,6 @@
   $recordTotal = $this->results->getResultTotal();
 ?>
 <?php// always display these at the very top! ?>
-<?=$this->render('Recommend/EventInfo.phtml')?>
 <?php foreach ($this->results->getRecommendations('top') as $current): ?>
   <?=$this->recommend($current)?>
 <?php endforeach; ?>

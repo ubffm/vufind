@@ -1,0 +1,67 @@
+<?php $this->info = $this->recommend->getAuthInfo();
+if (!empty($this->info) || isset($driver)):
+  if (!empty($this->info)):
+    $types = $this->info['type'];
+    if (in_array("ConferenceOrEvent",$types)):
+      $type = "event_gnd";
+      $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
+           || isset($this->info['dateOfConferenceOrEvent'])
+           || isset($this->info['placeOfConferenceOrEvent'])
+           || isset($this->info['homepage'])
+           || isset($this->info['spatialAreaOfActivity']);
+    else:
+      $type = "agent";
+      $moreInfo = isset($this->info['professionOrOccupation'])
+           || isset($this->info['placeOfBusiness'])
+           || isset($this->info['biographicalOrHistoricalInformation'])
+           || isset($this->info['dateOfBirth'])
+           || isset($this->info['dateOfDeath'])
+           || isset($this->info['placeOfBirth'])
+           || isset($this->info['placeOfDeath'])
+           || isset($this->info['publication'])
+           || isset($this->info['precedingCorporateBody'])
+           || isset($this->info['dateOfEstablishment'])
+           || isset($this->info['homepage'])
+           || isset($this->info['spatialAreaOfActivity'])
+           || isset($this->info['geographicAreaCode']);
+    endif;
+    $title = $this->info['preferredName'];
+    $variant = isset($this->info['variantName']) ? $this->info['variantName'] : '';
+    //TODO: There can be more than one thumbnail??
+    $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
+  else:
+    $title = $this->driver->getTitle();
+    $variant = $this->driver->getUseFor();
+    $type = "event";
+  endif;
+?>
+<div class="card clearfix">
+  <div class="flex-content flex-start">
+  <?php if (!empty($thumbnail)): ?>
+    <div class="authority-meta thumb">
+      <img class="pull-left flip" src="<?=$thumbnail ?>" alt="<?=$title?>"/>
+    </div>
+  <?php endif; ?>
+    <div class="authority-meta">
+      <h2><?=$title?></h2>
+      <?php if (!empty($moreInfo) && $type == "agent"): ?>
+        <?=$this->render('Recommend/data-agentFields.phtml');?>
+      <?php elseif (!empty($moreInfo) && $type == "event_gnd"): ?>
+        <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
+      <?php elseif ($type == "event"): ?>
+        <?=$this->render('Recommend/data-eventFields.phtml');?>
+      <?php endif; ?>
+    <?php if (!empty($variant)) : ?>
+       <br/><b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
+        <?php $this->data = $variant; ?>
+        <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
+    <?php endif; ?><br/>
+    </div>
+  <?php if (!empty($this->info['sameAs'])): ?>
+    <?=$this->render('Recommend/data-sameAs.phtml');?>
+  <?php else: ?>
+    <?=$this->render('Recommend/data-source.phtml');?>
+  <?php endif; ?>
+  </div>
+</div>
+<?php endif;?>
