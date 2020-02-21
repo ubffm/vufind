@@ -105,7 +105,11 @@ trait EdmAdvancedTrait
     public function getTitleIfExists($id,$source) {
       $response = $this->queryRecordId($id,$source);
       $record = current($response->getRecords());
-      return $record->getTitle() .' ('.implode(', ', $record->getFormats()).')';
+      if ($record and $record->getFormats()) {
+        return $record->getTitle() .' ('.implode(', ', $record->getFormats()).')';
+      } elseif ($record) {
+        return $record->getTitle();
+      }
     }
 
 }

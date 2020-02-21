@@ -57,8 +57,8 @@ public function getRecommendationSettings($handler = null)
     // Load the Agent- or the EventModuleRecommendations configuration if available,
     // depending on the type
     $recommend = [];
-    if ($handler == 'Agent' and isset($ss->AgentModuleRecommendations)) {
-        foreach ($ss->AgentModuleRecommendations as $section => $content) {
+    if (($handler == 'Agent' or $handler == 'Event') and isset($ss->AuthModuleRecommendations)) {
+        foreach ($ss->AuthModuleRecommendations as $section => $content) {
             $recommend[$section] = [];
             foreach ($content as $current) {
                 $recommend[$section][] = $current;
@@ -66,14 +66,7 @@ public function getRecommendationSettings($handler = null)
         }
     } else {
       $recommend['side'] = $ss->General->default_side_recommend->toArray();
-    } /* elseif (isset($ss->EventModuleRecommendations)) {
-          foreach ($ss->EventModuleRecommendations as $section => $content) {
-              $recommend[$section] = [];
-              foreach ($content as $current) {
-                  $recommend[$section][] = $current;
-              }
-          }
-    } */
+    }
     return $recommend;
   }
 }

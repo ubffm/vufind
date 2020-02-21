@@ -44,6 +44,14 @@ class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
 {
   use EdmReaderTrait;
 
+  /**
+   * Returns the authority type (Personal Name, Corporate Name or Event)
+   */
+   public function getAuthType()
+   {
+       return isset($this->fields['record_type'])
+             ? $this->fields['record_type'] : '';
+   }
    /**
     * Returns the type of the event
     */
@@ -69,6 +77,15 @@ class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
       {
           return isset($this->fields['place'])
                 ? $this->fields['place'] : [];
+      }
+
+      /**
+       * Returns the thumbnail url or []
+       */
+      public function getThumbnail($size = 'small')
+      {
+        return isset($this->fields['thumbnail'])
+            ? $this->fields['thumbnail'] : [];
       }
 
   }

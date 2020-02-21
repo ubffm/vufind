@@ -3,9 +3,25 @@
   if (empty($heading)) {
     $heading = $this->translate('Heading unavailable.');
   }
-  $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
+  $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
-<div class="media">
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLink()->getUrl($this->driver));
+  $cover = $coverDetails['html'];
+  $thumbnail = false;
+  $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
+  if ($cover):
+    ob_start(); ?>
+      <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
+       <?=$cover ?>
+      </div>
+    <?php $thumbnail = ob_get_contents();
+    ob_end_clean();?>
+    <div class="media">
+    <?php endif; ?>
+    <?php if ($thumbnail): ?>
+      <?=$thumbnail ?>
+    <?php endif ?>
+
   <div class="media-body">
     <div class="resultItemLine1">
       <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>

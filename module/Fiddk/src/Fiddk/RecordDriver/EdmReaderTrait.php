@@ -118,26 +118,31 @@ trait EdmReaderTrait
       if ($start == $end) {
         // exact date
         return $this->formatToDate($start,$lang);
-      } else {
-        // is same year?
-        if (substr($start,0,4) == substr($end,0,4)) {
-          // is whole year?
-          if (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31") {
-             return substr($start,0,4);
-          } else {
-            // two exact dates in same year
-            return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
-          }
+      } elseif (substr($start,0,4) == substr($end,0,4)) {
+        if (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31") {
+           // whole year
+           return substr($start,0,4);
         } else {
-          // season
-          if (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31"
-          && intval(substr($start,0,4)) + 1 == intval(substr($end,0,4))) {
-            return substr($start,0,4) . "/" . substr($end,0,4);
-          } else {
-          // two exact dates
-          return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
+           // two exact dates in same year
+           return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
         }
+      } elseif (substr($start,5,5) == "01-01" && substr($end,5,5) == "12-31") {
+        if (intval(substr($start,0,4)) + 1 == intval(substr($end,0,4))) {
+           // season
+           return substr($start,0,4) . "/" . substr($end,0,4);
+        } else {
+           // whole year span
+           return substr($start,0,4) . "-" . substr($end,0,4);
         }
+      } elseif (substr($start,5,5) == "01-01" && $end == "*") {
+         // since
+         return substr($start,0,4) . "-"; 
+      } elseif ($start == "*" && substr($end,5,5) == "12-31") {
+         // until
+         return "-" . substr($end,0,4);
+      } else {
+        // two exact dates
+        return $this->formatToDate($start,$lang) . " - " . $this->formatToDate($end,$lang);
       }
     }
 

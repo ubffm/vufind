@@ -1,3 +1,26 @@
-<?php foreach ($data as $link => $field): ?>
+<?php if(sizeof($data) > 8): ?>
+  <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+  <?php $rest = array_slice($data, 8); ?>
+  <?php $fields = array_slice($data, 0, 8);?>
+<?php foreach ($fields as $link => $field): ?>
   <a href="<?=$link?>"><?=$this->escapeHtml($field)?></a><br/>
 <?php endforeach; ?>
+<?php if (!(empty($rest))) : ?>
+<span class="toggleContainer">
+  <input type="checkbox" class="toggle" id="toggle_link">
+  <span> <?php foreach ($rest as $link => $field) : ?>
+    <a href="<?=$link?>"><?=$this->escapeHtml($field)?></a><br/>
+ <?php endforeach; ?>
+</span>
+<?php if ($lang =='de') : ?>
+ <label for="toggle_link" class="label_de"></label>
+<?php else : ?>
+ <label for="toggle_link" class="label_en"></label>
+<?php endif; ?>
+</span>
+<?php endif; ?>
+<?php else: ?>
+  <?php foreach ($data as $link => $field): ?>
+    <a href="<?=$link?>"><?=$this->escapeHtml($field)?></a><br/>
+  <?php endforeach; ?>
+<?php endif; ?>

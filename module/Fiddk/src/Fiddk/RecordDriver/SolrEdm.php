@@ -49,7 +49,7 @@ class SolrEdm extends \VuFind\RecordDriver\SolrDefault
   protected $forbiddenSnippetFields = [
         'author', 'author_id', 'title', 'title_short', 'title_full', 'event', 'event_id',
         'title_full_unstemmed', 'title_auth', 'title_sub', 'spelling', 'id',
-        'ctrlnum', 'author_variant', 'author2_variant', 'fullrecord'
+        'ctrlnum', 'author_variant', 'author2_variant', 'fullrecord', 'hierarchy_parent_id',
     ];
 
 }

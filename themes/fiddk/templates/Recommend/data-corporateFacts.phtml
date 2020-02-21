@@ -28,6 +28,12 @@
     <?=implode('; ',array_column($this->info['spatialAreaOfActivity'],'label'))?>
   </span><br />
 <?php endif; ?>
+<?php if (isset($this->info['geographicAreaCode'])) : ?>
+  <?=$this->transEsc('Place') . ': '?>
+  <span property="geographicAreaCode">
+    <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+  </span><br />
+<?php endif; ?>
 <?php if (isset($this->info['gndSubjectCategory'])) : ?>
   <?=$this->transEsc('Subject') . ': '?>
   <span property="Category">
