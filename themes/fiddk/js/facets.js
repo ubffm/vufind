@@ -13,7 +13,7 @@ var dprovs = {
   'InternationalesTheaterinstitut-MimeCentrum':'mcb',
   'OnlineContents':'olc',
   'TheaterwissenschaftlicheSammlungderUniversitätzuKöln':'slw',
-  'SchweizerischeTheatersammlung':'sts',
+  'SchweizerischeTheatersammlunginStiftungSAPA,SchweizerArchivderDarstellendenKünste':'sts',
   'TanzarchivLeipzig':'tal',
   'TeatroEspañoldelSiglodeOro':'tes',
   'TanzfondsErbe':'tfe',
@@ -170,13 +170,17 @@ function initFacetTree(treeNode, inSidebar)
   var operator = treeNode.data('operator');
   var sort = treeNode.data('sort');
   var query = window.location.href.split('?')[1];
+  // Hotfix
+  var queryAuth = window.location.href.split('/');
+  var queryHandler = 'id=' + queryAuth[4] + '&type=' + queryAuth[3].charAt(0).toUpperCase() + queryAuth[3].slice(1);
+  var queryNorm = (typeof query === 'undefined') ? queryHandler : query;
 
   if (inSidebar) {
     treeNode.prepend('<li class="list-group-item"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></li>');
   } else {
     treeNode.prepend('<div><i class="fa fa-spinner fa-spin" aria-hidden="true"></i><div>');
   }
-  $.getJSON(VuFind.path + '/AJAX/JSON?' + query,
+  $.getJSON(VuFind.path + '/AJAX/JSON?' + queryNorm,
     {
       method: "getFacetData",
       source: source,
@@ -299,7 +303,6 @@ VuFind.register('sideFacets', function SideFacets() {
   function init() {
     // Display "loading" message after user clicks facet:
     activateFacetBlocking();
-
     // Side facet status saving
     $('.facet-group .collapse').each(function openStoredFacets(index, item) {
       var source = $('#result0 .hiddenSource').val();
