@@ -7,9 +7,9 @@
   <?php endif; ?>
   <?php if (!empty($date)):
     if (!empty($place)): ?>
-      : <span property="date"><?=$date?></span>
+      : <span property="date"><?=$this->driver->translateDate($date,'de')?></span>
     <?php else: ?>
-      <span property="date"><?=$date?></span>
+      <span property="date"><?=$this->driver->translateDate($date,'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
   </span>

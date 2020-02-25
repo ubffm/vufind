@@ -59,7 +59,7 @@
   $hiddenFilters = $this->searchTabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
   $recordTotal = $this->results->getResultTotal();
 ?>
-<?php// always display these at the very top! ?>
+
 <?php foreach ($this->results->getRecommendations('top') as $current): ?>
   <?=$this->recommend($current)?>
 <?php endforeach; ?>
