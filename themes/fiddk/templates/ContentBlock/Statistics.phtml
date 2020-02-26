@@ -1,15 +1,16 @@
 <div class="flex-statistics card">
-  <div><i class="fa fa-chevron-circle-right" aria-hidden="true"></i><b>&nbsp;&nbsp;<?=$this->transEsc("Researching")?></b><hr/></div>
+  <div><b><?=$this->transEsc("Researching")?></b><hr id="research"/></div>
 <?php foreach ($this->statistics as $key => $amount): ?>
   <?php if ($key == "Objects") {
           $url = $this->url('search-results');
+          $key = "ObjectsAcc";
           //$icon = "fa-cubes";
         } elseif ($key == "Agents") {
           $url = $this->url('agentsearch-results');
           //$icon = "fa-users";
         } else {
           $url = $this->url('eventsearch-results');
-          //$icon = "fa-star-o";
+          $key = "EventsAcc";
         }?>
   <div>
     <a href="<?=$url?>">
