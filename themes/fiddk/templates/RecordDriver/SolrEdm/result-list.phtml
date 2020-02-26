@@ -75,15 +75,15 @@
               <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml',['data' => $this->driver->getSummary()[0]]);?>
             <?php endif; ?>
           <?php endif; ?>
-          <?php $placeDetails = $this->driver->getPlaceDateDetails();?>
-          <?php if (empty($pubDetails) && !empty($placeDetails)): ?>
+          <?php $placeDateDetails = $this->driver->getPlaceDateDetails();?>
+          <?php if (empty($pubDetails) && !empty($placeDateDetails)): ?>
             <?=!empty($journalTitles || $summAuthors || (empty($this->driver->getTitle())
               && !empty($this->driver->getSummary()))) ? '<br />' : ''?>
-            <?=implode('; ',$placeDetails);?>
+            <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml',['data' => $placeDateDetails,'driver' => $this->driver, 'highlight' => true]);?>
           <?php endif; ?>
           <?php $extent = $this->driver->getExtent();?>
           <?php if (!empty($extent)): ?>
-            <?=!empty($journalTitles || $summAuthors) || !empty($placeDetails) ? '<br />' : ''?>
+            <?=!empty($journalTitles || $summAuthors) || !empty($placeDateDetails) ? '<br />' : ''?>
             <?=implode('; ',$extent);?>
           <?php endif; ?>
       </div>
