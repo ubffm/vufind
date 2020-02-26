@@ -88,7 +88,8 @@
 
 #logo-carousel {
 
-  margin: 3em 0em;
+  margin: 1em 0em 3em 0em;
+  //margin: 3em 0em 1em 0em;
 
   .carousel-inner {
     height: 80px;
@@ -96,17 +97,35 @@
     padding-bottom: 25px;
     margin: 0px 30px;
   }
-  .carousel-inner .item.left.active {
-    transform: translateX(-25%);
+
+  @media (max-width: 991px) {
+    .carousel-inner .item.left.active {
+      transform: translateX(-100%);
+    }
+    .carousel-inner .item.right.active {
+      transform: translateX(100%);
+    }
+    .carousel-inner .item.next {
+      transform: translateX(100%)
+    }
+    .carousel-inner .item.prev {
+      transform: translateX(-100%)
+    }
   }
-  .carousel-inner .item.right.active {
-    transform: translateX(25%);
-  }
-  .carousel-inner .item.next {
-    transform: translateX(25%)
-  }
-  .carousel-inner .item.prev {
-    transform: translateX(-25%)
+
+  @media (min-width: 992px) {
+    .carousel-inner .item.left.active {
+      transform: translateX(-25%);
+    }
+    .carousel-inner .item.right.active {
+      transform: translateX(25%);
+    }
+    .carousel-inner .item.next {
+      transform: translateX(25%)
+    }
+    .carousel-inner .item.prev {
+      transform: translateX(-25%)
+    }
   }
 
   .carousel-inner .item.right,

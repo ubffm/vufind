@@ -1,5 +1,5 @@
 <div class="flex-statistics card">
-  <div><i class="fa fa-chevron-circle-right" aria-hidden="true" style="padding-right: 10px;"></i> <?=$this->transEsc("Researching")?></div>
+  <div><i class="fa fa-chevron-circle-right" aria-hidden="true"></i><b>&nbsp;&nbsp;<?=$this->transEsc("Researching")?></b><hr/></div>
 <?php foreach ($this->statistics as $key => $amount): ?>
   <?php if ($key == "Objects") {
           $url = $this->url('search-results');
