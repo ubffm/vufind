@@ -87,7 +87,7 @@ forms:
   # Example for an acquisition request form
 
   AcquisitionRequest:
-    enabled: true
+    enabled: false
     title: Acquisition Request
     onlyForLoggedUsers: false
     emailSubject: FID Kaufvorschlag
