@@ -72,7 +72,7 @@ trait EdmBasicTrait
     }
 
     public function getHumanReadableDates() {
-        return $this->getEdmRecord()->getPropValues("dcterms:temporal");
+        return $this->getEdmRecord()->getAttrVal("dcterms:temporal");
     }
 
     public function getPlacesOfPublication() {
