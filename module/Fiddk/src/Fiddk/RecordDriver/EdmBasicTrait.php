@@ -150,12 +150,19 @@ public function getPlaceDateDetails()
     public function getInstitutionLinked() {
       $inst = $this->getInstitution();
       $dprovConf = $this->mainConfig->DataProvider;
-      $instkey = preg_replace( "/\r|\n|\s|,|\//", "", $inst );
+      $instkey = preg_replace( "/\r|\n|\s|,|\/|\(|\)/", "", $inst );
       return [$inst => explode(',',$dprovConf[$instkey])];
     }
 
     public function getDigitalCopies() {
-      return $this->getEdmRecord()->getLinkedPropValues("edm:hasView","dc:description","");
+      $links = [];
+      $inst = $this->getInstitution();
+      // prevent duplicates
+      if ($inst != 'transcript Verlag' or $inst != 'Alexander Street Press') {
+        $links = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","dc:description","");
+      }
+      return $links + $this->getEdmRecord()->getLinkedPropValues("edm:isShownBy","dc:description","") +
+             $this->getEdmRecord()->getLinkedPropValues("edm:hasView","dc:description","");
     }
 
     public function getCatalogueLink() {

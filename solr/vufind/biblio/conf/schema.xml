@@ -152,7 +152,6 @@
    <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="publishDateSort" type="range" indexed="true" stored="false"/>
    <field name="edition" type="string" indexed="true" stored="true"/>
    <field name="description" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -203,6 +202,7 @@
    <field name="title_old" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_new" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="date_span" type="range" indexed="true" stored="true" multiValued="true"/>
+   <field name="date_span_sort" type="string" indexed="true" stored="true"/>
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>

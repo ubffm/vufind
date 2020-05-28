@@ -17,7 +17,7 @@
         : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $containerTitle)));
       $containerTitle = isset($highlight) ? $this->highlight($containerTitle) : $this->escapeHtml($containerTitle); ?>
       <a href="<?=$link?>"><?=$containerTitle?></a>
-      <?=isset($volumes[$i]) ? '[' . $this->escapeHtml($volumes[$i]) . ']' : '' ?>
+      <?=isset($volumes[$i]) && !empty($volumes[$i]) ? '[' . $this->escapeHtml($volumes[$i]) . ']' : '' ?>
       <?php $i++; ?>
       <?=empty($ref) ? '' : $this->escapeHtml($ref)?>
       <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
@@ -29,7 +29,7 @@
       ob_start();
       $link = $this->record($this->driver)->getLink('journaltitle', $containerTitle); ?>
       <a href="<?=$link?>"><?=$this->escapeHtml($containerTitle)?></a>
-      <?=isset($volumes[$i]) ? '[' . $this->escapeHtml($volumes[$i]) . ']' : ''?>
+      <?=isset($volumes[$i]) && !empty($volumes[$i]) ? '[' . $this->escapeHtml($volumes[$i]) . ']' : ''?>
       <?php $i++; ?>
       <?php $containerLinks[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
         ob_end_clean();

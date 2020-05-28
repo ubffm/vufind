@@ -63,6 +63,7 @@
     <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
     <!-- additional authority fields-->
     <field name="date" type="range" indexed="true" stored="true" multiValued="true"/>
+    <field name="date_sort" type="date" indexed="true" stored="true"/>
     <field name="place" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>

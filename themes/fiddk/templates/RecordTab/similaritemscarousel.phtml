@@ -34,6 +34,9 @@
             <div class="content">
             </div>
             <p><?=$data->getTitle();?></p>
+            <?php if ($data->getSubTitle()) :?>
+              <p><?=implode(', ',$data->getSubTitle());?></p>
+            <?php endif; ?>
             <?php if ($data->getFormats()) :?>
               <p><?=implode(', ',$data->getFormats());?></p>
             <?php endif; ?>

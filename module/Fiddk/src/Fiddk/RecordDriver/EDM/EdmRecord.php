@@ -28,6 +28,7 @@ class EdmRecord
     protected $belongsTo = [
       "edm:dataProvider" => "ore:Aggregation",
       "edm:isShownAt" => "ore:Aggregation",
+      "edm:isShownBy" => "ore:Aggregation",
       "dm2e:hasAnnotatableVersionAt" => "ore:Aggregation",
       "edm:hasView" => "ore:Aggregation",
       "edm:isRelatedTo" => "edm:ProvidedCHO",
