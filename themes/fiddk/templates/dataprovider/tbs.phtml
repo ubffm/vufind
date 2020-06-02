@@ -1,0 +1,17 @@
+<?php
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('Architekturmuseum (Berlin)');
+?>
+<h2>Architekturmuseum (Berlin)</h2>
+<img src="<?=$this->imageLink('logos_s/tbs.png')?>" alt="Architekturmuseum (Berlin)"/><br/><br/>
+<p><a href="https://architekturmuseum.ub.tu-berlin.de/index.php?p=610" target="_blank" data-lightbox-ignore>Direkt zum Katalog</a></p>
+<p></p>
+<?php } else {
+ // Set page title
+ $this->headTitle('Architekturmuseum (Berlin)');
+?>
+<h2>Architekturmuseum (Berlin)</h2>
+<img src="<?=$this->imageLink('logos_s/tbs.png')?>" alt="Architekturmuseum (Berlin)"/><br/><br/>
+<p><a href="https://architekturmuseum.ub.tu-berlin.de/index.php?p=610" target="_blank" data-lightbox-ignore>To the catalogue</a></p>
+<p></p>
+<?php } ?>
