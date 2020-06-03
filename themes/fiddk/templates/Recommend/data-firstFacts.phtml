@@ -1,7 +1,11 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <?php if (isset($this->info['professionOrOccupation'])) : ?>
   <span property="professionOrOccupation">
+    <?php if($this->info['gndIdentifier'] == "1043940596"):?>
+    <?='Autor, Dramatiker, Schauspieler, Regisseur, Drehbuchautor'?>
+    <?php else: ?>
     <?=implode(', ',array_column($this->info['professionOrOccupation'],'label'))?>
+  <?php endif; ?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['dateOfBirth']) || isset($this->info['placeOfBirth'])) : ?>
