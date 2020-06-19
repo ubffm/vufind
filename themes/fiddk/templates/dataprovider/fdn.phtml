@@ -1,0 +1,36 @@
+<?php
+if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('Deutsches Forum für Figurentheater und Puppenspielkunst');
+?>
+<h2>Deutsches Forum für Figurentheater und Puppenspielkunst</h2>
+<img src="<?=$this->imageLink('logos_m/fdn.png')?>" alt="Deutsches Forum für Figurentheater und Puppenspielkunst"/><br/><br/>
+<p><a href="http://www.fidena.de" target="_blank" data-lightbox-ignore>Direkt zum Katalog</a></p>
+<p>Die Fachbibliothek des Deutsches Forum für Figurentheater und Puppenspielkunst (dfp) e.V. steht allen Interessierten vor Ort und über das
+  <a href="https://www.fidena.de/portal/forschungszentrum/researcher-in-residence/mn_65" target="_blank" data-lightbox-ignore>Researcher
+  in Residence Stipendium</a> als Präsenzbestand zur Verfügung. Darüber hinaus wird ein digitaler Dokumentlieferdienst on-Demand angeboten.</p>
+  <p>Die Bibliothek besitzt den Sammelschwerpunkt Figurentheater und Puppenspielkunst. Der Bestand umfasst allgemeine Publikationen zur
+    Geschichte und Theorie des Puppen- und Objekttheaters, Theater- und Hochschulveröffentlichungen, Bildbände zum Puppen- und Objekttheater
+    der Welt, Kataloge von Masken- und Figurenausstellungen; Bau- und Spielanleitungen; Veröffentlichungen über Puppenspiel in Therapie und
+    Unterricht sowie über 1500 Stücke für das Puppentheater. Eine Besonderheit ist der Umfang an internationalen und deutschen Puppentheater-Zeitschriften.</p>
+    <p>Zusätzlich zu dem Bestand über Figurentheater, wird auch Literatur zu verwandten Künsten wie der Bildenden und Darstellenden Kunst, neuen Medien und
+    kulturpolitischen Schriften angeboten. Im Archiv des dfp werden Fotos, Festival- und Theaterprogramme, Rezensionen und andere Graue Literatur gesammelt.
+    Der Schwerpunkt des Archivs liegt hierbei auf der deutschen Figurentheaterszene.</p>
+<?php } else {
+ // Set page title
+ $this->headTitle('Deutsches Forum für Figurentheater und Puppenspielkunst');
+?>
+<h2>Deutsches Forum für Figurentheater und Puppenspielkunst</h2>
+<img src="<?=$this->imageLink('logos_m/fdn.png')?>" alt="Deutsches Forum für Figurentheater und Puppenspielkunst"/><br/><br/>
+<p><a href="http://www.fidena.de" target="_blank" data-lightbox-ignore>To the catalogue</a></p>
+<p>The specialist library of the German Forum for Figure Theatre and Puppetry is available as a reference collection to all interested parties on site and over the
+  <a href="https://www.fidena.de/portal/forschungszentrum/researcher-in-residence/mn_65" target="_blank" data-lightbox-ignore>Researcher
+  in Residence scholarship program</a>. It also provides an on-demand digital document delivery service.</p>
+  <p>The library collection features foremost literature about figure theatre and puppetry arts. This includes general publications
+    on the history and theory of puppet and object theatre, theatre and university publications on the subject of figure theatre,
+    illustrated books on puppet and object theatre worldwide, catalogues of masks and figure exhibitions, literature on construction
+    and performance of figures, publications on puppetry in therapy and education as well as over 1500 puppetry plays. Particularly
+    noteworthy is the collection of German and international puppetry magazines.</p>
+  <p>In addition to the puppetry related collection, the library also offers literature on related arts such as fine arts, performing
+    arts and new media as well as cultural-political writings. The institutional archive preserves photos, festival and theatre
+    programmes, reviews and other grey literature with the focus on the German figure theatre scene.</p>
+<?php } ?>
