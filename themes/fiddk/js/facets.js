@@ -20,6 +20,7 @@ var dprovs = {
   'Architekturmuseum(Berlin)':'tbs',
   'TeatroEspañoldelSiglodeOro':'tes',
   'TanzfondsErbe':'tfe',
+  'ThüringerUniversitäts-undLandesbibliothekJena':'thulb',
   'TheatermuseumderLandeshauptstadtDüsseldorf':'tmd',
   'transcriptVerlag':'tra',
   'FreieUniversitätBerlin,InstitutfürTheaterwissenschaft,TheaterhistorischeSammlungen':'tsb',

@@ -62,7 +62,8 @@ trait EdmAdvancedTrait
     public function getKVKLink() {
       $url = "";
       $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
-      $exclude = "Tanzfonds Erbe" == $this->getInstitution();
+      $inst = $this->getInstitution();
+      $exclude = in_array($inst,["Tanzfonds Erbe", "Thüringer Universitäts- und Landesbibliothek Jena"]) or $this->isArchiveRecord();
 
       if (!$exclude) {
         $isbn = $this->getCleanISBN();

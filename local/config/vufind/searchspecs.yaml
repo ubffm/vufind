@@ -300,18 +300,9 @@ Event:
 Agent:
   QueryFields:
     author_id:
-      - [onephrase, 50]
+      - [onephrase, 100]
     institution_id:
       - [onephrase, ~]
-    intermediate_id:
-      - [onephrase, ~]
-    topic_id:
-      - [onephrase, 50]
-
-Work:
-  QueryFields:
-    work_id:
-      - [onephrase, 50]
     topic_id:
       - [onephrase, 50]
 
@@ -324,7 +315,7 @@ has_thumb:
 playbills:
   DismaxFields:
     - date_month_day^100
-  FilterQuery: "format:Theaterzettel AND has_thumb:true"
+  FilterQuery: "format:Theaterzettel"
 
 # Fields for exact matches originating from alphabetic browse
 ids:

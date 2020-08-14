@@ -67,6 +67,10 @@ trait EdmBasicTrait
       return $this->getEdmRecord()->getPropValues("dcterms:tableOfContents");
     }
 
+    public function getAccessRestrictions() {
+      return $this->getEdmRecord()->getPropValues("dc:rights");
+    }
+
     public function getHumanReadablePublicationDates() {
         return $this->getEdmRecord()->getAttrVal("dcterms:issued");
     }
@@ -263,24 +267,16 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
     {
         $retVal = [];
         $headings = isset($this->fields['topic']) ? $this->fields['topic'] : [];
+        $contextIds = isset($this->fields['topic_id']) ? $this->fields['topic_id'] : [];
+        $contextRoles = isset($this->fields['topic_role']) ? $this->fields['topic_role'] : [];
 
         if ($extended) {
-          //$subjects = $this->getEdmRecord()->getLinkedPropValues("dc:subject","skos:prefLabel","");
-          /*foreach ($subjects as $link => $subject) {
-            $linkparts = explode('/',$link);
-            if (isset($linkparts[3]) && $linkparts[3] == 'agent') {
-              $retVal[] = [
-                'heading' => $subject,
-                'type' => 'agent',
-                'source' => $linkparts[4] . '_' . $linkparts[5]
-              ];
-            }
-          }*/
-          foreach ($headings as $heading) {
+
+          foreach ($headings as $i => $heading) {
             $retVal[] = [
               'heading' => $heading,
-              'type' => 'subject',
-              'source' => ''
+              'type' => $contextRoles[$i],
+              'source' => $contextIds[$i]
             ];
           }
         }
@@ -308,6 +304,17 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
     {
       return isset($this->fields['thumbnail']) ?
           $this->fields['thumbnail'] : [];
+    }
+
+    /**
+     * Return year easily for purposes like in playbill theme portal
+     *
+     * @return int
+     */
+    public function getYear()
+    {
+      return isset($this->fields['date_span_sort']) ?
+          substr($this->fields['date_span_sort'],0,4) : 0;
     }
 
 }

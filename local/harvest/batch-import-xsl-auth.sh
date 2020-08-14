@@ -94,7 +94,7 @@ done
 # Optimize the index now that we are done (if necessary):
 if [ "$OPTIMIZE" -eq "1" ]
 then
-  cd $VUFIND_HOME/../util
+  cd $VUFIND_HOME/util
   echo "Optimizing index..."
   php optimize.php authority
 fi

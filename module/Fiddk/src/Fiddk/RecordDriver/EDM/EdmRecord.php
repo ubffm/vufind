@@ -30,6 +30,7 @@ class EdmRecord
       "edm:isShownAt" => "ore:Aggregation",
       "edm:isShownBy" => "ore:Aggregation",
       "dm2e:hasAnnotatableVersionAt" => "ore:Aggregation",
+      "dc:rights" => "ore:Aggregation",
       "edm:hasView" => "ore:Aggregation",
       "edm:isRelatedTo" => "edm:ProvidedCHO",
       "edm:wasPresentAt" => "edm:ProvidedCHO",

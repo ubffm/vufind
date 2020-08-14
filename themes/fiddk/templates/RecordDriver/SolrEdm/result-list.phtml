@@ -71,20 +71,19 @@
           <?php endif; ?>
           <?php if (empty($this->driver->getTitle())): ?>
             <?php if (!empty($this->driver->getSummary())): ?>
-              <?=!empty($journalTitles || $summAuthors) ? '<br />' : ''?>
               <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml',['data' => $this->driver->getSummary()[0]]);?>
             <?php endif; ?>
           <?php endif; ?>
           <?php $placeDateDetails = $this->driver->getPlaceDateDetails();?>
           <?php if (empty($pubDetails) && !empty($placeDateDetails)): ?>
-            <?=!empty($journalTitles || $summAuthors || (empty($this->driver->getTitle())
-              && !empty($this->driver->getSummary()))) ? '<br />' : ''?>
             <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml',['data' => $placeDateDetails,'driver' => $this->driver, 'highlight' => true]);?>
           <?php endif; ?>
           <?php $extent = $this->driver->getExtent();?>
-          <?php if (!empty($extent)): ?>
-            <?=!empty($journalTitles || $summAuthors) || !empty($placeDateDetails) ? '<br />' : ''?>
-            <?=implode('; ',$extent);?>
+            <?php if (!empty($extent)): ?>
+              <?php if (!empty($pubDetails) && empty($journalTitles)):?>
+                <br/>
+              <?php endif; ?>
+                <?=implode('; ',$extent);?>
           <?php endif; ?>
       </div>
 

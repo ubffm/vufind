@@ -38,6 +38,9 @@ namespace Fiddk\Search\SolrAuthority;
  */
 class Params extends \VuFind\Search\Solr\Params
 {
+
+  protected $name;
+
   /**
      * Support method for _initSearch() -- handle basic settings.
      *
@@ -55,10 +58,12 @@ class Params extends \VuFind\Search\Solr\Params
         if (null === ($type = $request->get('type'))) {
             return false;
         }
+
+        $this->name = $request->get('name');
         // Set the correct search handler depending on authority type:
         if ($type == 'Agent') {
           $this->setBasicSearch($lookfor, 'Agent');
-        } else {
+        } elseif ($type == 'Event') {
           $this->setBasicSearch($lookfor, 'Event');
         }
         return true;
@@ -75,7 +80,7 @@ class Params extends \VuFind\Search\Solr\Params
        // For display purposes, find a nice way of displaying authority queries
        $q = parent::getDisplayQuery();
        if (strpos($q,'gnd_') === 0) {
-         $q = '(GND ' . substr($q,4) . ')';
+         $q = $this->name . ' (GND ' . substr($q,4) . ')';
        } else {
          $q = '';
        }

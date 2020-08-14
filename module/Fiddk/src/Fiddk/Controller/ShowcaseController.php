@@ -18,4 +18,14 @@ class ShowcaseController extends \VuFind\Controller\SearchController
 
     }
 
+    public function playbillsAction() {
+
+      $view = $this->createViewModel();
+      $runner = $this->serviceLocator->get('VuFind\SearchRunner');
+      $date = date('Y-m-d');
+      $request = ['lookfor' => $date,'type'=> 'playbills'];
+      $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
+      return $view;
+
+    }
 }

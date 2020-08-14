@@ -1,4 +1,12 @@
-<?php $recommend = $this->recommend->getResults(); if (count($recommend)> 0): ?>
+<?php $recommend = $this->recommend->getResults(); ?>
+<?php if (count($recommend) == 1): ?>
+  <?php $driver = $recommend[0];
+        $years = date('Y') - $driver->getYear();?>
+  <div class="card record">
+    <p><?=$this->translate('OTD', ['%%years%%' => $years])?></p><br/>
+    <?=$this->record($driver)->getCoreMetadata()?>
+  </div>
+<?php elseif (count($recommend)> 0): ?>
 <div class="random">
       <?php $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">

@@ -127,7 +127,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'dcterms:hasPart', 'getChildRecordCount', 'data-childRecords.phtml',
             ['allowZero' => false]
         );
-        $spec->setTemplateLine('Online Access', true, 'data-onlineAccess.phtml');
+        $spec->setLine('Rights', 'getAccessRestrictions');
         $spec->setTemplateLine('Tags', true, 'data-tags.phtml');
         return $spec->getArray();
     }

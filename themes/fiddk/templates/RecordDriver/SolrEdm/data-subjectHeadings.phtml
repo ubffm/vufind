@@ -1,8 +1,8 @@
 <?php foreach ($data as $field): ?>
   <div class="subject-line" property="keywords">
     <?php $subject = ''; ?>
-    <?php if($field['type'] == 'agent'): ?>
-      <a href="<?=$this->record($this->driver)->getLink('authority', $field['source']);?>"><?=$field['heading']?></a>
+    <?php if($field['source'] != '' and $field['type'] == 'agent'): ?>
+      <a href="<?=$this->record($this->driver)->getLink('author', $field['source']);?>"><?=$field['heading']?></a>
       <?php else: ?>
       <?php $field['heading'] = explode('--', $field['heading']); ?>
       <?php $i = 0; foreach ($field['heading'] as $subfield): ?>

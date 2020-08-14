@@ -1,0 +1,17 @@
+<?php // Set page title.
+$this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
+
+<h2><?=$this->transEsc('Playbills')?></h2>
+
+<div class="flex">
+<div class="card">
+  Text Text
+</div>
+<div class="card">
+  Linkverzeichnis
+</div>
+</div>
+
+<?php foreach ($this->results->getRecommendations('side') as $current):?>
+  <?=$this->recommend($current);?>
+<?php endforeach;?>

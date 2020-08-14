@@ -49,11 +49,12 @@ class AgentController extends \VuFind\Controller\AbstractSearch
       $this->searchClassId = 'SolrAuthor';
       $this->driver = $this->loadRecord();
       $id = $this->driver->getUniqueID();
-      // take driver to results view?
-      //$title = $this->driver->getTitle();
+      $name = $this->driver->getTitle();
       $this->searchClassId = 'SolrAuthority';
-      $this->getRequest()->getQuery()->set('id', $id);
-      $this->getRequest()->getQuery()->set('type', 'Agent');
+      $query = $this->getRequest()->getQuery();
+      $query->set('id', $id);
+      $query->set('type', 'Agent');
+      $query->set('name', $name);
       return !empty($id) ?
         $this->forwardTo('Agent', 'Results') : $this->forwardTo('Search', 'Home');
     }
