@@ -5,8 +5,9 @@
     <?php foreach ($pinnedlist as $pin) : ?>
       <div class="pinned_news">
         <?php if ($pin->enclosure!=null || $pin->enclosure!='') : ?>
+          <?php preg_match("/.+\((.+)\)/",$pin->author,$match); ?>
           <div class="news_pic">
-            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60" alt="<?=$pin->author?>">
+            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60" alt="<?=$match[1]?>">
           </div>
         <?php endif; ?>
         <span class="newsdate">
@@ -22,8 +23,9 @@
     <?php foreach ($newslist as $news) : ?>
       <div class="news">
         <?php if ($news->enclosure!=null || $news->enclosure!='') : ?>
+          <?php preg_match("/.+\((.+)\)/",$news->author,$match); ?>
           <div class="news_pic">
-            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto" alt="<?=$news->author?>">
+            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto" alt="<?=$match[1]?>">
           </div>
         <?php endif; ?>
         <span class="newsdate">
