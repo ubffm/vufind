@@ -6,7 +6,7 @@
       <div class="pinned_news">
         <?php if ($pin->enclosure!=null || $pin->enclosure!='') : ?>
           <div class="news_pic">
-            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60">
+            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60" alt="<?=$pin->author?>">
           </div>
         <?php endif; ?>
         <span class="newsdate">
@@ -23,7 +23,7 @@
       <div class="news">
         <?php if ($news->enclosure!=null || $news->enclosure!='') : ?>
           <div class="news_pic">
-            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto">
+            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto" alt="<?=$news->author?>">
           </div>
         <?php endif; ?>
         <span class="newsdate">
