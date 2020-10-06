@@ -18,10 +18,13 @@
     <li><a href="<?=$this->url('content-page', ['page' => 'kontakt'])?>"><?=$this->transEsc('Contact')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'suchen'])?>"><?=$this->transEsc('Search in SIS Portal')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'faq'])?>"><?=$this->transEsc('FAQ')?></a></li>
-    <li><a href="<?=$this->url('content-page', ['page' => 'news'])?>"><?=$this->transEsc('News')?></a>&ensp;<font color="#4f81bd">/</font>&ensp;
+    <li><a href="<?=$this->url('content-page', ['page' => 'news'])?>"><?=$this->transEsc('News')?></a>&ensp;<font color="#004393">/</font>&ensp;
       <a target="_blank" href="https://www.facebook.com/Fachinformationsdienst-Darstellende-Kunst-1740840716155321" aria-label="Facebook Link">
         <span class="fa fa-facebook-square"></span>
-      </a>
+      </a>&ensp;<font color="#004393">/</font>&ensp;
+        <a target="_blank" href="https://twitter.com/fid_dk" aria-label="Twitter Link">
+          <span class="fa fa-twitter"></span>
+        </a>
     </li>
       <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
         <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
