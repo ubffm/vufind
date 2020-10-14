@@ -68,7 +68,12 @@ class ContentController extends \VuFind\Controller\ContentController
             $view->action = $this->params()->fromPost('action');
             if (empty($view->email) || empty($view->action)) {
               $this->flashMessenger()->addMessage('bulk_error_missing', 'error');
-              return;
+              return $view;
+            }
+            $validator = new \Zend\Validator\EmailAddress();
+            if (!$validator->isValid($view->email)) {
+              $this->flashMessenger()->addMessage('Email address is invalid', 'error');
+              return $view;
             }
 
             // These settings are set in the feedback settion of your config.ini
