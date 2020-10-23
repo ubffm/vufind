@@ -20,6 +20,7 @@
     <?=$this->render("news/stream.phtml")?>
     <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>
     </div>
+    <div class="well well-lg clearfix" style="border: 2px solid red;"><i class="fa fa-plug" aria-hidden="true"></i> <?=$this->transEsc("Maintenance")?></div>
   </div>
   <h4 id="coop"><b>Kooperationen</b></h4>
   <?=$this->render("dataprovider/logoCarousel.phtml")?>
