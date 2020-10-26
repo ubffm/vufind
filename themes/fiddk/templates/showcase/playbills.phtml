@@ -1,7 +1,7 @@
 <?php // Set page title.
 $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
-<h2>Theaterzettel</h2>
+<h2>Themenportal Theaterzettel im FID Darstellende Kunst</h2>
 
 <div class="card">
   <p>Der Fachinformationsdienst Darstellende Kunst stellt Ihnen eine Auswahl an Informationsquellen zur Gattung Theaterzettel zur Verfügung.
@@ -9,8 +9,10 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
   sowie dem Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf
   finden Sie ein Auswahl an Fachliteratur sowie weiterführende Links zu Theaterzettel-Projekten im deutschsprachigen Raum.</p>
   <p>Sie haben Ergänzungen zur Auswahl oder benötigen Hilfe bei Ihrer Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
+</div>
+<div class="card">
   <h3>Theaterzettel</h3>
-  <p>Theaterzettel sind Plakate bzw. Zettel, die ein theatrales Ereignis ankündigen. Zumeist sehr kurzfristig produziert wird der Theaterzettel
+  <p><a target="_blank" href="https://de.wikipedia.org/wiki/Theaterzettel">Theaterzettel</a> sind Plakate bzw. Zettel, die ein theatrales Ereignis ankündigen. Zumeist sehr kurzfristig produziert wird der Theaterzettel
     am Tag der Aufführung (oder am Tag zuvor) im Theater und über die Stadt verteilt aufgehängt, sowie durch Zettelträger in einzelne Haushalte
     (z.B. <a target="_blank" href="https://de.wikipedia.org/wiki/Theaterabonnement">Abonnenten</a>) gebracht. Folgende Informationen kündigt der
     Theaterzettel an: der Name des Theaters bzw. Aufführungsort, das Datum der Aufführung, oft auch Beginn und Ende der Aufführung, der oder
@@ -30,20 +32,21 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
     und nicht einzelnen, erfasst. In einzelnen Digitalisierungsprojekten der letzten Jahrzehnte wurden Theaterzettelsammlungen systematisch
     erschlossen und teilweise mit weiterführenden Informationen angereichert. Einen Überblick – eine Art Topographie – über die
     Sammlungsbestände im deutschsprachigen Raum ist ein wünschenswertes Desiderat.</p>
+  <p><a target="_blank" href="http://d-nb.info/gnd/4185060-9">GND http://d-nb.info/gnd/4185060-9</a></p>
 </div>
 <div class="card">
   <h3>Literaturhinweise</h3>
   <ul>
     <li>Cepl-Kaufmann, Gertrude: „Zum kulturellen Stellenwert von Theaterzetteln“, in: Flugblätter von der frühen Neuzeit bis zur Gegenwart als kulturhistorische
-      Quellen und bibliothekarische Sondermaterialien, hg. von Christiane Caemmerer, Jörg Jungmayr und Eef Overgaauw. Frankfurt a. M. u. a.: Peter Lang 2010, S. 127–157.</li>
-    <li>Eder, Ruth (Hg.): Theaterzettel. Dortmund: Harenberg 1980.</li>
-    <li>Hänsel, Johann-Richard: Die Geschichte des Theaterzettels und seine Wirkung in der Öffent-lichkeit. Berlin, Freie Universität, Hochschulschrift 1959.</li>
-    <li>Korte, Hermann, Hans-Joachim Jakob und Bastian Dewenter (Hgg.): Medien der Theatergeschichte des 18. und 19. Jahrhunderts. Heidelberg: Universitätsverlag
+      Quellen und bibliothekarische Sondermaterialien, hg. von Christiane Caemmerer, Jörg Jungmayr und Eef Overgaauw. Frankfurt a. M. u. a.: Peter Lang 2010, S. 127–157.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?lookfor=Eder%2C+Ruth&type=AllFields">Eder, Ruth (Hg.): Theaterzettel. Dortmund: Harenberg 1980.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Die+Geschichte+des+Theaterzettels+&type0%5B%5D=AllFields&lookfor0%5B%5D=H%C3%A4nsel%2C+Johann-Richard&type0%5B%5D=Author">Hänsel, Johann-Richard: Die Geschichte des Theaterzettels und seine Wirkung in der Öffent-lichkeit. Berlin, Freie Universität, Hochschulschrift 1959.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Medien+der+Theatergeschichte+des+18.+und+19.+Jahrhunderts&type0%5B%5D=AllFields&lookfor0%5B%5D=Korte%2C+Hermann&type0%5B%5D=Author">Korte, Hermann, Hans-Joachim Jakob und Bastian Dewenter (Hgg.): Medien der Theatergeschichte des 18. und 19. Jahrhunderts. Heidelberg: Universitätsverlag
       Winter 2015 (= Proszenium. Beiträge zur historischen Theaterpublikumsforschung 3).</li>
-    <li>Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen. Erschließung, Digitalisierung, Forschung. Wien: Hollitzer Verlag 2012 (= Bibliographica 1).</li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Theater+-+Zettel+-+Sammlungen+&type0%5B%5D=AllFields&lookfor0%5B%5D=Pernerstorfer%2C+Matthias+Johannes+&type0%5B%5D=Author">Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen. Erschließung, Digitalisierung, Forschung. Wien: Hollitzer Verlag 2012 (= Bibliographica 1).</a></li>
     <li>Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen 2. Bestände, Erschließung, Forschung. Vienna: Hollitzer 2015 (= Bibliographica 2).</li>
-    <li>Pies, Eike: Einem hocherfreuten Publikum wird heute präsentiret eine kleine Chronik des Theaterzettels. Mit 29 Beispielen versetzt und vorgestellt von Eike Pies.
-      Solingen: E.&U. Brockhaus 2000.</li>
+    <li><a href="<?=$this->url('search-results')?>?lookfor0%5B%5D=Einem+hocherfreuten+Publikum+wird+heute+pr%C3%A4sentiret+eine+kleine+Chronik+des+Theaterzettels&type0%5B%5D=Title">Pies, Eike: Einem hocherfreuten Publikum wird heute präsentiret eine kleine Chronik des Theaterzettels. Mit 29 Beispielen versetzt und vorgestellt von Eike Pies.
+      Solingen: E.&U. Brockhaus 2000.</a></li>
   </ul>
   <h3>Weiterführende Links</h3>
     <ul>
