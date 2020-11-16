@@ -215,15 +215,16 @@ div.mainbody > div.result:not(.last) {
 }
 
 .badge {
-    color: @grey;
-    border: 1px solid @grey;
+    color: @darkgrey;
+    font-size: inherit;
+    border: 1px solid @darkgrey;
     background-color: @white;
     border-radius: 10px;
 }
 
 a.badge-secondary {
-  color: @grey;
-  border: 1px solid @grey;
+  color: @darkgrey;
+  border: 1px solid @darkgrey;
   &:hover {
     color: @darkprimary-color;
     text-decoration: underline;
@@ -359,6 +360,15 @@ div.card {
 
 a[target="_blank"].no-symbol::after {
   display: none;
+}
+
+div.flexing {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  .item {
+    flex-basis: 49%;
+  }
 }
 
 div.flex-content {

@@ -2,10 +2,22 @@
 <?php if (count($recommend) == 1): ?>
   <?php $driver = $recommend[0];
         $years = date('Y') - $driver->getYear();?>
-  <div class="card record">
-    <h3><?=$this->translate('PlaybillOTD')?></h3>
-    <p><?=$this->translate('OTD', ['%%years%%' => $years])?></p><br/>
-    <?=$this->record($driver)->getCoreMetadata()?>
+  <div class="card item">
+    <div class="flexing">
+      <div class="item">
+        <h4><?=$this->translate('PlaybillOTD')?></h4>
+        <p><?=$this->translate('OTD', ['%%years%%' => $years])?> <b><?=$this->record($driver)->getTitleHtml()?></b></p>
+      </div>
+    <?php
+      $coverDetails = $this->record($driver)->getCoverDetails('result-list', 'medium', $this->recordLink()->getUrl($driver));
+      $cover = $coverDetails['html'];
+    ?>
+    <?php if ($cover): ?>
+      <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col item">
+        <?=$cover?>
+      </div>
+    <?php endif; ?>
+  </div>
   </div>
 <?php elseif (count($recommend)> 0): ?>
 <div class="random">

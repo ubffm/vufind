@@ -3,12 +3,17 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
 
 <h2>Themenportal Theaterzettel im FID Darstellende Kunst</h2>
 
-<div class="card">
+<div class="flexing">
+<div class="card item">
   <p>Der Fachinformationsdienst Darstellende Kunst stellt Ihnen eine Auswahl an Informationsquellen zur Gattung Theaterzettel zur Verfügung.
-  Neben den aggregierten Datenbeständen „Theater und Musik in Weimar1751-1990“, „Theaterzettel-Sammlung der Lippischen Landesbibliothek“
+  Neben den aggregierten Datenbeständen „Theater und Musik in Weimar 1751-1990“, „Theaterzettel-Sammlung der Lippischen Landesbibliothek“
   sowie dem Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf
-  finden Sie ein Auswahl an Fachliteratur sowie weiterführende Links zu Theaterzettel-Projekten im deutschsprachigen Raum.</p>
+  finden Sie eine Auswahl an Fachliteratur sowie weiterführende Links zu Theaterzettel-Projekten im deutschsprachigen Raum.</p>
   <p>Sie haben Ergänzungen zur Auswahl oder benötigen Hilfe bei Ihrer Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
+</div>
+<?php foreach ($this->results->getRecommendations('side') as $current):?>
+  <?=$this->recommend($current);?>
+<?php endforeach;?>
 </div>
 <div class="card">
   <h3>Theaterzettel</h3>
@@ -45,16 +50,33 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
       Winter 2015 (= Proszenium. Beiträge zur historischen Theaterpublikumsforschung 3).</li>
     <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Theater+-+Zettel+-+Sammlungen+&type0%5B%5D=AllFields&lookfor0%5B%5D=Pernerstorfer%2C+Matthias+Johannes+&type0%5B%5D=Author">Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen. Erschließung, Digitalisierung, Forschung. Wien: Hollitzer Verlag 2012 (= Bibliographica 1).</a></li>
     <li>Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen 2. Bestände, Erschließung, Forschung. Vienna: Hollitzer 2015 (= Bibliographica 2).</li>
+    <li>Pernerstorfer, Matthias: „Mit gnädigster Bewilligung wird heute…“ Aktuelle Entwicklungen in der Erschließung und Digitalisierung von Theaterzetteln. Erschienen in: Neuböck, Gregor (Hg.): Digitalisierung in Bibliotheken : viel mehr als nur Bücher scannen. Berlin; Boston : De Gruyter Saur 2018, S. 173-204.</li>
     <li><a href="<?=$this->url('search-results')?>?lookfor0%5B%5D=Einem+hocherfreuten+Publikum+wird+heute+pr%C3%A4sentiret+eine+kleine+Chronik+des+Theaterzettels&type0%5B%5D=Title">Pies, Eike: Einem hocherfreuten Publikum wird heute präsentiret eine kleine Chronik des Theaterzettels. Mit 29 Beispielen versetzt und vorgestellt von Eike Pies.
       Solingen: E.&U. Brockhaus 2000.</a></li>
   </ul>
+  <h3>Digitale Sammlungen von Theaterzetteln (deutschsprachiger Raum)</h3>
+    <ul>
+      <li><a target="_blank" href="http://anno.onb.ac.at/">ANNO - AustriaN Newspapers Online</a>. Erläuterung: Umfangreiche digitale Sammlung von Theaterzetteln vom Wiener Burgtheater (zw. 1800-1949).</li>
+      <li><a target="_blank" href="http://berlinerklassik.bbaw.de/BK/theater/Suche.html">Berliner Theaterzettel</a> via <a target="_blank" href="http://berlinerklassik.bbaw.de/BK/">Datenbanken Berliner Klassik</a></li>
+      <li><a target="_blank" href="http://brema.suub.uni-bremen.de/suubtheater">Bremer Theaterzettel</a></li>
+      <li><a target="_blank" href="http://www.llb-detmold.de/sammlungen/musiksammlung/theatersammlung.html">Detmolder Theaterzettel</a> Digitalisate auffindbar in der <a target="_blank" href="http://www.llb-detmold.de/literatursuche/regionaldok-lippe.html">Lippische Bibliographie</a></li>
+      <li><a target="_blank" href="http://digital.ub.uni-duesseldorf.de/theaterzettel">Düsseldorfer Theaterzettel</a></li>
+      <li><a target="_blank" href="https://digital.blb-karlsruhe.de/2949538">Karlsruher Theaterzettel</a></li>
+      <li><a target="_blank" href="http://digital.lb-oldenburg.de/zs/nav/classification/365898">Oldenburger Theaterzettel</a></li>
+      <li><a target="_blank" href="http://www.landesarchiv-bw.de/plink/?f=2-362879">Stuttgarter Theaterzettel</a></li>
+      <li><a target="_blank" href="http://www.theaterzettel-weimar.de/home.html">Theater und Musik in Weimar 1754-1990</a></li>
+      <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=wtz">Wiener Theaterzettel der Oper und des Burgtheaters</a> in ANNO - AustriaN Newspapers Online</li>
+      <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=taw">Theaterzettel vom Theater an der Wien</a> in ANNO - AustriaN Newspapers Online</li>
+      <li><a target="_blank" href="https://www.theatermuseum.at/onlinesammlung/">Theatermuseum Wien</a></li>
+      <li><a target="_blank" href="http://www.archivinformationssystem.at/detail.aspx?ID=1451">Theaterzettelsammlung Emmerich Wagner</a></li>
+      <li><a target="_blank" href="http://theaterzettel.franconica.uni-wuerzburg.de/">Würzburger Theaterzettel</a></li>
+    </ul>
   <h3>Weiterführende Links</h3>
     <ul>
       <li><a target="_blank" href="https://www.theaterzettel.at/">THEO Theaterzettel Online. Ein Digitalisierungskonzept am Beispiel von Wiener Theaterzetteln des 19. Jahrhunderts</a></li>
-      <li><a target="_blank" href="http://anno.onb.ac.at/">ANNO - AustriaN Newspapers Online</a>. Erläuterung: Umfangreiche digitale Sammlung von Theaterzetteln vom Wiener Burgtheater (zw. 1800-1949).</li>
+      <li><a target="_blank" href="https://archiv.adk.de/bigobjekt/17289">Theaterzettel-Sammlung (gebunden)</a> im Archiv der <a target="_blank" href="https://de.wikipedia.org/wiki/Akademie_der_K%C3%BCnste_(Berlin)">Akademie der Künste, Berlin</a></li>
+      <li><a target="_blank" href="http://staatsbibliothek-berlin.de/de/die-staatsbibliothek/abteilungen/historische-drucke/sammlungen/bestaende/theaterzettel/">Sammlung der Theaterzettel der Staatsbibliothek Berlin</a></li>
+      <li><a target="_blank" href="https://www.libcrowds.com/collection/playbills">Theaterzettel der British Library</a></li>
+      <li><a target="_blank" href="http://www.ulm.de/sixcms/media.php/29/G3_1670-1899.pdf">Findbuch zu Theaterzetteln des Stadtarchivs Ulm</a></li>
     </ul>
 </div>
-
-<?php foreach ($this->results->getRecommendations('side') as $current):?>
-  <?=$this->recommend($current);?>
-<?php endforeach;?>
