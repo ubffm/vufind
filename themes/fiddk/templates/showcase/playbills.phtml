@@ -2,13 +2,17 @@
 $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID Darstellende Kunst')); ?>
 
 <h2>Themenportal Theaterzettel im FID Darstellende Kunst</h2>
-
+<!-- &filter[]=~format%3A"Theaterzettel" -->
 <div class="flexing">
 <div class="card item">
   <p>Der Fachinformationsdienst Darstellende Kunst stellt Ihnen eine Auswahl an Informationsquellen zur Gattung Theaterzettel zur Verfügung.
-  Neben den aggregierten Datenbeständen „Theater und Musik in Weimar 1751-1990“, „Theaterzettel-Sammlung der Lippischen Landesbibliothek“
-  sowie dem Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf
-  finden Sie eine Auswahl an Fachliteratur sowie weiterführende Links zu Theaterzettel-Projekten im deutschsprachigen Raum.</p>
+  Aktuell können Sie in den folgenden Datenbeständen recherchieren:
+  <ul>
+    <li>Theater und Musik in Weimar 1751-1990</li>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FUniversitäts-+und+Landesbibliothek+Düsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
+    <li>Theaterzettel-Sammlung der Lippischen Landesbibliothek</li>
+  </ul>
+  Darüber hinaus haben wir Ihnen eine Auswahl an Fachliteratur sowie weiterführende Links zu Projekten und Digitalen Sammlungen von Theaterzetteln im deutschsprachigen Raum zusammengestellt.</p>
   <p>Sie haben Ergänzungen zur Auswahl oder benötigen Hilfe bei Ihrer Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
 </div>
 <?php foreach ($this->results->getRecommendations('side') as $current):?>
@@ -26,6 +30,7 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
   <p>Den Höhepunkt seiner Verbreitung hatte das Medium Theaterzettel im 18. und 19. Jahrhundert. Mit Beginn des 20. Jahrhunderts übernahm das
     Programmheft die Funktion des Theaterzettels. Die öffentlich ausgehängten Zettel wurden sukzessive durch großformatige Plakate ersetzt,
     und auch die Verteilung der Theaterzettel an einzelne Haushalte wurde eingestellt.</p>
+    <br/>
   <h3>Forschung und Archivierung</h3>
   <p>Das Medium Theaterzettel ist eine zentrale Quelle für die Repertoireforschung. Sie geben Auskunft über den täglichen Theater- bzw.
     Spielbetrieb und vermitteln ein Bild der Aufführungspraxis. Neben der Theaterwissenschaft und -historiographie ist es vor allem die
@@ -37,7 +42,7 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
     und nicht einzelnen, erfasst. In einzelnen Digitalisierungsprojekten der letzten Jahrzehnte wurden Theaterzettelsammlungen systematisch
     erschlossen und teilweise mit weiterführenden Informationen angereichert. Einen Überblick – eine Art Topographie – über die
     Sammlungsbestände im deutschsprachigen Raum ist ein wünschenswertes Desiderat.</p>
-  <p><a target="_blank" href="http://d-nb.info/gnd/4185060-9">GND http://d-nb.info/gnd/4185060-9</a></p>
+  <p><a target="_blank" href="http://d-nb.info/gnd/4185060-9">GND-Eintrag Theaterzettel > http://d-nb.info/gnd/4185060-9</a></p>
 </div>
 <div class="card">
   <h3>Literaturhinweise</h3>
@@ -57,6 +62,10 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
   <h3>Digitale Sammlungen von Theaterzetteln (deutschsprachiger Raum)</h3>
     <ul>
       <li><a target="_blank" href="http://anno.onb.ac.at/">ANNO - AustriaN Newspapers Online</a>. Erläuterung: Umfangreiche digitale Sammlung von Theaterzetteln vom Wiener Burgtheater (zw. 1800-1949).</li>
+      <ul>
+        <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=wtz">Wiener Theaterzettel der Oper und des Burgtheaters</a></li>
+        <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=taw">Theaterzettel vom Theater an der Wien</a></li>
+      </ul>
       <li><a target="_blank" href="http://berlinerklassik.bbaw.de/BK/theater/Suche.html">Berliner Theaterzettel</a> via <a target="_blank" href="http://berlinerklassik.bbaw.de/BK/">Datenbanken Berliner Klassik</a></li>
       <li><a target="_blank" href="http://brema.suub.uni-bremen.de/suubtheater">Bremer Theaterzettel</a></li>
       <li><a target="_blank" href="http://www.llb-detmold.de/sammlungen/musiksammlung/theatersammlung.html">Detmolder Theaterzettel</a> Digitalisate auffindbar in der <a target="_blank" href="http://www.llb-detmold.de/literatursuche/regionaldok-lippe.html">Lippische Bibliographie</a></li>
@@ -65,8 +74,6 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
       <li><a target="_blank" href="http://digital.lb-oldenburg.de/zs/nav/classification/365898">Oldenburger Theaterzettel</a></li>
       <li><a target="_blank" href="http://www.landesarchiv-bw.de/plink/?f=2-362879">Stuttgarter Theaterzettel</a></li>
       <li><a target="_blank" href="http://www.theaterzettel-weimar.de/home.html">Theater und Musik in Weimar 1754-1990</a></li>
-      <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=wtz">Wiener Theaterzettel der Oper und des Burgtheaters</a> in ANNO - AustriaN Newspapers Online</li>
-      <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=taw">Theaterzettel vom Theater an der Wien</a> in ANNO - AustriaN Newspapers Online</li>
       <li><a target="_blank" href="https://www.theatermuseum.at/onlinesammlung/">Theatermuseum Wien</a></li>
       <li><a target="_blank" href="http://www.archivinformationssystem.at/detail.aspx?ID=1451">Theaterzettelsammlung Emmerich Wagner</a></li>
       <li><a target="_blank" href="http://theaterzettel.franconica.uni-wuerzburg.de/">Würzburger Theaterzettel</a></li>
