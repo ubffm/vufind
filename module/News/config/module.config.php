@@ -1,5 +1,5 @@
 <?php
-namespace News\Module\Configuration;
+namespace News\Module\Config;
 
 $config = [
   'controllers' => [
@@ -8,6 +8,7 @@ $config = [
     ],
     'aliases' => [
       'news' => 'News\Controller\NewsController',
+      'News' => 'News\Controller\NewsController',
     ]
   ],
   'vufind' => [
@@ -54,7 +55,7 @@ $routeGenerator->addStaticRoutes($config, $staticRoutes);
 
 // Add the home route last
 $config['router']['routes']['home'] = [
-    'type' => 'Zend\Router\Http\Literal',
+    'type' => 'Laminas\Router\Http\Literal',
     'options' => [
         'route'    => '/',
         'defaults' => [

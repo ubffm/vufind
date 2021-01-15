@@ -1,0 +1,7 @@
+<span class="newsdate"><?php if ($data->startdate!=null) echo date_format(date_create($data->startdate), "d.m.Y");?> - <?=htmlentities($data->category)?><br>
+    <?php preg_match("/.+\((.+)\)/",$data->author,$match); ?>
+    <b><?=htmlentities($match[1])?></b><br>
+</span>
+<a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$data->guid?>"><?=htmlentities($data->title)?></a><br>
+<?=htmlentities($data->description)?><br>
+<a href="<?=$this->url('news-article')?>?guid=<?=$data->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>

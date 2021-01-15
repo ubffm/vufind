@@ -1,10 +1,10 @@
 <?php
 /**
- * Factory for Solr search results objects.
+ * Factory for HeadThemeResources view helper.
  *
  * PHP version 7
  *
- * Copyright (C) Villanova University 2018.
+ * Copyright (C) Villanova University 2019.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -20,28 +20,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  Search_Solr
+ * @package  Theme
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
+ * @link     https://vufind.org Main Site
  */
-namespace VuFind\Search\Solr;
+namespace VuFindTheme\View\Helper;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Factory for Solr search results objects.
+ * Factory for HeadThemeResources view helper.
  *
  * @category VuFind
- * @package  Search_Solr
+ * @package  Theme
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
+ * @link     https://vufind.org Main Site
  */
-class ResultsFactory extends \VuFind\Search\Results\ResultsFactory
+class HeadThemeResourcesFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -55,28 +56,16 @@ class ResultsFactory extends \VuFind\Search\Results\ResultsFactory
      * @throws ServiceNotFoundException if unable to resolve the service.
      * @throws ServiceNotCreatedException if an exception is raised when
      * creating a service.
-     * @throws ContainerException&\Throwable if any other error occurs
+     * @throws ContainerException if any other error occurs
      */
-    public function __invoke(
-        ContainerInterface $container,
-        $requestedName,
+    public function __invoke(ContainerInterface $container, $requestedName,
         array $options = null
     ) {
-        $solr = parent::__invoke($container, $requestedName, $options);
-        $config = $container->get(\VuFind\Config\PluginManager::class)
-            ->get('config');
-        $solr->setSpellingProcessor(
-            new \VuFind\Search\Solr\SpellingProcessor(
-                $config->Spelling ?? null,
-                $solr->getOptions()->getSpellingNormalizer()
-            )
+        if (!empty($options)) {
+            throw new \Exception('Unexpected options sent to factory.');
+        }
+        return new $requestedName(
+            $container->get(\VuFindTheme\ResourceContainer::class)
         );
-        $solr->setHierarchicalFacetHelper(
-            $container->get(\VuFind\Search\Solr\HierarchicalFacetHelper::class)
-        );
-        $solr->setHierarchicalFacetHelper(
-            $container->get(\VuFind\Search\Solr\HierarchicalFacetHelper::class)
-        );
-        return $solr;
     }
 }

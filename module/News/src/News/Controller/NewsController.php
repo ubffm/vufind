@@ -2,15 +2,15 @@
 
 namespace News\Controller;
 
-use \Zend\Feed\Writer\Feed;
-use \Zend\Feed\Writer\Writer as FeedWriter;
+use \Laminas\Feed\Writer\Feed;
+use \Laminas\Feed\Writer\Writer as FeedWriter;
 
 class NewsController extends \VuFind\Controller\AbstractBase
 {
 
     /**
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Laminas\View\Model\ViewModel
      */
 
     private function articleLink($guid=null) {
@@ -174,9 +174,6 @@ class NewsController extends \VuFind\Controller\AbstractBase
               );
     }
 
-    /* Generate RSS Feed without Zend Feed Writer as it is not possible to set the
-    source url according to rss 2.0 specification and to avoid unnecessary extensions.
-    */
     public function rssAction()
     {
         $config = $this->getConfig();
@@ -193,7 +190,7 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $feed->setLanguage('de-de');
         $feed->setCopyright('Fachinformationsdienst Darstellende Kunst');
         $feed->setDateModified(time());
-        $feed->setImage(['uri' => 'https://www.performing-arts.eu/themes/fiddk/images/fid-dk_logo.gif','link' => $url,'title' => 'Fachinformationsdienst Darstellende Kunst']);
+        $feed->setImage(['uri' => 'https://www.performing-arts.eu/themes/fiddk/images/fid-dk_claim_s.png','link' => $url,'title' => 'Fachinformationsdienst Darstellende Kunst']);
 
         $news = $this->getTable('news');
         $newslist = $news->getNewsList();

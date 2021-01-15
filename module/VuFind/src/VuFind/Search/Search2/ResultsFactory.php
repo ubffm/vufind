@@ -74,6 +74,9 @@ class ResultsFactory extends \VuFind\Search\Results\ResultsFactory
         $solr->setHierarchicalFacetHelper(
             $container->get(\VuFind\Search\Solr\HierarchicalFacetHelper::class)
         );
+        $solr->setHierarchicalFacetHelper(
+            $container->get(\VuFind\Search\Solr\HierarchicalFacetHelper::class)
+        );
         return $solr;
     }
 }

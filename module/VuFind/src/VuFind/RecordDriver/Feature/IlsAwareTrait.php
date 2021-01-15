@@ -31,6 +31,8 @@ namespace VuFind\RecordDriver\Feature;
 
 use VuFind\Exception\ILS as ILSException;
 
+use VuFind\Exception\ILS as ILSException;
+
 /**
  * ILS support for MARC and other types of records.
  *

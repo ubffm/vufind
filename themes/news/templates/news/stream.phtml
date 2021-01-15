@@ -3,39 +3,14 @@
   <div class="stream well well-lg clearfix">
     <p class="title"><?=$this->transEsc("Newsstream")?></p>
     <?php foreach ($pinnedlist as $pin) : ?>
-      <div class="pinned_news">
-        <?php if ($pin->enclosure!=null || $pin->enclosure!='') : ?>
-          <?php preg_match("/.+\((.+)\)/",$pin->author,$match); ?>
-          <div class="news_pic">
-            <img src="<?=$this->imageLink($pin->enclosure)?>" width="80" height="60" alt="<?=$match[1]?>">
-          </div>
-        <?php endif; ?>
-        <span class="newsdate">
-          <?php if ($pin->startdate!=null) : ?>
-            <?=date_format(date_create($pin->startdate), "d.m.Y") . ' - ' . $this->transEsc('news::'.$pin->category)?>
-          <?php endif; ?>
-        </span><br/>
-        <b><?=htmlentities($pin->title)?></b><br/>
-        <?=htmlentities(substr($pin->description,0, 200)).'...'?><br/>
-        <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>" data-lightbox-ignore><?=$this->transEsc("news::FurtherInfo")?></a>
+      <div class="news">
+        <img src="<?=$this->imageLink('pin.png')?>">
+        <?=$this->render("news/newsitem_stream.phtml", ['data' => $pin])?>
       </div>
     <?php endforeach; ?>
     <?php foreach ($newslist as $news) : ?>
       <div class="news">
-        <?php if ($news->enclosure!=null || $news->enclosure!='') : ?>
-          <?php preg_match("/.+\((.+)\)/",$news->author,$match); ?>
-          <div class="news_pic">
-            <img src="<?=$this->imageLink($news->enclosure)?>" style="max-width:100%" height="auto" alt="<?=$match[1]?>">
-          </div>
-        <?php endif; ?>
-        <span class="newsdate">
-          <?php if ($news->startdate!=null) : ?>
-           <?=date_format(date_create($news->startdate), "d.m.Y") . ' - ' . $this->transEsc('news::'.$news->category)?>
-          <?php endif; ?>
-        </span><br/>
-        <b><?=htmlentities($news->title)?></b><br/>
-        <?=htmlentities(substr($news->description,0, 200)).'...'?><br/>
-        <a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>" data-lightbox-ignore><?=$this->transEsc("news::FurtherInfo")?></a>
+        <?=$this->render("news/newsitem_stream.phtml", ['data' => $news])?>      
       </div>
     <?php endforeach; ?>
   </div>

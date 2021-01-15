@@ -22,6 +22,7 @@
  * @category VuFind
  * @package  Channels
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Brent Palmer <brent-palmer@icpl.org>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
@@ -39,6 +40,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
  * @category VuFind
  * @package  Channels
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Brent Palmer <brent-palmer@icpl.org>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */

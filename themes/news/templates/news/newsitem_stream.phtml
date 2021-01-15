@@ -1,0 +1,14 @@
+<?php if ($data->enclosure!=null || $data->enclosure!='') : ?>
+  <?php preg_match("/.+\((.+)\)/",$data->author,$match); ?>
+  <div class="news_pic">
+    <img src="<?=$this->imageLink($data->enclosure)?>" style="max-width:100%" height="auto" alt="<?=$match[1]?>">
+  </div>
+<?php endif; ?>
+<span class="newsdate">
+  <?php if ($data->startdate!=null) : ?>
+    <?=date_format(date_create($data->startdate), "d.m.Y") . ' - ' . $this->transEsc('news::'.$data->category)?>
+  <?php endif; ?>
+</span><br/>
+<b><?=htmlentities($data->title)?></b><br/>
+<?=htmlentities(substr($data->description,0, 200)).'...'?><br/>
+<a href="<?=$this->url('news-article')?>?guid=<?=$data->guid?>" data-lightbox-ignore><?=$this->transEsc("news::FurtherInfo")?></a>

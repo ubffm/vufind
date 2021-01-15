@@ -1,0 +1,24 @@
+<table class="newstable table-striped">
+  <tr>
+    <th><?=$this->transEsc('Title')?></th>
+    <th><?=$this->transEsc('news::Editor')?></th>
+    <th><?=$this->transEsc('news::Startdate')?></th>
+    <th><?=$this->transEsc('news::Enddate')?></th>
+    <th><?=$this->transEsc('Edit')?></th>
+    <th><?=$this->transEsc('Delete')?></th>
+    <th><?=$this->transEsc('news::Active')?></th>
+    <th><?=$this->transEsc('news::Pin')?></th>
+  </tr>
+  <?php foreach ($datalist as $news) : ?>
+    <tr>
+      <td><a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a></td>
+      <td><?=$news->user?></td>
+      <td><?php if ($news->startdate!=null) { echo date_format(date_create($news->startdate), "d.m.Y");}?></td>
+      <td><?php if ($news->enddate!=null) { echo date_format(date_create($news->enddate), "d.m.Y");}?></td>
+      <td><a href="<?=$this->url('news-edit')?>?id=<?=$news->id?>"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="<?=$this->url('news-list')?>?do=del&amp;id=<?=$news->id?>"><i class="fa fa-trash-o"></i></a></td>
+      <td><a href="<?=$this->url('news-list')?>?do=act&amp;id=<?=$news->id?>"><?php if ($news->active==true):?><i class="fa fa-check"></i><?php else: ?><i class="fa fa-ban"></i><?php endif;?></a></td>
+      <td><a href="<?=$this->url('news-list')?>?do=pin&amp;id=<?=$news->id?>"><?php if ($news->pin==true):?><i class="fa fa-ban"></i><?php else: ?><i class="fa fa-check"></i><?php endif; ?></a></td>
+    </tr>
+  <?php endforeach; ?>
+</table>

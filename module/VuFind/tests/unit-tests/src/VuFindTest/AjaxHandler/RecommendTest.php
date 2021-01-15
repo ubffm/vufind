@@ -27,6 +27,7 @@
  */
 namespace VuFindTest\AjaxHandler;
 
+use Laminas\View\Renderer\PhpRenderer;
 use VuFind\AjaxHandler\Recommend;
 use VuFind\AjaxHandler\RecommendFactory;
 use VuFind\Recommend\PluginManager;

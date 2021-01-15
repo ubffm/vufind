@@ -39,6 +39,8 @@ namespace VuFindTest\Mink;
  */
 class RecordTest extends \VuFindTest\Integration\MinkTestCase
 {
+    use \VuFindTest\Unit\AutoRetryTrait;
+
     /**
      * Test record tabs for a particular ID.
      *

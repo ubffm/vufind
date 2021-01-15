@@ -123,6 +123,10 @@ abstract class AbstractAPI extends AbstractBase implements HttpServiceAwareInter
             $this->debugRequest($method, $path, $params, $req_headers);
         }
 
+        if ($this->logger) {
+            $this->debugRequest($method, $path, $params, $req_headers);
+        }
+
         // Add params
         if ($method == 'GET') {
             $client->setParameterGet($params);

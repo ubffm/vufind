@@ -39,6 +39,8 @@ namespace VuFindTest\Mink;
  */
 class CollectionsTest extends \VuFindTest\Integration\MinkTestCase
 {
+    use \VuFindTest\Unit\AutoRetryTrait;
+
     /**
      * Go to a collection page.
      *

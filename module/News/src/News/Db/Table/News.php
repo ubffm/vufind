@@ -22,6 +22,7 @@
  * @category VuFind
  * @package  Db_Table
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
@@ -29,7 +30,7 @@ namespace News\Db\Table;
 
 use VuFind\Db\Row\RowGateway;
 use VuFind\Db\Table\PluginManager;
-use Zend\Db\Adapter\Adapter;
+use Laminas\Db\Adapter\Adapter;
 
 /**
  * Table Definition for news
@@ -37,6 +38,7 @@ use Zend\Db\Adapter\Adapter;
  * @category VuFind
  * @package  Db_Table
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
@@ -48,12 +50,12 @@ class News extends \VuFind\Db\Table\Gateway
      *
      * @param Adapter       $adapter       Database adapter
      * @param PluginManager $tm            Table manager
-     * @param array         $cfg           Zend Framework configuration
+     * @param array         $cfg           Laminas Framework configuration
      * @param RowGateway    $rowObj        Row prototype object (null for default)
      * @param string        $table         Name of database table to interface with
      */
     public function __construct(Adapter $adapter, PluginManager $tm, $cfg,
-        RowGateway $rowObj = null, $table = 'news'
+        ?RowGateway $rowObj = null, $table = 'news'
     ) {
         parent::__construct($adapter, $tm, $cfg, $rowObj, $table);
     }
@@ -87,7 +89,7 @@ class News extends \VuFind\Db\Table\Gateway
     }
 
     /*
-     * Search through articles and find those macthing the searchTerm
+     * Search through articles and find those matching the searchTerm
     */
     public function searchNews($searchTerm)
     {
@@ -168,6 +170,9 @@ class News extends \VuFind\Db\Table\Gateway
        $this->delete($callback);
     }
 
+    /*
+     * Switch boolean values of article on or off (e.g. pin or activation)
+    */
     public function switchValue($value,$id)
     {
       $article = $this->getArticleById($id);

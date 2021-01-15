@@ -1,25 +1,17 @@
 <h2><?=$this->transEsc("news::CurrentNews")?></h2>
-<a class="link" href="<?=$this->url('news-archive')?>"><?=$this->transEsc("news::ArchivedNews")?></a>
+<div class="card">
+  <p><a class="link" href="<?=$this->url('news-archive')?>"><?=$this->transEsc("news::ArchivedNews")?></a></p>
 
-<?php foreach ($pinnedlist as $pin) : ?>
-  <div class="pinned_news">
-    <img src="/vufind/themes/news/images/unpin.png"><span class="newsdate"><?php if ($pin->startdate!=null) echo date_format(date_create($pin->startdate), "d.m.Y");?> - <?=htmlentities($pin->category)?><br>
-    <?php preg_match("/.+\((.+)\)/",$pin->author,$match); ?>
-    <b><?=htmlentities($match[1])?></b><br></span>
-    <a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=htmlentities($pin->title)?></a><br>
-    <?=htmlentities($pin->description)?><br>
-    <a href="<?=$this->url('news-article')?>?guid=<?=$pin->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
-  </div>
-<?php endforeach; ?>
+  <?php foreach ($pinnedlist as $pin) : ?>
+    <div class="news">
+      <img src="<?=$this->imageLink('pin.png')?>">
+      <?=$this->render("news/newsitem.phtml", ['data' => $pin])?>
+    </div>
+  <?php endforeach; ?>
+  <?php foreach ($newslist as $news) : ?>
+    <div class="news">
+      <?=$this->render("news/newsitem.phtml", ['data' => $news])?>
+    </div>
+  <?php endforeach; ?>
 
-<?php foreach ($newslist as $news) : ?>
-<div class="news">
-<span class="newsdate"><?php if ($news->startdate!=null) echo date_format(date_create($news->startdate), "d.m.Y");?> - <?=htmlentities($news->category)?><br>
-<?php preg_match("/.+\((.+)\)/",$news->author,$match); ?>
-<b><?=htmlentities($match[1])?></b><br></span>
-<a class="news_head" href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=htmlentities($news->title)?></a><br>
-<?=htmlentities($news->description)?><br>
-<a href="<?=$this->url('news-article')?>?guid=<?=$news->guid?>"><?=$this->transEsc("news::FurtherInfo")?></a>
 </div>
-
-<?php endforeach; ?>

@@ -2,7 +2,7 @@
 /**
  * Database authentication class
  *
- * PHP version 5
+ * PHP version 7
  *
  * Copyright (C) Villanova University 2010.
  *
@@ -19,31 +19,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @category VuFind2
+ * @category VuFind
  * @package  Authentication
  * @author   Chris Hallberg <challber@villanova.edu>
  * @author   Franck Borel <franck.borel@gbv.de>
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     http://vufind.org/wiki/vufind2:authentication_handlers Wiki
+ * @link     https://vufind.org/wiki/development:plugins:authentication_handlers Wiki
  */
 namespace News\Auth;
-use VuFind\Exception\Auth as AuthException, Zend\Crypt\Password\Bcrypt;
 
 /**
  * Database authentication class
  *
- * @category VuFind2
+ * @category VuFind
  * @package  Authentication
  * @author   Chris Hallberg <challber@villanova.edu>
  * @author   Franck Borel <franck.borel@gbv.de>
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     http://vufind.org/wiki/vufind2:authentication_handlers Wiki
+ * @link     https://vufind.org/wiki/development:plugins:authentication_handlers Wiki
  */
 class Database extends \VuFind\Auth\Database
 {
-    // BEWARE: Changed to false to remove possibility for other users
+    // Only admin user is allowed to log in
     /**
      * Does this authentication method support account creation?
      *
