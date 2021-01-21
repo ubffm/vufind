@@ -22,6 +22,7 @@
  * @category VuFind
  * @package  ContentBlock
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
@@ -33,6 +34,7 @@ namespace Fiddk\ContentBlock;
  * @category VuFind
  * @package  ContentBlock
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
@@ -44,10 +46,7 @@ class PluginManager extends \VuFind\ContentBlock\PluginManager
      * @var array
      */
     protected $aliases = [
-        'statistics' => 'Fiddk\ContentBlock\Statistics',
-        'channels' => 'VuFind\ContentBlock\Channels',
-        'facetlist' => 'VuFind\ContentBlock\FacetList',
-        'ilsstatusmonitor' => 'VuFind\ContentBlock\IlsStatusMonitor',
+        'statistics' => 'Fiddk\ContentBlock\Statistics'
     ];
 
     /**
@@ -57,10 +56,6 @@ class PluginManager extends \VuFind\ContentBlock\PluginManager
      */
     protected $factories = [
         'Fiddk\ContentBlock\Statistics' =>
-          'Fiddk\ContentBlock\StatisticsFactory',
-        'VuFind\ContentBlock\Channels' => 'VuFind\ContentBlock\ChannelsFactory',
-        'VuFind\ContentBlock\FacetList' => 'VuFind\ContentBlock\FacetListFactory',
-        'VuFind\ContentBlock\IlsStatusMonitor' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+          'Fiddk\ContentBlock\StatisticsFactory'
     ];
 }

@@ -151,24 +151,27 @@
    <field name="url" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="thumbnail" type="string" indexed="false" stored="true"/>
    <!-- fid specific fields -->
-   <field name="institution_id" type="string" indexed="true" stored="false"/>
+   <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="institution_facet" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="intermediate" type="boolean" indexed="false" stored="true" multiValued="true"/>
    <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_role" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="event" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="event_id" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="work" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="work_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
    <field name="related_to" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="container_facet" type="string" indexed="true" stored="false" multiValued="true"/>
-
    <field name="archive" type="boolean" indexed="true" stored="false"/>
+
    <!-- Catalog Specific Fields -->
-   <field name="lccn" type="string" indexed="true" stored="true"/>
-   <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/>
+   <!--field name="lccn" type="string" indexed="true" stored="true"/>
+   <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/-->
    <field name="isbn" type="isn" indexed="true" stored="true" multiValued="true"/>
    <field name="issn" type="isn" indexed="true" stored="true" multiValued="true"/>
-   <field name="oclc_num" type="string" indexed="true" stored="true" multiValued="true" />
+   <!--field name="oclc_num" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="callnumber-first" type="string" indexed="true" stored="true"/>
    <field name="callnumber-subject" type="string" indexed="true" stored="true"/>
    <field name="callnumber-label" type="string" indexed="true" stored="true"/>
@@ -190,7 +193,7 @@
    <!-- the author_fuller and author2_fuller fields are deprecated and should no longer be used. -->
    <field name="author_fuller" type="textProper" indexed="true" stored="true" multiValued="true" />
    <field name="author2_fuller" type="textProper" indexed="true" stored="true" multiValued="true" />
-   <field name="author_additional" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="author_additional" type="textProper" indexed="true" stored="true" multiValued="true"/-->
    <field name="title_alt" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_old" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_new" type="text" indexed="true" stored="true" multiValued="true"/>

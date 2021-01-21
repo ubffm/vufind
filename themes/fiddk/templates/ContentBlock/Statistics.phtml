@@ -1,27 +1,29 @@
 <div class="flex-statistics card">
   <div><b><?=$this->transEsc("Researching")?></b><hr id="research"/></div>
-<?php foreach ($this->statistics as $key => $amount): ?>
-  <?php if ($key == "Objects") {
+  <div class="flexing">
+    <?php foreach ($this->statistics as $key => $amount): ?>
+      <?php if ($key == "Objects") {
           $url = $this->url('search-results');
-          $key = "ObjectsAcc";
-          //$icon = "fa-cubes";
+          $pic = "Objects.jpg";
         } elseif ($key == "Agents") {
           $url = $this->url('agentsearch-results');
-          //$icon = "fa-users";
-        } else {
+          $pic = "Agents.jpg";
+        } elseif ($key == "Events") {
           $url = $this->url('eventsearch-results');
-          $key = "EventsAcc";
-        }?>
-  <div>
-    <a href="<?=$url?>">
-      <?=$this->localizedNumber($amount) . ' ' . $this->transEsc($key)?>
-    </a>
+          $pic = "Events.jpg";
+        } else {
+          $url = $this->url('worksearch-results');
+          $pic = "Works.jpg";
+        } ?>
+        <figure class="showcase" style="max-width: 120px;">
+          <a href="<?=$url?>">
+            <img src="<?=$this->imageLink($pic)?>">
+          </a>
+          <figcaption><span class="text"><?=strtoupper($this->transEsc($key))?></span><br/>
+            <a href="<?=$url?>"><?=$this->localizedNumber($amount) . " " . $this->transEsc("Datensätze")?></a>
+          </figcaption>
+        </figure>
+    <?php endforeach; ?>
   </div>
-<?php endforeach; ?>
-<div>
-  <!--hr>
-<i class="fa fa-chevron-circle-right" aria-hidden="true" style="padding-right: 10px;"></i> <a href="<?//=$this->url("showcase-home")?>">
-  <?//=$this->transEsc("Explore")?>
-</a -->
-</div>
+  <div>
 </div>

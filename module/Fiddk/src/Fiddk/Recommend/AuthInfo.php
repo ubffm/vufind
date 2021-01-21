@@ -22,12 +22,14 @@
  * @category VuFind
  * @package  Recommendations
  * @author   Chris Hallberg <challber@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
 namespace Fiddk\Recommend;
 
 use Fiddk\Connection\Lobid;
+use Fiddk\Connection\Wikipedia;
 use VuFindSearch\Query\Query;
 
 /**
@@ -39,6 +41,7 @@ use VuFindSearch\Query\Query;
  * @category VuFind
  * @package  Recommendations
  * @author   Chris Hallberg <challber@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  * @view     AuthorInfoFacets.phtml
@@ -49,7 +52,7 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
     /**
      * HTTP client
      *
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected $client;
 
@@ -59,6 +62,13 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * @var Lobid
      */
     protected $lobid;
+
+    /**
+     * Wikipedia client
+     *
+     * @var Wikipedia
+     */
+    protected $wikipedia;
 
     /**
      * Saved search results
@@ -100,16 +110,17 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * Constructor
      *
      * @param \VuFind\Search\Results\PluginManager $results Results plugin manager
-     * @param \Zend\Http\Client                    $client  HTTP client
+     * @param \Laminas\Http\Client                    $client  HTTP client
      * @param string                               $sources Source identifiers
      * (currently, only 'wikipedia' is supported)
      */
     public function __construct(\VuFind\Search\Results\PluginManager $results,
-        \Zend\Http\Client $client
+        \Laminas\Http\Client $client
     ) {
         $this->resultsManager = $results;
         $this->client = $client;
         $this->lobid = new Lobid($client);
+        $this->wikipedia = new Wikipedia($client);
         $this->sources = 'lobid';
     }
 
@@ -137,7 +148,7 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * be needed.
      *
      * @param \VuFind\Search\Base\Params $params  Search parameter object
-     * @param \Zend\StdLib\Parameters    $request Parameter object representing user
+     * @param \Laminas\StdLib\Parameters    $request Parameter object representing user
      * request.
      *
      * @return void
@@ -210,12 +221,31 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
     protected function getGnd()
     {
         $search = $this->searchObject->getParams()->getQuery();
-        //var_dump($search);
         if ($search instanceof Query) {
           $gnd = substr($search->getString(),4);
           return $gnd;
         } else {
           return '';
         }
+    }
+
+    /**
+    * Returns the source of the picture (ajax?)
+    */
+    public function getPicSource($thumbnail)
+    {
+      if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)):
+        $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
+        $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
+        if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])):
+          return [$imageInfo["Artist"]["value"],
+                  "https://commons.wikimedia.org/wiki/File:" . $fname[1],
+                  $imageInfo["LicenseShortName"]["value"]];
+        else:
+          return null;
+        endif;
+      else:
+        return null;
+      endif;
     }
 }

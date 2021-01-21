@@ -21,7 +21,7 @@
  *
  * @category VuFind
  * @package  Connection
- * @author   Chris Hallberg <challber@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
@@ -32,7 +32,7 @@ namespace Fiddk\Connection;
  *
  * @category VuFind
  * @package  Connection
- * @author   Chris Hallberg <challber@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
@@ -42,7 +42,7 @@ class Lobid
     /**
      * HTTP client
      *
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected $client;
 
@@ -56,9 +56,9 @@ class Lobid
     /**
      * Constructor
      *
-     * @param \Zend\Http\Client $client HTTP client
+     * @param \Laminas\Http\Client $client HTTP client
      */
-    public function __construct(\Zend\Http\Client $client)
+    public function __construct(\Laminas\Http\Client $client)
     {
         $this->client = $client;
     }

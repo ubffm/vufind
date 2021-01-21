@@ -1,6 +1,6 @@
 <?php
 /**
- * Factory for GetFacetData AJAX handler.
+ * Factory for GetTotalResults AJAX handler.
  *
  * PHP version 7
  *
@@ -22,6 +22,7 @@
  * @category VuFind
  * @package  AJAX
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
@@ -33,11 +34,12 @@ use Interop\Container\ContainerInterface;
  * @category VuFind
  * @package  AJAX
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
 class GetTotalResultsFactory
-    implements \Zend\ServiceManager\Factory\FactoryInterface
+    implements \Laminas\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create an object

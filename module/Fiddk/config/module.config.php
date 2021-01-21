@@ -1,11 +1,11 @@
 <?php
-namespace Fiddk\Module\Configuration;
+namespace Fiddk\Module\Config;
 
 $config = [
   'router' => [
       'routes' => [
           'dataprovider-page' => [
-              'type'    => 'Zend\Router\Http\Segment',
+              'type'    => 'Laminas\Router\Http\Segment',
               'options' => [
                   'route'    => '/DataProvider/[:page]',
                   'constraints' => [
@@ -18,7 +18,7 @@ $config = [
               ],
           ],
           'showcase' => [
-            'type' => 'Zend\Router\Http\Literal',
+            'type' => 'Laminas\Router\Http\Literal',
             'options' => [
               'route'    => '/Showcase',
             'defaults' => [
@@ -70,10 +70,12 @@ $config = [
     'allow_override' => true,
     'factories' => [
       'Fiddk\ContentBlock\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+      'Fiddk\RecordDriver\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
     ],
     'aliases' => [
-      'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager'
-    ]
+      'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager',
+      'VuFind\RecordDriver\PluginManager' => 'Fiddk\RecordDriver\PluginManager',
+    ],
   ],
   'vufind' => [
     'plugin_managers' => [
@@ -88,7 +90,7 @@ $config = [
       ],
       'recommend' => [
         'factories' => [
-          'Fiddk\Recommend\AuthInfo' => 'Fiddk\Recommend\AuthInfoFactory',
+          'Fiddk\Recommend\AuthInfo' => 'VuFind\Recommend\AuthorInfoFactory',
         ],
         'aliases' => [
           'authinfo' => 'Fiddk\Recommend\AuthInfo',
@@ -136,51 +138,12 @@ $config = [
           'solrauthority' => 'Fiddk\Search\SolrAuthority\Results',
           ],
       ],
-      'recorddriver' => [
-        'factories' => [
-          'Fiddk\RecordDriver\SolrEdm' =>
-              'VuFind\RecordDriver\SolrDefaultFactory',
-          'Fiddk\RecordDriver\SolrAuthor' =>
-              'VuFind\RecordDriver\SolrDefaultFactory',
-          'Fiddk\RecordDriver\SolrEvent' =>
-              'VuFind\RecordDriver\SolrDefaultFactory',
-
-        ],
-        'aliases' => [
-          'solredm' => 'Fiddk\RecordDriver\SolrEdm',
-          'solrauthor' => 'Fiddk\RecordDriver\SolrAuthor',
-          'solrevent' => 'Fiddk\RecordDriver\SolrEvent',
-        ],
-      ],
       'recordtab' => [
-        'factories' => [
-          'Fiddk\RecordTab\StaffViewEdm' => 'Zend\ServiceManager\Factory\InvokableFactory',
-        ],
         'aliases' => [
           'staffviewedm' => 'Fiddk\RecordTab\StaffViewEdm',
         ],
       ],
     ],
-    'recorddriver_tabs' => [
-      'Fiddk\RecordDriver\SolrEdm' => [
-        'tabs' => [
-          'TOC' => 'TOC',
-          'Similar' => 'SimilarItemsCarousel',
-          'Details' => 'StaffViewEdm',
-        ],
-        'defaultTab' => null,
-        ],
-      'Fiddk\RecordDriver\SolrEvent' => [
-        'tabs' => [
-        ],
-        'defaultTab' => null,
-        ],
-      'Fiddk\RecordDriver\SolrAuthor' => [
-        'tabs' => [
-        ],
-        'defaultTab' => null,
-        ],
-      ],
     ],
 ];
 
@@ -205,7 +168,7 @@ $routeGenerator->addStaticRoutes($config, $staticRoutes);
 
 // Add the home route last
 $config['router']['routes']['home'] = [
-    'type' => 'Zend\Router\Http\Literal',
+    'type' => 'Laminas\Router\Http\Literal',
     'options' => [
         'route'    => '/',
         'defaults' => [

@@ -1,10 +1,6 @@
 <?php
 return [
     'extends' => 'news',
-    'less' => [
-        'active' => false,
-        'compiled.less'
-    ],
     'favicon' => 'fid-dk_favicon.png',
     'helpers' => [
       'factories' => [

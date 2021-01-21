@@ -1,6 +1,6 @@
 <?php
 /**
- * Channels content block.
+ * Statistics content block.
  *
  * PHP version 7
  *
@@ -22,19 +22,21 @@
  * @category VuFind
  * @package  ContentBlock
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
 namespace Fiddk\ContentBlock;
 use VuFind\Config\PluginManager as ConfigManager;
 use VuFind\Search\Results\PluginManager as ResultsManager;
-use Zend\Config\Config;
+use Laminas\Config\Config;
 /**
  * FacetList content block.
  *
  * @category VuFind
  * @package  ContentBlock
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
@@ -76,13 +78,16 @@ class Statistics implements \VuFind\ContentBlock\ContentBlockInterface
         $oresult = $this->ResultsManager->get("Solr");
         $aresult = $this->ResultsManager->get("SolrAuthor");
         $eresult = $this->ResultsManager->get("SolrEvent");
+        //$wresult = $this->ResultsManager->get("Solr");
         $oresults = $oresult->getResultTotal();
         $aresults = $aresult->getResultTotal();
         $eresults = $eresult->getResultTotal();
+        //$wresults = $wresult->getResultTotal();
         return [
             'statistics' => ['Objects' => $oresults,
                              'Agents' => $aresults,
                              'Events' => $eresults]
+                             //'Works' => $wresults]
         ];
     }
 }

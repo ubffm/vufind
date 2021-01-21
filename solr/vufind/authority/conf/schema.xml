@@ -70,6 +70,9 @@
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
     <field name="occupation_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="orga_domain" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="author" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
+    <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="author_role" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Tracking fields to keep track of oldest and most recent index times -->
     <field name="first_indexed" type="date" indexed="true" stored="true" docValues="true"/>
