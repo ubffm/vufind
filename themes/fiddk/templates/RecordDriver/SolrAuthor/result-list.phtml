@@ -9,28 +9,28 @@
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
-  if ($cover):
+  if ($coverDetails['cover']):
     ob_start(); ?>
       <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
        <?=$cover ?>
       </div>
     <?php $thumbnail = ob_get_contents();
     ob_end_clean();?>
-    <div class="media">
-    <?php endif; ?>
+  <?php endif; ?>
+      <div class="media">
     <?php if ($thumbnail): ?>
       <?=$thumbnail ?>
     <?php endif ?>
 
   <div class="media-body">
     <div class="resultItemLine1">
-      <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
+      <a href="<?=$this->url('agentrecord')?><?=urlencode($this->driver->getUniqueId())?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
-  <?php if ($authType == "Personal Name"): ?>
-    <?php $prof = $this->driver->getOccupation();?>
-    <?php $birth = $this->driver->getBirthDate();?>
-    <?php $death = $this->driver->getDeathDate();?>
-    <?php if (!empty($prof) || !empty($birth) || !empty($death)): ?>
+  <?php if ($authType == "Personal Name"):
+    $prof = $this->driver->getOccupation();
+    $birth = $this->driver->getBirthDate();
+    $death = $this->driver->getDeathDate();
+    if (!empty($prof) || !empty($birth) || !empty($death)): ?>
       <div class="resultItemLine2">
       <?php if ($birth || $death) : ?>
           <?php if (!$death) : ?>
@@ -45,12 +45,12 @@
         <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation_facet%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
       <?php endforeach; ?>
       </div>
-  <?php endif; ?>
-  <?php elseif ($authType == "Corporate Name"): ?>
-    <?php $domain = $this->driver->getOrgaDomain();?>
-    <?php $birth = $this->driver->getBirthDate();?>
-    <?php $death = $this->driver->getDeathDate();?>
-    <?php if (!empty($domain)): ?>
+    <?php endif; ?>
+  <?php elseif ($authType == "Corporate Name"):
+     $domain = $this->driver->getOrgaDomain();
+     $birth = $this->driver->getBirthDate();
+     $death = $this->driver->getDeathDate();
+     if (!empty($domain) || !empty($birth) || !empty($death)): ?>
       <div class="resultItemLine2">
         <?php if ($birth || $death) : ?>
             <?php if (!$death) : ?>

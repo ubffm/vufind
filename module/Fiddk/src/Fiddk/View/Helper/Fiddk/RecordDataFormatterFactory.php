@@ -22,19 +22,21 @@
  * @category VuFind
  * @package  View_Helpers
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
  */
 namespace Fiddk\View\Helper\Fiddk;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for record driver data formatting view helper
  *
  * @category VuFind
  * @package  View_Helpers
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
@@ -106,7 +108,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'DatesPlaces', 'getPlaceDateDetails', 'data-placeDateDetails.phtml'
         );
         $spec->setLine('dcterms:extent', 'getExtent');
-        $spec->setLine('dm2e:callNumber', 'getCallNumber');
+        $spec->setLine('bf:shelfMark', 'getCallNumber');
         $spec->setLine('dcterms:provenance', 'getProvenance');
         $spec->setMultiLine(
             'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
@@ -144,6 +146,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
       $spec->setTemplateLine('Ask Archive', 'askArchive','data-askArchive.phtml');
       $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink','data-licenseLink.phtml');
       $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink','data-externalLink.phtml');
+      $spec->setTemplateLine('edm:isShownBy', 'getDigitalCopies','data-collapsible_.phtml');
       $spec->setTemplateLine('edm:hasView', 'getDigitalCopies','data-collapsible_.phtml');
       $spec->setTemplateLine('edm:wasPresentAt', 'getEvents','link-event.phtml');
       $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks','data-internalLink.phtml');

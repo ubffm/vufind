@@ -2,7 +2,7 @@
 /**
  * Record driver view helper
  *
- * PHP version 5
+ * PHP version 7
  *
  * Copyright (C) Villanova University 2010.
  *
@@ -27,7 +27,6 @@
  */
 namespace Fiddk\View\Helper\Fiddk;
 use VuFind\Cover\Router as CoverRouter;
-use Zend\View\Exception\RuntimeException, Zend\View\Helper\AbstractHelper;
 
 /**
  * Record driver view helper

@@ -22,6 +22,7 @@
  * @category VuFind
  * @package  View_Helpers
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
@@ -29,7 +30,7 @@
 namespace Fiddk\View\Helper\Fiddk;
 
 use VuFind\RecordDriver\AbstractBase as RecordDriver;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Record driver data formatting view helper
@@ -37,11 +38,12 @@ use Zend\View\Helper\AbstractHelper;
  * @category VuFind
  * @package  View_Helpers
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
  */
 class RecordDataFormatter extends \VuFind\View\Helper\Root\RecordDataFormatter
 {
-  
+
 }

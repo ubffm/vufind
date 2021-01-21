@@ -2,7 +2,7 @@
 /**
  * Model for EDM authority records in Solr.
  *
- * PHP version 5
+ * PHP version 7
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -40,18 +40,8 @@ namespace Fiddk\RecordDriver;
  *
  * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrAuthor extends \VuFind\RecordDriver\SolrAuthDefault
+class SolrAuthor extends SolrAuthDefault
 {
-  use EdmReaderTrait;
-
-  /**
-   * Returns the authority type (Personal Name, Corporate Name or Event)
-   */
-  public function getAuthType()
-  {
-     return isset($this->fields['record_type'])
-           ? $this->fields['record_type'] : '';
-  }
 
   /**
   * Get the occupation of the person.
@@ -95,15 +85,6 @@ class SolrAuthor extends \VuFind\RecordDriver\SolrAuthDefault
   {
      return isset($this->fields['death_date'])
          ? $this->fields['death_date'] : "";
-  }
-
-  /**
-   * Returns the thumbnail url or []
-   */
-  public function getThumbnail($size = 'small')
-  {
-    return isset($this->fields['thumbnail'])
-        ? $this->fields['thumbnail'] : [];
   }
 
 }

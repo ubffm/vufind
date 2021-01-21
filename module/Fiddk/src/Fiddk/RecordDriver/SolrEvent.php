@@ -2,7 +2,7 @@
 /**
  * Model for EDM authority records in Solr.
  *
- * PHP version 5
+ * PHP version 7
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -40,18 +40,9 @@ namespace Fiddk\RecordDriver;
  *
  * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
+class SolrEvent extends SolrAuthDefault
 {
-  use EdmReaderTrait;
 
-  /**
-   * Returns the authority type (Personal Name, Corporate Name or Event)
-   */
-   public function getAuthType()
-   {
-       return isset($this->fields['record_type'])
-             ? $this->fields['record_type'] : '';
-   }
    /**
     * Returns the type of the event
     */
@@ -80,12 +71,46 @@ class SolrEvent extends \VuFind\RecordDriver\SolrAuthDefault
       }
 
       /**
-       * Returns the thumbnail url or []
+       * Returns the agents of the event
        */
-      public function getThumbnail($size = 'small')
-      {
-        return isset($this->fields['thumbnail'])
-            ? $this->fields['thumbnail'] : [];
-      }
+       /**
+     * Deduplicate author information into associative array with main/corporate/
+     * secondary keys.
+     *
+     * @param array $dataFields An array of extra data fields to retrieve (see
+     * getAuthorDataFields)
+     *
+     * @return array
+     */
+     public function getDeduplicatedAuthors($dataFields = ['role','id'])
+     {
+       $authors = [];
+       foreach (['primary', 'corporate'] as $type) {
+           $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
+       }
+       $dedup_data = function (&$array) {
+           foreach ($array as $author => $data) {
+               foreach ($data as $field => $values) {
+                   if (is_array($values)) {
+                       $array[$author][$field] = array_unique($values);
+                   }
+               }
+           }
+       };
+       $dedup_data($authors['primary']);
+       $dedup_data($authors['corporate']);
+       return $authors;
+     }
 
-  }
+   /**
+    * Get an array of all main authors ids
+    *
+    * @return array
+    */
+   public function getPrimaryAuthorsIds()
+   {
+       return isset($this->fields['author_id']) ?
+           $this->fields['author_id'] : [];
+   }
+
+}
