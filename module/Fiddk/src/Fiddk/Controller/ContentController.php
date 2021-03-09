@@ -2,9 +2,9 @@
 
 namespace Fiddk\Controller;
 
-use Zend\Mail;
-use Zend\Mail\Address;
-use Zend\Mail\AddressList;
+use Laminas\Mail;
+use Laminas\Mail\Address;
+use Laminas\Mail\AddressList;
 
 class ContentController extends \VuFind\Controller\ContentController
 {
@@ -12,7 +12,7 @@ class ContentController extends \VuFind\Controller\ContentController
 
     /**
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Laminas\View\Model\ViewModel
      */
 
     public function licensedAction()
@@ -39,7 +39,7 @@ class ContentController extends \VuFind\Controller\ContentController
     {
       $page = $this->params()->fromRoute('page');
       $themeInfo = $this->serviceLocator->get(\VuFindTheme\ThemeInfo::class);
-      $language = $this->serviceLocator->get(\Zend\Mvc\I18n\Translator::class)
+      $language = $this->serviceLocator->get(\Laminas\Mvc\I18n\Translator::class)
     ->getLocale();
     $defaultLanguage = $this->getConfig()->Site->language;
     // Try to find a template using
@@ -70,7 +70,7 @@ class ContentController extends \VuFind\Controller\ContentController
               $this->flashMessenger()->addMessage('bulk_error_missing', 'error');
               return $view;
             }
-            $validator = new \Zend\Validator\EmailAddress();
+            $validator = new \Laminas\Validator\EmailAddress();
             if (!$validator->isValid($view->email)) {
               $this->flashMessenger()->addMessage('Email address is invalid', 'error');
               return $view;

@@ -66,9 +66,28 @@ class SolrEvent extends SolrAuthDefault
       */
       public function getEventPlace()
       {
-          return isset($this->fields['place'])
-                ? $this->fields['place'] : [];
+          return isset($this->fields['geographic'])
+                ? $this->fields['geographic'] : [];
       }
+
+      /**
+       * Returns related links
+       */
+       public function getsameAs()
+       {
+           return isset($this->fields['related'])
+                 ? $this->fields['related'] : [];
+       }
+
+       /**
+        * Get related works
+        */
+        public function getWorks()
+        {
+          $works = isset($this->fields['work']) ? $this->fields['work'] : [];
+          $work_ids = isset($this->fields['work_id']) ? $this->fields['work_id'] : [];
+          return array_combine($work_ids,$works);
+        }
 
       /**
        * Returns the agents of the event

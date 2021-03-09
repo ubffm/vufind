@@ -1,15 +1,13 @@
 <?php
   // Set up page title:
   $lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $this->params->getDisplayQuery();
-  if (isset($this->overrideTitle)) {
-      $this->headTitle($this->overrideTitle);
-  } else {
-      $this->headTitle($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
-  }
+  $headTitle = $this->slot('head-title')
+        ->get($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
+  $this->headTitle($headTitle);
 
   $searchIndex = $this->params->getSearchHandler();
   $searchType = $this->params->getSearchType();
-  $searchClassId = $this->params->getsearchClassId();
+  $searchClassId = $this->params->getSearchClassId();
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
@@ -21,7 +19,7 @@
         'searchId' => $this->results->getSearchId(),
         'searchClassId' => 'Solr', // don't make Authority show up
         'checkboxFilters' => $this->params->getCheckboxFacets(),
-        'filterList' => $this->params->getFilters(),
+        'filterList' => $this->params->getFilterList(true),
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
         'selectedShards' => $this->params->getSelectedShards(),
         'ignoreHiddenFiltersInRequest' => isset($this->ignoreHiddenFiltersInRequest) ? $this->ignoreHiddenFiltersInRequest : false,
@@ -30,11 +28,7 @@
   );
 
   // Set up breadcrumbs:
-  if (isset($this->overrideTitle)) {
-    $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($this->overrideTitle) . '</li>';
-  } else {
-    $this->layout()->breadcrumbs .= '<li class="active">' . $this->transEsc('Search') . ': ' . $this->escapeHtml($lookfor) . '</li>';
-  }
+  $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
 
   // Enable cart if appropriate:
   $this->showBulkOptions = $this->params->getOptions()->supportsCart() && $this->showBulkOptions;
@@ -51,24 +45,28 @@
   }
 
   // Load Javascript dependencies into header:
+  $this->headScript()->appendFile("vendor/hunt.min.js");
   $this->headScript()->appendFile("check_item_statuses.js");
   $this->headScript()->appendFile("check_save_statuses.js");
-
-  $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
-  $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
-  $hiddenFilters = $this->searchTabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $recordTotal = $this->results->getResultTotal();
 ?>
 
-<?php foreach ($this->results->getRecommendations('top') as $current): ?>
-  <?=$this->recommend($current)?>
-<?php endforeach; ?>
+<?php /* locally CHANGED:
+ * - top recommendation on top of main body. Not next to side facets.
+ */
+ if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
+  <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
+    <?=$this->recommend($current, 'top', $index)?>
+  <?php endforeach; ?>
+<?php endif; ?>
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?=$this->flashmessages()?>
-  <nav class="search-header hidden-print">
+  <div class="search-header hidden-print">
     <div class="search-stats">
       <?php if ($recordTotal > 0): ?>
         <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
+        <a class="search-filter-toggle visible-xs" href="#search-sidebar" data-toggle="offcanvas" title="<?=$this->transEsc('sidebar_expand') ?>">
+          <?=$this->transEsc('Refine Results') ?>
+        </a>
       <?php else: ?>
         <h2><?=$this->transEsc('nohit_heading')?></h2>
       <?php endif; ?>
@@ -81,31 +79,28 @@
         <?=$this->render('search/controls/view.phtml')?>
       </div>
     <?php endif; ?>
-  </nav>
+  </div>
   <?php /* End Listing Options */ ?>
 
   <?php if ($recordTotal < 1): ?>
     <p>
-      <?php if (isset($this->overrideEmptyMessage)): ?>
-        <?=$this->overrideEmptyMessage?>
-      <?php else: ?>
-      <?php if ($searchClassId == "Solr") : ?>
-        <?php $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <?php else : ?>
-        <?php $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <?php endif; ?>
-        <?=$this->layout()->srmessage ?>
-      <?php endif; ?>
+      <?php
+        $emptyMessage = $this->slot('empty-message')->get(
+          $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)])
+        );
+        $this->layout()->srmessage = $emptyMessage;
+        echo $emptyMessage;
+      ?>
     </p>
     <?php if (isset($this->parseError)): ?>
       <p class="alert alert-danger"><?=$this->transEsc('nohit_parse_error')?></p>
     <?php endif; ?>
-    <?php foreach (($top = $this->results->getRecommendations('top')) as $current): ?>
-      <?=$this->recommend($current)?>
+    <?php foreach (($top = $this->results->getRecommendations('top')) as $index => $current): ?>
+      <?=$this->recommend($current, 'top', $index)?>
     <?php endforeach; ?>
-    <?php foreach ($this->results->getRecommendations('noresults') as $current): ?>
+    <?php foreach ($this->results->getRecommendations('noresults') as $index => $current): ?>
       <?php if (!in_array($current, $top)): ?>
-        <?=$this->recommend($current)?>
+        <?=$this->recommend($current, 'noresults', $index)?>
       <?php endif; ?>
     <?php endforeach; ?>
   <?php else: ?>
@@ -139,9 +134,9 @@
 <?php /* End Main Listing */ ?>
 
 <?php /* Narrow Search Options */ ?>
-<div class="<?=$this->layoutClass('sidebar')?>">
-  <?php foreach ($this->results->getRecommendations('side') as $current): ?>
-    <?=$this->recommend($current)?>
+<div class="<?=$this->layoutClass('sidebar')?>" id="search-sidebar">
+  <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>
+    <?=$this->recommend($current, 'side', $index)?>
   <?php endforeach; ?>
 </div>
 <?php /* End Narrow Search Options */ ?>

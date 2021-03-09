@@ -1,11 +1,9 @@
 <?php
   // Set up page title:
   $lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $this->params->getDisplayQuery();
-  if (isset($this->overrideTitle)) {
-      $this->headTitle($this->overrideTitle);
-  } else {
-      $this->headTitle($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
-  }
+  $headTitle = $this->slot('head-title')
+        ->get($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
+  $this->headTitle($headTitle);
 
   $searchIndex = $this->params->getSearchHandler();
   $searchType = $this->params->getSearchType();
@@ -21,7 +19,7 @@
         'searchId' => $this->results->getSearchId(),
         'searchClassId' => $searchClassId,
         'checkboxFilters' => $this->params->getCheckboxFacets(),
-        'filterList' => $this->params->getFilters(),
+        'filterList' => $this->params->getFilterList(true),
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
         'selectedShards' => $this->params->getSelectedShards(),
         'ignoreHiddenFiltersInRequest' => isset($this->ignoreHiddenFiltersInRequest) ? $this->ignoreHiddenFiltersInRequest : false,
@@ -30,11 +28,7 @@
   );
 
   // Set up breadcrumbs:
-  if (isset($this->overrideTitle)) {
-    $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($this->overrideTitle) . '</li>';
-  } else {
-    $this->layout()->breadcrumbs .= '<li class="active">' . $this->transEsc('Search') . ': ' . $this->escapeHtml($lookfor) . '</li>';
-  }
+  $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
 
   // Enable cart if appropriate:
   $this->showBulkOptions = $this->params->getOptions()->supportsCart() && $this->showBulkOptions;
@@ -70,7 +64,7 @@
     <?php endforeach; ?>
   <?php endif; ?>
   <?=$this->flashmessages()?>
-  <nav class="search-header hidden-print">
+  <div class="search-header hidden-print">
     <div class="search-stats">
       <?php if ($recordTotal > 0): ?>
         <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
@@ -86,23 +80,25 @@
         <?=$this->render('search/controls/view.phtml')?>
       </div>
     <?php endif; ?>
-  </nav>
+  </div>
   <?php /* End Listing Options */ ?>
 
   <?php if ($recordTotal < 1): ?>
     <p>
-      <?php if (isset($this->overrideEmptyMessage)): ?>
-        <?=$this->overrideEmptyMessage?>
-      <?php else: ?>
-      <?php if ($searchClassId == "Solr") : ?>
-        <?php $this->layout()->srmessage = $this->translate('nohit_lookfor_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <?php elseif ($searchClassId == "SolrAuthor") : ?>
-        <?php $this->layout()->srmessage = $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <?php else : ?>
-        <?php $this->layout()->srmessage = $this->translate('nohit_lookfor_events_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)]); ?>
-      <?php endif; ?>
-        <?=$this->layout()->srmessage ?>
-      <?php endif; ?>
+      <?php
+        if ($searchClassId == "Solr"):
+          $noMessage = 'nohit_lookfor_html';
+        elseif ($searchClassId == "SolrAuthor"):
+          $noMessage = 'nohit_lookfor_agents_html';
+        else:
+          $noMessage = 'nohit_lookfor_events_html';
+        endif;
+        $emptyMessage = $this->slot('empty-message')->get(
+          $this->translate($noMessage, ['%%lookfor%%' => $this->escapeHtml($lookfor)])
+        );
+        $this->layout()->srmessage = $emptyMessage;
+        echo $emptyMessage;
+      ?>
     </p>
     <?php if (isset($this->parseError)): ?>
       <p class="alert alert-danger"><?=$this->transEsc('nohit_parse_error')?></p>

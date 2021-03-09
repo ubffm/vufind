@@ -62,4 +62,56 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
         ? $this->fields['thumbnail'] : [];
   }
 
+  /**
+   * Returns the further source links (Personal Name, Corporate Name or Event)
+   */
+  public function getSource()
+  {
+    $sources = [];
+    if (isset($this->fields['source'])) {
+      foreach ($this->fields['source'] as $source) {
+        $sources[] = ["id" => $source, "name" => "Theaterlexikon der Schweiz"];
+      }
+    }
+    return $sources;
+  }
+
+  public function getInstitution() {
+    return isset($this->fields['institution']) ? $this->fields['institution'] : '';
+  }
+
+  public function getIntermediate() {
+    return isset($this->fields['intermediate']) ? $this->fields['intermediate'] : '';
+  }
+
+  /**
+   * Get an array of all dataproviders, also taking in consideration if
+   * there are intermediate data providers.
+   *
+   * @return array
+   */
+  public function getInstitutionLinked() {
+    $dprovConf = $this->mainConfig->DataProvider;
+    $inter = $this->getIntermediate();
+    $inst = $this->getInstitution();
+    $res = [];
+    if (!empty($inter)) {
+      $type = "inter";
+      $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+      $info = explode(',',$dprovConf[$instkey]);
+      $instlink = $info[0];
+      $instid = $info[1];
+      $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
+      $info = explode(',',$dprovConf[$interkey]);
+      $interlink = $info[0];
+      $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+    } else {
+      $type = "inst";
+      $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+      $info = explode(',',$dprovConf[$instkey]);
+      $res = [$type => [$inst,$info[0],$info[1]]];
+    }
+    return $res;
+  }
+
 }

@@ -23,23 +23,41 @@ if (!empty($this->info) || isset($driver)):
            || isset($this->info['dateOfEstablishment'])
            || isset($this->info['homepage'])
            || isset($this->info['spatialAreaOfActivity'])
-           || isset($this->info['geographicAreaCode']);
+           || isset($this->info['geographicAreaCode'])
+           || isset($this->info['sameAs']);
     endif;
     $title = $this->info['preferredName'];
     $variant = isset($this->info['variantName']) ? $this->info['variantName'] : '';
     //TODO: There can be more than one thumbnail??
     $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
   else:
+    $type = $this->driver->getAuthType();
+    $dprov = $this->driver->getInstitutionLinked();
     $title = $this->driver->getTitle();
-    $variant = $this->driver->getUseFor();
-    $type = "event";
+    if ($type = "work"):
+      $variant = $this->driver->getAlternativeTitles();
+      $sameAs = [];
+      $works = [];
+    else:
+      $variant = $this->driver->getUseFor();
+      $sameAs = $this->driver->getSameAs();
+      $works = $this->driver->getWorks();
+    endif;
   endif;
 ?>
 <div class="card clearfix">
   <div class="flex-content flex-start">
-  <?php if (!empty($thumbnail)): ?>
+  <?php if (!empty($thumbnail)):
+    $picSource = $this->recommend->getPicSource($thumbnail);?>
     <div class="authority-meta thumb">
-      <img class="pull-left flip" src="<?=$thumbnail ?>" alt="<?=$title?>"/>
+      <figure>
+          <img class="pull-left flip" src="<?=$thumbnail?>" alt="<?=$title?>"/>
+        <?php if (!empty($picSource)): ?>
+          <figcaption><?=$this->transEsc("PicSource") . ": " . $picSource[0] . " | "?>
+          <a href="<?=$picSource[1]?>">Wikimedia Commons</a>
+          <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
+        <?php endif; ?>
+      </figure>
     </div>
   <?php endif; ?>
     <div class="authority-meta">
@@ -57,11 +75,22 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
     <?php endif; ?><br/>
     </div>
+    <div class="authority-meta">
+      <?php if (!empty($works)) : ?>
+        <b><?=$this->transEsc('Related Works') . ':'?></b>
+        <?php foreach($works as $work_id => $work): ?>
+          <span property="edm:isRelatedTo">
+            <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
+          </span><br />
+        <?php endforeach; ?>
+      <?php endif; ?>
   <?php if (!empty($this->info['sameAs'])): ?>
     <?=$this->render('Recommend/data-sameAs.phtml');?>
-  <?php else: ?>
+  <?php endif; ?>
+  <?php if (!empty($this->info['describedBy']) || $dprov !== ''): ?>
     <?=$this->render('Recommend/data-source.phtml');?>
   <?php endif; ?>
-  </div>
+   </div>
+ </div>
 </div>
 <?php endif;?>

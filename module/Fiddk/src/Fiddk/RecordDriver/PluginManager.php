@@ -51,6 +51,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
         'solredm' => SolrEdm::class,
         'solrauthor' => SolrAuthor::class,
         'solrevent' => SolrEvent::class,
+        'solrwork' => SolrWork::class,
     ];
 
   /**
@@ -63,6 +64,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
         SolrAuthDefault::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrAuthor::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrEvent::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
+        SolrWork::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
     ];
 
     /**
@@ -87,5 +89,17 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
     public function getSolrEventRecord($data)
     {
         return $this->getSolrRecord($data, 'SolrEvent','');
+    }
+
+    /**
+     * Convenience method to retrieve a populated Solr work record driver.
+     *
+     * @param array $data Raw Solr data
+     *
+     * @return AbstractBase
+     */
+    public function getSolrWorkRecord($data)
+    {
+        return $this->getSolrRecord($data, 'SolrWork','');
     }
 }

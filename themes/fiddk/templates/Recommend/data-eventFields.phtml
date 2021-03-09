@@ -1,6 +1,7 @@
 <?php $eventType = $this->driver->getEventType();
       $eventDates = $this->driver->getEventDate();
       $eventPlaces = $this->driver->getEventPlace();
+      $eventAgents = $this->driver->getDeduplicatedAuthors();
       $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 <?php if (!empty($eventType)) : ?>
   <b><?=$this->transEsc('Type of Event') . ':'?></b>
@@ -16,7 +17,7 @@
   <?php endforeach; ?>
   <span property="edm:occuredAt">
     <?=$this->escapeHtml(implode($normDates,', '))?>
-  </span><br />
+  </span><br/>
 <?php endif; ?>
 <?php if (!empty($eventPlaces)) : ?>
   <b><?=$this->transEsc('PlaceOfEvent') . ':'?></b>
@@ -25,4 +26,33 @@
       <?=$eventPlace?>
     </span><br />
   <?php endforeach; ?>
+<?php endif; ?>
+<?php if (!empty($eventAgents)) : ?>
+  <br/>
+  <b><?=$this->transEsc('Contributors')?></b><br/>
+  <?php $formattedAuthors = [];
+    if (!empty($eventAgents["primary"])):
+      foreach ($eventAgents["primary"] as $author => $dataFields):
+        if (!empty($author)):
+          ob_start();
+          // an authority link exists and that document exists in SolrAuthor
+          if (isset($dataFields['id'][0])) : //&& $this->driver->checkExistence($dataFields['id'][0],"SolrAuth")) :
+            $authorityLookfor = $this->url('agentrecord') . urlencode($dataFields['id'][0]);
+          else :
+            $authorityLookfor = $this->record($this->driver)->getLink('name', $author);
+          endif; ?>
+      <span class="author-data" property="<?=$this->escapeHtml($dataFields['role'][0])?>">
+        <a href="<?=$authorityLookfor?>">
+          <?=$this->escapeHtml($author)?>
+        </a>
+        <?='(' . implode(', ', array_map(function($role) {return $this->transEsc('edm::' . $role);},array_unique($dataFields['role']))) . ')'?>
+      </span>
+      <?php
+        // Strip whitespace before close tags to avoid spaces in front of commas:
+        $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
+        ob_end_clean();
+       endif;
+     endforeach;
+   endif; ?>
+  <?=implode(', ', $formattedAuthors)?><br/>
 <?php endif; ?>

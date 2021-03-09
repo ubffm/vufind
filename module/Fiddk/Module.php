@@ -1,8 +1,8 @@
 <?php
 /**
- * Template for ZF2 module for storing local overrides.
+ * Code module for the core of the VuFind application
  *
- * PHP version 5
+ * PHP version 7
  *
  * Copyright (C) Villanova University 2010.
  *
@@ -23,20 +23,20 @@
  * @package  Module
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development
+ * @link     https://vufind.org
  */
 namespace Fiddk;
-use Zend\ModuleManager\ModuleManager,
-    Zend\Mvc\MvcEvent;
+
+use Laminas\Mvc\MvcEvent;
 
 /**
- * Template for ZF2 module for storing local overrides.
+ * Code module for the core of the VuFind application
  *
  * @category VuFind
  * @package  Module
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development
+ * @link     https://vufind.org
  */
 class Module
 {
@@ -58,7 +58,7 @@ class Module
     public function getAutoloaderConfig()
     {
         return [
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ],
@@ -67,28 +67,15 @@ class Module
     }
 
     /**
-     * Initialize the module
-     *
-     * @param ModuleManager $m Module manager
-     *
-     * @return void
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function init(ModuleManager $m)
-    {
-    }
-
-    /**
      * Bootstrap the module
      *
      * @param MvcEvent $e Event
      *
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onBootstrap(MvcEvent $e)
     {
+        $bootstrapper = new \VuFind\Bootstrapper($e);
+        $bootstrapper->bootstrap();
     }
 }

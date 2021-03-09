@@ -34,10 +34,13 @@
     <field name="record_format" type="string" indexed="true" stored="true"/>
 
     <!-- Extra identifiers - where did authority record originate? -->
-    <field name="source" type="string" indexed="true" stored="true"/>
+    <field name="source" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="record_type" type="string" indexed="true" stored="true"/>
     <field name="lccn" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="institution" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
+    <field name="intermediate" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="intermediate_id" type="string" indexed="true" stored="false" multiValued="true"/>
 
     <!-- String Fields for Exact Match / Faceting -->
     <field name="heading" type="string" indexed="true" stored="true"/>
@@ -64,7 +67,7 @@
     <!-- additional authority fields-->
     <field name="date" type="range" indexed="true" stored="true" multiValued="true"/>
     <field name="date_sort" type="date" indexed="true" stored="true"/>
-    <field name="place" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
@@ -73,6 +76,8 @@
     <field name="author" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
     <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="author_role" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="work" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="work_id" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Tracking fields to keep track of oldest and most recent index times -->
     <field name="first_indexed" type="date" indexed="true" stored="true" docValues="true"/>

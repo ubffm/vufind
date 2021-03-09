@@ -1,0 +1,5 @@
+<?php foreach ($data as $inst => $info): ?>
+  <?php if (isset($info[0]) && isset($info[1])): ?>
+  <?=$this->escapeHtml($inst) . " via " ?><a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>  
+  <?php endif; ?>
+<?php endforeach; ?>

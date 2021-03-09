@@ -1,11 +1,11 @@
-<div class="authority-meta">
-  <h4><?=$this->transEsc('More Links')?></h4>
-  <?php // bug in lobid creates dublicates! ?>
-  <?php $dub = []; ?>
-  <?php foreach ($this->info['sameAs'] as $k => $current):
-      if (isset($current['id']) && isset($current['collection'])) :
-        $abbr = isset($current['collection']['abbr']) ? $current['collection']['abbr'] : '';
-        if (!(in_array($abbr,$dub))) :
+<h4><?=$this->transEsc('More Links')?></h4>
+<?php // bug in lobid creates dublicates!
+$dub = [];
+$sources = isset($driver) ? $this->driver->getSource() : [];
+foreach ($this->info['sameAs'] as $k => $current):
+  if (isset($current['id']) && isset($current['collection'])) :
+    $abbr = isset($current['collection']['abbr']) ? $current['collection']['abbr'] : '';
+    if (!(in_array($abbr,$dub))) :
         $dub[] = $abbr;
         $name = isset($current['collection']['name']) ? $current['collection']['name'] : '';
         $icon = isset($current['collection']['icon']) ? $current['collection']['icon'] : '';
@@ -14,11 +14,14 @@
         <i class="external-icon"><img src="<?=$icon?>" alt="<?=$abbr?>"></i>
         <?=$name?>
       </a><br />
-      <?php if(array_key_exists($k+1,$this->info['sameAs'])):?>
+      <?php if(array_key_exists($k+1,$this->info['sameAs']) or !empty($sources)):?>
          <hr/>
-      <?php endif;?>
-      <?php endif; ?>
-    <?php endif; ?>
-  <?php endforeach; ?><br />
-  <?=$this->render('Recommend/data-source.phtml');?>
-</div>
+      <?php endif;
+    endif;
+  endif;
+endforeach;
+if (!empty($sources)):
+  foreach ($sources as $source): ?>
+    <a href="<?=$source['id']?>" target="_blank"><?=$source['name']?></a><br />
+<?php endforeach;
+endif;?><br />

@@ -28,8 +28,8 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
-use Zend\Config\Config;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Config\Config;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 /**
  * Event Record Controller
  *
@@ -50,8 +50,9 @@ class EventController extends \VuFind\Controller\AbstractSearch
       $this->driver = $this->loadRecord();
       $id = $this->driver->getUniqueID();
       $this->searchClassId = 'SolrAuthority';
-      $this->getRequest()->getQuery()->set('id', $id);
-      $this->getRequest()->getQuery()->set('type', 'Event');
+      $query = $this->getRequest()->getQuery();
+      $query->set('id', $id);
+      $query->set('type', 'Event');
       return $this->forwardTo('Event', 'Results');
     }
 
@@ -86,7 +87,7 @@ class EventController extends \VuFind\Controller\AbstractSearch
     /**
     * Send search results to results view
     *
-    * @return \Zend\View\Model\ViewModel
+    * @return \Laminas\View\Model\ViewModel
     */
     public function resultsAction()
     {

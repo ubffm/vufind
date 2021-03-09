@@ -43,13 +43,13 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
     /**
      * Default action if none provided
      *
-     * @return Zend\View\Model\ViewModel
+     * @return Laminas\View\Model\ViewModel
      */
     public function dataProviderAction()
     {
         $page = $this->params()->fromRoute('page');
         $themeInfo = $this->serviceLocator->get('VuFindTheme\ThemeInfo');
-        $language = $this->serviceLocator->get('Zend\Mvc\I18n\Translator')
+        $language = $this->serviceLocator->get('Laminas\Mvc\I18n\Translator')
             ->getLocale();
         $defaultLanguage = $this->getConfig()->Site->language;
         // Try to find a template using
@@ -81,7 +81,7 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
     public function notFoundAction()
     {
         $response   = $this->response;
-        if ($response instanceof \Zend\Http\Response) {
+        if ($response instanceof \Laminas\Http\Response) {
             return $this->createHttpNotFoundModel($response);
         }
         return $this->createConsoleNotFoundModel($response);

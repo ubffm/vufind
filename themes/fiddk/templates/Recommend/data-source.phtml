@@ -1,5 +1,6 @@
 <?php if(isset($this->info['describedBy'])) : ?>
-  <b><?=$this->transEsc('Source').':'?></b><br />
+  <p class="bottom">
+  <b><?=$this->transEsc('Source').':'?></b><br>
   <a href="<?=$this->info['describedBy']['id']?>" target="_blank">
     <?=$this->info['describedBy']['id']?>
   </a><?=' (' . $this->transEsc('License') . ': '?>
@@ -11,4 +12,15 @@
         <?=$this->info['describedBy']['license']['label']?>
     <?php endif; ?>
   </a><?=') '?><?=$this->transEsc('via')?> <a href="https://lobid.org/gnd" target="_blank">lobid-gnd</a>
+</p>
+<?php elseif (!empty($dprov)) : ?>
+  <b><?=$this->transEsc('Source') . ':'?></b><br/>
+  <?php foreach ($dprov as $inter => $info): ?>
+    <?php if ($inter == "inst"): ?>
+      <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <?php else: ?>
+      <a href="<?=$info[4]?>" target="_blank"><?=$this->escapeHtml($info[3])?></a><?=" via "?>
+      <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <?php endif; ?>
+  <?php endforeach; ?>
 <?php endif; ?>

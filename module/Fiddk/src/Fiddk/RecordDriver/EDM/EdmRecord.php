@@ -3,7 +3,7 @@
 /**
  * Parser for EDM records
  *
- * PHP version 5
+ * PHP version 7
  *
  *
  * @category  File_Formats
@@ -24,29 +24,7 @@ class EdmRecord
 {
 
     protected $record;
-
-    protected $belongsTo = [
-      "edm:dataProvider" => "ore:Aggregation",
-      "edm:isShownAt" => "ore:Aggregation",
-      "edm:isShownBy" => "ore:Aggregation",
-      "dm2e:hasAnnotatableVersionAt" => "ore:Aggregation",
-      "dc:rights" => "ore:Aggregation",
-      "edm:hasView" => "ore:Aggregation",
-      "edm:isRelatedTo" => "edm:ProvidedCHO",
-      "edm:wasPresentAt" => "edm:ProvidedCHO",
-      "dm2e:publishedAt" => "edm:ProvidedCHO",
-      "dm2e:callNumber" => "edm:ProvidedCHO",
-      "dcterms:issued" => "edm:ProvidedCHO",
-      "dcterms:alternative" => "edm:ProvidedCHO",
-      "bibo:volume" => "edm:ProvidedCHO",
-      "dcterms:temporal" => "edm:ProvidedCHO",
-      "dcterms:extent" => "edm:ProvidedCHO",
-      "dcterms:tableOfContents" => "edm:ProvidedCHO",
-      "dcterms:spatial" => "edm:ProvidedCHO",
-      "dc:date" => "edm:ProvidedCHO",
-      "dc:subject" => "edm:ProvidedCHO",
-      "dcterms:provenance" => "edm:ProvidedCHO",
-    ];
+    protected $ns;
 
     /**
      * create a new SimpleXML EDM Record with all namespaces registered
@@ -58,8 +36,9 @@ class EdmRecord
         if ($this->record === null) {
           $this->record = new \SimpleXMLElement($edm);
           if ($this->record->getNamespaces(true)) {
-            foreach ($this->record->getDocNamespaces(true) as $ns => $nsLink) {
-              $this->record->registerXPathNamespace($ns,$nsLink);
+            foreach ($this->record->getDocNamespaces(true) as $names => $namesLink) {
+              $this->ns[$names] = $namesLink;
+              $this->record->registerXPathNamespace($names,$namesLink);
             }
           } else {
             //TODO: Exception instead
@@ -78,105 +57,86 @@ class EdmRecord
         $this->record = null;
     }
 
-    // get all classes
-    function getClasses() {
-      return $this->record->xpath("/rdf:RDF/*");
+    /* for fields that always return literal values */
+    function getLiteralVals($prop = "", $class = "") {
+      $name = explode(":",$prop);
+      if (array_key_exists($name[0],$this->ns)) {
+        return $this->record->xpath("/rdf:RDF/".$class."/".$prop);
+      }
+      else {
+        return [];
+      }
     }
 
-    // convenience method to get certain class directly
-    function getClassesOfType($classType = "") {
-      return $this->record->xpath("/rdf:RDF/".$classType);
-    }
-
-    function getClassProperties($class = null) {
-      return $class->xpath("./*");
-    }
-
-    function getPropertiesOfClass($classType = "") {
-      return $this->record->xpath("/rdf:RDF/".$classType."/*");
-    }
-
-    function getAttributeVal($elem = null, $ns = "", $attr = "") {
-      $attr = $elem->attributes($ns,true)->$attr;
-      return isset($attr) ? $attr->__toString() : "";
-    }
-
-    function getAttrVal($str = "") {
+    /* for temporal attributes that will never have an associated
+    Timespan class */
+    function getAttrVals($prop = "", $class = "") {
       $attrs = [];
-      try {
-        $props = $this->record->xpath("/rdf:RDF/edm:ProvidedCHO/".$str);
+      $name = explode(":",$prop);
+      if (array_key_exists($name[0],$this->ns)) {
+        $props = $this->record->xpath("/rdf:RDF/".$class."/".$prop);
         foreach ($props as $prop) {
           $attr = $prop->attributes("rdf",true);
           $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
-
         }
-      } catch (\Exception $e) {
+        return $attrs;
+      }
+      else {
         return [];
       }
-      return $attrs;
     }
 
-    function getValuesOf($props = null, $propType = "", $fieldName = "") {
-      $values = [];
-      $parts = explode(':',$propType);
-      $ns = $parts[0];
-      $name = $parts[1];
-      foreach ($props as $prop) {
-        if ($prop->getName() == $name && array_key_exists($ns,$prop->getNamespaces())) {
-          // literal value
-          if ($prop->__toString()) {
-            $values[] = $prop->__toString();
-          // linked resource
-          } else {
-            $values[] = $this->findMatchingPropVals($prop,$fieldName);
-          }
-        }
-      }
-      return $values;
-    }
-
-    function getPropValues($propType = "") {
+    /* for properties that return either literals or attribute values that
+    have to be resolved */
+    function getPropValues($prop = "", $class = "", $fieldName = "") {
       $vals = [];
-      $classType = $this->belongsTo[$propType];
-      $props = $this->getPropertiesOfClass($classType);
-      if ($props) {
-        $vals = $this->getValuesOf($props,$propType,"skos:prefLabel");
-      }
-      return $vals;
-    }
-
-    function getLinkedPropValues($propType = "", $labelField = "", $fieldName = "") {
-      $vals = [];
-      $classType = $this->belongsTo[$propType];
-      $props = $this->getPropertiesOfClass($classType);
-      if ($props) {
-        $labels = $this->getValuesOf($props,$propType, $labelField);
-        $links = $this->getValuesOf($props,$propType, $fieldName);
-        $vals = array_combine($links,$labels);
-      }
-      return $vals;
-    }
-
-    function findMatchingPropVals($prop = null, $fieldName = "") {
-      $vals = [];
-      $matchingProps = [];
-      $attrVal = $this->getAttributeVal($prop,"rdf","resource");
-      if ($fieldName && $attrVal) {
-        $matchingProps = array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="'.$attrVal.'"]/' . $fieldName));
-        if ($matchingProps) {
-          foreach ($matchingProps as $matchingProp) {
-            if ($matchingProp->__toString()) {
-              $vals[] = $matchingProp->__toString();
-            }
-            else {
-              $vals[] = $this->findMatchingPropVals($matchingProp,"skos:prefLabel");
+      $name = explode(":",$prop);
+      if (array_key_exists($name[0],$this->ns)) {
+        $props = $this->record->xpath("/rdf:RDF/".$class."/".$prop);
+        foreach ($props as $prop) {
+          $resLink = $this->getResourceVal($prop);
+          if ($resLink) {
+            if (in_array($name[1], ["temporal","issued", "created"])) {
+              $vals[] = $resLink;
+            } else {
+              $vals[] = $this->findMatchingPropVal($resLink, $fieldName);
             }
           }
-          return implode(", ",$vals);
+          else {
+            $vals[] = $prop->__toString();
+          }
+        }
+        return $vals;
+      }
+      else {
+        return [];
+      }
+    }
+
+    function findMatchingPropVal($attr = "", $fieldName = "") {
+        return implode(array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="'.$attr.'"]/' . $fieldName)),", ");
+    }
+
+    function getResourceVal($prop = null) {
+      $attrs = $prop->attributes("rdf",true);
+      return isset($attrs["resource"]) ? $attrs["resource"]->__toString() : "";
+    }
+
+    function getLinkedPropValues($prop = "", $class = "", $fieldName = "") {
+      $vals = [];
+      $name = explode(":",$prop);
+      if (array_key_exists($name[0],$this->ns)) {
+        $props = $this->record->xpath("/rdf:RDF/".$class."/".$prop);
+        $links = [];
+        foreach ($props as $p) {
+          $links[] = $this->getResourceVal($p);
+        }
+        $labels = $this->getPropValues($prop, $class, $fieldName);
+        if (count($links) == count($labels)) {
+          $vals = array_combine($links,$labels);
         }
       }
-      // no matching properties
-      return $attrVal;
+      return $vals;
     }
 
     function toXML() {

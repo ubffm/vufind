@@ -136,7 +136,7 @@ trait EdmReaderTrait
         }
       } elseif (substr($start,5,5) == "01-01" && $end == "*") {
          // since
-         return substr($start,0,4) . "-"; 
+         return substr($start,0,4) . "-";
       } elseif ($start == "*" && substr($end,5,5) == "12-31") {
          // until
          return "-" . substr($end,0,4);

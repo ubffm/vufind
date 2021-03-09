@@ -113,7 +113,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setMultiLine(
             'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
           );
-        $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-1::']);
+        $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-2::']);
         $spec->setTemplateLine('dc:description', 'getSummary', 'data-collapsible.phtml');
         $spec->setLine('ISBN', 'getISBNs');
         $spec->setLine('ISSN', 'getISSNs');
@@ -146,9 +146,9 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
       $spec->setTemplateLine('Ask Archive', 'askArchive','data-askArchive.phtml');
       $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink','data-licenseLink.phtml');
       $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink','data-externalLink.phtml');
-      $spec->setTemplateLine('edm:isShownBy', 'getDigitalCopies','data-collapsible_.phtml');
       $spec->setTemplateLine('edm:hasView', 'getDigitalCopies','data-collapsible_.phtml');
       $spec->setTemplateLine('edm:wasPresentAt', 'getEvents','link-event.phtml');
+      $spec->setTemplateLine('Work', 'getWorks','link-work.phtml');
       $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks','data-internalLink.phtml');
       return $spec->getArray();
     }

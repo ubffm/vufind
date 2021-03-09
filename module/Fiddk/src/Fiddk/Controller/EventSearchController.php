@@ -26,7 +26,7 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 /**
  * Event Controller
  *

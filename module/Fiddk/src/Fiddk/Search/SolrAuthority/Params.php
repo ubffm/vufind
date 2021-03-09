@@ -44,7 +44,7 @@ class Params extends \VuFind\Search\Solr\Params
   /**
      * Support method for _initSearch() -- handle basic settings.
      *
-     * @param \Zend\StdLib\Parameters $request Parameter object representing user
+     * @param \Laminas\StdLib\Parameters $request Parameter object representing user
      * request.
      *
      * @return bool True if search settings were found, false if not.
@@ -65,6 +65,8 @@ class Params extends \VuFind\Search\Solr\Params
           $this->setBasicSearch($lookfor, 'Agent');
         } elseif ($type == 'Event') {
           $this->setBasicSearch($lookfor, 'Event');
+        } elseif ($type == 'Work') {
+          $this->setBasicSearch($lookfor, 'Work');
         }
         return true;
     }

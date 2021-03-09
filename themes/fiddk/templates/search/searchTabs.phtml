@@ -7,9 +7,11 @@
             <?=$this->transEsc($tab['label']); ?></a>
         <?php if ($tab['id'] == "SolrEvent" && !$tab['selected']) :
                 $url = str_replace("/EventSearch/Results", "/AJAX/json", $tab['url']);
-              elseif  ($tab['id'] === "SolrAuthor" && !$tab['selected']):
+              elseif ($tab['id'] === "SolrAuthor" && !$tab['selected']):
                 $url = str_replace("/AgentSearch/Results", "/AJAX/json", $tab['url']);
-              elseif  ($tab['id'] === "Solr" && !$tab['selected']):
+              elseif ($tab['id'] === "SolrWork" && !$tab['selected']):
+                $url = str_replace("/WorkSearch/Results", "/AJAX/json", $tab['url']);
+              elseif (!$tab['selected']):
                 $url = str_replace("/Search/Results", "/AJAX/json", $tab['url']);
               endif;
               if (isset($url) && !$tab['selected']) {
@@ -29,10 +31,4 @@ JS;
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
-  <?php if ($searchTabs[2]["selected"]) : ?>
-    <div class="alert alert-info" style="margin:10px 0px;">
-      <?=$this->transEsc("EventInfoText")?>
-      <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><?=$this->transEsc("Feedback")?>&nbsp;<i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
-    </div>
-  <?php endif; ?>
 <?php endif; ?>

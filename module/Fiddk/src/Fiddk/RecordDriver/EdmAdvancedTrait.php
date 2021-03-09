@@ -98,11 +98,13 @@ trait EdmAdvancedTrait
       return $response;
     }
 
+    // test if record exists
     public function checkExistence($id,$source) {
       $response = $this->queryRecordId($id,$source);
       return $response->getTotal();
     }
 
+    // get title and format of related record
     public function getTitleIfExists($id,$source) {
       $response = $this->queryRecordId($id,$source);
       $record = current($response->getRecords());

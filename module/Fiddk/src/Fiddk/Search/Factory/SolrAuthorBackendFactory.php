@@ -60,26 +60,11 @@ class SolrAuthorBackendFactory extends \VuFind\Search\Factory\SolrAuthBackendFac
     protected function createBackend(Connector $connector)
     {
         $backend = parent::createBackend($connector);
-        $factory = $this->createRecordCollectionFactory();
+        $manager = $this->serviceLocator
+            ->get(\VuFind\RecordDriver\PluginManager::class);
+        $factory = new RecordCollectionFactory([$manager,'getSolrAuthorRecord']);
         $backend->setRecordCollectionFactory($factory);
         return $backend;
     }
-
-    /**
-    * Create the record collection factory
-    *
-    * @return RecordCollectionFactory
-    */
-   protected function createRecordCollectionFactory()
-   {
-       $manager = $this->serviceLocator
-           ->get(\VuFind\RecordDriver\PluginManager::class);
-       $callback = function ($data) use ($manager) {
-           $driver = $manager->get('SolrAuthor');
-           $driver->setRawData($data);
-           return $driver;
-       };
-       return new RecordCollectionFactory($callback);
-   }
 
 }

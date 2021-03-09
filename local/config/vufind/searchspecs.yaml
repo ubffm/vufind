@@ -296,6 +296,8 @@ Event:
   QueryFields:
     event_id:
       - [onephrase, 50]
+    topic_id:
+      - [onephrase, 50]
 
 Agent:
   QueryFields:
@@ -303,6 +305,13 @@ Agent:
       - [onephrase, 100]
     institution_id:
       - [onephrase, ~]
+    topic_id:
+      - [onephrase, 50]
+
+Work:
+  QueryFields:
+    work_id:
+      - [onephrase, 50]
     topic_id:
       - [onephrase, 50]
 

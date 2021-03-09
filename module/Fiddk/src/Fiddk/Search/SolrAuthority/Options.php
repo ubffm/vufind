@@ -57,7 +57,7 @@ public function getRecommendationSettings($handler = null)
     // Load the Agent- or the EventModuleRecommendations configuration if available,
     // depending on the type
     $recommend = [];
-    if (($handler == 'Agent' or $handler == 'Event') and isset($ss->AuthModuleRecommendations)) {
+    if (($handler == 'Agent' or $handler == 'Event' or $handler == 'Work') and isset($ss->AuthModuleRecommendations)) {
         foreach ($ss->AuthModuleRecommendations as $section => $content) {
             $recommend[$section] = [];
             foreach ($content as $current) {
