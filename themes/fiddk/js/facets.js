@@ -1,11 +1,41 @@
 /*global VuFind */
+var dprovs = {
+  'AdamMatthewDigital':'amd',
+  'AkademiederKünsteBerlin':'adk',
+  'AkademiederKünsteBerlin,Archivbestand':'adka',
+  'AkademiederKünsteBerlin,ArchivDarstellendeKunst':'adka',
+  'AlexanderStreetPress':'asp',
+  'DerradeMorodaDanceArchives':'ddm',
+  'DeutschesForumfürFigurentheaterundPuppenspielkunst':'fdn',
+  'DeutschesTanzfilminstitutBremen':'dtb',
+  'DeutschesTanzarchivKöln':'dtk',
+  'DeutschesTheatermuseumMünchen':'dtm',
+  'Universitäts-undLandesbibliothekDüsseldorf':'dtz',
+  'UniversitätsbibliothekFrankfurtamMain':'fub',
+  'DonJuanArchivWien':'kom',
+  'LandesarchivThüringen': 'lath',
+  'InternationalesTheaterinstitut–MimeCentruminInternationalesTheaterinstitut–MediathekfürTanzundTheater(MTT)':'mcb',
+  'OnlineContents':'olc',
+  'TheaterwissenschaftlicheSammlungderUniversitätzuKöln':'slw',
+  'SchweizerischeTheatersammlunginStiftungSAPA,SchweizerArchivderDarstellendenKünste':'sts',
+  'TanzarchivLeipzig':'tal',
+  'Architekturmuseum(Berlin)':'tbs',
+  'TeatroEspañoldelSiglodeOro':'tes',
+  'TanzfondsErbe':'tfe',
+  'ThüringerUniversitäts-undLandesbibliothekJena':'thulb',
+  'TheatermuseumderLandeshauptstadtDüsseldorf':'tmd',
+  'transcriptVerlag':'tra',
+  'FreieUniversitätBerlin,InstitutfürTheaterwissenschaft,TheaterhistorischeSammlungen':'tsb',
+  'VerbundDeutscherTanzarchive':'vdt'
+};
+
 /*exported collapseTopFacets, initFacetTree */
 /* locally CHANGED:
  * - many changes in buildFacetTree (l. 82)
  * - added more param in functions that call tree building
  * - removed selector boxes in hierarchical facet
  */
-function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts)
+function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, dprovs)
 {
   var json = [];
 
@@ -47,8 +77,15 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts)
 
     var children = null;
     if (typeof this.children !== 'undefined' && this.children.length > 0) {
-      children = buildFacetNodes(this.children, currentPath, allowExclude, excludeTitle, counts);
+      children = buildFacetNodes(this.children, currentPath, allowExclude, excludeTitle, counts, dprovs);
     }
+
+    var dprov = '';
+    var normText = this.displayText.replace(/(\n|\s)/gm,"");
+    if (dprovs.hasOwnProperty(normText)) {
+      dprov = dprovs[normText];
+    }
+
     json.push({
       'text': $html.html(),
       'children': children,
@@ -57,6 +94,7 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts)
         'opened': this.hasAppliedChildren
       },
       'li_attr': this.isApplied ? { 'class': 'active' } : {},
+      'dprov': dprov,
       'data': {
         'url': url.replace(/&amp;/g, '&')
       }
@@ -78,15 +116,23 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
   var facet = treeNode.data('facet');
   var operator = treeNode.data('operator');
 
-  var results = buildFacetNodes(facetData, currentPath, allowExclude, excludeTitle, inSidebar);
+  var results = buildFacetNodes(facetData, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
   treeNode.find('.fa-spinner').parent().remove();
   if (inSidebar) {
-    treeNode.on('loaded.jstree open_node.jstree', function treeNodeOpen(/*e, data*/) {
-      var nodes = treeNode.find('ul.jstree-container-ul > li.jstree-node')
-      nodes.addClass('list-group-item');
-      if (more && nodes.length > more) {
-        for(var i=more; i<nodes.length; i++) {
-          $(nodes[i]).addClass('narrowGroupHidden-' + facet + ' hidden');
+    treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
+      var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
+      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
+      $(treeItems).addClass('list-group-item');
+      $(treeItems).each(function addInfo(i) {
+          if (results[i].dprov) {
+              $(this).append('<a class="providerInfo" data-lightbox href="' + VuFind.path + '/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+        }
+      });
+      // reinit lightbox
+      VuFind.init('lightbox');
+      if (more && $(treeItems).length > more) {
+        for(var i=more; i<$(treeItems).length; i++) {
+          $(treeItems[i]).addClass('narrowGroupHidden-' + facet + ' hidden');
         }
         var $moreButton = $('<a/>')
           .addClass('facet narrow-toggle more-facets')
@@ -108,15 +154,37 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
         $moreButton.appendTo(treeNode.find('ul.jstree-container-ul'));
         $lessButton.appendTo(treeNode.find('ul.jstree-container-ul'));
       }
-      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
       registerMoreLessFacetsEventHandlers();
     });
-  }
+    treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
+    treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
+      var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
+      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
+      $(treeItems).addClass('list-group-item');
+      $(treeItems).each(function addInfo(i) {
+        if (this.id == data.node.id) {
+          // add info to parent node
+          if (results[i].dprov) {
+            $(this.children[1]).after('<a class="providerInfo" data-lightbox href="' + VuFind.path + '/DataProvider/' + results[i].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+          }
+          var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
+          // add info to each child
+          data.node.children.forEach(function(child,j) {
+            if (results[i].children[j].dprov) {
+                $(treeChildren[j]).append('<a class="providerInfo" data-lightbox href="' + VuFind.path + '/DataProvider/' + results[i].children[j].dprov + '"><i class="fa fa-info-circle" aria-hidden="true"></i></a>');
+            }
+          });
+        }
+      });
+      // reinit lightbox
+      VuFind.init('lightbox');
+    });
   treeNode.jstree({
     'core': {
       'data': results
     }
   });
+}
 }
 
 function initFacetTree(treeNode, inSidebar)

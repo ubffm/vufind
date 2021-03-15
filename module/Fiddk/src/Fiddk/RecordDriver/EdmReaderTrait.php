@@ -103,15 +103,13 @@ trait EdmReaderTrait
     /* this should be a helper instead! */
     public function translateDate($date,$lang) {
       // FIXME
-      if (substr($date,0,4) == "http") {
-        $dateParts = explode("_",substr($date,35));
+      if (strpos($date,"T00:00:00Z_")) {
+        $dateParts = explode("_",$date);
+      } elseif (strpos($date,"T00:00:00Z TO ")) {
+        $dateParts = explode(" TO ",str_replace("]","",str_replace("[","",$date)));
       }
       else {
-        if (strpos($date,"_") !== false) {
-          $dateParts = explode("_",str_replace(["[","]","TO "],"",$date));
-        } else {
-          $dateParts = explode(" ",str_replace(["[","]","TO "],"",$date));
-        }
+        return $date;
       }
       $start = isset($dateParts[0]) ? substr($dateParts[0],0,10) : "";
       $end = isset($dateParts[1]) ? substr($dateParts[1],0,10) : "";

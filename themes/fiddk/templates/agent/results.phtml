@@ -59,6 +59,12 @@
   <?php endforeach; ?>
 <?php endif; ?>
 <div class="<?=$this->layoutClass('mainbody')?>">
+  <?php if ($searchIndex == "Work" or $searchIndex == "Event"):
+    $thistype = $this->transEsc("thisdms");
+  else:
+    $thistype = $this->transEsc("thisdfs");
+  endif; ?>
+  <h2><?=$this->translate('RelatedWithObjects', ['%%this%%' => $thistype,'%%type%%' => $this->transEsc($searchIndex)]) . ":";?></h2>
   <?=$this->flashmessages()?>
   <div class="search-header hidden-print">
     <div class="search-stats">

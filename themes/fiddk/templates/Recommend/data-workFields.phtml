@@ -1,37 +1,19 @@
-<?php $eventType = $this->driver->getEventType();
-      $eventDates = $this->driver->getEventDate();
-      $eventPlaces = $this->driver->getEventPlace();
-      $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
-<?php if (!empty($eventType)) : ?>
-  <b><?=$this->transEsc('Type of Event') . ':'?></b>
-  <span property="performingArtsType">
-    <?=implode($eventType,', ')?>
-  </span><br />
-<?php endif; ?>
-<?php if (!empty($eventDates)) : ?>
-  <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
-  <?php $normDates = [];?>
-  <?php foreach ($eventDates as $eventDate): ?>
-    <?php $normDates[] = $this->driver->translateDate($eventDate,$lang)?>
-  <?php endforeach; ?>
-  <span property="edm:occuredAt">
-    <?=$this->escapeHtml(implode($normDates,', '))?>
+<?php $description = $this->driver->getSummary();
+      //$genre = $this->driver->getGenre(); bf:genreForm
+      $lang = $this->plugin('translate')->getTranslator()->getLocale();
+      //$edm = $this->driver->getXML('edm');?>
+      <?//=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
+<?php if (!empty($description)) : ?>
+  <br/><span property="description">
+    <?=implode('; ',$description)?>
   </span><br/>
-<?php endif; ?>
-<?php if (!empty($eventPlaces)) : ?>
-  <b><?=$this->transEsc('PlaceOfEvent') . ':'?></b>
-  <?php foreach($eventPlaces as $eventPlace): ?>
-    <span property="edm:happenedAt">
-      <?=$eventPlace?>
-    </span><br />
-  <?php endforeach; ?>
-<?php endif; ?>
-<?php if (!empty($agents)) : ?>
+  <?php endif; ?>
+<?php if (!empty($this->agents)) : ?>
   <br/>
   <b><?=$this->transEsc('Contributors')?></b><br/>
   <?php $formattedAuthors = [];
-    if (!empty($agents["primary"])):
-      foreach ($agents["primary"] as $author => $dataFields):
+    if (!empty($this->agents["primary"])):
+      foreach ($this->agents["primary"] as $author => $dataFields):
         if (!empty($author)):
           ob_start();
           // an authority link exists and that document exists in SolrAuthor

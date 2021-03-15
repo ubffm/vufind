@@ -49,7 +49,7 @@ class SolrWork extends SolrEdm
    */
   public function getAuthType()
   {
-      return "work";
+      return "Work";
   }
 
 }

@@ -15,9 +15,7 @@
       <td>
         <?php foreach ($fields as $field) : ?>
          <?php foreach ($field as $resource => $seeAlso) : ?>
-           <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
-             <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-          <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+          <?php if ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag' || $institution == 'Adam Matthew Digital')) : ?>
              <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
              <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
           <?php else: ?>
@@ -30,9 +28,7 @@
           <input type="checkbox" class="toggle" id="toggle_<?=$key?>">
           <span> <?php foreach ($rest as $field) : ?>
             <?php foreach ($field as $resource => $seeAlso): ?>
-            <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
-              <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-           <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+           <?php if ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag' || $institution == 'Adam Matthew Digital')) : ?>
               <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
               <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
            <?php else: ?>
@@ -53,9 +49,7 @@
     <td>
       <?php foreach ($fields as $type => $field) : ?>
        <?php foreach ($field as $resource => $seeAlso) : ?>
-         <?php if ($key == 'edm:hasView' || $key == 'edm:isRelatedTo') : ?>
-           <a href="<?=$resource?>"><?=$this->escapeHtml($seeAlso)?></a><br/>
-        <?php elseif ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag')) : ?>
+        <?php if ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag'  || $institution == 'Adam Matthew Digital')) : ?>
            <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
          <?php elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>

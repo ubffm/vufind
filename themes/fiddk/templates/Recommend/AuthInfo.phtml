@@ -2,6 +2,7 @@
 if (!empty($this->info) || isset($driver)):
   if (!empty($this->info)):
     $types = $this->info['type'];
+    $dprov = '';
     if (in_array("ConferenceOrEvent",$types)):
       $type = "event_gnd";
       $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
@@ -34,7 +35,8 @@ if (!empty($this->info) || isset($driver)):
     $type = $this->driver->getAuthType();
     $dprov = $this->driver->getInstitutionLinked();
     $title = $this->driver->getTitle();
-    if ($type = "work"):
+    $this->agents = $this->driver->getDeduplicatedAuthors();
+    if ($type == "Work"):
       $variant = $this->driver->getAlternativeTitles();
       $sameAs = [];
       $works = [];
@@ -66,9 +68,11 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('Recommend/data-agentFields.phtml');?>
       <?php elseif (!empty($moreInfo) && $type == "event_gnd"): ?>
         <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
-      <?php elseif ($type == "event"): ?>
+      <?php elseif ($type == "Event"): ?>
         <?=$this->render('Recommend/data-eventFields.phtml');?>
-      <?php endif; ?>
+      <?php elseif ($type == "Work"): ?>
+      <?=$this->render('Recommend/data-workFields.phtml');?>
+    <?php endif; ?>
     <?php if (!empty($variant)) : ?>
        <br/><b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
         <?php $this->data = $variant; ?>
@@ -87,8 +91,8 @@ if (!empty($this->info) || isset($driver)):
   <?php if (!empty($this->info['sameAs'])): ?>
     <?=$this->render('Recommend/data-sameAs.phtml');?>
   <?php endif; ?>
-  <?php if (!empty($this->info['describedBy']) || $dprov !== ''): ?>
-    <?=$this->render('Recommend/data-source.phtml');?>
+  <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>
+    <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov]);?>
   <?php endif; ?>
    </div>
  </div>
