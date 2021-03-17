@@ -115,4 +115,13 @@ trait EdmAdvancedTrait
       }
     }
 
+    // get date of related event
+    public function getEventDate($id) {
+      $response = $this->queryRecordId($id,"SolrEvent");
+      $record = current($response->getRecords());
+      if ($record and $record->getEventDate()) {
+        return $record->getEventDate();
+      }
+    }
+
 }

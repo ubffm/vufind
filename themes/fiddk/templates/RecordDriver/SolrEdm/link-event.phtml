@@ -1,3 +1,8 @@
 <?php foreach ($data as $id => $field): ?>
-  <a href="<?=$this->url('eventrecord')?><?=$id?>"><?=$this->escapeHtml($field)?></a><br/>
+  <?php $eventDate = $this->driver->getEventDate($id);
+        $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
+  <a href="<?=$this->url('eventrecord')?><?=$id?>"><?=$this->escapeHtml($field)?></a>
+  <?php if (isset($eventDate)):?>
+    <?="(" . $this->driver->translateDate($eventDate[0],$lang) . ")"?>
+  <?php endif;?><br/>
 <?php endforeach; ?>
