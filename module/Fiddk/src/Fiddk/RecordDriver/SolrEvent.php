@@ -132,4 +132,22 @@ class SolrEvent extends SolrAuthDefault
            $this->fields['author_id'] : [];
    }
 
+   /**
+    * Get the number of work records related to this event
+    *
+    * @return int Number of records
+    */
+   public function getWorkCount()
+   {
+       $id = $this->getUniqueId();
+       $query = new \VuFindSearch\Query\Query(
+           'event_id:"' . $id . '"'
+       );
+       // Disable highlighting for efficiency; not needed here:
+       $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+       return $this->searchService
+           ->search("SolrWork", $query, 0, 0, $params)
+           ->getTotal();
+   }
+
 }

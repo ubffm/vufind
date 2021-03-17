@@ -1,17 +1,16 @@
 <?php $this->info = $this->recommend->getAuthInfo();
+      $type = $this->driver->getAuthType();
 if (!empty($this->info) || isset($driver)):
   if (!empty($this->info)):
     $types = $this->info['type'];
     $dprov = '';
     if (in_array("ConferenceOrEvent",$types)):
-      $type = "event_gnd";
       $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
            || isset($this->info['dateOfConferenceOrEvent'])
            || isset($this->info['placeOfConferenceOrEvent'])
            || isset($this->info['homepage'])
            || isset($this->info['spatialAreaOfActivity']);
     else:
-      $type = "agent";
       $moreInfo = isset($this->info['professionOrOccupation'])
            || isset($this->info['placeOfBusiness'])
            || isset($this->info['biographicalOrHistoricalInformation'])
@@ -32,7 +31,6 @@ if (!empty($this->info) || isset($driver)):
     //TODO: There can be more than one thumbnail??
     $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
   else:
-    $type = $this->driver->getAuthType();
     $dprov = $this->driver->getInstitutionLinked();
     $title = $this->driver->getTitle();
     $this->agents = $this->driver->getDeduplicatedAuthors();
@@ -64,12 +62,20 @@ if (!empty($this->info) || isset($driver)):
   <?php endif; ?>
     <div class="authority-meta">
       <h2><?=$title?></h2>
-      <?php if (!empty($moreInfo) && $type == "agent"): ?>
-        <?=$this->render('Recommend/data-agentFields.phtml');?>
+      <?php if (!empty($moreInfo) && $type == "Personal Name"): ?>
+        <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
+        <?=$this->render('Recommend/data-moreFacts.phtml');?><br/>
+      <?php elseif (!empty($moreInfo) && $type == "Corporate Name"): ?>
+        <?=$this->render('Recommend/data-corporateFacts.phtml');?>
+      <?php endif; ?>
+      <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
+        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $this->driver->getUniqueId()]);?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $this->driver->getUniqueId()]);?>
       <?php elseif (!empty($moreInfo) && $type == "event_gnd"): ?>
         <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
       <?php elseif ($type == "Event"): ?>
         <?=$this->render('Recommend/data-eventFields.phtml');?>
+        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $this->driver->getUniqueId()]);?>
       <?php elseif ($type == "Work"): ?>
       <?=$this->render('Recommend/data-workFields.phtml');?>
     <?php endif; ?>
@@ -81,19 +87,24 @@ if (!empty($this->info) || isset($driver)):
     </div>
     <div class="authority-meta">
       <?php if (!empty($works)) : ?>
-        <b><?=$this->transEsc('Related Works') . ':'?></b>
+        <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b>
         <?php foreach($works as $work_id => $work): ?>
           <span property="edm:isRelatedTo">
             <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
           </span><br />
         <?php endforeach; ?>
+        <br />
       <?php endif; ?>
-  <?php if (!empty($this->info['sameAs'])): ?>
-    <?=$this->render('Recommend/data-sameAs.phtml');?>
-  <?php endif; ?>
-  <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>
-    <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov]);?>
-  <?php endif; ?>
+      <?php if (!empty($this->info['sameAs'])): ?>
+        <?=$this->render('Recommend/data-sameAs.phtml');?>
+      <?php endif; ?>
+      <?php if ($type == "Work"): ?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $this->driver->getUniqueId()]);?>
+        <br />
+      <?php endif; ?>
+      <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>
+        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov]);?>
+      <?php endif; ?>
    </div>
  </div>
 </div>

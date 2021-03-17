@@ -52,4 +52,23 @@ class SolrWork extends SolrEdm
       return "Work";
   }
 
+  /**
+   * Get the number of event records belonging to this work
+   *
+   * @return int Number of records
+   */
+  public function getEventCount()
+  {
+
+      $id = $this->getUniqueId();
+      $query = new \VuFindSearch\Query\Query(
+          'work_id:"' . $id . '"'
+      );
+      // Disable highlighting for efficiency; not needed here:
+      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+      return $this->searchService
+          ->search("SolrEvent", $query, 0, 0, $params)
+          ->getTotal();
+  }
+
 }

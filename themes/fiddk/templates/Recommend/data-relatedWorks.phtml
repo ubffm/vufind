@@ -1,0 +1,10 @@
+<?php if ($count > 0):
+  if ($type !== 'Event'):
+    $searchType = "Agent";
+  else:
+    $searchType = "Event";
+  endif; ?>
+  <span property="edm:isRelatedTo">
+    <a href="<?=$this->url('worksearch-results') . '?lookfor=' . $id . '&type=' . $searchType?>"><?=$count . " " . $this->transEsc('RelatedWorks'. substr($type,0,3))?></a>
+  </span><br />
+<?php endif; ?>

@@ -87,4 +87,40 @@ class SolrAuthor extends SolrAuthDefault
          ? $this->fields['death_date'] : "";
   }
 
+  /**
+   * Get the number of work records related to this agent
+   *
+   * @return int Number of records
+   */
+  public function getWorkCount()
+  {
+      $id = $this->getUniqueId();
+      $query = new \VuFindSearch\Query\Query(
+          'author_id:"' . $id . '"'
+      );
+      // Disable highlighting for efficiency; not needed here:
+      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+      return $this->searchService
+          ->search("SolrWork", $query, 0, 0, $params)
+          ->getTotal();
+  }
+
+  /**
+   * Get the number of event records related to this agent
+   *
+   * @return int Number of records
+   */
+  public function getEventCount()
+  {
+      $id = $this->getUniqueId();
+      $query = new \VuFindSearch\Query\Query(
+          'author_id:"' . $id . '"'
+      );
+      // Disable highlighting for efficiency; not needed here:
+      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+      return $this->searchService
+          ->search("SolrEvent", $query, 0, 0, $params)
+          ->getTotal();
+  }
+
 }

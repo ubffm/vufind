@@ -16,6 +16,12 @@
     <?=implode('/',array_column($this->info['placeOfActivity'],'label'))?>
   </span><br/>
 <?php endif; ?>
+<?php if (isset($this->info['geographicAreaCode'])) : ?>
+  <?=$this->transEsc('Place') . ': '?>
+  <span property="geographicAreaCode">
+    <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+  </span><br />
+<?php endif; ?>
 <?php if (isset($this->info['publication'])) : ?>
   <?=$this->transEsc('Publications') . ':'?><br />
   <div class="publications">
