@@ -2,9 +2,9 @@
   <h4><?=$this->transEsc("Researching")?><hr id="research"/></h4>
   <div class="flexing">
     <?php foreach ($this->statistics as $key => $amount): ?>
-      <?php if ($key == "Objects") {
+      <?php if ($key == "Resources") {
           $url = $this->url('search-results');
-          $pic = "Objects.jpg";
+          $pic = "Resources.jpg";
         } elseif ($key == "Agents") {
           $url = $this->url('agentsearch-results');
           $pic = "Agents.jpg";

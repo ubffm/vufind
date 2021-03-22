@@ -187,11 +187,11 @@ forms:
 
   AskArchiveDTK:
     enabled: true
-    title: AskAboutObject
+    title: AskAboutResource
     onlyForLoggedUsers: false
     senderEmailRequired: true
     senderNameRequired: true
-    emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
+    emailSubject: Anfrage zu einer Ressource aus Ihrem Bestand via FID Darstellende Kunst
     response: Thank you for your request.
 
     recipient:
@@ -214,11 +214,11 @@ forms:
 
   AskArchiveMCB:
     enabled: true
-    title: AskAboutObject
+    title: AskAboutResource
     onlyForLoggedUsers: false
     senderEmailRequired: true
     senderNameRequired: true
-    emailSubject: Anfrage zu einem Objekt aus Ihrem Bestand via FID Darstellende Kunst
+    emailSubject: Anfrage zu einer Ressource aus Ihrem Bestand via FID Darstellende Kunst
     response: Thank you for your request.
 
     recipient:

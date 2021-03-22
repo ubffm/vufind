@@ -64,7 +64,7 @@
   else:
     $thistype = $this->transEsc("thisdfs");
   endif; ?>
-  <h2><?=$this->translate('RelatedWithObjects', ['%%this%%' => $thistype,'%%type%%' => $this->transEsc($searchIndex)]) . ":";?></h2>
+  <h2><?=$this->translate('RelatedWithResources', ['%%this%%' => $thistype,'%%type%%' => $this->transEsc($searchIndex)]) . ":";?></h2>
   <?=$this->flashmessages()?>
   <div class="search-header hidden-print">
     <div class="search-stats">
