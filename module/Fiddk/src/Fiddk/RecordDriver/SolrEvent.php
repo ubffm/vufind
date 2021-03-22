@@ -70,15 +70,6 @@ class SolrEvent extends SolrAuthDefault
                 ? $this->fields['geographic'] : [];
       }
 
-      /**
-       * Returns related links
-       */
-       public function getsameAs()
-       {
-           return isset($this->fields['related'])
-                 ? $this->fields['related'] : [];
-       }
-
        /**
         * Get related works
         */

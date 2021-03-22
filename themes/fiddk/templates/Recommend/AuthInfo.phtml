@@ -37,11 +37,9 @@ if (!empty($this->info) || isset($driver)):
     if ($type == "Work"):
       $variant = $this->driver->getAlternativeTitles();
       $sameAs = [];
-      $works = [];
     else:
       $variant = $this->driver->getUseFor();
       $sameAs = $this->driver->getSameAs();
-      $works = $this->driver->getWorks();
     endif;
   endif;
 ?>
@@ -86,14 +84,17 @@ if (!empty($this->info) || isset($driver)):
     <?php endif; ?><br/>
     </div>
     <div class="authority-meta">
-      <?php if (!empty($works)) : ?>
-        <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b>
-        <?php foreach($works as $work_id => $work): ?>
-          <span property="edm:isRelatedTo">
-            <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
-          </span><br />
-        <?php endforeach; ?>
-        <br />
+      <?php if ($type == 'Event'):
+        $works = $this->driver->getWorks();
+        if (!empty($works)) : ?>
+          <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b>
+          <?php foreach($works as $work_id => $work): ?>
+            <span property="edm:isRelatedTo">
+              <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
+            </span><br />
+          <?php endforeach; ?>
+          <br />
+        <?php endif; ?>
       <?php endif; ?>
       <?php if (!empty($this->info['sameAs'])): ?>
         <?=$this->render('Recommend/data-sameAs.phtml');?>

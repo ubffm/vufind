@@ -8,7 +8,7 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
   <p>Der Fachinformationsdienst Darstellende Kunst stellt Ihnen eine Auswahl an Informationsquellen zur Gattung Theaterzettel zur Verfügung.
   Aktuell können Sie in den folgenden Datenbeständen recherchieren:
   <ul>
-    <li>Theater und Musik in Weimar 1751-1990</li>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FLandesarchiv+Thüringen%2F%22&type=AllFields">Theater und Musik in Weimar 1751-1990</a></li>
     <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FUniversitäts-+und+Landesbibliothek+Düsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
     <li>Theaterzettel-Sammlung der Lippischen Landesbibliothek</li>
   </ul>

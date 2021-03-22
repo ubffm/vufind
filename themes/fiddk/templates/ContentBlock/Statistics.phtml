@@ -1,5 +1,5 @@
 <div class="flex-statistics card">
-  <h4><?=$this->transEsc("Researching")?></b><hr id="research"/></h4>
+  <h4><?=$this->transEsc("Researching")?><hr id="research"/></h4>
   <div class="flexing">
     <?php foreach ($this->statistics as $key => $amount): ?>
       <?php if ($key == "Objects") {
@@ -25,4 +25,6 @@
         </figure>
     <?php endforeach; ?>
   </div>
+  <hr/>
+  <h4><?=$this->transEsc('ResearchingD')?> <a href="<?=$this->url('showcase-playbills')?>"><?=$this->transEsc('PlaybillPortal')?></a></h4>
 </div>

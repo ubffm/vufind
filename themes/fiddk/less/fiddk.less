@@ -288,14 +288,14 @@ div#accordion .panel-collapse {
 #searchAndNews {
   width: 80%;
   margin: auto;
-  padding-right: 40px;
 
   .well.searchForm {
     margin-bottom: 10px;
   }
   .homeinfo {
      display: flex;
-     max-height: 310px;
+     flex-direction: row;
+     max-height: 370px;
      @media (max-width: 767px) {
        flex-wrap: wrap;
      }
@@ -312,7 +312,6 @@ div#accordion .panel-collapse {
           margin-top: 10px;
         }
         min-width: 140px;
-        padding: 10px;
         //box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
       }
     }
