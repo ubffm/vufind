@@ -13,7 +13,7 @@ var dprovs = {
   'Universitäts-undLandesbibliothekDüsseldorf':'dtz',
   'UniversitätsbibliothekFrankfurtamMain':'fub',
   'DonJuanArchivWien':'kom',
-  'LandesarchivThüringen': 'lath',
+  'LandesarchivThüringen-HauptstaatsarchivWeimar': 'lath',
   'InternationalesTheaterinstitut–MimeCentruminInternationalesTheaterinstitut–MediathekfürTanzundTheater(MTT)':'mcb',
   'OnlineContents':'olc',
   'TheaterwissenschaftlicheSammlungderUniversitätzuKöln':'slw',
