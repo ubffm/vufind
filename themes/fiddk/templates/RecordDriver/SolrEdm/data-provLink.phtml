@@ -9,6 +9,6 @@
     <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
     <!--a class="providerInfo" data-lightbox href="/vufind/DataProvider/dtk"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/-->
     <hr>
-    <a href="<?=$this->url('agentrecord')?><?=$info[2]?>"><?=$this->transEsc("More_of_this_provider")?></a>
+    <a href="<?=$this->url('agentrecord')?><?=$info[1]?>"><?=$this->transEsc("More_of_this_provider")?></a>
   <?php endif; ?>
 <?php endforeach; ?>
