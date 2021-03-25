@@ -1,9 +1,12 @@
-<?php $this->info = $this->recommend->getAuthInfo();
+<?php $this->info = $this->recommend->getAuthInfo($this->driver);
       $type = $this->driver->getAuthType();
 if (!empty($this->info) || isset($driver)):
-  if (!empty($this->info)):
     $types = $this->info['type'];
-    $dprov = '';
+    if (!empty($this->info['gndIdentifier'])):
+      $dprov = '';
+    else:
+      $dprov = $this->driver->getInstitutionLinked();
+    endif;
     if (in_array("ConferenceOrEvent",$types)):
       $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
            || isset($this->info['dateOfConferenceOrEvent'])
@@ -28,20 +31,11 @@ if (!empty($this->info) || isset($driver)):
     endif;
     $title = $this->info['preferredName'];
     $variant = isset($this->info['variantName']) ? $this->info['variantName'] : '';
+    $id = $this->driver->getUniqueId();
+    $this->agents = $this->driver->getDeduplicatedAuthors();
     //TODO: There can be more than one thumbnail??
     $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
-  else:
-    $dprov = $this->driver->getInstitutionLinked();
-    $title = $this->driver->getTitle();
-    $this->agents = $this->driver->getDeduplicatedAuthors();
-    if ($type == "Work"):
-      $variant = $this->driver->getAlternativeTitles();
-      $sameAs = [];
-    else:
-      $variant = $this->driver->getUseFor();
-      $sameAs = $this->driver->getSameAs();
-    endif;
-  endif;
+      //$sameAs = $this->driver->getSameAs();
 ?>
 <div class="card clearfix">
   <div class="flex-content flex-start">
@@ -60,20 +54,19 @@ if (!empty($this->info) || isset($driver)):
   <?php endif; ?>
     <div class="authority-meta">
       <h2><?=$title?></h2>
-      <?php if (!empty($moreInfo) && $type == "Personal Name"): ?>
-        <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
-        <?=$this->render('Recommend/data-moreFacts.phtml');?><br/>
-      <?php elseif (!empty($moreInfo) && $type == "Corporate Name"): ?>
-        <?=$this->render('Recommend/data-corporateFacts.phtml');?>
-      <?php endif; ?>
       <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
-        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $this->driver->getUniqueId()]);?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $this->driver->getUniqueId()]);?>
-      <?php elseif (!empty($moreInfo) && $type == "event_gnd"): ?>
+        <?php if ($type == "Personal Name"): ?>
+          <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
+          <?=$this->render('Recommend/data-moreFacts.phtml');?><br/>
+        <?php elseif ($type == "Corporate Name"): ?>
+          <?=$this->render('Recommend/data-corporateFacts.phtml');?>
+        <?php endif; ?>
+        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
+      <?php elseif ($type == "event_gnd"): ?>
         <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
       <?php elseif ($type == "Event"): ?>
         <?=$this->render('Recommend/data-eventFields.phtml');?>
-        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $this->driver->getUniqueId()]);?>
       <?php elseif ($type == "Work"): ?>
       <?=$this->render('Recommend/data-workFields.phtml');?>
     <?php endif; ?>
@@ -87,7 +80,7 @@ if (!empty($this->info) || isset($driver)):
       <?php if ($type == 'Event'):
         $works = $this->driver->getWorks();
         if (!empty($works)) : ?>
-          <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b>
+          <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b><br/>
           <?php foreach($works as $work_id => $work): ?>
             <span property="edm:isRelatedTo">
               <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
@@ -100,7 +93,7 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('Recommend/data-sameAs.phtml');?>
       <?php endif; ?>
       <?php if ($type == "Work"): ?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $this->driver->getUniqueId()]);?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
         <br />
       <?php endif; ?>
       <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>

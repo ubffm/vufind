@@ -8,6 +8,7 @@
   $searchIndex = $this->params->getSearchHandler();
   $searchType = $this->params->getSearchType();
   $searchClassId = $this->params->getSearchClassId();
+  $recordTotal = $this->results->getResultTotal();
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
@@ -53,11 +54,9 @@
 <?php /* locally CHANGED:
  * - top recommendation on top of main body. Not next to side facets.
  */
- if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
-  <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
-    <?=$this->recommend($current, 'top', $index)?>
-  <?php endforeach; ?>
-<?php endif; ?>
+foreach ($this->results->getRecommendations('top') as $index => $current): ?>
+  <?=$this->recommend($current, 'top', $index)?>
+<?php endforeach; ?>
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?php if ($searchIndex == "Work" or $searchIndex == "Event"):
     $thistype = $this->transEsc("thisdms");
@@ -101,9 +100,6 @@
     <?php if (isset($this->parseError)): ?>
       <p class="alert alert-danger"><?=$this->transEsc('nohit_parse_error')?></p>
     <?php endif; ?>
-    <?php foreach (($top = $this->results->getRecommendations('top')) as $index => $current): ?>
-      <?=$this->recommend($current, 'top', $index)?>
-    <?php endforeach; ?>
     <?php foreach ($this->results->getRecommendations('noresults') as $index => $current): ?>
       <?php if (!in_array($current, $top)): ?>
         <?=$this->recommend($current, 'noresults', $index)?>

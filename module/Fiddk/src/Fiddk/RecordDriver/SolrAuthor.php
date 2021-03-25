@@ -73,7 +73,7 @@ class SolrAuthor extends SolrAuthDefault
   public function getBirthDate()
   {
      return isset($this->fields['birth_date'])
-         ? $this->fields['birth_date'] : "";
+         ? $this->fields['birth_date'] : '';
   }
 
   /**
@@ -84,7 +84,7 @@ class SolrAuthor extends SolrAuthDefault
   public function getDeathDate()
   {
      return isset($this->fields['death_date'])
-         ? $this->fields['death_date'] : "";
+         ? $this->fields['death_date'] : '';
   }
 
   /**
@@ -101,7 +101,7 @@ class SolrAuthor extends SolrAuthDefault
       // Disable highlighting for efficiency; not needed here:
       $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
       return $this->searchService
-          ->search("SolrWork", $query, 0, 0, $params)
+          ->search("Solr", $query, 0, 0, $params)
           ->getTotal();
   }
 

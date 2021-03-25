@@ -178,11 +178,11 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      *
      * @return array info
      */
-    public function getAuthInfo()
+    public function getAuthInfo($driver)
     {
         $gnd = $this->getGnd();
         return !empty($gnd)
-            ? $this->lobid->get($gnd) : null;
+            ? $this->lobid->get($gnd) : $this->getAuthObject($driver);
     }
 
     /**
@@ -222,11 +222,52 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
     {
         $search = $this->searchObject->getParams()->getQuery();
         if ($search instanceof Query) {
-          $gnd = substr($search->getString(),4);
-          return $gnd;
+          $query = $search->getString();
+          $gnd = substr($query,4);
+          $isGnd = substr($query,0,3) == "gnd";
+          if ($isGnd) {
+            return $gnd;
+          }
+          else {
+            return '';
+          }
         } else {
           return '';
         }
+    }
+
+    /**
+     * Takes the search term and extracts the gnd from it
+     *
+     * @return string
+     */
+    protected function getAuthObject($driver)
+    {
+        $res = [];
+        $type = $driver->getAuthType();
+        $res["type"] = [$type];
+        $res["gndIdentifier"] = '';
+        $res["preferredName"] = $driver->getTitle();
+        if ($type == "Personal Name") {
+          if ($driver->getOccupation()) {
+            foreach ($driver->getOccupation() as $occu) {
+              $res["professionOrOccupation"][] = ["label" => $occu];
+            }
+          }
+          if ($driver->getBirthDate()) {
+            $res["dateOfBirth"] = [$driver->getBirthDate()];
+          }
+          if ($driver->getDeathDate()) {
+            $res["dateOfDeath"] = [$driver->getDeathDate()];
+          }
+        } elseif ($type == "Event") {
+        }
+        if ($type == "Work") {
+          $res["variantName"] = $driver->getAlternativeTitles();
+        } else {
+          $res["variantName"] = $driver->getUseFor();
+        }
+        return $res;
     }
 
     /**

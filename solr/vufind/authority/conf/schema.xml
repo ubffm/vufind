@@ -69,6 +69,7 @@
     <field name="date_sort" type="date" indexed="true" stored="true"/>
     <field name="geographic" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
     <field name="occupation_facet" type="string" indexed="true" stored="true" multiValued="true"/>
