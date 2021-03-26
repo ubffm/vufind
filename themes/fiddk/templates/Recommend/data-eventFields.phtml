@@ -26,11 +26,10 @@
     </span><br />
   <?php endforeach; ?>
 <?php endif; ?>
-<?php if (!empty($agents)) : ?>
+<?php if (!empty($agents["primary"])):?>
   <br/>
   <b><?=$this->transEsc('Contributors')?></b><br/>
   <?php $formattedAuthors = [];
-    if (!empty($agents["primary"])):
       foreach ($agents["primary"] as $author => $dataFields):
         if (!empty($author)):
           ob_start();
@@ -51,7 +50,6 @@
         $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
         ob_end_clean();
        endif;
-     endforeach;
-   endif; ?>
+     endforeach;?>
   <?=implode(', ', $formattedAuthors)?><br/>
 <?php endif; ?>
