@@ -1,17 +1,16 @@
 <?php $recommend = $this->recommend->getResults(); ?>
 <?php if (count($recommend) == 1): ?>
   <?php $driver = $recommend[0];
-        $years = date('Y') - $driver->getYear();?>
+        $years = date('Y') - $driver->getYear();
+        $link = $this->recordLink()->getUrl($driver);
+        $coverDetails = $this->record($driver)->getCoverDetails('result-list', 'medium', $link);
+        $cover = $coverDetails['html'];?>
   <div class="card item">
     <div class="flexing">
       <div class="item">
         <h3><?=$this->translate('PlaybillOTD')?></h3>
-        <p><?=$this->translate('OTD', ['%%years%%' => $years])?> <b><?=$this->record($driver)->getTitleHtml()?></b></p>
+        <p><?=$this->translate('OTD', ['%%years%%' => $years])?> <a href="<?=$link?>"><b><?=$this->record($driver)->getTitleHtml()?></b></a></p>
       </div>
-    <?php
-      $coverDetails = $this->record($driver)->getCoverDetails('result-list', 'medium', $this->recordLink()->getUrl($driver));
-      $cover = $coverDetails['html'];
-    ?>
     <?php if ($cover): ?>
       <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col item">
         <?=$cover?>
