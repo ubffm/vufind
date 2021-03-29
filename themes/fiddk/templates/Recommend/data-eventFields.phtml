@@ -8,6 +8,12 @@
     <?=implode($eventType,', ')?>
   </span><br />
 <?php endif; ?>
+<?php if (isset($this->info["genre"])) : ?>
+  <b><?=$this->transEsc('Genre') . ':'?></b>
+  <span property="genre">
+    <?=implode($this->info["genre"],', ')?>
+  </span><br />
+<?php endif; ?>
 <?php if (!empty($eventDates)) : ?>
   <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
   <?php $normDates = [];?>

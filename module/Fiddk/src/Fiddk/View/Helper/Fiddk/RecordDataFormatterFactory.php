@@ -122,6 +122,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
         );
         $spec->setTemplateLine('Series', 'getSeries', 'data-series.phtml');
+        $spec->setLine('Genre', 'getGenres');
         $spec->setTemplateLine(
             'dc:subject', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml', ['context' => ['extended' => true]]
         );

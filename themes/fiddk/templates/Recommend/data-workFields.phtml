@@ -1,12 +1,16 @@
-<?php $description = $this->driver->getSummary();
-      //$genre = $this->driver->getGenre(); bf:genreForm
-      $lang = $this->plugin('translate')->getTranslator()->getLocale();
+<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
       //$edm = $this->driver->getXML('edm');?>
       <?//=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
-<?php if (!empty($description)) : ?>
-  <br/><span property="description">
-    <?=implode('; ',$description)?>
+<?php if (!empty($this->info["description"])) : ?>
+  <span property="description">
+    <?=implode('; ',$this->info["description"])?>
   </span><br/>
+  <?php endif; ?>
+  <?php if (!empty($this->info["genre"])) : ?>
+    <br/><b><?=$this->transEsc('Genre') . ':'?></b>
+    <span property="genre">
+      <?=implode($this->info["genre"],', ')?>
+    </span><br />
   <?php endif; ?>
 <?php if (!empty($this->agents)) : ?>
   <br/>

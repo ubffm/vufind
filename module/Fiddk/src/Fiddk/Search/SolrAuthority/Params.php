@@ -84,7 +84,7 @@ class Params extends \VuFind\Search\Solr\Params
        if (strpos($q,'gnd_') === 0) {
          $q = $this->name . ' (GND ' . substr($q,4) . ')';
        } else {
-         $q = '';
+         $q = $this->name;
        }
        return $q;
 }

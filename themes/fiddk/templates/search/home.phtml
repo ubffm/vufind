@@ -22,8 +22,13 @@
         <?=$this->slot('search-home-hero')->end(); ?>
     </div>
     <div class="homeinfo">
-    <?=$this->render("news/stream.phtml")?>
-    <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>
+      <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>
+      <div class="flex-playbills card">
+        <h4><?=$this->transEsc('ResearchingD')?> <a href="<?=$this->url('showcase-playbills')?>"><?=$this->transEsc('PlaybillPortal')?></a><hr/></h4>
+        <?php foreach ($this->results->getRecommendations('side') as $current):?>
+          <?=$this->recommend($current);?>
+        <?php endforeach;?>
+      </div>
     </div>
   </div>
   <h4 id="coop"><b>Kooperationen</b></h4>

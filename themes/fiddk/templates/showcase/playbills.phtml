@@ -14,9 +14,11 @@ $this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID D
   Darüber hinaus haben wir Ihnen eine Auswahl an Fachliteratur sowie weiterführende Links zu Projekten und Digitalen Sammlungen von Theaterzetteln im deutschsprachigen Raum zusammengestellt.</p>
   <p>Sie haben Ergänzungen zur Auswahl oder benötigen Hilfe bei Ihrer Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
 </div>
+  <div class="card item">
 <?php foreach ($this->results->getRecommendations('side') as $current):?>
   <?=$this->recommend($current);?>
 <?php endforeach;?>
+  </div>
 </div>
 <div class="card">
   <h3>Theaterzettel</h3>

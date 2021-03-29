@@ -91,7 +91,7 @@ foreach ($this->results->getRecommendations('top') as $index => $current): ?>
     <p>
       <?php
         $emptyMessage = $this->slot('empty-message')->get(
-          $this->translate('nohit_lookfor_agents_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)])
+          $this->translate('nohit_lookfor_entity_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)])
         );
         $this->layout()->srmessage = $emptyMessage;
         echo $emptyMessage;

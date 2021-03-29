@@ -78,6 +78,13 @@ if (!empty($this->info) || isset($driver)):
     </div>
     <div class="authority-meta">
       <?php if ($type == 'Event'):
+        if (!empty($this->info['description'])) : ?>
+            <span property="description">
+              <?php foreach($this->info['description'] as $descr): ?>
+                  <?=$descr?><br />
+              <?php endforeach; ?>
+            </span><br/>
+        <?php endif;
         $works = $this->driver->getWorks();
         if (!empty($works)) : ?>
           <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b><br/>

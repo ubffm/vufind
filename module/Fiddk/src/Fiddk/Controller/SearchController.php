@@ -57,6 +57,11 @@ class SearchController extends \VuFind\Controller\SearchController
           $specialFacets['checkboxes'], $view->saved
         );
 
+        $runner = $this->serviceLocator->get('VuFind\SearchRunner');
+        $date = date('Y-m-d');
+        $request = ['lookfor' => $date,'type'=> 'playbills'];
+        $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
+
         try {
           $news = $this->getTable('news');
           $view->newslist= $news->getCurrentArticles();

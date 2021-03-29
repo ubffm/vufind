@@ -81,6 +81,13 @@ class SolrEvent extends SolrAuthDefault
         }
 
       /**
+      * Get genres
+      */
+      public function getGenres() {
+        return isset($this->fields['genre']) ? $this->fields['genre'] : [];
+      }
+
+      /**
        * Returns the agents of the event
        */
        /**

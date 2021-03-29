@@ -5,18 +5,16 @@
         $link = $this->recordLink()->getUrl($driver);
         $coverDetails = $this->record($driver)->getCoverDetails('result-list', 'medium', $link);
         $cover = $coverDetails['html'];?>
-  <div class="card item">
     <div class="flexing">
       <div class="item">
         <h3><?=$this->translate('PlaybillOTD')?></h3>
         <p><?=$this->translate('OTD', ['%%years%%' => $years])?> <a href="<?=$link?>"><b><?=$this->record($driver)->getTitleHtml()?></b></a></p>
       </div>
     <?php if ($cover): ?>
-      <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col item">
+      <div class="media-right <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col item">
         <?=$cover?>
       </div>
     <?php endif; ?>
-  </div>
   </div>
 <?php elseif (count($recommend)> 0): ?>
 <div class="random">
