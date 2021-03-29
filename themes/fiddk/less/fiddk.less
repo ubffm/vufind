@@ -296,7 +296,6 @@ div#accordion .panel-collapse {
      display: flex;
      flex-direction: row;
      justify-content: space-between;
-     max-height: 350px;
      @media (max-width: 767px) {
        flex-wrap: wrap;
      }
@@ -310,16 +309,23 @@ div#accordion .panel-collapse {
       div.flexing {
         justify-content: space-evenly;
         figure {
-          margin-bottom: 20px;
+          margin-bottom: 15px;
         }
+      }
+      @media (max-width: 767px) {
+        flex-basis: 100%;
       }
     }
 
     .flex-playbills {
-      padding-top: 5px;
+      padding: 5px 20px;
       flex-basis: 60%;
+      flex-direction: column;
       .recordcover {
         max-height: 260px;
+      }
+      @media (max-width: 767px) {
+        flex-basis: 100%;
       }
     }
   }
