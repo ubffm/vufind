@@ -152,7 +152,11 @@
 
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
-        <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => $licenseLinks]);?>
+        <?php if(count($licenseLinks) == 1): ?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => $licenseLinks]);?>
+        <?php elseif(count($licenseLinks) >= 1): ?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => array_slice($licenseLinks, 0, 1)]);?>
+        <?php endif; ?>
       </div>
 
       <div class="result-formats">
