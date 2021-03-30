@@ -15,12 +15,12 @@
           $url = $this->url('worksearch-results');
           $pic = "Works.jpg";
         } ?>
-        <figure class="showcase" style="max-width: 120px;">
+        <figure class="showcase">
           <a href="<?=$url?>">
             <img src="<?=$this->imageLink($pic)?>">
           </a>
-          <figcaption><span class="text"><?=strtoupper($this->transEsc($key))?></span><br/>
-            <a href="<?=$url?>"><?=$this->localizedNumber($amount) . " " . $this->transEsc("Datensätze")?></a>
+          <figcaption><h5><?=$this->transEsc($key)?><br/>
+            <a href="<?=$url?>"><?=$this->localizedNumber($amount) . " " . $this->transEsc("Datensätze")?></a></h5>
           </figcaption>
         </figure>
     <?php endforeach; ?>
