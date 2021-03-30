@@ -57,6 +57,10 @@ trait EdmBasicTrait
       return isset($this->fields['genre']) ? $this->fields['genre'] : [];
     }
 
+    public function getFormats() {
+      return isset($this->fields['format']) ? array_unique($this->fields['format']) : [];
+    }
+
       /**
      * Get the titles of parent titles.
      *
