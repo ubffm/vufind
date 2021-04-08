@@ -4,22 +4,26 @@
     <?php foreach ($this->statistics as $key => $amount): ?>
       <?php if ($key == "Resources") {
           $url = $this->url('search-results');
+          $info = $this->url('content-page', ['page' => 'resources']);
           $pic = "Resources.jpg";
         } elseif ($key == "Agents") {
           $url = $this->url('agentsearch-results');
+          $info = $this->url('content-page', ['page' => 'agents']);
           $pic = "Agents.jpg";
         } elseif ($key == "Events") {
           $url = $this->url('eventsearch-results');
+          $info = $this->url('content-page', ['page' => 'events']);
           $pic = "Events.jpg";
         } else {
           $url = $this->url('worksearch-results');
+          $info = $this->url('content-page', ['page' => 'works']);
           $pic = "Works.jpg";
         } ?>
         <figure class="showcase">
           <a href="<?=$url?>">
             <img src="<?=$this->imageLink($pic)?>">
           </a>
-          <figcaption><h5><?=$this->transEsc($key)?><br/>
+          <figcaption><h5><?=$this->transEsc($key)?><a data-lightbox href="<?=$info?>"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/>
             <a href="<?=$url?>"><?=$this->localizedNumber($amount) . " " . $this->transEsc("Datensätze")?></a></h5>
           </figcaption>
         </figure>
