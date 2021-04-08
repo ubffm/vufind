@@ -190,6 +190,10 @@ div.mainbody > div.result:not(.last) {
   }
 }
 
+@media (min-width:1200px){
+  .container,footer{width:1236px}
+}
+
 .container {
   background: #fff;
   border-radius: 6px;
@@ -312,7 +316,6 @@ div#accordion .panel-collapse {
       flex-basis: 49%;
       padding: 5px 20px;
       div.flexing {
-        justify-content: space-evenly;
         figure {
           margin-bottom: 15px;
         }
@@ -534,11 +537,14 @@ iframe#fid-license-frame {
 figure.showcase {
   border: 1px solid @btn-default-border;
   border-radius: 5px;
-  max-width: 180px;
+  max-width: 205px;
 }
 
 figcaption {
   font-size: 12px;
   text-align: center;
   padding: 0px 5px;
+  h5 {
+    line-height: 1.3;
+  }
 }
