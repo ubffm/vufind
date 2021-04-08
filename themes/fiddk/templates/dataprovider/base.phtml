@@ -1,0 +1,21 @@
+<?php
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('BASE - Bielefeld Academic Search Engine');
+?>
+<h2>BASE - Bielefeld Academic Search Engine</h2>
+<img src="<?=$this->imageLink('logos_s/base.gif')?>" alt="BASE - Bielefeld Academic Search Engine"/>
+<br/><br/>
+<p><a href="https://www.base-search.net"
+    target="_blank" data-lightbox-ignore>Direkt zur Webseite</a></p>
+<p></p>
+<?php } else {
+  // Set page title
+  $this->headTitle('BASE - Bielefeld Academic Search Engine');
+?>
+<h2>BASE - Bielefeld Academic Search Engine</h2>
+<img src="<?=$this->imageLink('logos_s/base.gif')?>" alt="BASE - Bielefeld Academic Search Engine"/>
+<br/><br/>
+<p><a href="https://www.base-search.net"
+    target="_blank" data-lightbox-ignore>Direct to the website</a></p>
+<p></p>
+<?php } ?>

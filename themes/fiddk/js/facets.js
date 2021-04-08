@@ -5,6 +5,8 @@ var dprovs = {
   'AkademiederKünsteBerlin,Archivbestand':'adka',
   'AkademiederKünsteBerlin,ArchivDarstellendeKunst':'adka',
   'AlexanderStreetPress':'asp',
+  'BadischeLandesbibliothek':'blb',
+  'BASE-BielefeldAcademicSearchEngine':'base',
   'DerradeMorodaDanceArchives':'ddm',
   'DeutschesForumfürFigurentheaterundPuppenspielkunst':'fdn',
   'DeutschesTanzfilminstitutBremen':'dtb',

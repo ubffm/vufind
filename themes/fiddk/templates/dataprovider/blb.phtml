@@ -1,0 +1,21 @@
+<?php
+  if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
+    $this->headTitle('Badische Landesbibliothek');
+?>
+<h2>Badische Landesbibliothek</h2>
+<img src="<?=$this->imageLink('logos_s/blb.png')?>" alt="Badische Landesbibliothek"/>
+<br/><br/>
+<p><a href="https://www.blb-karlsruhe.de"
+    target="_blank" data-lightbox-ignore>Direkt zur Webseite</a></p>
+<p></p>
+<?php } else {
+  // Set page title
+  $this->headTitle('Badische Landesbibliothek');
+?>
+<h2>Badische Landesbibliothek</h2>
+<img src="<?=$this->imageLink('logos_s/blb.png')?>" alt="Badische Landesbibliothek"/>
+<br/><br/>
+<p><a href="https://www.blb-karlsruhe.de"
+    target="_blank" data-lightbox-ignore>Direct to the website</a></p>
+<p></p>
+<?php } ?>
