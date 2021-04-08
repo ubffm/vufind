@@ -1,0 +1,9 @@
+<h2><?=$this->transEsc('Resources');?></h2>
+<div class="info">
+<img src="<?=$this->imageLink('Resources.jpg')?>" alt="Resources"/>
+<p>In <b>Ressourcen</b> recherchieren Sie in Monographien,
+  <a href="<?=$this->url('search-results') . '?filter[]=~format%3A%22Zeitschrift%22'?>" data-lightbox-ignore>Zeitschriften</a>,
+  <a href="<?=$this->url('search-results') . '?filter[]=~format%3A%22Video%22'?>" data-lightbox-ignore>AV-Mitschnitten</a>,
+  <a href="<?=$this->url('search-results') . '?filter[]=~format%3A%22Programmheft%22'?>" data-lightbox-ignore>Programmheften</a>,
+  <a href="<?=$this->url('search-results') . '?filter[]=~format%3A%22Fotografie%22'?>" data-lightbox-ignore>Fotografien</a>, uvm.</p>
+</div>

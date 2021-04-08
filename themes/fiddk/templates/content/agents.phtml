@@ -1,0 +1,16 @@
+<h2><?=$this->transEsc('Agents');?></h2>
+<div class="info">
+<img src="<?=$this->imageLink('Agents.jpg')?>" alt="Agents"/>
+<p>In <b>Personen / Körperschaften</b> recherchieren Sie in
+  <a href="<?=$this->url('agentsearch-results') . '?filter[]=record_type%3A%22Personal+Name%22'?>" data-lightbox-ignore>Personengruppen</a>
+  der Darstellenden Kunst
+  (<a href="<?=$this->url('agentsearch-results') . '?filter[]=occupation_facet%3A%22Schauspieler%22'?>" data-lightbox-ignore>Schauspieler</a> und
+  <a href="<?=$this->url('agentsearch-results') . '?filter[]=occupation_facet%3A%22Schauspielerin%22'?>" data-lightbox-ignore>Schauspielerinnen</a>,
+  <a href="<?=$this->url('agentsearch-results') . '?filter[]=occupation_facet%3A%22Regisseur%22'?>" data-lightbox-ignore>Regisseure</a> und
+  <a href="<?=$this->url('agentsearch-results') . '?filter[]=occupation_facet%3A%22Regisseurin%22'?>" data-lightbox-ignore>Regisseurinnen</a>, uvm.)
+  und in <a href="<?=$this->url('agentsearch-results') . '?filter[]=record_type%3A%22Corporate+Name%22'?>" data-lightbox-ignore>Institutionen</a>
+  der Darstellenden Kunst
+  (<a href="<?=$this->url('agentsearch-results') . '?filter[]=orga_domain%3A%22Theater%22'?>" data-lightbox-ignore>Spielstätten</a>,
+   <a href="<?=$this->url('agentsearch-results') . '?filter[]=orga_domain%3A%22Theatertruppe%22'?>" data-lightbox-ignore>Theatergruppen</a>,
+   <a href="<?=$this->url('agentsearch-results') . '?filter[]=orga_domain%3A%22Museum%22'?>" data-lightbox-ignore>Museen</a> uvm.).</p>
+</div>

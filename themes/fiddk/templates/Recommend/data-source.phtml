@@ -1,15 +1,15 @@
-<?php if(isset($this->info['describedBy'])) : ?>
+<?php if(!empty($describedBy)) : ?>
   <p class="bottom">
   <b><?=$this->transEsc('Source').':'?></b><br>
-  <a href="<?=$this->info['describedBy']['id']?>" target="_blank">
-    <?=$this->info['describedBy']['id']?>
+  <a href="<?=$describedBy['id']?>" target="_blank">
+    <?=$describedBy['id']?>
   </a><?=' (' . $this->transEsc('License') . ': '?>
-    <a href="<?=$this->info['describedBy']['license']['id']?>" target="_blank">
-    <?php if ($this->info['describedBy']['license']['label'] ==
+    <a href="<?=$describedBy['license']['id']?>" target="_blank">
+    <?php if ($describedBy['license']['label'] ==
         'http://creativecommons.org/publicdomain/zero/1.0/') : ?>
         <?="CC0 1.0"?>
     <?php else: ?>
-        <?=$this->info['describedBy']['license']['label']?>
+        <?=$describedBy['license']['label']?>
     <?php endif; ?>
   </a><?=') '?><?=$this->transEsc('via')?> <a href="https://lobid.org/gnd" target="_blank">lobid-gnd</a>
 </p>

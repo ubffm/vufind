@@ -101,7 +101,7 @@ class SolrAuthor extends SolrAuthDefault
       // Disable highlighting for efficiency; not needed here:
       $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
       return $this->searchService
-          ->search("Solr", $query, 0, 0, $params)
+          ->search("SolrWork", $query, 0, 0, $params)
           ->getTotal();
   }
 

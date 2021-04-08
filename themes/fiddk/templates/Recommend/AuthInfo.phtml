@@ -104,7 +104,7 @@ if (!empty($this->info) || isset($driver)):
         <br />
       <?php endif; ?>
       <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>
-        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov]);?>
+        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov, 'describedBy' => $this->info['describedBy']]);?>
       <?php endif; ?>
    </div>
  </div>
