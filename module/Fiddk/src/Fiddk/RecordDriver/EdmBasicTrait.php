@@ -176,7 +176,7 @@ trait EdmBasicTrait
       $licenseLinks = [];
       $inst = $this->getInstitution();
       if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-        $licenseLinks = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","ore:Aggregation","dc:description");
+        $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","ore:Aggregation","dc:description")];
       }
       return $licenseLinks;
     }
@@ -194,7 +194,7 @@ trait EdmBasicTrait
       $res = [];
       if (!empty($inter)) {
         $type = "inter";
-        if ($inter == "BASE") {
+        if ($inter == "BASE - Bielefeld Academic Search Engine") {
             $instkey = explode("_",$this->getEdmRecord()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
             $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
             $instid = "BASE";

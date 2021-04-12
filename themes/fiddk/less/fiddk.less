@@ -1,33 +1,36 @@
 /* HEADER */
-header .navbar {
-  border: 0;
+header {
+  .navbar {
+    border: 0;
 
-  .navbar-form {
+    .navbar-form {
       width: 100%;
       margin-top: 15px;
       padding-left: 0px;
       padding-right: 0px;
+    }
   }
-}
-
-header .banner.container.navbar {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  ul {
-    margin-top: 5px;
+  .container {
+    background-color: #fff;
   }
-  .navbar-brand {
-    background: @logo no-repeat scroll left center transparent;
-    width: 500px;
-    height: 100px;
-    margin-top: 1em;
-    margin-left: 0.4em;
+  .banner.container.navbar {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    ul {
+      margin-top: 5px;
+    }
+    .navbar-brand {
+      background: @logo no-repeat scroll left center transparent;
+      width: 500px;
+      height: 100px;
+      margin-top: 1em;
+      margin-left: 0.4em;
+    }
   }
-}
-
-header .banner.container.navbar.search + div.container.navbar.search {
-    border-radius: 0px;
-    padding-bottom: 20px;
+  .banner.container.navbar.search + div.container.navbar.search {
+      border-radius: 0px;
+      padding-bottom: 20px;
+  }
 }
 
 /** Searchbar/-box ***/
@@ -100,12 +103,9 @@ ul.nav-tabs li:not(.active) a:hover .loader {
 }
 
 /* FOOTER */
-.bottom_logos {
-    background: @powered-by no-repeat scroll right top transparent;
-    height: 100px;
-}
-
 footer {
+  background-color: @brand-primary;
+  color: #fff;
   padding-top: 0px;
   ul {
     padding-left: 0px;
@@ -114,10 +114,23 @@ footer {
 }
 
 .footer-container {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 15px;
     .footer-column {
       padding-left: 10px;
+      flex-basis: 17%;
+      figure {
+        margin: 0.8em;
+      }
+    }
+    h5 {
+      font-weight: bold;
+    }
+    a {
+      color: #fff;
+    }
+    .flexshrink {
+      padding-left: 10px;
+      flex-basis: 14%;
     }
 }
 
@@ -191,19 +204,18 @@ div.mainbody > div.result:not(.last) {
 }
 
 @media (min-width:1200px){
-  .container,footer{width:1236px}
-}
-
-.container {
-  background: #fff;
-  border-radius: 6px;
+  .container {
+    width: 1236px;
+  }
 }
 
 #content {
   border-radius: 0px;
+  background-color: #fff;
 }
 
 .breadcrumbs .container {
+  background-color: #fff;
   border-radius: 0px;
 }
 .breadcrumb {
@@ -289,7 +301,7 @@ div#accordion .panel-collapse {
   margin-top: 5em;
 
   #coop {
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-left: 2rem;
   }
 }

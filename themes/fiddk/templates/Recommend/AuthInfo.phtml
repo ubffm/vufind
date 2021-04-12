@@ -4,8 +4,10 @@ if (!empty($this->info) || isset($driver)):
     $types = $this->info['type'];
     if (!empty($this->info['gndIdentifier'])):
       $dprov = '';
+      $describedBy = $this->info['describedBy'];
     else:
       $dprov = $this->driver->getInstitutionLinked();
+      $describedBy = '';
     endif;
     if (in_array("ConferenceOrEvent",$types)):
       $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
@@ -103,8 +105,8 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
         <br />
       <?php endif; ?>
-      <?php if (!empty($this->info['describedBy']) || isset($dprov)): ?>
-        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov, 'describedBy' => $this->info['describedBy']]);?>
+      <?php if (!empty($describedBy) || !empty($dprov)): ?>
+        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov, 'describedBy' => $describedBy]);?>
       <?php endif; ?>
    </div>
  </div>

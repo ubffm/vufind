@@ -153,9 +153,9 @@
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
         <?php if(count($licenseLinks) == 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => $licenseLinks]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => $licenseLinks, 'inst' => $this->driver->getInstitution()]);?>
         <?php elseif(count($licenseLinks) >= 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => array_slice($licenseLinks, 0, 1)]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitution()]);?>
         <?php endif; ?>
       </div>
 

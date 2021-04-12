@@ -5,3 +5,6 @@ Disallow: /Alphabrowse
 Disallow: /Browse
 Disallow: /Combined
 Disallow: /Search/Results
+Disallow: /AgentSearch/Results
+Disallow: /EventSearch/Results
+Disallow: /WorkSearch/Results
