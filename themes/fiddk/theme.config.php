@@ -3,7 +3,7 @@ return [
     'extends' => 'news',
     'js' => [
         'klaro-config.js',
-        'https://cdn.kiprotect.com/klaro/v0.7/klaro.js',
+        'klaro-no-css.js',
     ],
     'favicon' => 'fid-dk_favicon.png',
     'helpers' => [
