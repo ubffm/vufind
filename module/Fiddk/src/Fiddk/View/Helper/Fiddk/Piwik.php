@@ -38,30 +38,38 @@ namespace Fiddk\View\Helper\Fiddk;
  */
 class Piwik extends \VuFind\View\Helper\Root\Piwik
 {
-
   /**
-   * Get the Finalization Part of the Tracking code
+   * Returns Piwik code (if active) or empty string if not.
    *
-   * @return string JavaScript Code Fragment
+   * @param array $params Parameters
+   *
+   * @return string
    */
-   protected function getClosingTrackingCode()
-   {
-     return <<<EOT
-VuFindPiwikTracker.enableLinkTracking();
-};
-(function(){
-if (typeof Piwik === 'undefined') {
-    var d=document, g=d.createElement('script'),
-        s=d.getElementsByTagName('script')[0];
-    g.type='application/javascript'; g.name='matomo'; g.defer=true;
-    g.async=true; g.src='{$this->url}piwik.js';
-    g.onload=initVuFindPiwikTracker{$this->timestamp};
-    s.parentNode.insertBefore(g,s);
-} else {
-    initVuFindPiwikTracker{$this->timestamp}();
-}
-})();
-   EOT;
-   }
+  public function __invoke($params = null)
+  {
+      if (!$this->url) {
+          return '';
+      }
 
+      $this->params = $params;
+      if (isset($this->params['lightbox'])) {
+          $this->lightbox = $this->params['lightbox'];
+      }
+
+      $results = $this->getSearchResults();
+      if ($results && ($combinedResults = $this->getCombinedSearchResults())) {
+          $code = $this->trackCombinedSearch($results, $combinedResults);
+      } elseif ($results) {
+          $code = $this->trackSearch($results);
+      } elseif ($recordDriver = $this->getRecordDriver()) {
+          $code = $this->trackRecordPage($recordDriver);
+      } else {
+          $code = $this->trackPageView();
+      }
+
+      $inlineScript = $this->getView()->plugin('inlinescript');
+      // needed, as normally only W3C approved attributes are allowed
+      $inlineScript->setAllowArbitraryAttributes(true);
+      return $inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $code, 'SET', ['data-type' => 'application/javascript','data-name' => 'matomo'],'text/plain');
+  }
 }
