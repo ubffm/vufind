@@ -1,21 +1,31 @@
 <?php
   if ($this->plugin('translate')->getTranslator()->getLocale()=='de') {
-    $this->headTitle('Badische Landesbibliothek');
+    $this->headTitle('Digitalisierungsprojekt Karlsruher Theaterzettel der Badischen Landesbibliothek');
 ?>
-<h2>Badische Landesbibliothek</h2>
+<h2>Digitalisierungsprojekt Karlsruher Theaterzettel der Badischen Landesbibliothek</h2>
 <img src="<?=$this->imageLink('logos_s/blb.png')?>" alt="Badische Landesbibliothek"/>
 <br/><br/>
-<p><a href="https://www.blb-karlsruhe.de"
+<p><a href="https://digital.blb-karlsruhe.de/theaterzettel/"
     target="_blank" data-lightbox-ignore>Direkt zur Webseite</a></p>
-<p></p>
+<p>Als Vorlage für die Digitalisierung der Karlsruher Theaterzettel dienten die
+   Bestände des Badischen Staatstheaters, die sich nahezu lückenlos von der Spielzeit
+   1813/14 bis zum Ende der Weimarer Republik erhalten haben. Theaterzettel im Besitz
+   der Badischen Landesbibliothek und des Stadtarchivs Karlsruhe, die im Staatstheater
+   nicht vorhanden sind, in einer anderen Ausgabe vorliegen oder zusätzliche Informationen
+   enthalten, wurden für die Digitalen Sammlungen ergänzt.</p>
 <?php } else {
   // Set page title
-  $this->headTitle('Badische Landesbibliothek');
+  $this->headTitle('Digital Collections: Karlsruhe Playbills at the Badische Landesbibliothek');
 ?>
-<h2>Badische Landesbibliothek</h2>
+<h2>Digital Collections: Karlsruhe Playbills at the Badische Landesbibliothek</h2>
 <img src="<?=$this->imageLink('logos_s/blb.png')?>" alt="Badische Landesbibliothek"/>
 <br/><br/>
-<p><a href="https://www.blb-karlsruhe.de"
+<p><a href="https://digital.blb-karlsruhe.de/theaterzettel/"
     target="_blank" data-lightbox-ignore>Direct to the website</a></p>
-<p></p>
+<p>The inventory of the Badisches Staatstheater served as a template for the digitization
+  of the Karlsruhe theater playbils, which were almost completely preserved from the
+  1813/14 season to the end of the Weimar Republic. Theater playbills in the possession
+  of the Baden State Library and the Stadtarchiv Karlsruhe, which are not available in
+  the Badisches Staatstheater, are in a different edition or contain additional information,
+  have been added for the digital collections.</p>
 <?php } ?>

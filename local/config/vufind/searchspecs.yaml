@@ -324,7 +324,7 @@ has_thumb:
 playbills:
   DismaxFields:
     - date_month_day^100
-  FilterQuery: "format:Theaterzettel"
+  FilterQuery: "format:Theaterzettel AND has_thumb:true"
 
 # Fields for exact matches originating from alphabetic browse
 ids:

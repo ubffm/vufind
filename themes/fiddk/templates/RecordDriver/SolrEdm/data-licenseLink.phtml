@@ -2,7 +2,7 @@
 foreach (current($data) as $link => $field): ?>
   <?=$field?>: <a target="_blank" href="<?=$link?>"><?=$this->transEsc("FullTextByFID");?></a>
   <?php if ($inst == "Adam Matthew Digital"): ?>
-    <?="(" . $this->transEsc("Nationallicense");?><a data-lightbox href="<?=$this->url('content-page', ['page' => 'amd']);?>"><i class="fa fa-info-circle" aria-hidden="true"></i></a><?=")"?>
+    <?="("?><a data-lightbox href="<?=$this->url('content-page', ['page' => 'amd']);?>"><?=$this->transEsc("Nationallicense");?><i class="fa fa-info-circle" aria-hidden="true"></i></a><?=")"?>
   <?php endif; ?>
   <img src="<?=$this->imageLink('fid-dk_logo_nur-Taenzer.png')?>" style="width:7%"/><br />
 <?php endforeach; ?>
