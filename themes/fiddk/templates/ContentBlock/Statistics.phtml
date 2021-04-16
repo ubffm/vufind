@@ -21,9 +21,9 @@
         } ?>
         <figure class="showcase">
           <a href="<?=$url?>">
-            <img src="<?=$this->imageLink($pic)?>">
+            <img src="<?=$this->imageLink($pic)?>" alt="<?=$this->transEsc($key)?>">
           </a>
-          <figcaption><h5><?=$this->transEsc($key)?><a data-lightbox href="<?=$info?>"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/>
+          <figcaption><h5><?=$this->transEsc($key)?><a data-lightbox href="<?=$info?>"><i class="fa fa-info-circle"></i></a><br/>
             <a href="<?=$url?>"><?=$this->localizedNumber($amount) . " " . $this->transEsc("Datensätze")?></a></h5>
           </figcaption>
         </figure>
