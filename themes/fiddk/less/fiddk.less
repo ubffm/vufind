@@ -364,17 +364,6 @@ body.template-dir-content {
     }
 }
 
-div#contacts {
-  .left {
-    float: left;
-    padding-right: 50px;
-  }
-  .right {
-    float: left;
-    margin-left: 30px;
-  }
-}
-
 div.card {
   border: 1px solid @btn-default-border;
   padding: 15px 20px 20px 20px;
@@ -402,6 +391,13 @@ div.flexing {
   justify-content: space-between;
   .item {
     flex-basis: 49%;
+  }
+  .itemleft {
+    flex-basis: 40%;
+    margin-right: 20px;
+  }
+  &.left {
+    justify-content: left;
   }
 }
 
