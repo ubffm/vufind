@@ -20,6 +20,18 @@
     <?=implode('; ',$this->info['dateOfTermination'])?>
   </span><br/>
 <?php endif; ?>
+<?php if (isset($this->info['precedingCorporateBody'])) : ?>
+  <?=$this->transEsc('precedingCorporateBody') . ': '?>
+  <span property="precedingCorporateBody">
+    <?=implode('; ',array_column($this->info['precedingCorporateBody'],'label'))?>
+  </span><br/>
+<?php endif; ?>
+<?php if (isset($this->info['succeedingCorporateBody'])) : ?>
+  <?=$this->transEsc('succeedingCorporateBody') . ': '?>
+  <span property="succeedingCorporateBody">
+    <?=implode('; ',array_column($this->info['succeedingCorporateBody'],'label'))?>
+  </span><br/>
+<?php endif; ?>
 <?php if (isset($this->info['placeOfBusiness'])) : ?>
   <?=$this->transEsc('placeOfBusiness') . ' in '?>
   <span property="placeOfBusiness">
@@ -49,17 +61,5 @@
   <?=$this->transEsc('Subject') . ': '?>
   <span property="Category">
     <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
-  </span><br/>
-<?php endif; ?>
-<?php if (isset($this->info['precedingCorporateBody'])) : ?>
-  <?=$this->transEsc('precedingCorporateBody') . ': '?>
-  <span property="precedingCorporateBody">
-    <?=implode('; ',array_column($this->info['precedingCorporateBody'],'label'))?>
-  </span><br/>
-<?php endif; ?>
-<?php if (isset($this->info['succeedingCorporateBody'])) : ?>
-  <?=$this->transEsc('succeedingCorporateBody') . ': '?>
-  <span property="succeedingCorporateBody">
-    <?=implode('; ',array_column($this->info['succeedingCorporateBody'],'label'))?>
   </span><br/>
 <?php endif; ?>
