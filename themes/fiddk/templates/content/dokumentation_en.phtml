@@ -6,42 +6,57 @@ $this->headTitle($this->translate('Documentation') . ' - ' . $this->translate('F
 
 <div class="card">
 <p>Materials related to project documentation may be used subsequently at no charge.</p>
-
 <ul>
-
-<li><a target="_blank" href="<?=$this->imageLink('Dokumentenmappe_Workshop.pdf')?>">Document file on the <i>SIS</i> workshop entitled “Preservation and Maintenance:
+  <li><a target="_blank" href="<?=$this->imageLink('Dokumentenmappe_Workshop.pdf')?>">Document file on the SIS Performing Arts workshop entitled “Preservation and Maintenance:
   Managing Stage Artefacts” and held on the 8th and 9th Oct. 2015 (in German)</a></li>
   <li><a target="_blank" href="<?=$this->imageLink('Ergebnismappe_Bundesverband_05-09-2016.pdf')?>">Document file on the workshop of the Bundesverband der
     Bibliotheken und Museen für Darstellende Künste e.V. held on 5th and 6th Sept. 2016 (in German)</a></li>
-<li><a target="_blank" href="https://github.com/ubffm"><i>SIS</i> source codes on the collaborative development platform GitHub</a></li>
+  <li><a target="_blank" href="https://github.com/ubffm">SIS Performing Arts source codes on the collaborative development platform GitHub</a></li>
 </ul>
 </div>
 
+<h2>Downloads</h2>
 <div class="card">
-In order to embed the <i>SIS</i> searchbox in your own website, you can download the HTML code snippet:
-<form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
-  <input type="submit" value="Download"/>
-</form>
-<br>
-<p>The searchbox is responsive and looks like the following representation:</p>
-<div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
- <div style="float:left;padding-bottom:5px;">
-   <a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" style="max-width:300px;"></a>
- </div>
- <div class="well well-lg clearfix" style="float:left;margin-top:0;margin-bottom:0;min-width:300px;margin-left:20px;max-width:400px;overflow:hidden;">
+  <h3>Logo</h3>
+  <p>The SIS Performing Arts Logo is available under the license <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank">CC BY-SA 4.0</a>:</p>
+  <img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" alt="Fachinformationsdienst Darstellende Kunst Logo">
+</div>
+<div class="card">
+  <h3>Searchbox</h3>
+  <p>In order to embed the SIS Performing Arts searchbox in your own website, you can download the HTML code snippet:</p>
+  <form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
+    <input type="submit" value="Download"/>
+  </form>
+  <br>
+  <p>The searchbox is responsive and looks like the following representation:</p>
+  <div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
+    <div style="float:left;padding-bottom:5px;">
+      <a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" alt="Fachinformationsdienst Darstellende Kunst Logo" style="max-width:300px;"></a>
+    </div>
+    <div class="well well-lg clearfix" style="float:left;margin-top:0;margin-bottom:0;margin-left:20px;min-width:300px;max-width:400px;overflow:hidden;">
     <form class="searchForm navbar-form flip" method="get" action="http://performing-arts.eu/Search/Results" name="searchForm" style="margin:0 auto;padding:0px;">
       <div class="form-group">
           <input type="text" name="lookfor" value="" class="searchForm_lookfor form-control autocomplete searcher:Solr typeSelector:searchForm_type" style="min-width:240px;"/>
         </div>
           <button type="submit" class="btn btn-primary" style="color:#FFF;background-color:#004393;">
-          <i class="fa fa-search" style="padding-right:4px;"></i>Find</button>
+          <i class="fa fa-search" style="padding-right:4px;"></i>Suchen</button>
     </form>
+    </div>
   </div>
 </div>
+<div class="card">
+  <h3>BEACON-Files</h3>
+  <p>A BEACON-File allows for linking websites that contain authority files about
+    entities like persons (e.g. lexica or library catalogues).
+    The SIS Performing Arts provides BEACON-Files with persons, corporations, works
+    and events from the performing arts domain that can be found in the search portal.
+    More information about
+    <a href="https://meta.wikimedia.org/wiki/BEACON" target="_blank">BEACON</a>.
+    <ul>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_persons.txt'?>">BEACON-File Persons</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_organizations.txt'?>">BEACON-File Corporations</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_works.txt'?>">BEACON-File Works</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_events.txt'?>">BEACON-File Events</a></li>
+    </ul>
+  </p>
 </div>
-<!--
-<h2>Materials</h2>
-<p>
-In the <b>Materials</b> section, we have provided an overview of documents housed by other institutions which could be relevant to research and university teaching in theatre and dance studies.
-</p>
--->

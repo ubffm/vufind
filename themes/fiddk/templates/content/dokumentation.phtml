@@ -5,34 +5,36 @@ $this->headTitle($this->translate('Documentation') . ' - ' . $this->translate('F
 <h2>Projektdokumentation</h2>
 
 <div class="card">
-<p>
-Die Materialien zu Projektdokumentationen stellen wir Ihnen zur Nachnutzung frei zur Verfügung.
-</p>
+<p>Die Materialien zu Projektdokumentationen stellen wir Ihnen zur Nachnutzung frei zur Verfügung.</p>
 
 <ul>
-
-<li><a target="_blank" href="<?=$this->imageLink('Dokumentenmappe_Workshop.pdf')?>">Dokumentenmappe zum <i>FID</i> Workshop „Verwahren/Aufbewahren. Über den Umgang mit
+<li><a target="_blank" href="<?=$this->imageLink('Dokumentenmappe_Workshop.pdf')?>">Dokumentenmappe zum FID DK Workshop „Verwahren/Aufbewahren. Über den Umgang mit
 Inszenierungsartefakten“ vom 8./9. Oktober 2015</a></li>
 <li><a target="_blank" href="<?=$this->imageLink('Ergebnismappe_Bundesverband_05-09-2016.pdf')?>">Dokumentenmappe zum Arbeitstreffen des Bundesverbandes der
   Bibliotheken und Museen für Darstellende Künste e.V. vom 5./6. September 2016</a></li>
-<li><a target="_blank" href="https://github.com/ubffm"><i>FID</i> Quellcodes auf der kollaborativen Entwicklerplattform GitHub</a></li>
+<li><a target="_blank" href="https://github.com/ubffm">FID DK Quellcodes auf der kollaborativen Entwicklerplattform GitHub</a></li>
 </ul>
 </div>
 
+<h2>Downloads</h2>
 <div class="card">
-<p>
-Der Suchschlitz des <i>FID</i> kann in den eigenen Webauftritt eingebunden werden. Sie können den benötigten HTML-Codesausschnitt hier downloaden:
-<form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
-  <input type="submit" value="Download"/>
-</form>
-<br>
-</p>
-<p>Der Suchschlitz ist responsiv und sieht wie folgt aus:</p>
-<div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
- <div style="float:left;padding-bottom:5px;">
-   <a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" style="max-width:300px;"></a>
- </div>
- <div class="well well-lg clearfix" style="float:left;margin-top:0;margin-bottom:0;margin-left:20px;min-width:300px;max-width:400px;overflow:hidden;">
+  <h3>Logo</h3>
+  <p>Das Logo des FID DK steht unter der Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a> zur Verfügung:</p>
+  <img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" alt="Fachinformationsdienst Darstellende Kunst Logo">
+</div>
+<div class="card">
+  <h3>Suchschlitz</h3>
+  <p>Der Suchschlitz des FID DK kann in den eigenen Webauftritt eingebunden werden. Sie können den benötigten HTML-Codesausschnitt hier downloaden:</p>
+  <form method="get" action="<?=$this->imageLink('fiddk_searchbox.zip')?>">
+    <input type="submit" value="Download"/>
+  </form>
+  <br>
+  <p>Der Suchschlitz ist responsiv und sieht wie folgt aus:</p>
+  <div class="container-fluid" style="padding:5px;border:1px solid #EDEDED;">
+    <div style="float:left;padding-bottom:5px;">
+      <a href="http://www.performing-arts.eu/"><img src="<?=$this->imageLink('fid-dk_claim_s.png')?>" alt="Fachinformationsdienst Darstellende Kunst Logo" style="max-width:300px;"></a>
+    </div>
+    <div class="well well-lg clearfix" style="float:left;margin-top:0;margin-bottom:0;margin-left:20px;min-width:300px;max-width:400px;overflow:hidden;">
     <form class="searchForm navbar-form flip" method="get" action="http://performing-arts.eu/Search/Results" name="searchForm" style="margin:0 auto;padding:0px;">
       <div class="form-group">
           <input type="text" name="lookfor" value="" class="searchForm_lookfor form-control autocomplete searcher:Solr typeSelector:searchForm_type" style="min-width:240px;"/>
@@ -40,13 +42,22 @@ Der Suchschlitz des <i>FID</i> kann in den eigenen Webauftritt eingebunden werde
           <button type="submit" class="btn btn-primary" style="color:#FFF;background-color:#004393;">
           <i class="fa fa-search" style="padding-right:4px;"></i>Suchen</button>
     </form>
+    </div>
   </div>
 </div>
+<div class="card">
+  <h3>BEACON-Dateien</h3>
+  <p>Eine BEACON-Datei ermöglicht, Webseiten miteinander zu verknüpfen, die Normdaten
+    zu Entitäten wie Personen beinhalten (z.B. Personenlexika oder Bibliothekskataloge).
+    Der Fachinformationsdienst Darstellende Kunst stellt BEACON-Dateien zu den
+    im FID Portal vorhandenen Personen, Körperschaften, Werken und Ereignissen der Darstellenden Kunst bereit.
+    Mehr Informationen zu
+    <a href="https://de.wikipedia.org/wiki/Wikipedia:BEACON" target="_blank">BEACON</a>.
+    <ul>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_persons.txt'?>">BEACON-Datei Personen</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_organizations.txt'?>">BEACON-Datei Körperschaften</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_works.txt'?>">BEACON-Datei Werke</a></li>
+      <li><a href="<?=$this->url('home') . 'docs/beacon_events.txt'?>">BEACON-Datei Ereignisse</a></li>
+    </ul>
+  </p>
 </div>
-
-<!--
-<h2>Materialien</h2>
-<p>
-Im Bereich <b>Materialien</b> haben wir Dokumente anderer Institutionen zusammengefasst, die für Forschung und Lehre der Theater- und Tanzwissenschaft relevant sein können.
-</p>
--->
