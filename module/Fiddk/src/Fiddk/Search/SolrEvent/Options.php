@@ -67,9 +67,20 @@ class Options extends \VuFind\Search\Solr\Options
      *
      * @return string|bool
     */
-public function getAdvancedSearchAction()
-{
-    // Not currently supported:
-    return false;
-}
+    public function getAdvancedSearchAction()
+    {
+        // Not currently supported:
+        return false;
+    }
+
+    /**
+     * Return the route name for the facet list action. Returns false to cover
+     * unimplemented support.
+     *
+     * @return string|bool
+     */
+    public function getFacetListAction()
+    {
+        return 'authority-facetlist';
+    }
 }

@@ -62,4 +62,16 @@ class Options extends \VuFind\Search\Solr\Options
         return 'agentsearch-results';
     }
 
+    /**
+     * Return the route name for the facet list action. Returns false to cover
+     * unimplemented support.
+     *
+     * @return string|bool
+     */
+    public function getFacetListAction()
+    {
+        return 'authority-facetlist';
+    }
+
+
 }
