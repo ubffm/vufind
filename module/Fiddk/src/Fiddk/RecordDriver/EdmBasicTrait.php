@@ -42,22 +42,23 @@ trait EdmBasicTrait
 {
 
     public function getInstitution() {
-      return isset($this->fields['institution']) ? $this->fields['institution'] : '';
+      return $this->fields['institution'] ?? '';
     }
 
     public function getIntermediate() {
-      return isset($this->fields['intermediate']) ? $this->fields['intermediate'] : '';
+      return $this->fields['intermediate'] ?? '';
     }
 
     public function getAlternativeTitles() {
-      return isset($this->fields['title_alt']) ? $this->fields['title_alt'] : [];
+      return $this->fields['title_alt'] ?? [];
     }
 
     public function getGenres() {
-      return isset($this->fields['genre']) ? $this->fields['genre'] : [];
+      return $this->fields['genre'] ?? [];
     }
 
-    public function getFormats() {
+    public function getFormats(): array
+    {
       return isset($this->fields['format']) ? array_unique($this->fields['format']) : [];
     }
 
@@ -68,7 +69,7 @@ trait EdmBasicTrait
      */
     public function getContainerTitle()
     {
-        return isset($this->fields['container_title']) ? $this->fields['container_title'] : [];
+        return $this->fields['container_title'] ?? [];
     }
 
     /**
@@ -120,7 +121,13 @@ trait EdmBasicTrait
     }
 
     public function getVolume() {
-      return $this->getEdmRecord()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
+      $vol = $this->getEdmRecord()->getLiteralVals("bf:partNumber", "edm:ProvidedCHO");
+      if ($vol) {
+        return $vol;
+      }
+      else {
+        return $this->getEdmRecord()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
+      }
     }
 
     public function getProvenance() {
@@ -269,8 +276,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      */
     public function getPrimaryAuthorsIds()
     {
-        return isset($this->fields['author_id']) ?
-            $this->fields['author_id'] : [];
+        return $this->fields['author_id'] ?? [];
     }
 
     /**
@@ -279,10 +285,8 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      * @return array
      */
     public function getEvents() {
-      $eventTitles = isset($this->fields['event']) ?
-          $this->fields['event'] : [];
-      $eventIds = isset($this->fields['event_id']) ?
-          $this->fields['event_id'] : [];
+      $eventTitles = $this->fields['event'] ?? [];
+      $eventIds = $this->fields['event_id'] ?? [];
       if (isset($eventTitles[0])) {
         return array_combine($eventIds,$eventTitles);
       } else {
@@ -296,10 +300,8 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      * @return array
      */
     public function getWorks() {
-      $workTitles = isset($this->fields['work']) ?
-          $this->fields['work'] : [];
-      $workIds = isset($this->fields['work_id']) ?
-          $this->fields['work_id'] : [];
+      $workTitles = $this->fields['work'] ?? [];
+      $workIds = $this->fields['work_id'] ?? [];
       if (isset($workTitles[0])) {
         return array_combine($workIds,$workTitles);
       } else {
@@ -343,16 +345,16 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
     public function getAllSubjectHeadings($extended = true)
     {
         $retVal = [];
-        $headings = isset($this->fields['topic']) ? $this->fields['topic'] : [];
-        $contextIds = isset($this->fields['topic_id']) ? $this->fields['topic_id'] : [];
-        $contextRoles = isset($this->fields['topic_role']) ? $this->fields['topic_role'] : [];
+        $headings = $this->fields['topic'] ?? [];
+        $contextIds = $this->fields['topic_id'] ?? [];
+        $contextRoles = $this->fields['topic_role'] ?? [];
 
         if ($extended) {
 
           foreach ($headings as $i => $heading) {
             $retVal[] = [
               'heading' => $heading,
-              'type' => isset($contextRoles[$i]) ? $contextRoles[$i] : '',
+              'type' => $contextRoles[$i] ?? '',
               'source' => isset($contextIds[$i]) ? $contextRoles[$i] : ''
             ];
           }
@@ -379,8 +381,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      */
     public function getThumbnail($size = 'small')
     {
-      return isset($this->fields['thumbnail']) ?
-          $this->fields['thumbnail'] : [];
+      return $this->fields['thumbnail'] ?? [];
     }
 
     /**
