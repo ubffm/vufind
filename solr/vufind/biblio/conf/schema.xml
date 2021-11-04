@@ -153,8 +153,8 @@
    <!-- fid specific fields -->
    <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="institution_facet" type="string" indexed="true" stored="false" multiValued="true"/>
-   <field name="intermediate" type="string" indexed="true" stored="true"/>
-   <field name="intermediate_id" type="string" indexed="true" stored="false"/>
+   <field name="intermediate" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="intermediate_id" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publisher_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_id" type="string" indexed="true" stored="true" multiValued="true"/>

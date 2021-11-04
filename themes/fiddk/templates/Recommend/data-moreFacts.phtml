@@ -4,6 +4,11 @@
     <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
   </span><br/>
 <?php endif; ?>
+<?php if (isset($this->info['description'])) : ?>
+<?php foreach($this->info['description'] as $descr): ?>
+    <?=$descr?><br />
+<?php endforeach; ?>
+<?php endif; ?>
 <?php if (isset($this->info['affiliation'])) : ?>
   <br/><?=$this->transEsc('Affiliation') . ': '?>
   <span property="affiliation">
@@ -17,7 +22,7 @@
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['geographicAreaCode'])) : ?>
-  <?=$this->transEsc('Place') . ': '?>
+  <?=$this->transEsc('GeographicAreaCode') . ': '?>
   <span property="geographicAreaCode">
     <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
   </span><br />

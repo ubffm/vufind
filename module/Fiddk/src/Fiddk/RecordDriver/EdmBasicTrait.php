@@ -45,8 +45,8 @@ trait EdmBasicTrait
       return $this->fields['institution'] ?? '';
     }
 
-    public function getIntermediate() {
-      return $this->fields['intermediate'] ?? '';
+    public function getIntermediates() {
+      return $this->fields['intermediate'] ?? [];
     }
 
     public function getAlternativeTitles() {
@@ -173,9 +173,8 @@ trait EdmBasicTrait
       return $this->getEdmRecord()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
-    // TODO: remove
-    public function getPerformancePlaces() {
-      return $this->getEdmRecord()->getPropValues("eclap:performancePlace", "edm:ProvidedCHO", "skos:prefLabel");
+    public function getCurrentLocation() {
+      return $this->getEdmRecord()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     /* Prepare attribute val with link */
@@ -196,12 +195,13 @@ trait EdmBasicTrait
      */
     public function getInstitutionLinked() {
       $dprovConf = $this->mainConfig->DataProvider;
-      $inter = $this->getIntermediate();
+      $inters = $this->getIntermediates();
       $inst = $this->getInstitution();
       $res = [];
-      if (!empty($inter)) {
+      if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
         $type = "inter";
-        if ($inter == "BASE - Bielefeld Academic Search Engine") {
+        foreach ($inters as $inter) {
+          if ($inter == "BASE - Bielefeld Academic Search Engine") {
             $instkey = explode("_",$this->getEdmRecord()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
             $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
             $instid = "BASE";
@@ -216,6 +216,7 @@ trait EdmBasicTrait
           $info = explode(',',$dprovConf[$interkey]);
           $interlink = $info[0];
           $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+        }
       } else {
         $type = "inst";
         $instkey = preg_replace( "/\r|\n|\s|,|\/|\(|\)/", "", $inst);
@@ -355,7 +356,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
             $retVal[] = [
               'heading' => $heading,
               'type' => $contextRoles[$i] ?? '',
-              'source' => isset($contextIds[$i]) ? $contextRoles[$i] : ''
+              'source' => isset($contextIds[$i]) ? $contextIds[$i] : ''
             ];
           }
         }

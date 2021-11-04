@@ -55,7 +55,7 @@ if (!empty($this->info) || isset($driver)):
     </div>
   <?php endif; ?>
     <div class="authority-meta">
-      <h2><?=$title?></h2>
+      <h2><?=$this->escapeHtml($title)?></h2>
       <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
         <?php if ($type == "Personal Name"): ?>
           <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
@@ -70,9 +70,14 @@ if (!empty($this->info) || isset($driver)):
       <?php elseif ($type == "Event"): ?>
         <?=$this->render('Recommend/data-eventFields.phtml');?>
       <?php elseif ($type == "Work"): ?>
-      <?=$this->render('Recommend/data-workFields.phtml');?>
-    <?php endif; ?>
-    <?php if (!empty($variant)) : ?>
+        <?=$this->render('Recommend/data-workFields.phtml');?>
+        <?php if (!empty($variant)): ?>
+         <br/><b><?=$this->transEsc('edm::dcterms:alternative')?></b><br/>
+          <?php $this->data = $variant; ?>
+          <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
+        <?php endif; ?><br/>
+      <?php endif; ?>
+    <?php if (!empty($variant) and $type != "Work"): ?>
        <br/><b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
         <?php $this->data = $variant; ?>
         <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
@@ -80,19 +85,12 @@ if (!empty($this->info) || isset($driver)):
     </div>
     <div class="authority-meta">
       <?php if ($type == 'Event'):
-        if (!empty($this->info['description'])) : ?>
-            <span property="description">
-              <?php foreach($this->info['description'] as $descr): ?>
-                  <?=$descr?><br />
-              <?php endforeach; ?>
-            </span><br/>
-        <?php endif;
         $works = $this->driver->getWorks();
         if (!empty($works)) : ?>
           <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b><br/>
           <?php foreach($works as $work_id => $work): ?>
             <span property="edm:isRelatedTo">
-              <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$work?></a>
+              <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$this->escapeHtml($work)?></a>
             </span><br />
           <?php endforeach; ?>
           <br />

@@ -88,6 +88,17 @@ class SolrAuthor extends SolrAuthDefault
   }
 
   /**
+   * Get birth date of person or date of establishment of organization.
+   *
+   * @return string
+   */
+  public function getHomepage()
+  {
+     return isset($this->fields['homepage'])
+         ? $this->fields['homepage'] : '';
+  }
+
+  /**
    * Get the number of work records related to this agent
    *
    * @return int Number of records

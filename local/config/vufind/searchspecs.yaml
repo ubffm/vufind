@@ -305,6 +305,8 @@ Agent:
       - [onephrase, 100]
     institution_id:
       - [onephrase, ~]
+    intermediate_id:
+      - [onephrase, ~]
     topic_id:
       - [onephrase, 50]
 

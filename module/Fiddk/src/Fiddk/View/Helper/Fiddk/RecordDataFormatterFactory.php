@@ -109,6 +109,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         );
         $spec->setLine('dcterms:extent', 'getExtent');
         $spec->setLine('bf:shelfMark', 'getCallNumber');
+        $spec->setLine('edm:currentLocation', 'getCurrentLocation');
         $spec->setLine('dcterms:provenance', 'getProvenance');
         $spec->setMultiLine(
             'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()

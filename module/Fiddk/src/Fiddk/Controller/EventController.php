@@ -44,6 +44,21 @@ class EventController extends \VuFind\Controller\AbstractSearch
 {
     protected $driver = null;
 
+    /**
+     * Returns a list of all items associated with one facet for the lightbox
+     *
+     * Parameters:
+     * facet        The facet to retrieve
+     * searchParams Facet search params from $results->getUrlQuery()->getParams()
+     *
+     * @return mixed
+     */
+     public function facetListAction()
+     {
+      $this->searchClassId = 'SolrEvent';
+      return parent::facetListAction();
+    }
+
     public function homeAction()
     {
       $this->searchClassId = 'SolrEvent';

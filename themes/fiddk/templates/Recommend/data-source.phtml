@@ -1,6 +1,6 @@
 <?php if(!empty($describedBy)) : ?>
   <p class="bottom">
-  <b><?=$this->transEsc('Source').':'?></b><br>
+  <b><?=$this->transEsc('Institution').':'?></b><br>
   <a href="<?=$describedBy['id']?>" target="_blank">
     <?=$describedBy['id']?>
   </a><?=' (' . $this->transEsc('License') . ': '?>
@@ -14,7 +14,7 @@
   </a><?=') '?><?=$this->transEsc('via')?> <a href="https://lobid.org/gnd" target="_blank">lobid-gnd</a>
 </p>
 <?php elseif (!empty($dprov)) : ?>
-  <b><?=$this->transEsc('Source') . ':'?></b><br/>
+  <b><?=$this->transEsc('Institution') . ':'?></b><br/>
   <?php foreach ($dprov as $inter => $info): ?>
     <?php if ($inter == "inst"): ?>
       <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>

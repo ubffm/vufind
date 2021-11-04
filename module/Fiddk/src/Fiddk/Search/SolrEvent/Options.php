@@ -81,6 +81,6 @@ class Options extends \VuFind\Search\Solr\Options
      */
     public function getFacetListAction()
     {
-        return 'authority-facetlist';
+        return 'event-facetlist';
     }
 }

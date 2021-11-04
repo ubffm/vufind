@@ -3,6 +3,11 @@
     <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
   </span><br/>
 <?php endif; ?>
+<?php if (isset($this->info['description'])) : ?>
+<?php foreach($this->info['description'] as $descr): ?>
+    <?=$descr?><br />
+<?php endforeach; ?>
+<?php endif; ?>
 <?php if (isset($this->info['broaderTermInstantial'])) : ?>
   <span property="broaderTermInstantial">
     <?=implode(', ',array_column($this->info['broaderTermInstantial'],'label'))?>
@@ -52,7 +57,7 @@
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['geographicAreaCode'])) : ?>
-  <?=$this->transEsc('Place') . ': '?>
+  <?=$this->transEsc('GeographicAreaCode') . ': '?>
   <span property="geographicAreaCode">
     <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
   </span><br/>

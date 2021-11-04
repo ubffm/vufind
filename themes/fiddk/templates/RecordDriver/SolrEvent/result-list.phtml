@@ -26,15 +26,19 @@
     <div class="resultItemLine1">
       <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
-    <?php $eventType = $this->driver->getEventType();?>
+    <?php $eventTypes = $this->driver->getEventType();
+          $eventGenres = $this->driver->getGenres();?>
     <div class="resultItemLine2">
-      <?php foreach ($eventType as $type): ?>
+      <?php foreach ($eventTypes as $type): ?>
         <?=$this->escapeHtml($type)?>
       <?php endforeach; ?>
     </div>
+    <div class="resultItemLine3">
+        <?=$this->escapeHtml(implode($eventGenres,'; '))?>
+    </div>
     <?php $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();?>
     <?php if ($places || $dates): ?>
-      <div class="resultItemLine3">
+      <div class="resultItemLine4">
         <?php if ($places && $dates): ?>
           <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>

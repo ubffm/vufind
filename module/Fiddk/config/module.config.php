@@ -37,7 +37,7 @@ $config = [
       'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\EventSearchController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\WorkSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\WorkController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
@@ -176,6 +176,7 @@ $recordRoutes = [
 
 $staticRoutes = ['EventSearch/Home','EventSearch/Results',
                  'AgentSearch/Home','AgentSearch/Results',
+                 'Agent/FacetList','Event/FacetList',
                  'WorkSearch/Home','WorkSearch/Results',
                  'Showcase/Home', 'Showcase/Playbills'];
 

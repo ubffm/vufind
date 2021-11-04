@@ -20,9 +20,13 @@
     <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
   </span><br />
 <?php endif; ?>
-<?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
+<?php if (isset($this->info['biographicalOrHistoricalInformation'])
+   or isset($this->info['description'])) : ?>
   <br/><b><?=$this->transEsc('Description')?></b>
   <br/><span property="description">
     <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
+    <?php foreach($this->info['description'] as $descr): ?>
+        <?=$descr?><br />
+    <?php endforeach; ?>
   </span><br/><br/>
 <?php endif; ?>

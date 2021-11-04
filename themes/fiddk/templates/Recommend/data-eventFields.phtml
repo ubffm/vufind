@@ -11,7 +11,7 @@
 <?php if (!empty($this->info["genre"])) : ?>
   <b><?=$this->transEsc('Genre') . ':'?></b>
   <span property="genre">
-    <?=implode($this->info["genre"],', ')?>
+    <?=$this->escapeHtml(implode($this->info["genre"],'; '))?>
   </span><br />
 <?php endif; ?>
 <?php if (!empty($eventDates)) : ?>
@@ -31,6 +31,14 @@
       <?=$eventPlace?>
     </span><br />
   <?php endforeach; ?>
+<?php endif; ?>
+<?php if (isset($this->info['description'])) : ?>
+  <br/><b><?=$this->transEsc('Description')?></b>
+  <br/><span property="description">
+    <?php foreach($this->info['description'] as $descr): ?>
+        <?=$descr?><br />
+    <?php endforeach; ?>
+  </span><br/>
 <?php endif; ?>
 <?php if (!empty($agents["primary"])):?>
   <br/>

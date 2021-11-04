@@ -72,25 +72,26 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
   }
 
   /**
-   * Returns the further source links (Personal Name, Corporate Name or Event)
+   * Returns further links (Personal Name, Corporate Name or Event)
    */
   public function getSource()
   {
-    $sources = [];
-    if (isset($this->fields['source'])) {
-      foreach ($this->fields['source'] as $source) {
-        $sources[] = ["id" => $source, "name" => "Theaterlexikon der Schweiz"];
+    $links = [];
+    if (isset($this->fields['links'])) {
+      foreach ($this->fields['links'] as $link) {
+        // TODO: Map for which kind of link
+        $links[] = ["id" => $link, "name" => "Theaterlexikon der Schweiz"];
       }
     }
-    return $sources;
+    return $links;
   }
 
   public function getInstitution() {
     return isset($this->fields['institution']) ? $this->fields['institution'] : '';
   }
 
-  public function getIntermediate() {
-    return isset($this->fields['intermediate']) ? $this->fields['intermediate'] : '';
+  public function getIntermediates() {
+    return isset($this->fields['intermediate']) ? $this->fields['intermediate'] : [];
   }
 
   /**
@@ -101,11 +102,12 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
    */
   public function getInstitutionLinked() {
     $dprovConf = $this->mainConfig->DataProvider;
-    $inter = $this->getIntermediate();
+    $inters = $this->getIntermediates();
     $inst = $this->getInstitution();
     $res = [];
-    if (!empty($inter)) {
+    if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
       $type = "inter";
+      foreach ($inters as $inter) {
       $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
       $info = explode(',',$dprovConf[$instkey]);
       $instlink = $info[0];
@@ -114,6 +116,7 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
       $info = explode(',',$dprovConf[$interkey]);
       $interlink = $info[0];
       $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+    }
     } else {
       $type = "inst";
       $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);

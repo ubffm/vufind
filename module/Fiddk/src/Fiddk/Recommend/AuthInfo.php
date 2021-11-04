@@ -248,6 +248,7 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
         $res["type"] = [$type];
         $res["gndIdentifier"] = '';
         $res["preferredName"] = $driver->getTitle();
+        $res["description"] = $driver->getSummary();
         if ($type == "Personal Name") {
           if ($driver->getOccupation()) {
             foreach ($driver->getOccupation() as $occu) {
@@ -262,12 +263,10 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
           }
         } elseif ($type == "Event") {
           $res["genre"] = $driver->getGenres();
-          $res["description"] = $driver->getSummary();
         }
         if ($type == "Work") {
           $res["variantName"] = $driver->getAlternativeTitles();
           $res["genre"] = $driver->getGenres();
-          $res["description"] = $driver->getSummary();
         } else {
           $res["variantName"] = $driver->getUseFor();
         }

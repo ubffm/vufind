@@ -34,13 +34,16 @@
     <field name="record_format" type="string" indexed="true" stored="true"/>
 
     <!-- Extra identifiers - where did authority record originate? -->
-    <field name="source" type="string" indexed="true" stored="true" multiValued="true"/>
+    <!-- Data provider here still mapped as institution -->
+    <field name="source" type="string" indexed="true" stored="true"/>
+    <!-- Especially used for extra links to GND which is still better than parsing the full record-->
+    <field name="links" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="record_type" type="string" indexed="true" stored="true"/>
     <field name="lccn" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="institution" type="string" indexed="true" stored="true"/>
     <field name="institution_id" type="string" indexed="true" stored="false"/>
-    <field name="intermediate" type="string" indexed="true" stored="true"/>
-    <field name="intermediate_id" type="string" indexed="true" stored="false"/>
+    <field name="intermediate" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="intermediate_id" type="string" indexed="true" stored="false" multiValued="true"/>
 
     <!-- String Fields for Exact Match / Faceting -->
     <field name="heading" type="string" indexed="true" stored="true"/>
@@ -69,10 +72,10 @@
     <field name="date_sort" type="date" indexed="true" stored="true"/>
     <field name="geographic" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="genre" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre" type="string" indexed="false" stored="true" multiValued="true"/>
+    <field name="genre_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
-    <field name="occupation_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="orga_domain" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="author" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
     <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -99,5 +102,4 @@
   <copyField source="heading" dest="heading_keywords" />
   <copyField source="use_for" dest="use_for_keywords" />
   <copyField source="see_also" dest="see_also_keywords" />
-  <copyField source="occupation" dest="occupation_facet"/>
 </schema>
