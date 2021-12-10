@@ -134,4 +134,12 @@ class SolrAuthor extends SolrAuthDefault
           ->getTotal();
   }
 
+  /**
+   * Returns links to provider
+   */
+   public function getSameAs()
+   {
+       return $this->getEdmRecord()->getAttrVals("owl:sameAs", "foaf:Person");
+   }
+
 }

@@ -148,4 +148,12 @@ class SolrEvent extends SolrAuthDefault
            ->getTotal();
    }
 
+   /**
+    * Returns links to provider
+    */
+    public function getSameAs()
+    {
+        return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:Event");
+    }
+
 }

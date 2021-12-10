@@ -42,7 +42,7 @@ trait EdmAdvancedTrait
 
     public function isArchiveRecord() {
       $query = new \VuFindSearch\Query\Query(
-              'id:"'.$this->getUniqueId().'"'.'+archive:true'
+              'id:"'.$this->getUniqueId().'"'.'+(archive:true OR format:Werk)'
         );
       // Disable highlighting for efficiency; not needed here:
       $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);

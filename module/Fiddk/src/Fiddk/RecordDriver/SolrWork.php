@@ -71,4 +71,12 @@ class SolrWork extends SolrEdm
           ->getTotal();
   }
 
+  /**
+   * Returns links to provider
+   */
+   public function getSameAs()
+   {
+       return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
+   }
+
 }

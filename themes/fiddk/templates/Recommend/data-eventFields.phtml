@@ -36,7 +36,7 @@
   <br/><b><?=$this->transEsc('Description')?></b>
   <br/><span property="description">
     <?php foreach($this->info['description'] as $descr): ?>
-        <?=$descr?><br />
+        <?=$this->escapeHtml($descr)?><br />
     <?php endforeach; ?>
   </span><br/>
 <?php endif; ?>

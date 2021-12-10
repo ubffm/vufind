@@ -54,15 +54,6 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
   }
 
   /**
-   * Returns related links
-   */
-   public function getsameAs()
-   {
-       return isset($this->fields['related'])
-             ? $this->fields['related'] : [];
-   }
-
-  /**
    * Returns the thumbnail url or []
    */
   public function getThumbnail($size = 'small')

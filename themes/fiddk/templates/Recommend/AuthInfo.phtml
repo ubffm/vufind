@@ -5,9 +5,11 @@ if (!empty($this->info) || isset($driver)):
     if (!empty($this->info['gndIdentifier'])):
       $dprov = '';
       $describedBy = $this->info['describedBy'];
+      $sameAs = '';
     else:
       $dprov = $this->driver->getInstitutionLinked();
       $describedBy = '';
+      $sameAs = $this->driver->getSameAs();
     endif;
     if (in_array("ConferenceOrEvent",$types)):
       $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
@@ -104,7 +106,7 @@ if (!empty($this->info) || isset($driver)):
         <br />
       <?php endif; ?>
       <?php if (!empty($describedBy) || !empty($dprov)): ?>
-        <?=$this->render('Recommend/data-source.phtml',['dprov' => $dprov, 'describedBy' => $describedBy]);?>
+        <?=$this->render('Recommend/data-source.phtml',['type' => $type,'dprov' => $dprov, 'describedBy' => $describedBy, 'sameAs' => $sameAs]);?>
       <?php endif; ?>
    </div>
  </div>

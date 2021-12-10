@@ -18,6 +18,15 @@
   <?php foreach ($dprov as $inter => $info): ?>
     <?php if ($inter == "inst"): ?>
       <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+      <?php if ($info[2] == "THULB" && !empty($sameAs)): ?>
+        <?php if ($type == "Event"): ?>
+          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('PerAtProv')?></a>
+        <?php elseif ($type == "Work"): ?>
+          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('WorkAtProv')?></a>
+        <?php else: ?>
+          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('AgeAtProv')?></a>
+        <?php endif; ?>
+      <?php endif; ?>
     <?php else: ?>
       <a href="<?=$info[4]?>" target="_blank"><?=$this->escapeHtml($info[3])?></a><?=" via "?>
       <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>

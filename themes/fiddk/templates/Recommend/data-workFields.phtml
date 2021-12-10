@@ -2,9 +2,9 @@
       //$edm = $this->driver->getXML('edm');?>
       <?//=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
 <?php if (!empty($this->info["description"])) : ?>
-  <span property="description">
-    <?=implode('; ',$this->info["description"])?>
-  </span><br/>
+  <?php foreach($this->info['description'] as $descr): ?>
+      <span property="description"><?=$descr?></span><br/>
+  <?php endforeach; ?><br/>
   <?php endif; ?>
   <?php if (!empty($this->info["genre"])) : ?>
     <br/><b><?=$this->transEsc('Genre') . ':'?></b>
@@ -12,7 +12,7 @@
       <?=$this->escapeHtml(implode($this->info["genre"],'; '))?>
     </span><br />
   <?php endif; ?>
-<?php if (!empty($this->agents)) : ?>
+<?php if (!empty($this->agents["primary"])) : ?>
   <br/>
   <b><?=$this->transEsc('Contributors')?></b><br/>
   <?php $formattedAuthors = [];
