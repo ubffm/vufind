@@ -73,16 +73,16 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('Recommend/data-eventFields.phtml');?>
       <?php elseif ($type == "Work"): ?>
         <?=$this->render('Recommend/data-workFields.phtml');?>
-        <?php if (!empty($variant)): ?>
-         <br/><b><?=$this->transEsc('edm::dcterms:alternative')?></b><br/>
-          <?php $this->data = $variant; ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
-        <?php endif; ?><br/>
       <?php endif; ?>
-    <?php if (!empty($variant) and $type != "Work"): ?>
-       <br/><b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
-        <?php $this->data = $variant; ?>
-        <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
+    <?php if (!empty($variant)):?>
+      <br/>
+      <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
+       <b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
+      <?php else: ?>
+       <b><?=$this->transEsc('edm::dcterms:alternative')?></b><br/>
+      <?php endif; ?>
+      <?php $this->data = $variant; ?>
+      <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
     <?php endif; ?><br/>
     </div>
     <div class="authority-meta">

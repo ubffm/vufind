@@ -36,6 +36,7 @@ usage()
     exit 1
 }
 
+export SOLR_ADDITIONAL_JVM_OPTIONS="-Dlog4j2.formatMsgNoLookups=true"
 
 [ $# -gt 0 ] || usage
 
