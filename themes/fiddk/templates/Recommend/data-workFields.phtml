@@ -1,18 +1,88 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
       //$edm = $this->driver->getXML('edm');?>
       <?//=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
-<?php if (!empty($this->info["description"])) : ?>
-  <?php foreach($this->info['description'] as $descr): ?>
+  <?php if (!empty($this->info["description"])) : ?>
+  <?php foreach($this->info["description"] as $descr): ?>
       <span property="description"><?=$descr?></span><br/>
   <?php endforeach; ?><br/>
   <?php endif; ?>
+  <?php if (!empty($this->info["definition"])) : ?>
+  <?php foreach($this->info["definition"] as $descr): ?>
+      <span property="definition"><?=$descr?></span><br/>
+  <?php endforeach; ?><br/>
+  <?php endif; ?>
+  <?php if (!empty($this->info["biographicalOrHistoricalInformation"])) : ?>
+  <?php foreach($this->info["biographicalOrHistoricalInformation"] as $descr): ?>
+      <span property="biographicalOrHistoricalInformation"><?=$descr?></span><br/>
+  <?php endforeach; ?><br/>
+  <?php endif; ?>
   <?php if (!empty($this->info["genre"])) : ?>
-    <br/><b><?=$this->transEsc('Genre') . ':'?></b>
+    <b><?=$this->transEsc('Genre') . ':'?></b>
     <span property="genre">
       <?=$this->escapeHtml(implode($this->info["genre"],'; '))?>
     </span><br />
   <?php endif; ?>
-<?php if (!empty($this->agents["primary"])) : ?>
+  <?php if (!empty($this->info["formOfWorkAndExpression"])) : ?>
+    <b><?=$this->transEsc("Form") . ':'?></b>
+    <span property="formOfWorkAndExpression">
+      <?=implode('; ',array_column($this->info["formOfWorkAndExpression"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["broaderTermInstantial"])) : ?>
+    <b><?=$this->transEsc("broaderTermInstantial") . ':'?></b>
+    <span property="broaderTermInstantial">
+      <?=implode('; ',array_column($this->info["broaderTermInstantial"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["broaderTermGeneral"])) : ?>
+    <b><?=$this->transEsc("broaderTermGeneral") . ':'?></b>
+    <span property="broaderTermGeneral">
+      <?=implode('; ',array_column($this->info["broaderTermGeneral"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["broaderTermPartitive"])) : ?>
+    <b><?=$this->transEsc("broaderTermPartitive") . ':'?></b>
+    <span property="broaderTermPartitive">
+      <?=implode('; ',array_column($this->info["broaderTermPartitive"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["gndSubjectCategory"])) : ?>
+    <b><?=$this->transEsc("gndSubjectCategory") . ':'?></b>
+    <span property="gndSubjectCategory">
+      <?=implode('; ',array_column($this->info["gndSubjectCategory"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (isset($this->info["udkCode"])) : ?>
+    <b><?=$this->transEsc("Date") . ': '?></b>
+    <span property="udkCode">
+      <?=$this->escapeHtml(implode($this->info["udkCode"],'; '))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (isset($this->info['dateOfProduction'])) : ?>
+    <b><?=$this->transEsc('dateOfProduction') . ': '?></b>
+    <span property="dateOfProduction">
+      <?=$this->escapeHtml(implode($this->info["dateOfProduction"],'; '))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (isset($this->info['dateOfPublication'])) : ?>
+    <b><?=$this->transEsc('Published') . ': '?></b>
+    <span property="dateOfPublication">
+      <?=$this->escapeHtml(implode($this->info["dateOfPublication"],'; '))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (isset($this->info['geographicAreaCode'])) : ?>
+    <b><?=$this->transEsc('GeographicAreaCode') . ': '?></b>
+    <span property="geographicAreaCode">
+      <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (isset($this->info["thematicIndexNumericDesignationOfMusicalWork"])) : ?>
+    <b><?=$this->transEsc("thematicIndexNumericDesignationOfMusicalWork") . ": "?></b>
+    <span property="thematicIndexNumericDesignationOfMusicalWork">
+    <?=$this->escapeHtml(implode($this->info["thematicIndexNumericDesignationOfMusicalWork"],"; "))?>
+    </span><br />
+  <?php endif; ?>
+<?php if (!empty($this->agents["primary"]) || !empty($this->info["firstAuthor"])) : ?>
   <br/>
   <b><?=$this->transEsc('Contributors')?></b><br/>
   <?php $formattedAuthors = [];
@@ -37,7 +107,31 @@
         $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
         ob_end_clean();
        endif;
-     endforeach;
-   endif; ?>
+     endforeach; ?>
   <?=implode(', ', $formattedAuthors)?><br/>
 <?php endif; ?>
+<?php elseif (!empty($this->info["firstAuthor"])) : ?>
+    <br/>
+    <b><?=$this->transEsc('Contributors')?></b><br/>
+    <span property="firstAuthor">
+      <?=$this->info['firstAuthor'][0]['label'] . ' (' . $this->transEsc('edm::rdau:P60434') . ')';?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["mediumOfPerformance"])) : ?>
+    <b><?=$this->transEsc("mediumOfPerformance") . ':'?></b>
+    <span property="mediumOfPerformance">
+      <?=implode('; ',array_column($this->info["mediumOfPerformance"],"label"))?>
+    </span><br />
+  <?php endif; ?>
+  <?php if (!empty($this->info["literarySource"])) : ?>
+    <br/><b><?=$this->transEsc("literarySource") . ':'?></b>
+    <span property="literarySource">
+      <?=implode('; ',array_column($this->info["literarySource"],"label"))?>
+    </span>
+  <?php endif; ?>
+  <?php if (!empty($this->info["relatedWork"])) : ?>
+    <br/><b><?=$this->transEsc("RelatedWork") . ':'?></b>
+    <span property="relatedWork">
+      <?=implode('; ',array_column($this->info["relatedWork"],"label"))?>
+    </span><br />
+  <?php endif; ?>

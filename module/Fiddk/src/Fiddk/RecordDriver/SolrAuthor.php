@@ -88,7 +88,7 @@ class SolrAuthor extends SolrAuthDefault
   }
 
   /**
-   * Get birth date of person or date of establishment of organization.
+   * Get homepage of person
    *
    * @return string
    */
@@ -97,6 +97,31 @@ class SolrAuthor extends SolrAuthDefault
      return isset($this->fields['homepage'])
          ? $this->fields['homepage'] : '';
   }
+
+  /**
+   * Get gender of person.
+   */
+   public function getGender()
+   {
+       return $this->getEdmRecord()->getLiteralVals("rdau:P60531", "foaf:Person");
+   }
+
+  /**
+  * Get place of birth of person.
+  */
+  public function getPlaceOfBirth()
+  {
+      return $this->getEdmRecord()->getPropValues("rdau:P60593", "foaf:Person");
+  }
+
+  /**
+  * Get place of death of person.
+  */
+  public function getPlaceOfDeath()
+  {
+      return $this->getEdmRecord()->getPropValues("rdau:P60592", "foaf:Person");
+  }
+
 
   /**
    * Get the number of work records related to this agent

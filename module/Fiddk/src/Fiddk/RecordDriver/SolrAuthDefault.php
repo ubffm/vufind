@@ -112,7 +112,11 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
       $type = "inst";
       $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
       $info = explode(',',$dprovConf[$instkey]);
-      $res = [$type => [$inst,$info[0],$info[1]]];
+      if (isset($info[1])) {
+        $res = [$type => [$inst,$info[0],$info[1]]];
+      } else {
+        $res = [];
+      }
     }
     return $res;
   }

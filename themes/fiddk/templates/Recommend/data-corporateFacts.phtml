@@ -6,7 +6,7 @@
 <?php if (isset($this->info['description'])) : ?>
 <?php foreach($this->info['description'] as $descr): ?>
     <?=$descr?><br />
-<?php endforeach; ?>
+<?php endforeach; ?><br/>
 <?php endif; ?>
 <?php if (isset($this->info['broaderTermInstantial'])) : ?>
   <span property="broaderTermInstantial">
@@ -14,7 +14,7 @@
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['dateOfEstablishment'])) : ?>
-  <br/><?=$this->transEsc('established')?>
+  <?=$this->transEsc('established')?>
   <span property="dateOfEstablishment">
     <?=implode('; ',$this->info['dateOfEstablishment'])?>
   </span><br/>
@@ -26,21 +26,15 @@
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['precedingCorporateBody'])) : ?>
-  <?=$this->transEsc('precedingCorporateBody') . ': '?>
+  <b><?=$this->transEsc('precedingCorporateBody') . ': '?></b>
   <span property="precedingCorporateBody">
     <?=implode('; ',array_column($this->info['precedingCorporateBody'],'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['succeedingCorporateBody'])) : ?>
-  <?=$this->transEsc('succeedingCorporateBody') . ': '?>
+  <b><?=$this->transEsc('succeedingCorporateBody') . ': '?></b>
   <span property="succeedingCorporateBody">
     <?=implode('; ',array_column($this->info['succeedingCorporateBody'],'label'))?>
-  </span><br/>
-<?php endif; ?>
-<?php if (isset($this->info['placeOfBusiness'])) : ?>
-  <?=$this->transEsc('placeOfBusiness') . ' in '?>
-  <span property="placeOfBusiness">
-    <?=implode('; ',array_column($this->info['placeOfBusiness'],'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['homepage'])) : ?>
@@ -50,20 +44,26 @@
     </span><br/>
   <?php endforeach; ?>
 <?php endif; ?>
+<?php if (isset($this->info['placeOfBusiness'])) : ?>
+  <b><?=$this->transEsc('placeOfBusiness') . ': '?></b>
+  <span property="placeOfBusiness">
+    <?=implode('; ',array_column($this->info['placeOfBusiness'],'label'))?>
+  </span><br/>
+<?php endif; ?>
 <?php if (isset($this->info['spatialAreaOfActivity'])) : ?>
-  <?=$this->transEsc('spatialAreaOfActivity') . ': '?>
+  <b><?=$this->transEsc('spatialAreaOfActivity') . ': '?></b>
   <span property="spatialAreaOfActivity">
     <?=implode('; ',array_column($this->info['spatialAreaOfActivity'],'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['geographicAreaCode'])) : ?>
-  <?=$this->transEsc('GeographicAreaCode') . ': '?>
+  <b><?=$this->transEsc('GeographicAreaCode') . ': '?></b>
   <span property="geographicAreaCode">
     <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['gndSubjectCategory'])) : ?>
-  <?=$this->transEsc('Subject') . ': '?>
+  <b><?=$this->transEsc('gndSubjectCategory') . ': '?></b>
   <span property="Category">
     <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
   </span><br/>

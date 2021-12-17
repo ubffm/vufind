@@ -250,10 +250,21 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
         $res["preferredName"] = $driver->getTitle();
         $res["description"] = $driver->getSummary();
         if ($type == "Personal Name") {
-          if ($driver->getOccupation()) {
-            foreach ($driver->getOccupation() as $occu) {
-              $res["professionOrOccupation"][] = ["label" => $occu];
-            }
+          $gender = $driver->getGender();
+          $occupation = $driver->getOccupation();
+          $pbirth= $driver->getPlaceOfBirth();
+          $pdeath = $driver->getPlaceOfDeath();
+          foreach ($occupation as $val) {
+              $res["professionOrOccupation"][] = ["label" => $val];
+          }
+          foreach ($gender as $val) {
+            $res["gender"][] = ["label" => $val];
+          }
+          foreach ($pbirth as $val) {
+            $res["placeOfBirth"][] = ["label" => $val];
+          }
+          foreach ($pdeath as $val) {
+            $res["placeOfDeath"][] = ["label" => $val];
           }
           if ($driver->getBirthDate()) {
             $res["dateOfBirth"] = [$driver->getBirthDate()];

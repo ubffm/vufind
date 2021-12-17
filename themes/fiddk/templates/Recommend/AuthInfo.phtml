@@ -11,28 +11,6 @@ if (!empty($this->info) || isset($driver)):
       $describedBy = '';
       $sameAs = $this->driver->getSameAs();
     endif;
-    if (in_array("ConferenceOrEvent",$types)):
-      $moreInfo = isset($this->info['biographicalOrHistoricalInformation'])
-           || isset($this->info['dateOfConferenceOrEvent'])
-           || isset($this->info['placeOfConferenceOrEvent'])
-           || isset($this->info['homepage'])
-           || isset($this->info['spatialAreaOfActivity']);
-    else:
-      $moreInfo = isset($this->info['professionOrOccupation'])
-           || isset($this->info['placeOfBusiness'])
-           || isset($this->info['biographicalOrHistoricalInformation'])
-           || isset($this->info['dateOfBirth'])
-           || isset($this->info['dateOfDeath'])
-           || isset($this->info['placeOfBirth'])
-           || isset($this->info['placeOfDeath'])
-           || isset($this->info['publication'])
-           || isset($this->info['precedingCorporateBody'])
-           || isset($this->info['dateOfEstablishment'])
-           || isset($this->info['homepage'])
-           || isset($this->info['spatialAreaOfActivity'])
-           || isset($this->info['geographicAreaCode'])
-           || isset($this->info['sameAs']);
-    endif;
     $title = $this->info['preferredName'];
     $variant = isset($this->info['variantName']) ? $this->info['variantName'] : '';
     $id = $this->driver->getUniqueId();
@@ -60,14 +38,13 @@ if (!empty($this->info) || isset($driver)):
       <h2><?=$this->escapeHtml($title)?></h2>
       <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
         <?php if ($type == "Personal Name"): ?>
-          <?=$this->render('Recommend/data-firstFacts.phtml');?><br/>
-          <?=$this->render('Recommend/data-moreFacts.phtml');?><br/>
+          <?=$this->render('Recommend/data-personFacts.phtml');?><br/>
         <?php elseif ($type == "Corporate Name"): ?>
-          <?=$this->render('Recommend/data-corporateFacts.phtml');?>
+          <?=$this->render('Recommend/data-corporateFacts.phtml');?><br/>
         <?php endif; ?>
         <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
         <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
-      <?php elseif ($type == "event_gnd"): ?>
+      <?php elseif ($type == "Event" and (!empty($this->info['gndIdentifier']))): ?>
         <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
       <?php elseif ($type == "Event"): ?>
         <?=$this->render('Recommend/data-eventFields.phtml');?>
