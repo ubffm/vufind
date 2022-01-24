@@ -28,8 +28,6 @@
  */
 namespace Fiddk\Connection;
 
-use VuFind\I18n\Translator\TranslatorAwareInterface;
-
 /**
  * Wikipedia connection class
  *
@@ -40,9 +38,8 @@ use VuFind\I18n\Translator\TranslatorAwareInterface;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
-class Wikipedia extends \VuFind\Connection\Wikipedia implements TranslatorAwareInterface
+class Wikipedia extends \VuFind\Connection\Wikipedia
 {
-    use \VuFind\I18n\Translator\TranslatorAwareTrait;
 
     /**
      * This method is responsible for connecting to Wikimedia API

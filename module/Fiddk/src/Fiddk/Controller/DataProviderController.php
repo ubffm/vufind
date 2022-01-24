@@ -49,8 +49,9 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
     {
         $page = $this->params()->fromRoute('page');
         $themeInfo = $this->serviceLocator->get('VuFindTheme\ThemeInfo');
-        $language = $this->serviceLocator->get('Laminas\Mvc\I18n\Translator')
-            ->getLocale();
+        $language = "de"; 
+          //$this->serviceLocator->get('Laminas\Mvc\I18n\Translator')
+          //  ->getLocale();
         $defaultLanguage = $this->getConfig()->Site->language;
         // Try to find a template using
         // 1.) Current language suffix

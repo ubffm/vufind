@@ -117,8 +117,8 @@
    <!--<field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/> -->
    <field name="allfields" type="text" indexed="true" stored="false" multiValued="true"/>
    <field name="allfields_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
-   <!-- <field name="fulltext" type="text" indexed="true" stored="false"/>
-   <field name="fulltext_unstemmed" type="textProper" indexed="true" stored="false"/> -->
+   <field name="fulltext" type="text" indexed="true" stored="false"/>
+   <field name="fulltext_unstemmed" type="textProper" indexed="true" stored="false"/>
    <field name="spelling" type="textSpell" indexed="true" stored="true" multiValued="true"/>
    <field name="spellingShingle" type="textSpellShingle" indexed="true" stored="true" multiValued="true"/>
    <!-- Institutional Fields -->
@@ -280,7 +280,7 @@
  <copyField source="publisher" dest="publisherStr"/>
  <copyField source="topic" dest="topic_unstemmed"/>
  <copyField source="allfields" dest="allfields_unstemmed"/>
- <!--<copyField source="fulltext" dest="fulltext_unstemmed"/>-->
+ <copyField source="fulltext" dest="fulltext_unstemmed"/>
  <!-- CopyFields for Alphabetic Browse -->
  <copyField source="topic" dest="topic_browse"/>
  <copyField source="author" dest="author_browse"/>

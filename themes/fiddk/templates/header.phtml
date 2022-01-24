@@ -54,13 +54,14 @@
 
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
             <li class="language dropdown">
-              <form method="post" name="langForm" id="langForm">
-                <input type="hidden" name="mylang"/>
-              </form>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->transEsc("Language")?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <?php foreach ($this->layout()->allLangs as $langCode => $langName): ?>
-                  <li<?=$this->layout()->userLang == $langCode ? ' class="active"' : ''?>><a href="#" onClick="document.langForm.mylang.value='<?=$langCode?>';document.langForm.submit()"><?=$this->displayLanguageOption($langName)?></a></li>
+                  <li<?=$this->layout()->userLang == $langCode ? ' class="active"' : ''?>>
+                  <a href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['lng' => $langCode])) ?>" rel="nofollow">
+                    <?=$this->displayLanguageOption($langName)?>
+                  </a>
+                </li>
                 <?php endforeach; ?>
               </ul>
             </li>

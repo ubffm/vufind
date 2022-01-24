@@ -28,7 +28,11 @@
  * Wiki
  */
 namespace Fiddk\View\Helper\Fiddk;
+
 use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for record driver data formatting view helper
@@ -60,7 +64,9 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
       * @SuppressWarnings(PHPMD.UnusedFormalParameter)
       */
      public function __invoke(ContainerInterface $container, $requestedName,
-         array $options = null
+          ContainerInterface $container,
+          $requestedName,
+          array $options = null
      ) {
          if (!empty($options)) {
              throw new \Exception('Unexpected options sent to factory.');
