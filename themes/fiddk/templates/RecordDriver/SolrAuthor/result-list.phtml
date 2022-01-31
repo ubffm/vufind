@@ -34,11 +34,11 @@
       <div class="resultItemLine2">
       <?php if ($birth || $death) : ?>
           <?php if (!$death) : ?>
-              <?='* ' . $this->driver->translateDate($birth,'de')?><br/>
+              <?='* ' . $this->driver->translateDate($birth, 'de')?><br/>
           <?php elseif(!$birth) : ?>
-              <?='† ' . $this->driver->translateDate($death,'de')?><br/>
+              <?='† ' . $this->driver->translateDate($death, 'de')?><br/>
           <?php else : ?>
-              <?='* ' . $this->driver->translateDate($birth,'de') . ' - † ' . $this->driver->translateDate($death,'de')?><br/>
+              <?='* ' . $this->driver->translateDate($birth, 'de') . ' - † ' . $this->driver->translateDate($death, 'de')?><br/>
           <?php endif; ?>
       <?php endif; ?>
       <?php foreach ($prof as $current): ?>
@@ -54,11 +54,11 @@
       <div class="resultItemLine2">
         <?php if ($birth || $death) : ?>
             <?php if (!$death) : ?>
-                <?=$this->transEsc('since') . ' ' . $this->driver->translateDate($birth,'de')?><br/>
+                <?=$this->transEsc('since') . ' ' . $this->driver->translateDate($birth, 'de')?><br/>
             <?php elseif(!$birth) : ?>
-                <?=$this->transEsc('until') . ' ' . $this->driver->translateDate($death,'de')?><br/>
+                <?=$this->transEsc('until') . ' ' . $this->driver->translateDate($death, 'de')?><br/>
             <?php else : ?>
-                <?=$this->driver->translateDate($birth,'de') . ' - ' . $this->driver->translateDate($death,'de')?><br/>
+                <?=$this->driver->translateDate($birth, 'de') . ' - ' . $this->driver->translateDate($death, 'de')?><br/>
             <?php endif; ?>
         <?php endif; ?>
       <?php foreach ($domain as $current): ?>

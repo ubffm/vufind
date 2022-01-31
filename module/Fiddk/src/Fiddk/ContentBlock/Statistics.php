@@ -27,9 +27,9 @@
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
 namespace Fiddk\ContentBlock;
-use VuFind\Config\PluginManager as ConfigManager;
+
 use VuFind\Search\Results\PluginManager as ResultsManager;
-use Laminas\Config\Config;
+
 /**
  * FacetList content block.
  *
@@ -48,6 +48,7 @@ class Statistics implements \VuFind\ContentBlock\ContentBlockInterface
      * @var ResultsManager
      */
     protected $resultsManager;
+
     /**
      * Constructor
      *
@@ -68,6 +69,7 @@ class Statistics implements \VuFind\ContentBlock\ContentBlockInterface
     public function setConfig($settings)
     {
     }
+
     /**
      * Return context variables used for rendering the block's template.
      *

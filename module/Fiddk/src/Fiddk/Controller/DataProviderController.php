@@ -27,6 +27,7 @@
  * @link     https://vufind.org Main Page
  */
 namespace Fiddk\Controller;
+
 /**
  * Controller for mostly static pages that doesn't fall under any particular
  * function.
@@ -49,9 +50,9 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
     {
         $page = $this->params()->fromRoute('page');
         $themeInfo = $this->serviceLocator->get('VuFindTheme\ThemeInfo');
-        $language = "de"; 
-          //$this->serviceLocator->get('Laminas\Mvc\I18n\Translator')
-          //  ->getLocale();
+        $language = "de";
+        //$this->serviceLocator->get('Laminas\Mvc\I18n\Translator')
+        //  ->getLocale();
         $defaultLanguage = $this->getConfig()->Site->language;
         // Try to find a template using
         // 1.) Current language suffix
@@ -74,6 +75,7 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
         $view = $this->createViewModel(['page' => $page]);
         return $view;
     }
+
     /**
      * Action called if matched action does not exist
      *

@@ -26,6 +26,7 @@
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
 namespace Fiddk\RecordDriver;
+
 /**
  * Additional functionality for Edm Solr records.
  *
@@ -39,89 +40,94 @@ namespace Fiddk\RecordDriver;
  */
 trait EdmAdvancedTrait
 {
-
-    public function isArchiveRecord() {
-      $query = new \VuFindSearch\Query\Query(
-              'id:"'.$this->getUniqueId().'"'.'+(archive:true OR format:Werk)'
+    public function isArchiveRecord()
+    {
+        $query = new \VuFindSearch\Query\Query(
+            'id:"' . $this->getUniqueId() . '"' . '+(archive:true OR format:Werk)'
         );
-      // Disable highlighting for efficiency; not needed here:
-      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-      return $this->searchService
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        return $this->searchService
               ->search($this->sourceIdentifier, $query, 0, 0, $params)
               ->getTotal();
     }
 
-    public function askArchive() {
-      $mail = "";
-      if ($this->isArchiveRecord() && (strpos($this->getUniqueId(),"DTK") === 0 || strpos($this->getUniqueId(),"MCB") === 0) && $this->getCallNumber()) {
-        $mail = $this->getCallNumber()[0];
-      }
-      return $mail;
-    }
-
-    public function getKVKLink() {
-      $url = "";
-      $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
-      $inst = $this->getInstitution();
-      $exclude = in_array($inst,["Tanzfonds Erbe", "Thüringer Universitäts- und Landesbibliothek Jena"]) or $this->isArchiveRecord();
-
-      if (!$exclude) {
-        $isbn = $this->getCleanISBN();
-        if ($isbn) {
-          $url = $base . "SB=" . $isbn . "&";
-        } elseif ($this->getTitle()) {
-          $url = $base . "TI=" . $this->getTitle() . "&";
-          if (isset($this->getPublicationDetails()[0])) {
-            $url = $url . "PY=" . $this->getPublicationDetails()[0]->getDate() . "&";
-          }
-          if (isset($this->getPublishers()[0])) {
-            $url = $url . "PU=" . $this->getPublishers()[0] . "&";
-          }
+    public function askArchive()
+    {
+        $mail = "";
+        if ($this->isArchiveRecord() && (strpos($this->getUniqueId(), "DTK") === 0 || strpos($this->getUniqueId(), "MCB") === 0) && $this->getCallNumber()) {
+            $mail = $this->getCallNumber()[0];
         }
-      }
-
-      if ($url) {
-        return htmlspecialchars($url) . "autosubmit";
-      } else {
-         return NULL;
-      }
+        return $mail;
     }
 
-    public function queryRecordId($id,$source) {
-      $query = new \VuFindSearch\Query\Query(
-              'id:"'.$id.'"'
+    public function getKVKLink()
+    {
+        $url = "";
+        $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
+        $inst = $this->getInstitution();
+        $exclude = in_array($inst, ["Tanzfonds Erbe", "Thüringer Universitäts- und Landesbibliothek Jena"]) or $this->isArchiveRecord();
+
+        if (!$exclude) {
+            $isbn = $this->getCleanISBN();
+            if ($isbn) {
+                $url = $base . "SB=" . $isbn . "&";
+            } elseif ($this->getTitle()) {
+                $url = $base . "TI=" . $this->getTitle() . "&";
+                if (isset($this->getPublicationDetails()[0])) {
+                    $url = $url . "PY=" . $this->getPublicationDetails()[0]->getDate() . "&";
+                }
+                if (isset($this->getPublishers()[0])) {
+                    $url = $url . "PU=" . $this->getPublishers()[0] . "&";
+                }
+            }
+        }
+
+        if ($url) {
+            return htmlspecialchars($url) . "autosubmit";
+        } else {
+            return null;
+        }
+    }
+
+    public function queryRecordId($id, $source)
+    {
+        $query = new \VuFindSearch\Query\Query(
+            'id:"' . $id . '"'
         );
-      // Disable highlighting for efficiency; not needed here:
-      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-      $response = $this->searchService
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        $response = $this->searchService
               ->search($source, $query, 0, 1, $params);
-      return $response;
+        return $response;
     }
 
     // test if record exists
-    public function checkExistence($id,$source) {
-      $response = $this->queryRecordId($id,$source);
-      return $response->getTotal();
+    public function checkExistence($id, $source)
+    {
+        $response = $this->queryRecordId($id, $source);
+        return $response->getTotal();
     }
 
     // get title and format of related record
-    public function getTitleIfExists($id,$source) {
-      $response = $this->queryRecordId($id,$source);
-      $record = current($response->getRecords());
-      if ($record and $record->getFormats()) {
-        return $record->getTitle() .' ('.implode(', ', $record->getFormats()).')';
-      } elseif ($record) {
-        return $record->getTitle();
-      }
+    public function getTitleIfExists($id, $source)
+    {
+        $response = $this->queryRecordId($id, $source);
+        $record = current($response->getRecords());
+        if ($record and $record->getFormats()) {
+            return $record->getTitle() . ' (' . implode(', ', $record->getFormats()) . ')';
+        } elseif ($record) {
+            return $record->getTitle();
+        }
     }
 
     // get date of related event
-    public function getEventDate($id) {
-      $response = $this->queryRecordId($id,"SolrEvent");
-      $record = current($response->getRecords());
-      if ($record and $record->getEventDate()) {
-        return $record->getEventDate();
-      }
+    public function getEventDate($id)
+    {
+        $response = $this->queryRecordId($id, "SolrEvent");
+        $record = current($response->getRecords());
+        if ($record and $record->getEventDate()) {
+            return $record->getEventDate();
+        }
     }
-
 }

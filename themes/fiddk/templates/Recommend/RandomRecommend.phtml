@@ -18,14 +18,14 @@
       </div>
     <?php endif; ?>
   </div>
-<?php elseif (count($recommend)> 0): ?>
+<?php elseif (count($recommend) > 0): ?>
 <div class="random">
       <?php $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
-      <?php for($i=1;$i<count($recommend)/$perPage;$i++): ?>
+      <?php for($i = 1;$i < count($recommend) / $perPage;$i++): ?>
         <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
       <?php endfor; ?>
     </ol>
@@ -33,23 +33,23 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <?php foreach ($recommend as $index=>$driver): ?>
+        <?php foreach ($recommend as $index => $driver): ?>
           <div class="carousel-item">
               <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLink()->getUrl($driver));?>
               <a class="content" href="<?=$this->recordLink()->getUrl($driver)?>">
                 <div class="imgDescr card">
                   <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
                   <?php if ($driver->getContainerTitle()) :?>
-                    <p><?=$this->transEsc("In") . ': ' . implode(', ',$driver->getContainerTitle());?></p>
+                    <p><?=$this->transEsc("In") . ': ' . implode(', ', $driver->getContainerTitle());?></p>
                   <?php endif; ?>
                   <?php if ($driver->getFormats()) :?>
-                    <p><?=$this->transEsc("Format") . ': ' . implode(', ',$driver->getFormats());?></p>
+                    <p><?=$this->transEsc("Format") . ': ' . implode(', ', $driver->getFormats());?></p>
                   <?php endif; ?>
                   <p><?=$this->transEsc("Institution") . ': ' . $driver->getInstitution();?>
                 </div>
               </a>
             </div>
-          <?php if(($index+1) % $perPage == 0 && $index < count($recommend)-1): ?>
+          <?php if(($index + 1) % $perPage == 0 && $index < count($recommend) - 1): ?>
       </div>
       <div class="item">
           <?php endif; ?>

@@ -42,18 +42,18 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class AgentSearchController extends \VuFind\Controller\AuthorController
 {
-  /**
-   * Constructor
-   *
-   * @param ServiceLocatorInterface $sm Service locator
-   */
-  public function __construct(ServiceLocatorInterface $sm)
-  {
-      $this->searchClassId = 'SolrAuthor';
-      parent::__construct($sm);
-  }
+    /**
+     * Constructor
+     *
+     * @param ServiceLocatorInterface $sm Service locator
+     */
+    public function __construct(ServiceLocatorInterface $sm)
+    {
+        $this->searchClassId = 'SolrAuthor';
+        parent::__construct($sm);
+    }
 
-  /**
+    /**
      * Sets the configuration for performing an author search
      *
      * @return mixed
@@ -63,15 +63,13 @@ class AgentSearchController extends \VuFind\Controller\AuthorController
         return parent::resultsAction();
     }
 
-
-  /**
-    * Displays the proper page for a search action
-    *
-    * @return mixed
-    */
+    /**
+     * Displays the proper page for a search action
+     *
+     * @return mixed
+     */
     public function homeAction()
     {
-      return $this->forwardTo('AgentSearch', 'Results');
+        return $this->forwardTo('AgentSearch', 'Results');
     }
-
 }

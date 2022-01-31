@@ -27,7 +27,9 @@
  * @link     https://vufind.org/wiki/development Wiki
  */
 namespace Fiddk\AjaxHandler;
+
 use Interop\Container\ContainerInterface;
+
 /**
  * Factory for GetFacetData AJAX handler.
  *
@@ -57,7 +59,9 @@ class GetTotalResultsFactory
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function __invoke(ContainerInterface $container, $requestedName,
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
         array $options = null
     ) {
         if (!empty($options)) {

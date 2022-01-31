@@ -7,18 +7,18 @@
  * Copyright (C) Villanova University 2018.
  * Copyright (C) Frankfurt University Library 2019.
  *
-  * This program is free software; you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License version 2,
-  * as published by the Free Software Foundation.
-  *
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-  * along with this program; if not, write to the Free Software
-  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
  * @package  Controller
@@ -28,8 +28,7 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
-use Laminas\Config\Config;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Agent "Record" Controller (which is a Search Controller with Recommendation)
  *
@@ -46,18 +45,19 @@ class AgentController extends \VuFind\Controller\AbstractSearch
 
     public function homeAction()
     {
-      $this->searchClassId = 'SolrAuthor';
-      $this->driver = $this->loadRecord();
-      $id = $this->driver->getUniqueID();
-      $name = $this->driver->getTitle();
-      $this->searchClassId = 'SolrAuthority';
-      $query = $this->getRequest()->getQuery();
-      $query->set('id', $id);
-      $query->set('type', 'Agent');
-      $query->set('name', $name);
-      return !empty($id) ?
+        $this->searchClassId = 'SolrAuthor';
+        $this->driver = $this->loadRecord();
+        $id = $this->driver->getUniqueID();
+        $name = $this->driver->getTitle();
+        $this->searchClassId = 'SolrAuthority';
+        $query = $this->getRequest()->getQuery();
+        $query->set('id', $id);
+        $query->set('type', 'Agent');
+        $query->set('name', $name);
+        return !empty($id) ?
         $this->forwardTo('Agent', 'Results') : $this->forwardTo('Search', 'Home');
     }
+
     /**
      * Load the record requested by the user; note that this is not done in the
      * init() method since we don't want to perform an expensive search twice
@@ -87,66 +87,67 @@ class AgentController extends \VuFind\Controller\AbstractSearch
     }
 
     /**
-    * Send search results to results view
-    *
-    * @return \Laminas\View\Model\ViewModel
-    */
+     * Send search results to results view
+     *
+     * @return \Laminas\View\Model\ViewModel
+     */
     public function resultsAction()
     {
-      $view = $this->createViewModel(['driver' => $this->driver]);
+        $view = $this->createViewModel(['driver' => $this->driver]);
 
-      // Handle saved search requests:
-      $savedId = $this->params()->fromQuery('saved', false);
-      if ($savedId !== false) {
-        return $this->redirectToSavedSearch($savedId);
-      }
-      $runner = $this->serviceLocator->get(\VuFind\Search\SearchRunner::class);
-      // Send both GET and POST variables to search class:
-      $request = $this->getRequest()->getQuery()->toArray()
+        // Handle saved search requests:
+        $savedId = $this->params()->fromQuery('saved', false);
+        if ($savedId !== false) {
+            return $this->redirectToSavedSearch($savedId);
+        }
+        $runner = $this->serviceLocator->get(\VuFind\Search\SearchRunner::class);
+        // Send both GET and POST variables to search class:
+        $request = $this->getRequest()->getQuery()->toArray()
         + $this->getRequest()->getPost()->toArray();
-      $lastView = $this->getSearchMemory()
+        $lastView = $this->getSearchMemory()
         ->retrieveLastSetting($this->searchClassId, 'view');
-      $view->results = $results = $runner->run(
-        $request, $this->searchClassId, $this->getSearchSetupCallback(),
-        $lastView
-      );
-      $view->params = $results->getParams();
-      // If we received an EmptySet back, that indicates that the real search
-      // failed due to some kind of syntax error, and we should display a
-      // warning to the user; otherwise, we should proceed with normal post-search
-      // processing.
-      if ($results instanceof \VuFind\Search\EmptySet\Results) {
-        $view->parseError = true;
-      } else {
-        // If a "jumpto" parameter is set, deal with that now:
-        if ($jump = $this->processJumpTo($results)) {
-            return $jump;
+        $view->results = $results = $runner->run(
+            $request,
+            $this->searchClassId,
+            $this->getSearchSetupCallback(),
+            $lastView
+        );
+        $view->params = $results->getParams();
+        // If we received an EmptySet back, that indicates that the real search
+        // failed due to some kind of syntax error, and we should display a
+        // warning to the user; otherwise, we should proceed with normal post-search
+        // processing.
+        if ($results instanceof \VuFind\Search\EmptySet\Results) {
+            $view->parseError = true;
+        } else {
+            // If a "jumpto" parameter is set, deal with that now:
+            if ($jump = $this->processJumpTo($results)) {
+                return $jump;
+            }
+            // Remember the current URL as the last search.
+            $this->rememberSearch($results);
+            // Add to search history:
+            if ($this->saveToHistory) {
+                $this->saveSearchToHistory($results);
+            }
+            // Set up results scroller:
+            if ($this->resultScrollerActive()) {
+                $this->resultScroller()->init($results);
+            }
         }
-        // Remember the current URL as the last search.
-        $this->rememberSearch($results);
-        // Add to search history:
-        if ($this->saveToHistory) {
-            $this->saveSearchToHistory($results);
+        // Special case: If we're in RSS view, we need to render differently:
+        if (isset($view->params) && $view->params->getView() == 'rss') {
+            $response = $this->getResponse();
+            $response->getHeaders()->addHeaderLine('Content-type', 'text/xml');
+            $feed = $this->getViewRenderer()->plugin('resultfeed');
+            $response->setContent($feed($view->results)->export('rss'));
+            return $response;
         }
-        // Set up results scroller:
-        if ($this->resultScrollerActive()) {
-            $this->resultScroller()->init($results);
-        }
-      }
-      // Special case: If we're in RSS view, we need to render differently:
-      if (isset($view->params) && $view->params->getView() == 'rss') {
-        $response = $this->getResponse();
-        $response->getHeaders()->addHeaderLine('Content-type', 'text/xml');
-        $feed = $this->getViewRenderer()->plugin('resultfeed');
-        $response->setContent($feed($view->results)->export('rss'));
-        return $response;
-      }
-      // Search toolbar
-      $config = $this->serviceLocator->get(\VuFind\Config\PluginManager::class)
+        // Search toolbar
+        $config = $this->serviceLocator->get(\VuFind\Config\PluginManager::class)
         ->get('config');
-      $view->showBulkOptions = isset($config->Site->showBulkOptions)
+        $view->showBulkOptions = isset($config->Site->showBulkOptions)
         && $config->Site->showBulkOptions;
-      return $view;
+        return $view;
     }
-
 }

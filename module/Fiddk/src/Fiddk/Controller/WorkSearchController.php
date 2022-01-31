@@ -26,7 +26,9 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
+
 use Laminas\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Event Controller
  *
@@ -58,5 +60,4 @@ class WorkSearchController extends \VuFind\Controller\AbstractSearch
     {
         return $this->resultsAction();
     }
-
 }

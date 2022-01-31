@@ -38,35 +38,34 @@ namespace Fiddk\Search\SolrAuthority;
  */
 class Options extends \VuFind\Search\Solr\Options
 {
-
-  /**
- * Load all recommendation settings from the relevant ini file.  Returns an
- * associative array where the key is the location of the recommendations (top
- * or side) and the value is the settings found in the file (which may be either
- * a single string or an array of strings).
- *
- * @param string $handler Name of handler for which to load specific settings.
- *
- * @return array associative: location (top/side/etc.) => search settings
- */
-public function getRecommendationSettings($handler = null)
-{
-    // Load the necessary settings to determine the appropriate recommendations
-    // module:
-    $ss = $this->configLoader->get($this->getSearchIni());
-    // Load the Agent- or the EventModuleRecommendations configuration if available,
-    // depending on the type
-    $recommend = [];
-    if (($handler == 'Agent' or $handler == 'Event' or $handler == 'Work') and isset($ss->AuthModuleRecommendations)) {
-        foreach ($ss->AuthModuleRecommendations as $section => $content) {
-            $recommend[$section] = [];
-            foreach ($content as $current) {
-                $recommend[$section][] = $current;
+    /**
+     * Load all recommendation settings from the relevant ini file.  Returns an
+     * associative array where the key is the location of the recommendations (top
+     * or side) and the value is the settings found in the file (which may be either
+     * a single string or an array of strings).
+     *
+     * @param string $handler Name of handler for which to load specific settings.
+     *
+     * @return array associative: location (top/side/etc.) => search settings
+     */
+    public function getRecommendationSettings($handler = null)
+    {
+        // Load the necessary settings to determine the appropriate recommendations
+        // module:
+        $ss = $this->configLoader->get($this->getSearchIni());
+        // Load the Agent- or the EventModuleRecommendations configuration if available,
+        // depending on the type
+        $recommend = [];
+        if (($handler == 'Agent' or $handler == 'Event' or $handler == 'Work') and isset($ss->AuthModuleRecommendations)) {
+            foreach ($ss->AuthModuleRecommendations as $section => $content) {
+                $recommend[$section] = [];
+                foreach ($content as $current) {
+                    $recommend[$section][] = $current;
+                }
             }
+        } else {
+            $recommend['side'] = $ss->General->default_side_recommend->toArray();
         }
-    } else {
-      $recommend['side'] = $ss->General->default_side_recommend->toArray();
+        return $recommend;
     }
-    return $recommend;
-  }
 }

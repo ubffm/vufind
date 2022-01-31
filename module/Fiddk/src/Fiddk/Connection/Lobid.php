@@ -38,7 +38,6 @@ namespace Fiddk\Connection;
  */
 class Lobid
 {
-
     /**
      * HTTP client
      *
@@ -82,7 +81,7 @@ class Lobid
         $uri = 'http://lobid.org/gnd/' . $gnd . '.json';
         $response = $this->client->setUri($uri)->setMethod('GET')->send();
         if ($response->isSuccess()) {
-          return $this->parseJson($response->getBody());
+            return $this->parseJson($response->getBody());
         }
         return null;
     }
@@ -114,11 +113,10 @@ class Lobid
     public function parseJson($body)
     {
         if ($body) {
-          $json = json_decode($body,true);
-          return $json;
+            $json = json_decode($body, true);
+            return $json;
         } else {
-          return [];
-      }
+            return [];
+        }
     }
-
 }

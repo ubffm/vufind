@@ -38,10 +38,9 @@ namespace Fiddk\Search\SolrAuthority;
  */
 class Params extends \VuFind\Search\Solr\Params
 {
+    protected $name;
 
-  protected $name;
-
-  /**
+    /**
      * Support method for _initSearch() -- handle basic settings.
      *
      * @param \Laminas\StdLib\Parameters $request Parameter object representing user
@@ -62,11 +61,11 @@ class Params extends \VuFind\Search\Solr\Params
         $this->name = $request->get('name');
         // Set the correct search handler depending on authority type:
         if ($type == 'Agent') {
-          $this->setBasicSearch($lookfor, 'Agent');
+            $this->setBasicSearch($lookfor, 'Agent');
         } elseif ($type == 'Event') {
-          $this->setBasicSearch($lookfor, 'Event');
+            $this->setBasicSearch($lookfor, 'Event');
         } elseif ($type == 'Work') {
-          $this->setBasicSearch($lookfor, 'Work');
+            $this->setBasicSearch($lookfor, 'Work');
         }
         return true;
     }
@@ -77,15 +76,15 @@ class Params extends \VuFind\Search\Solr\Params
      *
      * @return string user friendly version of 'query'
      */
-     public function getDisplayQuery()
-     {
-       // For display purposes, find a nice way of displaying authority queries
-       $q = parent::getDisplayQuery();
-       if (strpos($q,'gnd_') === 0) {
-         $q = $this->name . ' (GND ' . substr($q,4) . ')';
-       } else {
-         $q = $this->name;
-       }
-       return $q;
-}
+    public function getDisplayQuery()
+    {
+        // For display purposes, find a nice way of displaying authority queries
+        $q = parent::getDisplayQuery();
+        if (strpos($q, 'gnd_') === 0) {
+            $q = $this->name . ' (GND ' . substr($q, 4) . ')';
+        } else {
+            $q = $this->name;
+        }
+        return $q;
+    }
 }

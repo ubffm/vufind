@@ -1,25 +1,23 @@
 <?php
-
 namespace News\Controller;
 
-use \Laminas\Feed\Writer\Feed;
-use \Laminas\Feed\Writer\Writer as FeedWriter;
+use Laminas\Feed\Writer\Feed;
 
 class NewsController extends \VuFind\Controller\AbstractBase
 {
-
     /**
      *
      * @return \Laminas\View\Model\ViewModel
      */
-
-    private function articleLink($guid=null) {
+    private function articleLink($guid=null)
+    {
         $config = $this->getConfig();
-        $link = $config->Site->url.'/news/article?guid='.$guid;
+        $link = $config->Site->url . '/news/article?guid=' . $guid;
         return $link;
     }
 
-    private function getExtension($filename=null) {
+    private function getExtension($filename=null)
+    {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         return $ext;
     }
@@ -31,13 +29,13 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $admin = false;
         $newslist = null;
         $searchlist = null;
-        if (isset($user->username)){
-            if ($config->Social->newsadmin==$user->username)
+        if (isset($user->username)) {
+            if ($config->Social->newsadmin == $user->username) {
                 $admin =true;
+            }
         }
 
-        if ($admin){
-
+        if ($admin) {
             $news = $this->getTable('news');
             $searchParam = $this->params()->fromPost('searchNews');
             $titleParam = $this->params()->fromPost('title');
@@ -45,16 +43,15 @@ class NewsController extends \VuFind\Controller\AbstractBase
             $setParam = $this->params()->fromQuery('do');
 
             // save article
-            if (!isset ($searchParam) && $titleParam != null) {
-
-              $articleParams = $this->params()->fromPost();
+            if (!isset($searchParam) && $titleParam != null) {
+                $articleParams = $this->params()->fromPost();
                 // generate guid hash if set is new
                 if ($articleParams['id'] > 0) {
                     $guid = $articleParams['guid'];
                     $active = $articleParams['active'];
                     $pin = $articleParams['pin'];
                 } else {
-                    $guid = hash_hmac('md2', $titleParam . date("Y-m-d H:i:s") , 'fid4dfg');
+                    $guid = hash_hmac('md2', $titleParam . date("Y-m-d H:i:s"), 'fid4dfg');
                     $active = 0;
                     $pin = 0;
                 }
@@ -67,36 +64,35 @@ class NewsController extends \VuFind\Controller\AbstractBase
                 $filePic='';
 
                 if (!empty($_FILES['dl1']['name'])) {
-                    $fileDl1 = $guid.'_1.'.$this->getExtension($_FILES['dl1']['name']);
-                    move_uploaded_file($_FILES['dl1']['tmp_name'], $uploaddir.$fileDl1);
+                    $fileDl1 = $guid . '_1.' . $this->getExtension($_FILES['dl1']['name']);
+                    move_uploaded_file($_FILES['dl1']['tmp_name'], $uploaddir . $fileDl1);
                 }
 
                 if (!empty($_FILES['dl2']['name'])) {
-                    $fileDl2 = $guid.'_2.'.$this->getExtension($_FILES['dl2']['name']);
-                    move_uploaded_file($_FILES['dl2']['tmp_name'], $uploaddir.$fileDl2);
+                    $fileDl2 = $guid . '_2.' . $this->getExtension($_FILES['dl2']['name']);
+                    move_uploaded_file($_FILES['dl2']['tmp_name'], $uploaddir . $fileDl2);
                 }
 
                 if (!empty($_FILES['dl3']['name'])) {
-                    $fileDl3 = $guid.'_3.'.$this->getExtension($_FILES['dl3']['name']);
-                    move_uploaded_file($_FILES['dl3']['tmp_name'], $uploaddir.$fileDl3);
+                    $fileDl3 = $guid . '_3.' . $this->getExtension($_FILES['dl3']['name']);
+                    move_uploaded_file($_FILES['dl3']['tmp_name'], $uploaddir . $fileDl3);
                 }
 
-                if($articleParams['enddate'] == ''){
+                if ($articleParams['enddate'] == '') {
                     $enddate = '9999-12-31';
-
                 } else {
                     $enddate = $articleParams['enddate'];
                 }
 
-                $data = array(
+                $data = [
                         'title' => $titleParam,
                         'description' => $articleParams['description'],
                         'link' => $this->articleLink($guid),
                         'author' => $articleParams['author'],
                         'guid' => $guid,
                         'pubDate' => $articleParams['startdate'],
-                        'category' => isset($articleParams['category']) ? $articleParams['category'] : '',
-                        'enclosure' => isset($articleParams['enclosure']) ? $articleParams['enclosure'] : '',
+                        'category' => $articleParams['category'] ?? '',
+                        'enclosure' => $articleParams['enclosure'] ?? '',
                         'source' => $articleParams['source'],
                         'user' => 'Peter Parker',
                         'text' => $articleParams['text'],
@@ -116,23 +112,23 @@ class NewsController extends \VuFind\Controller\AbstractBase
                         'dl3' => $fileDl3,
                         'active' => $active,
                         'pin' => $pin
-                );
+                ];
 
                 if ($articleParams['id'] > 0) {
-                    $news->updateArticle($data,$articleParams['id']);
+                    $news->updateArticle($data, $articleParams['id']);
                 } else {
                     $news->createArticle($data);
                 }
             }
 
             // set actions
-            if (isset ($setParam)) {
-              switch ($setParam){
+            if (isset($setParam)) {
+                switch ($setParam) {
                     case 'act':
-                        $news->switchValue('active',$idParam);
+                        $news->switchValue('active', $idParam);
                         break;
                     case 'pin':
-                        $news->switchValue('pin',$idParam);
+                        $news->switchValue('pin', $idParam);
                         break;
                     case 'del':
                         $news->deleteArticle($idParam);
@@ -141,8 +137,8 @@ class NewsController extends \VuFind\Controller\AbstractBase
             }
 
             // do search
-            if (isset ($searchParam)) {
-               $searchlist = $news->searchNews($searchParam);
+            if (isset($searchParam)) {
+                $searchlist = $news->searchNews($searchParam);
             }
 
             // get all news
@@ -150,28 +146,25 @@ class NewsController extends \VuFind\Controller\AbstractBase
         }
 
         return $this->createViewModel(
-                array
-                (
+            [
                         'admin'    => $admin,
                         'newslist' => $newslist,
                         'searchlist' => $searchlist,
-                )
+                ]
         );
-
     }
 
     public function editAction($id=null)
     {
-      $id = $this->params()->fromQuery('id');
-      $news = $this->getTable('news');
-      $article = $news->getArticleById($id);
+        $id = $this->params()->fromQuery('id');
+        $news = $this->getTable('news');
+        $article = $news->getArticleById($id);
 
-      return $this->createViewModel(
-              array
-                  (
+        return $this->createViewModel(
+            [
                         'article' => $article,
-                  )
-              );
+                  ]
+        );
     }
 
     public function rssAction()
@@ -196,34 +189,35 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $newslist = $news->getNewsList();
 
         foreach ($newslist as $news) {
-          $entry = $feed->createEntry();
-          $entry->setTitle(htmlspecialchars($news->title,ENT_QUOTES,"UTF-8"));
-          $entry->setLink($url . '/news/article?guid=' . $news->guid);
-          //$entry->setDescription(htmlspecialchars($news->description,ENT_QUOTES,"UTF-8"));
-          $entry->setId($news->guid);
-          $entry->setDateModified(time());
-          $entry->setDateCreated(time());
-          if ($news->enclosure) {
-            if (explode('.',$news->enclosure)[1] == "gif") {
-              $entry->setEnclosure(['uri'=> $url . '/themes/fiddk/images/' . htmlspecialchars($news->enclosure,ENT_QUOTES,"UTF-8"),'type'=> 'image/gif','length'=> 5070]);
-            } else {
-              $entry->setEnclosure(['uri'=> $url . '/themes/fiddk/images/' . htmlspecialchars($news->enclosure,ENT_QUOTES,"UTF-8"),'type'=> 'image/png','length'=> 5150]);
+            $entry = $feed->createEntry();
+            $entry->setTitle(htmlspecialchars($news->title, ENT_QUOTES, "UTF-8"));
+            $entry->setLink($url . '/news/article?guid=' . $news->guid);
+            //$entry->setDescription(htmlspecialchars($news->description,ENT_QUOTES,"UTF-8"));
+            $entry->setId($news->guid);
+            $entry->setDateModified(time());
+            $entry->setDateCreated(time());
+            if ($news->enclosure) {
+                if (explode('.', $news->enclosure)[1] == "gif") {
+                    $entry->setEnclosure(['uri'=> $url . '/themes/fiddk/images/' . htmlspecialchars($news->enclosure, ENT_QUOTES, "UTF-8"),'type'=> 'image/gif','length'=> 5070]);
+                } else {
+                    $entry->setEnclosure(['uri'=> $url . '/themes/fiddk/images/' . htmlspecialchars($news->enclosure, ENT_QUOTES, "UTF-8"),'type'=> 'image/png','length'=> 5150]);
+                }
             }
-          }
-          $author = htmlspecialchars($news->author,ENT_QUOTES,"UTF-8");
-          $name = str_replace(')','',explode('(',$author)[1]);
-          $mail = trim(explode('(',$author)[0]);
-          $entry->addAuthor(['name'=> $name,'email'=>$mail]);
-          $entry->setDateCreated(date_create($news->startdate));
-          $entry->addCategory(['term' => htmlspecialchars($news->category,ENT_QUOTES,"UTF-8")]);
-          $entry->setCommentLink(htmlspecialchars($news->source,ENT_QUOTES,"UTF-8"));
-          $feed->addEntry($entry);
-      }
+            $author = htmlspecialchars($news->author, ENT_QUOTES, "UTF-8");
+            $name = str_replace(')', '', explode('(', $author)[1]);
+            $mail = trim(explode('(', $author)[0]);
+            $entry->addAuthor(['name'=> $name,'email'=>$mail]);
+            $entry->setDateCreated(date_create($news->startdate));
+            $entry->addCategory(['term' => htmlspecialchars($news->category, ENT_QUOTES, "UTF-8")]);
+            $entry->setCommentLink(htmlspecialchars($news->source, ENT_QUOTES, "UTF-8"));
+            $feed->addEntry($entry);
+        }
 
         $viewModel = $this->createViewModel(
-                array(
+            [
                   'feed' => $feed
-                ));
+                ]
+        );
         $viewModel->setTerminal(true);
         return $viewModel;
     }
@@ -236,11 +230,10 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $article = $news->getArticle($guid);
 
         return $this->createViewModel(
-                array
-                    (
+            [
                           'article' => $article,
-                    )
-                );
+                    ]
+        );
     }
 
     public function currentAction()
@@ -250,12 +243,11 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $pinnedlist = $news->getPinnedArticles();
 
         return $this->createViewModel(
-                array
-                    (
+            [
                         'newslist' => $newslist,
                         'pinnedlist' => $pinnedlist,
-                    )
-                );
+                    ]
+        );
     }
 
     public function newsAction()
@@ -270,15 +262,13 @@ class NewsController extends \VuFind\Controller\AbstractBase
 
     public function archiveAction()
     {
-      $news = $this->getTable('news');
-      $newslist = $news->getArchivedArticles();
+        $news = $this->getTable('news');
+        $newslist = $news->getArchivedArticles();
 
-      return $this->createViewModel(
-              array
-                  (
+        return $this->createViewModel(
+            [
                       'newslist' => $newslist
-                  )
-              );
+                  ]
+        );
     }
-
 }

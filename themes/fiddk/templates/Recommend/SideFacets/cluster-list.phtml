@@ -43,9 +43,9 @@ $idAndClass = 'id="more-narrowGroupHidden-' . $this->escapeHtmlAttr($this->title
       }
     ?>
     <?php if ($this->facet == "orga_domain" || $this->facet == "occupation_facet"):
-        $moreUrl = str_replace("Search","AgentSearch",$moreUrl);
+        $moreUrl = str_replace("Search", "AgentSearch", $moreUrl);
         elseif ($this->facet == "event_type" || $this->facet == "place") :
-        $moreUrl = str_replace("Search","EventSearch",$moreUrl);
+        $moreUrl = str_replace("Search", "EventSearch", $moreUrl);
      endif; ?>
     <a class="facet narrow-toggle <?=$moreClass ?>" data-lightbox href="<?=$moreUrl ?>" rel="nofollow">
       <span class="text"><?=$this->transEsc('see all')?> ...</span>

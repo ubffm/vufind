@@ -28,12 +28,12 @@
  */
 namespace Fiddk\AjaxHandler;
 
-use VuFind\Search\Results\PluginManager as ResultsManager;
-use VuFind\Search\SearchRunner;
-use VuFind\Session\Settings as SessionSettings;
 use Laminas\Mvc\Controller\Plugin\Params;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Renderer\RendererInterface;
+use VuFind\Search\Results\PluginManager as ResultsManager;
+use VuFind\Search\SearchRunner;
+use VuFind\Session\Settings as SessionSettings;
 
 /**
  * "Get Facet Data" AJAX handler
@@ -56,13 +56,13 @@ use Laminas\View\Renderer\RendererInterface;
  */
 class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
 {
-
     /**
      * Results plugin manager
      *
      * @var ResultsManager
      */
     protected $resultsManager;
+
     /**
      * Search runner
      *
@@ -76,6 +76,7 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
      * @var RendererInterface
      */
     protected $renderer;
+
     /**
      * Constructor
      *
@@ -83,14 +84,18 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
      * @param SearchRunner      $sr       Search runner
      * @param SessionSettings   $ss       Session settings
      */
-    public function __construct(SessionSettings $ss, ResultsManager $rm,
-      SearchRunner $sr, RendererInterface $renderer
+    public function __construct(
+        SessionSettings $ss,
+        ResultsManager $rm,
+        SearchRunner $sr,
+        RendererInterface $renderer
     ) {
         $this->sessionSettings = $ss;
         $this->resultsManager = $rm;
         $this->searchRunner = $sr;
         $this->renderer = $renderer;
     }
+
     /**
      * Handle a request.
      *
@@ -100,16 +105,14 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
      */
     public function handleRequest(Params $params)
     {
-      $this->disableSessionWrites();  // avoid session write timing bug
-      $searchClass = $params->fromPost('searchClassId', $params->fromQuery('searchClassId'));
-      $results = $this->resultsManager->get($searchClass);
-      $paramsObj = $results->getParams();
-      $paramsObj->initFromRequest(new Parameters($params->fromQuery()));
-      $resultTotal = $results->getResultTotal();
-      $localizedTotal = $this->renderer
-            ->render('ajax/resultTotal.phtml',['resultTotal' => $resultTotal]);
-      return $this->formatResponse(compact('localizedTotal'));
-
+        $this->disableSessionWrites();  // avoid session write timing bug
+        $searchClass = $params->fromPost('searchClassId', $params->fromQuery('searchClassId'));
+        $results = $this->resultsManager->get($searchClass);
+        $paramsObj = $results->getParams();
+        $paramsObj->initFromRequest(new Parameters($params->fromQuery()));
+        $resultTotal = $results->getResultTotal();
+        $localizedTotal = $this->renderer
+            ->render('ajax/resultTotal.phtml', ['resultTotal' => $resultTotal]);
+        return $this->formatResponse(compact('localizedTotal'));
     }
-
 }

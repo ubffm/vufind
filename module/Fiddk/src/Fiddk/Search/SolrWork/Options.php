@@ -61,5 +61,4 @@ class Options extends \VuFind\Search\Solr\Options
     {
         return 'worksearch-results';
     }
-
 }

@@ -26,6 +26,7 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Search\SolrEvent;
+
 /**
  * Author Search Options
  *
@@ -66,7 +67,7 @@ class Options extends \VuFind\Search\Solr\Options
      * Returns false if the feature is not supported.
      *
      * @return string|bool
-    */
+     */
     public function getAdvancedSearchAction()
     {
         // Not currently supported:

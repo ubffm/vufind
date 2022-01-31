@@ -19,67 +19,67 @@
   <?php if (!empty($this->info["genre"])) : ?>
     <b><?=$this->transEsc('Genre') . ':'?></b>
     <span property="genre">
-      <?=$this->escapeHtml(implode($this->info["genre"],'; '))?>
+      <?=$this->escapeHtml(implode($this->info["genre"], '; '))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["formOfWorkAndExpression"])) : ?>
     <b><?=$this->transEsc("Form") . ':'?></b>
     <span property="formOfWorkAndExpression">
-      <?=implode('; ',array_column($this->info["formOfWorkAndExpression"],"label"))?>
+      <?=implode('; ', array_column($this->info["formOfWorkAndExpression"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["broaderTermInstantial"])) : ?>
     <b><?=$this->transEsc("broaderTermInstantial") . ':'?></b>
     <span property="broaderTermInstantial">
-      <?=implode('; ',array_column($this->info["broaderTermInstantial"],"label"))?>
+      <?=implode('; ', array_column($this->info["broaderTermInstantial"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["broaderTermGeneral"])) : ?>
     <b><?=$this->transEsc("broaderTermGeneral") . ':'?></b>
     <span property="broaderTermGeneral">
-      <?=implode('; ',array_column($this->info["broaderTermGeneral"],"label"))?>
+      <?=implode('; ', array_column($this->info["broaderTermGeneral"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["broaderTermPartitive"])) : ?>
     <b><?=$this->transEsc("broaderTermPartitive") . ':'?></b>
     <span property="broaderTermPartitive">
-      <?=implode('; ',array_column($this->info["broaderTermPartitive"],"label"))?>
+      <?=implode('; ', array_column($this->info["broaderTermPartitive"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["gndSubjectCategory"])) : ?>
     <b><?=$this->transEsc("gndSubjectCategory") . ':'?></b>
     <span property="gndSubjectCategory">
-      <?=implode('; ',array_column($this->info["gndSubjectCategory"],"label"))?>
+      <?=implode('; ', array_column($this->info["gndSubjectCategory"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info["udkCode"])) : ?>
     <b><?=$this->transEsc("Date") . ': '?></b>
     <span property="udkCode">
-      <?=$this->escapeHtml(implode($this->info["udkCode"],'; '))?>
+      <?=$this->escapeHtml(implode($this->info["udkCode"], '; '))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['dateOfProduction'])) : ?>
     <b><?=$this->transEsc('dateOfProduction') . ': '?></b>
     <span property="dateOfProduction">
-      <?=$this->escapeHtml(implode($this->info["dateOfProduction"],'; '))?>
+      <?=$this->escapeHtml(implode($this->info["dateOfProduction"], '; '))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['dateOfPublication'])) : ?>
     <b><?=$this->transEsc('Published') . ': '?></b>
     <span property="dateOfPublication">
-      <?=$this->escapeHtml(implode($this->info["dateOfPublication"],'; '))?>
+      <?=$this->escapeHtml(implode($this->info["dateOfPublication"], '; '))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['geographicAreaCode'])) : ?>
     <b><?=$this->transEsc('GeographicAreaCode') . ': '?></b>
     <span property="geographicAreaCode">
-      <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+      <?=implode('; ', array_column($this->info['geographicAreaCode'], 'label'))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info["thematicIndexNumericDesignationOfMusicalWork"])) : ?>
     <b><?=$this->transEsc("thematicIndexNumericDesignationOfMusicalWork") . ": "?></b>
     <span property="thematicIndexNumericDesignationOfMusicalWork">
-    <?=$this->escapeHtml(implode($this->info["thematicIndexNumericDesignationOfMusicalWork"],"; "))?>
+    <?=$this->escapeHtml(implode($this->info["thematicIndexNumericDesignationOfMusicalWork"], "; "))?>
     </span><br />
   <?php endif; ?>
 <?php if (!empty($this->agents["primary"]) || !empty($this->info["firstAuthor"])) : ?>
@@ -100,7 +100,7 @@
         <a href="<?=$authorityLookfor?>">
           <?=$this->escapeHtml($author)?>
         </a>
-        <?='(' . implode(', ', array_map(function($role) {return $this->transEsc('edm::' . $role);},array_unique($dataFields['role']))) . ')'?>
+        <?='(' . implode(', ', array_map(function ($role) {return $this->transEsc('edm::' . $role);}, array_unique($dataFields['role']))) . ')'?>
       </span>
       <?php
         // Strip whitespace before close tags to avoid spaces in front of commas:
@@ -120,18 +120,18 @@
   <?php if (!empty($this->info["mediumOfPerformance"])) : ?>
     <b><?=$this->transEsc("mediumOfPerformance") . ':'?></b>
     <span property="mediumOfPerformance">
-      <?=implode('; ',array_column($this->info["mediumOfPerformance"],"label"))?>
+      <?=implode('; ', array_column($this->info["mediumOfPerformance"], "label"))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["literarySource"])) : ?>
     <br/><b><?=$this->transEsc("literarySource") . ':'?></b>
     <span property="literarySource">
-      <?=implode('; ',array_column($this->info["literarySource"],"label"))?>
+      <?=implode('; ', array_column($this->info["literarySource"], "label"))?>
     </span>
   <?php endif; ?>
   <?php if (!empty($this->info["relatedWork"])) : ?>
     <br/><b><?=$this->transEsc("RelatedWork") . ':'?></b>
     <span property="relatedWork">
-      <?=implode('; ',array_column($this->info["relatedWork"],"label"))?>
+      <?=implode('; ', array_column($this->info["relatedWork"], "label"))?>
     </span><br />
   <?php endif; ?>

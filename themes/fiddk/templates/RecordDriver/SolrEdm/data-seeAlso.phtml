@@ -3,7 +3,7 @@
 <?php foreach ($data as $key => $fields): ?>
   <?php $count = sizeof($fields);?>
   <tr>
-    <th><?php if (strpos($key,':')) : ?>
+    <th><?php if (strpos($key, ':')) : ?>
       <?=$this->transEsc('edm::' . $key);?>
     <?php else : ?>
       <?=$this->transEsc($key);?>
@@ -37,7 +37,7 @@
          <?php endforeach; ?>
          <?php endforeach; ?>
         </span>
-        <?php if ($lang =='de') : ?>
+        <?php if ($lang == 'de') : ?>
          <label for="toggle_<?=$key?>" class="label_de"></label>
         <?php else : ?>
          <label for="toggle_<?=$key?>" class="label_en"></label>
@@ -49,12 +49,12 @@
     <td>
       <?php foreach ($fields as $type => $field) : ?>
        <?php foreach ($field as $resource => $seeAlso) : ?>
-        <?php if ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag'  || $institution == 'Adam Matthew Digital')) : ?>
+        <?php if ($key == 'edm:isShownAt' && ($institution == 'Alexander Street Press' || $institution == 'transcript Verlag' || $institution == 'Adam Matthew Digital')) : ?>
            <a href="<?=$this->url('content-page', ['page' => 'licensed']) . '?link=' . key($field)?>"><?=$this->transEsc("FullTextByFID");?></a>
            <img src="<?=$this->imageLink("fid-dk_logo_nur-Taenzer.png")?>" style="width:7%"/><br />
          <?php elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
        <?php elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>
-             <?php $trans = $this->transEsc(substr($seeAlso,0,7)) . substr($seeAlso,7);?>
+             <?php $trans = $this->transEsc(substr($seeAlso, 0, 7)) . substr($seeAlso, 7);?>
              <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
          <?php elseif ($key == 'child_records') : ?>
              <a href="<?=$this->recordLink()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>

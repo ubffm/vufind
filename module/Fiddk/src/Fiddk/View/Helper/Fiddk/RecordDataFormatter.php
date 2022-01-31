@@ -29,9 +29,6 @@
  */
 namespace Fiddk\View\Helper\Fiddk;
 
-use VuFind\RecordDriver\AbstractBase as RecordDriver;
-use Laminas\View\Helper\AbstractHelper;
-
 /**
  * Record driver data formatting view helper
  *
@@ -45,5 +42,4 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class RecordDataFormatter extends \VuFind\View\Helper\Root\RecordDataFormatter
 {
-
 }

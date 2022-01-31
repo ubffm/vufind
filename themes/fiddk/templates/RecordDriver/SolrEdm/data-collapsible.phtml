@@ -1,5 +1,5 @@
 <?php foreach ($data as $n => $field):
-  $brfield = nl2br(str_replace("\r","\r\n",$this->escapeHtml($field)));
+  $brfield = nl2br(str_replace("\r", "\r\n", $this->escapeHtml($field)));
   $words = preg_split('/\s(?!\/>)/', $brfield);
   if (sizeof($words) <= 28) : ?>
     <?=$brfield;?><br/>
@@ -7,18 +7,18 @@
     $lang = $this->plugin('translate')->getTranslator()->getLocale();
     $start = array_slice($words, 0, 28);
     $rest = array_slice($words, 28);?>
-    <?=implode($start,' ') . ' ';?>
+    <?=implode($start, ' ') . ' ';?>
     <span class="toggleContainer">
       <input type="checkbox" class="toggle" id="toggle_<?=$n?>">
-      <span><?=implode($rest,' ');?></span>
-      <?php if ($lang =='de') : ?>
+      <span><?=implode($rest, ' ');?></span>
+      <?php if ($lang == 'de') : ?>
         <label for="toggle_<?=$n?>" class="label_de"></label>
       <?php else : ?>
         <label for="toggle_<?=$n?>" class="label_en"></label>
       <?php endif; ?>
       </span><br/>
   <?php endif; ?>
-  <?php if ($n < sizeof($data)-1): ?>
+  <?php if ($n < sizeof($data) - 1): ?>
     <hr/>
   <?php endif; ?>
 <?php endforeach; ?>

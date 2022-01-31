@@ -51,10 +51,11 @@ class SearchController extends \VuFind\Controller\SearchController
         $view->options = $this->serviceLocator
             ->get('VuFind\SearchOptionsPluginManager')->get($this->searchClassId);
         $specialFacets = $this->parseSpecialFacetsSetting(
-           $view->options->getSpecialAdvancedFacets()
+            $view->options->getSpecialAdvancedFacets()
         );
         $view->checkboxFacets = $this->processAdvancedCheckboxes(
-          $specialFacets['checkboxes'], $view->saved
+            $specialFacets['checkboxes'],
+            $view->saved
         );
 
         $runner = $this->serviceLocator->get('VuFind\SearchRunner');
@@ -63,9 +64,9 @@ class SearchController extends \VuFind\Controller\SearchController
         $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
 
         try {
-          $news = $this->getTable('news');
-          $view->newslist= $news->getCurrentArticles();
-          $view->pinnedlist= $news->getPinnedArticles();
+            $news = $this->getTable('news');
+            $view->newslist= $news->getCurrentArticles();
+            $view->pinnedlist= $news->getPinnedArticles();
         } catch (\Exception $e) {
         }
 

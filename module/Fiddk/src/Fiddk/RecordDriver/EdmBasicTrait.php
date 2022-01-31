@@ -26,6 +26,7 @@
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
 namespace Fiddk\RecordDriver;
+
 /**
  * Additional functionality for Edm Solr records.
  *
@@ -37,32 +38,34 @@ namespace Fiddk\RecordDriver;
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
-
 trait EdmBasicTrait
 {
-
-    public function getInstitution() {
-      return $this->fields['institution'] ?? '';
+    public function getInstitution()
+    {
+        return $this->fields['institution'] ?? '';
     }
 
-    public function getIntermediates() {
-      return $this->fields['intermediate'] ?? [];
+    public function getIntermediates()
+    {
+        return $this->fields['intermediate'] ?? [];
     }
 
-    public function getAlternativeTitles() {
-      return $this->fields['title_alt'] ?? [];
+    public function getAlternativeTitles()
+    {
+        return $this->fields['title_alt'] ?? [];
     }
 
-    public function getGenres() {
-      return $this->fields['genre'] ?? [];
+    public function getGenres()
+    {
+        return $this->fields['genre'] ?? [];
     }
 
     public function getFormats(): array
     {
-      return isset($this->fields['format']) ? array_unique($this->fields['format']) : [];
+        return isset($this->fields['format']) ? array_unique($this->fields['format']) : [];
     }
 
-      /**
+    /**
      * Get the titles of parent titles.
      *
      * @return array
@@ -91,100 +94,113 @@ trait EdmBasicTrait
      *
      * @return array
      */
-     public function getPlaceDateDetails()
-     {
-       $places = $this->getPlaces();
-       $dates = $this->getHumanReadableDates();
-       $i = 0;
-       $retval = [];
-       while (isset($places[$i]) || isset($dates[$i])) {
-        // Build objects to represent each set of data; these will
-        // transform seamlessly into strings in the view layer.
-        $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
-            $places[$i] ?? '',
-            '',
-            $dates[$i] ?? ''
-        );
-        $i++;
-       }
-      return $retval;
+    public function getPlaceDateDetails()
+    {
+        $places = $this->getPlaces();
+        $dates = $this->getHumanReadableDates();
+        $i = 0;
+        $retval = [];
+        while (isset($places[$i]) || isset($dates[$i])) {
+            // Build objects to represent each set of data; these will
+            // transform seamlessly into strings in the view layer.
+            $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
+                $places[$i] ?? '',
+                '',
+                $dates[$i] ?? ''
+            );
+            $i++;
+        }
+        return $retval;
     }
 
     /* All those fields that are not in the index, but need to be displayed */
     /* Literals*/
-    public function getExtent() {
-      return $this->getEdmRecord()->getLiteralVals("dcterms:extent", "edm:ProvidedCHO");
+    public function getExtent()
+    {
+        return $this->getEdmRecord()->getLiteralVals("dcterms:extent", "edm:ProvidedCHO");
     }
 
-    public function getCallNumber() {
-      return $this->getEdmRecord()->getLiteralVals("bf:shelfMark", "edm:ProvidedCHO");
+    public function getCallNumber()
+    {
+        return $this->getEdmRecord()->getLiteralVals("bf:shelfMark", "edm:ProvidedCHO");
     }
 
-    public function getVolume() {
-      $vol = $this->getEdmRecord()->getLiteralVals("bf:partNumber", "edm:ProvidedCHO");
-      if ($vol) {
-        return $vol;
-      }
-      else {
-        return $this->getEdmRecord()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
-      }
-    }
-
-    public function getProvenance() {
-      return $this->getEdmRecord()->getLiteralVals("dcterms:provenance", "edm:ProvidedCHO");
-    }
-
-    public function getTOC() {
-      $tocs = $this->getEdmRecord()->getLiteralVals("dcterms:tableOfContents", "edm:ProvidedCHO");
-      if ($tocs) {
-        $res = [];
-        foreach ($tocs as $toc) {
-          //TODO: what if table of contents is a link?
-          $res = array_merge($res,array_filter(explode('--', $toc), 'trim'));
+    public function getVolume()
+    {
+        $vol = $this->getEdmRecord()->getLiteralVals("bf:partNumber", "edm:ProvidedCHO");
+        if ($vol) {
+            return $vol;
+        } else {
+            return $this->getEdmRecord()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
         }
-        return $res;
-      } else
-        return [];
     }
 
-    public function getAccessRestrictions() {
-      return $this->getEdmRecord()->getLiteralVals("dc:rights", "ore:Aggregation");
+    public function getProvenance()
+    {
+        return $this->getEdmRecord()->getLiteralVals("dcterms:provenance", "edm:ProvidedCHO");
+    }
+
+    public function getTOC()
+    {
+        $tocs = $this->getEdmRecord()->getLiteralVals("dcterms:tableOfContents", "edm:ProvidedCHO");
+        if ($tocs) {
+            $res = [];
+            foreach ($tocs as $toc) {
+                //TODO: what if table of contents is a link?
+                $res = array_merge($res, array_filter(explode('--', $toc), 'trim'));
+            }
+            return $res;
+        } else {
+            return [];
+        }
+    }
+
+    public function getAccessRestrictions()
+    {
+        return $this->getEdmRecord()->getLiteralVals("dc:rights", "ore:Aggregation");
     }
 
     /* Attribute Vals */
-    public function getHumanReadablePublicationDates() {
-      return $this->getEdmRecord()->getAttrVals("dcterms:issued", "edm:ProvidedCHO");
+    public function getHumanReadablePublicationDates()
+    {
+        return $this->getEdmRecord()->getAttrVals("dcterms:issued", "edm:ProvidedCHO");
     }
 
     /* Literal or Attribute Vals */
-    public function getHumanReadableDates() {
-      return $this->getEdmRecord()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
+    public function getHumanReadableDates()
+    {
+        return $this->getEdmRecord()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
     }
 
-    public function getPlacesOfPublication() {
-      return $this->getEdmRecord()->getPropValues("rdau:P60163", "edm:ProvidedCHO", "skos:prefLabel");
+    public function getPlacesOfPublication()
+    {
+        return $this->getEdmRecord()->getPropValues("rdau:P60163", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
-    public function getPlacesOfManufacture() {
-      return $this->getEdmRecord()->getPropValues("rdau:P60162", "edm:ProvidedCHO", "skos:prefLabel");
+    public function getPlacesOfManufacture()
+    {
+        return $this->getEdmRecord()->getPropValues("rdau:P60162", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
-    public function getPlaces() {
-      return $this->getEdmRecord()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "skos:prefLabel");
+    public function getPlaces()
+    {
+        return $this->getEdmRecord()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
-    public function getCurrentLocation() {
-      return $this->getEdmRecord()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
+    public function getCurrentLocation()
+    {
+        return $this->getEdmRecord()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     /* Prepare attribute val with link */
-    public function getLicenseLink() {
-      $licenseLinks = [];
-      $inst = $this->getInstitution();
-      if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-        $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","ore:Aggregation","dc:description")];
-      }
-      return $licenseLinks;
+    public function getLicenseLink()
+    {
+        $licenseLinks = [];
+        $inst = $this->getInstitution();
+        if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
+            $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
+        }
+        return $licenseLinks;
     }
 
     /**
@@ -193,82 +209,84 @@ trait EdmBasicTrait
      *
      * @return array
      */
-    public function getInstitutionLinked() {
-      $dprovConf = $this->mainConfig->DataProvider;
-      $inters = $this->getIntermediates();
-      $inst = $this->getInstitution();
-      $res = [];
-      if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
-        $type = "inter";
-        foreach ($inters as $inter) {
-          if ($inter == "BASE - Bielefeld Academic Search Engine") {
-            $instkey = explode("_",$this->getEdmRecord()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
-            $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
-            $instid = "BASE";
-          }
-          else {
-            $instkey = preg_replace( "/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-            $info = explode(',',$dprovConf[$instkey]);
-            $instlink = $info[0];
-            $instid = $info[1];
-          }
-          $interkey = preg_replace( "/\r|\n|\s|,|\/|\(|\)/", "", $inter);
-          $info = explode(',',$dprovConf[$interkey]);
-          $interlink = $info[0];
-          $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+    public function getInstitutionLinked()
+    {
+        $dprovConf = $this->mainConfig->DataProvider;
+        $inters = $this->getIntermediates();
+        $inst = $this->getInstitution();
+        $res = [];
+        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
+            $type = "inter";
+            foreach ($inters as $inter) {
+                if ($inter == "BASE - Bielefeld Academic Search Engine") {
+                    $instkey = explode("_", $this->getEdmRecord()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
+                    $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
+                    $instid = "BASE";
+                } else {
+                    $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+                    $info = explode(',', $dprovConf[$instkey]);
+                    $instlink = $info[0];
+                    $instid = $info[1];
+                }
+                $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
+                $info = explode(',', $dprovConf[$interkey]);
+                $interlink = $info[0];
+                $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+            }
+        } else {
+            $type = "inst";
+            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+            $info = explode(',', $dprovConf[$instkey]);
+            $res = [$type => [$inst,$info[0],$info[1]]];
         }
-      } else {
-        $type = "inst";
-        $instkey = preg_replace( "/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-        $info = explode(',',$dprovConf[$instkey]);
-        $res = [$type => [$inst,$info[0],$info[1]]];
-      }
-      return $res;
+        return $res;
     }
 
-    public function getDigitalCopies() {
-      $links = [];
-      $inst = $this->getInstitution();
-      // prevent duplicates
-      if ($inst != 'transcript Verlag' and $inst != 'Alexander Street Press' and $inst != 'Adam Matthew Digital') {
-        $links = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt","ore:Aggregation","dc:description");
-      }
-      return $links + $this->getEdmRecord()->getLinkedPropValues("edm:isShownBy","ore:Aggregation","dc:description") +
-             $this->getEdmRecord()->getLinkedPropValues("edm:hasView","ore:Aggregation","dc:description");
+    public function getDigitalCopies()
+    {
+        $links = [];
+        $inst = $this->getInstitution();
+        // prevent duplicates
+        if ($inst != 'transcript Verlag' and $inst != 'Alexander Street Press' and $inst != 'Adam Matthew Digital') {
+            $links = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
+        }
+        return $links + $this->getEdmRecord()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
+             $this->getEdmRecord()->getLinkedPropValues("edm:hasView", "ore:Aggregation", "dc:description");
     }
 
-    public function getCatalogueLink() {
-      return $this->getEdmRecord()->getLinkedPropValues("dm2e:hasAnnotatableVersionAt","ore:Aggregation","dc:description");
+    public function getCatalogueLink()
+    {
+        return $this->getEdmRecord()->getLinkedPropValues("dm2e:hasAnnotatableVersionAt", "ore:Aggregation", "dc:description");
     }
 
     /**
- * Deduplicate author information into associative array with main/corporate/
- * secondary keys.
- *
- * @param array $dataFields An array of extra data fields to retrieve (see
- * getAuthorDataFields)
- *
- * @return array
- */
-public function getDeduplicatedAuthors($dataFields = ['role','id'])
-{
-    $authors = [];
-    foreach (['primary', 'corporate'] as $type) {
-        $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
-    }
-    $dedup_data = function (&$array) {
-        foreach ($array as $author => $data) {
-            foreach ($data as $field => $values) {
-                if (is_array($values)) {
-                    $array[$author][$field] = array_unique($values);
+     * Deduplicate author information into associative array with main/corporate/
+     * secondary keys.
+     *
+     * @param array $dataFields An array of extra data fields to retrieve (see
+     * getAuthorDataFields)
+     *
+     * @return array
+     */
+    public function getDeduplicatedAuthors($dataFields = ['role','id'])
+    {
+        $authors = [];
+        foreach (['primary', 'corporate'] as $type) {
+            $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
+        }
+        $dedup_data = function (&$array) {
+            foreach ($array as $author => $data) {
+                foreach ($data as $field => $values) {
+                    if (is_array($values)) {
+                        $array[$author][$field] = array_unique($values);
+                    }
                 }
             }
-        }
-    };
-    $dedup_data($authors['primary']);
-    $dedup_data($authors['corporate']);
-    return $authors;
-}
+        };
+        $dedup_data($authors['primary']);
+        $dedup_data($authors['corporate']);
+        return $authors;
+    }
 
     /**
      * Get an array of all main authors ids
@@ -285,14 +303,15 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      *
      * @return array
      */
-    public function getEvents() {
-      $eventTitles = $this->fields['event'] ?? [];
-      $eventIds = $this->fields['event_id'] ?? [];
-      if (isset($eventTitles[0])) {
-        return array_combine($eventIds,$eventTitles);
-      } else {
-        return [];
-      }
+    public function getEvents()
+    {
+        $eventTitles = $this->fields['event'] ?? [];
+        $eventIds = $this->fields['event_id'] ?? [];
+        if (isset($eventTitles[0])) {
+            return array_combine($eventIds, $eventTitles);
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -300,33 +319,35 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      *
      * @return array
      */
-    public function getWorks() {
-      $workTitles = $this->fields['work'] ?? [];
-      $workIds = $this->fields['work_id'] ?? [];
-      if (isset($workTitles[0])) {
-        return array_combine($workIds,$workTitles);
-      } else {
-        return [];
-      }
+    public function getWorks()
+    {
+        $workTitles = $this->fields['work'] ?? [];
+        $workIds = $this->fields['work_id'] ?? [];
+        if (isset($workTitles[0])) {
+            return array_combine($workIds, $workTitles);
+        } else {
+            return [];
+        }
     }
 
-  /**
-   * Get all record links related to the current record.
- *
- * @return null|array
- */
-    public function getAllRecordLinks() {
-      $retVal = [];
-      if (isset($this->fields['related_to'])) {
-        $ids = $this->fields['related_to'];
-        array_walk($ids, function (&$id) use (&$retVal) {
-          $title = $this->getTitleIfExists($id,$this->sourceIdentifier);
-          if ($title) {
-            $retVal[$id] = $title;
-          }
-        });
-      }
-      return $retVal;
+    /**
+     * Get all record links related to the current record.
+     *
+     * @return null|array
+     */
+    public function getAllRecordLinks()
+    {
+        $retVal = [];
+        if (isset($this->fields['related_to'])) {
+            $ids = $this->fields['related_to'];
+            array_walk($ids, function (&$id) use (&$retVal) {
+                $title = $this->getTitleIfExists($id, $this->sourceIdentifier);
+                if ($title) {
+                    $retVal[$id] = $title;
+                }
+            });
+        }
+        return $retVal;
     }
 
     /**
@@ -351,14 +372,13 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
         $contextRoles = $this->fields['topic_role'] ?? [];
 
         if ($extended) {
-
-          foreach ($headings as $i => $heading) {
-            $retVal[] = [
+            foreach ($headings as $i => $heading) {
+                $retVal[] = [
               'heading' => $heading,
               'type' => $contextRoles[$i] ?? '',
-              'source' => isset($contextIds[$i]) ? $contextIds[$i] : ''
+              'source' => $contextIds[$i] ?? ''
             ];
-          }
+            }
         }
 
         return $retVal;
@@ -382,7 +402,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      */
     public function getThumbnail($size = 'small')
     {
-      return $this->fields['thumbnail'] ?? [];
+        return $this->fields['thumbnail'] ?? [];
     }
 
     /**
@@ -392,8 +412,7 @@ public function getDeduplicatedAuthors($dataFields = ['role','id'])
      */
     public function getYear()
     {
-      return isset($this->fields['date_span_sort']) ?
-          substr($this->fields['date_span_sort'],0,4) : 0;
+        return isset($this->fields['date_span_sort']) ?
+          substr($this->fields['date_span_sort'], 0, 4) : 0;
     }
-
 }

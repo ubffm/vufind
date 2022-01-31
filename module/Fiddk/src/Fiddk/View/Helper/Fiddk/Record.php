@@ -26,7 +26,6 @@
  * @link     https://vufind.org/wiki/development Wiki
  */
 namespace Fiddk\View\Helper\Fiddk;
-use VuFind\Cover\Router as CoverRouter;
 
 /**
  * Record driver view helper
@@ -46,7 +45,6 @@ class Record extends \VuFind\View\Helper\Root\Record
      */
     public function getPublicationDetails()
     {
-        return $this->renderTemplate('data-publicationDetails.phtml',['data' => $this->driver->getPublicationDetails()]);
+        return $this->renderTemplate('data-publicationDetails.phtml', ['data' => $this->driver->getPublicationDetails()]);
     }
-
 }

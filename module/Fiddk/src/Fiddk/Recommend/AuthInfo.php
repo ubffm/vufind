@@ -48,7 +48,6 @@ use VuFindSearch\Query\Query;
  */
 class AuthInfo implements \VuFind\Recommend\RecommendInterface
 {
-
     /**
      * HTTP client
      *
@@ -114,7 +113,8 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * @param string                               $sources Source identifiers
      * (currently, only 'wikipedia' is supported)
      */
-    public function __construct(\VuFind\Search\Results\PluginManager $results,
+    public function __construct(
+        \VuFind\Search\Results\PluginManager $results,
         \Laminas\Http\Client $client
     ) {
         $this->resultsManager = $results;
@@ -195,21 +195,21 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
         preg_match('/(\d{4})-(\d{2})-(\d{2})/', $date, $matches, PREG_OFFSET_CAPTURE);
         if (!empty($matches) && isset($matches[1][0]) && isset($matches[2][0])
           && isset($matches[3][0])) {
-          $str = '';
-          if ($matches[3][0][0] == '0') {
-            $str .= $matches[3][0][1];
-          } else {
-            $str .= $matches[3][0];
-          }
-          if ($lang == 'de') {
-            $str .= '. ' . $this->dates['de'][$matches[2][0]];
-          } else {
-            $str .= ' ' . $this->dates['en'][$matches[2][0]];
-          }
-          $str .= ' ' . $matches[1][0];
-          return $str;
+            $str = '';
+            if ($matches[3][0][0] == '0') {
+                $str .= $matches[3][0][1];
+            } else {
+                $str .= $matches[3][0];
+            }
+            if ($lang == 'de') {
+                $str .= '. ' . $this->dates['de'][$matches[2][0]];
+            } else {
+                $str .= ' ' . $this->dates['en'][$matches[2][0]];
+            }
+            $str .= ' ' . $matches[1][0];
+            return $str;
         } else {
-          return $date;
+            return $date;
         }
     }
 
@@ -222,17 +222,16 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
     {
         $search = $this->searchObject->getParams()->getQuery();
         if ($search instanceof Query) {
-          $query = $search->getString();
-          $gnd = substr($query,4);
-          $isGnd = substr($query,0,3) == "gnd";
-          if ($isGnd) {
-            return $gnd;
-          }
-          else {
-            return '';
-          }
+            $query = $search->getString();
+            $gnd = substr($query, 4);
+            $isGnd = substr($query, 0, 3) == "gnd";
+            if ($isGnd) {
+                return $gnd;
+            } else {
+                return '';
+            }
         } else {
-          return '';
+            return '';
         }
     }
 
@@ -250,57 +249,55 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
         $res["preferredName"] = $driver->getTitle();
         $res["description"] = $driver->getSummary();
         if ($type == "Personal Name") {
-          $gender = $driver->getGender();
-          $occupation = $driver->getOccupation();
-          $pbirth= $driver->getPlaceOfBirth();
-          $pdeath = $driver->getPlaceOfDeath();
-          foreach ($occupation as $val) {
-              $res["professionOrOccupation"][] = ["label" => $val];
-          }
-          foreach ($gender as $val) {
-            $res["gender"][] = ["label" => $val];
-          }
-          foreach ($pbirth as $val) {
-            $res["placeOfBirth"][] = ["label" => $val];
-          }
-          foreach ($pdeath as $val) {
-            $res["placeOfDeath"][] = ["label" => $val];
-          }
-          if ($driver->getBirthDate()) {
-            $res["dateOfBirth"] = [$driver->getBirthDate()];
-          }
-          if ($driver->getDeathDate()) {
-            $res["dateOfDeath"] = [$driver->getDeathDate()];
-          }
+            $gender = $driver->getGender();
+            $occupation = $driver->getOccupation();
+            $pbirth= $driver->getPlaceOfBirth();
+            $pdeath = $driver->getPlaceOfDeath();
+            foreach ($occupation as $val) {
+                $res["professionOrOccupation"][] = ["label" => $val];
+            }
+            foreach ($gender as $val) {
+                $res["gender"][] = ["label" => $val];
+            }
+            foreach ($pbirth as $val) {
+                $res["placeOfBirth"][] = ["label" => $val];
+            }
+            foreach ($pdeath as $val) {
+                $res["placeOfDeath"][] = ["label" => $val];
+            }
+            if ($driver->getBirthDate()) {
+                $res["dateOfBirth"] = [$driver->getBirthDate()];
+            }
+            if ($driver->getDeathDate()) {
+                $res["dateOfDeath"] = [$driver->getDeathDate()];
+            }
         } elseif ($type == "Event") {
-          $res["genre"] = $driver->getGenres();
+            $res["genre"] = $driver->getGenres();
         }
         if ($type == "Work") {
-          $res["variantName"] = $driver->getAlternativeTitles();
-          $res["genre"] = $driver->getGenres();
+            $res["variantName"] = $driver->getAlternativeTitles();
+            $res["genre"] = $driver->getGenres();
         } else {
-          $res["variantName"] = $driver->getUseFor();
+            $res["variantName"] = $driver->getUseFor();
         }
         return $res;
     }
 
     /**
-    * Returns the source of the picture (ajax?)
-    */
+     * Returns the source of the picture (ajax?)
+     */
     public function getPicSource($thumbnail)
     {
-      if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)):
+        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)):
         $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
         $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
         if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])):
           return [$imageInfo["Artist"]["value"],
                   "https://commons.wikimedia.org/wiki/File:" . $fname[1],
-                  $imageInfo["LicenseShortName"]["value"]];
-        else:
+                  $imageInfo["LicenseShortName"]["value"]]; else:
           return null;
-        endif;
-      else:
+        endif; else:
         return null;
-      endif;
+        endif;
     }
 }

@@ -23,7 +23,7 @@
         <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title getFull" data-view="<?=$this->params->getOptions()->getListViewOption() ?>">
           <?php $subtitles = $this->driver->getSubtitle(); ?>
           <?php if(!empty($subtitles)): ?>
-            <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode($subtitles,'; '),180));?>
+            <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode($subtitles, '; '), 180));?>
           <?php else: ?>
             <?=$this->record($this->driver)->getTitleHtml();?>
           <?php endif; ?>
@@ -34,12 +34,12 @@
           <?php $journalTitles = $this->driver->getContainerTitle(); $summDate = isset($this->driver->getPublicationDates()[0]) ? $this->driver->getPublicationDates()[0] : ""; ?>
           <?php if (!empty($journalTitles)): ?>
             <?=$this->transEsc('In')?>
-            <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml',['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
+            <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml', ['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate) . ')' : ''?>
           <?php elseif (!empty($summDate)): ?>
             <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate)?>
           <?php endif; ?>
-          <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()),0,3); if (!empty($summAuthors)): ?>
+          <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()), 0, 3); if (!empty($summAuthors)): ?>
            <?=!empty($journalTitles) ? '<br />' : ''?>
            <?php $roles = $this->driver->getPrimaryAuthorsRoles();?>
            <?php $ids = $this->driver->getPrimaryAuthorsIds();?>
@@ -50,7 +50,7 @@
                <?php else : ?>
                  <a href="<?=$this->record($this->driver)->getLink('name', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
                <?php endif; ?>
-               <?='(' . $this->transEsc('edm::' . $roles[$i]) .')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
+               <?='(' . $this->transEsc('edm::' . $roles[$i]) . ')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
              <?php endif; ?>
           <?php endforeach; ?>
         <?php endif; ?>
@@ -67,23 +67,23 @@
           <?php $pubDetails = $this->driver->getPublicationDetails();?>
           <?php if (!empty($pubDetails)): ?>
             <?=!empty($journalTitles || $summAuthors) ? '<br />' : ''?>
-            <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml',['data' => $pubDetails,'driver' => $this->driver]);?>
+            <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
           <?php endif; ?>
           <?php if (empty($this->driver->getTitle())): ?>
             <?php if (!empty($this->driver->getSummary())): ?>
-              <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml',['data' => $this->driver->getSummary()[0]]);?>
+              <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml', ['data' => $this->driver->getSummary()[0]]);?>
             <?php endif; ?>
           <?php endif; ?>
           <?php $placeDateDetails = $this->driver->getPlaceDateDetails();?>
           <?php if (empty($pubDetails) && !empty($placeDateDetails)): ?>
-            <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml',['data' => $placeDateDetails,'driver' => $this->driver, 'highlight' => true]);?>
+            <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver, 'highlight' => true]);?>
           <?php endif; ?>
           <?php $extent = $this->driver->getExtent();?>
             <?php if (!empty($extent)): ?>
               <?php if (!empty($pubDetails) && empty($journalTitles)):?>
                 <br/>
               <?php endif; ?>
-                <?=implode('; ',$extent);?>
+                <?=implode('; ', $extent);?>
           <?php endif; ?>
       </div>
 
@@ -153,9 +153,9 @@
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
         <?php if(count($licenseLinks) == 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => $licenseLinks, 'inst' => $this->driver->getInstitution()]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitution()]);?>
         <?php elseif(count($licenseLinks) >= 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml',['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitution()]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitution()]);?>
         <?php endif; ?>
       </div>
 

@@ -42,129 +42,121 @@ namespace Fiddk\RecordDriver;
  */
 class SolrAuthor extends SolrAuthDefault
 {
+    /**
+     * Get the occupation of the person.
+     *
+     * @return array
+     */
+    public function getOccupation()
+    {
+        return $this->fields['occupation'] ?? [];
+    }
 
-  /**
-  * Get the occupation of the person.
-  *
-  * @return array
-  */
-  public function getOccupation()
-  {
-     return isset($this->fields['occupation'])
-         ? $this->fields['occupation'] : [];
-  }
+    /**
+     * Get domain of organization.
+     *
+     * @return array
+     */
+    public function getOrgaDomain()
+    {
+        return $this->fields['orga_domain'] ?? [];
+    }
 
-  /**
-   * Get domain of organization.
-   *
-   * @return array
-   */
-  public function getOrgaDomain()
-  {
-     return isset($this->fields['orga_domain'])
-         ? $this->fields['orga_domain'] : [];
-  }
+    /**
+     * Get birth date of person or date of establishment of organization.
+     *
+     * @return string
+     */
+    public function getBirthDate()
+    {
+        return $this->fields['birth_date'] ?? '';
+    }
 
-  /**
-   * Get birth date of person or date of establishment of organization.
-   *
-   * @return string
-   */
-  public function getBirthDate()
-  {
-     return isset($this->fields['birth_date'])
-         ? $this->fields['birth_date'] : '';
-  }
+    /**
+     * Get death date of person or date of termination of organization.
+     *
+     * @return string
+     */
+    public function getDeathDate()
+    {
+        return $this->fields['death_date'] ?? '';
+    }
 
-  /**
-   * Get death date of person or date of termination of organization.
-   *
-   * @return string
-   */
-  public function getDeathDate()
-  {
-     return isset($this->fields['death_date'])
-         ? $this->fields['death_date'] : '';
-  }
+    /**
+     * Get homepage of person
+     *
+     * @return string
+     */
+    public function getHomepage()
+    {
+        return $this->fields['homepage'] ?? '';
+    }
 
-  /**
-   * Get homepage of person
-   *
-   * @return string
-   */
-  public function getHomepage()
-  {
-     return isset($this->fields['homepage'])
-         ? $this->fields['homepage'] : '';
-  }
+    /**
+     * Get gender of person.
+     */
+    public function getGender()
+    {
+        return $this->getEdmRecord()->getLiteralVals("rdau:P60531", "foaf:Person");
+    }
 
-  /**
-   * Get gender of person.
-   */
-   public function getGender()
-   {
-       return $this->getEdmRecord()->getLiteralVals("rdau:P60531", "foaf:Person");
-   }
+    /**
+     * Get place of birth of person.
+     */
+    public function getPlaceOfBirth()
+    {
+        return $this->getEdmRecord()->getPropValues("rdau:P60593", "foaf:Person");
+    }
 
-  /**
-  * Get place of birth of person.
-  */
-  public function getPlaceOfBirth()
-  {
-      return $this->getEdmRecord()->getPropValues("rdau:P60593", "foaf:Person");
-  }
+    /**
+     * Get place of death of person.
+     */
+    public function getPlaceOfDeath()
+    {
+        return $this->getEdmRecord()->getPropValues("rdau:P60592", "foaf:Person");
+    }
 
-  /**
-  * Get place of death of person.
-  */
-  public function getPlaceOfDeath()
-  {
-      return $this->getEdmRecord()->getPropValues("rdau:P60592", "foaf:Person");
-  }
-
-
-  /**
-   * Get the number of work records related to this agent
-   *
-   * @return int Number of records
-   */
-  public function getWorkCount()
-  {
-      $id = $this->getUniqueId();
-      $query = new \VuFindSearch\Query\Query(
-          'author_id:"' . $id . '"'
-      );
-      // Disable highlighting for efficiency; not needed here:
-      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-      return $this->searchService
+    /**
+     * Get the number of work records related to this agent
+     *
+     * @return int Number of records
+     */
+    public function getWorkCount()
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            'author_id:"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        return $this->searchService
           ->search("SolrWork", $query, 0, 0, $params)
           ->getTotal();
-  }
+    }
 
-  /**
-   * Get the number of event records related to this agent
-   *
-   * @return int Number of records
-   */
-  public function getEventCount()
-  {
-      $id = $this->getUniqueId();
-      $query = new \VuFindSearch\Query\Query(
-          'author_id:"' . $id . '"'
-      );
-      // Disable highlighting for efficiency; not needed here:
-      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-      return $this->searchService
+    /**
+     * Get the number of event records related to this agent
+     *
+     * @return int Number of records
+     */
+    public function getEventCount()
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            'author_id:"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        return $this->searchService
           ->search("SolrEvent", $query, 0, 0, $params)
           ->getTotal();
-  }
+    }
 
-  /**
-   * Returns links to provider
-   */
-   public function getSameAs()
-   {
-       return $this->getEdmRecord()->getAttrVals("owl:sameAs", "foaf:Person");
-   }
-
+    /**
+     * Returns links to provider
+     */
+    public function getSameAs()
+    {
+        return $this->getEdmRecord()->getAttrVals("owl:sameAs", "foaf:Person");
+    }
 }

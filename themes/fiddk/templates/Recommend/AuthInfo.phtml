@@ -12,11 +12,11 @@ if (!empty($this->info) || isset($driver)):
       $sameAs = $this->driver->getSameAs();
     endif;
     $title = $this->info['preferredName'];
-    $variant = isset($this->info['variantName']) ? $this->info['variantName'] : '';
+    $variant = $this->info['variantName'] ?? '';
     $id = $this->driver->getUniqueId();
     $this->agents = $this->driver->getDeduplicatedAuthors();
     //TODO: There can be more than one thumbnail??
-    $thumbnail = isset($this->info['depiction'][0]['thumbnail']) ? $this->info['depiction'][0]['thumbnail'] : '';
+    $thumbnail = $this->info['depiction'][0]['thumbnail'] ?? '';
       //$sameAs = $this->driver->getSameAs();
 ?>
 <div class="card clearfix">
@@ -42,8 +42,8 @@ if (!empty($this->info) || isset($driver)):
         <?php elseif ($type == "Corporate Name"): ?>
           <?=$this->render('Recommend/data-corporateFacts.phtml');?><br/>
         <?php endif; ?>
-        <?=$this->render('Recommend/data-relatedWorks.phtml',['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
+        <?=$this->render('Recommend/data-relatedWorks.phtml', ['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
       <?php elseif ($type == "Event" and (!empty($this->info['gndIdentifier']))): ?>
         <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
       <?php elseif ($type == "Event"): ?>
@@ -79,11 +79,11 @@ if (!empty($this->info) || isset($driver)):
         <?=$this->render('Recommend/data-sameAs.phtml');?>
       <?php endif; ?>
       <?php if ($type == "Work"): ?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml',['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
+        <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
         <br />
       <?php endif; ?>
       <?php if (!empty($describedBy) || !empty($dprov)): ?>
-        <?=$this->render('Recommend/data-source.phtml',['type' => $type,'dprov' => $dprov, 'describedBy' => $describedBy, 'sameAs' => $sameAs]);?>
+        <?=$this->render('Recommend/data-source.phtml', ['type' => $type,'dprov' => $dprov, 'describedBy' => $describedBy, 'sameAs' => $sameAs]);?>
       <?php endif; ?>
    </div>
  </div>

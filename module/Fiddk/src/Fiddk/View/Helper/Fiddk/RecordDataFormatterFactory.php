@@ -33,7 +33,7 @@ use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\ServiceManager\Factory\FactoryInterface;
+
 /**
  * Factory for record driver data formatting view helper
  *
@@ -47,42 +47,43 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
  */
 class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
 {
-  /**
-      * Create an object
-      *
-      * @param ContainerInterface $container     Service manager
-      * @param string             $requestedName Service being created
-      * @param null|array         $options       Extra options (optional)
-      *
-      * @return object
-      *
-      * @throws ServiceNotFoundException if unable to resolve the service.
-      * @throws ServiceNotCreatedException if an exception is raised when
-      * creating a service.
-      * @throws ContainerException if any other error occurs
-      *
-      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-      */
-     public function __invoke(
-          ContainerInterface $container,
-          $requestedName,
-          array $options = null
-     ) {
-         if (!empty($options)) {
-             throw new \Exception('Unexpected options sent to factory.');
-         }
-         $helper = new $requestedName();
-         $helper->setDefaults(
-             'collection-info', [$this, 'getDefaultCollectionInfoSpecs']
-         );
-         $helper->setDefaults(
-             'collection-record', [$this, 'getDefaultCollectionRecordSpecs']
-         );
-         $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
-         $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
-         return $helper;
-     }
-
+    /**
+     * Create an object
+     *
+     * @param ContainerInterface $container     Service manager
+     * @param string             $requestedName Service being created
+     * @param null|array         $options       Extra options (optional)
+     *
+     * @return object
+     *
+     * @throws ServiceNotFoundException if unable to resolve the service.
+     * @throws ServiceNotCreatedException if an exception is raised when
+     * creating a service.
+     * @throws ContainerException if any other error occurs
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        array $options = null
+    ) {
+        if (!empty($options)) {
+            throw new \Exception('Unexpected options sent to factory.');
+        }
+        $helper = new $requestedName();
+        $helper->setDefaults(
+            'collection-info',
+            [$this, 'getDefaultCollectionInfoSpecs']
+        );
+        $helper->setDefaults(
+            'collection-record',
+            [$this, 'getDefaultCollectionRecordSpecs']
+        );
+        $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
+        $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
+        return $helper;
+    }
 
     /**
      * Get default specifications for displaying data in core metadata.
@@ -95,46 +96,69 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('Subtitle', 'getSubtitle');
         $spec->setLine('Alternative Title', 'getAlternativeTitles');
         $spec->setLine(
-            'New Title', 'getNewerTitles', null, ['recordLink' => 'title']
+            'New Title',
+            'getNewerTitles',
+            null,
+            ['recordLink' => 'title']
         );
         $spec->setLine(
-            'Previous Title', 'getPreviousTitles', null, ['recordLink' => 'title']
+            'Previous Title',
+            'getPreviousTitles',
+            null,
+            ['recordLink' => 'title']
         );
         $spec->setTemplateLine(
-            'In', 'getContainerTitle', 'data-containerTitle.phtml'
+            'In',
+            'getContainerTitle',
+            'data-containerTitle.phtml'
         );
         $spec->setLine(
-            'dc:type', 'getFormats', 'RecordHelper',
+            'dc:type',
+            'getFormats',
+            'RecordHelper',
             ['helperMethod' => 'getFormatList']
         );
         $spec->setTemplateLine(
-            'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
+            'Published',
+            'getPublicationDetails',
+            'data-publicationDetails.phtml'
         );
         $spec->setTemplateLine(
-            'DatesPlaces', 'getPlaceDateDetails', 'data-placeDateDetails.phtml'
+            'DatesPlaces',
+            'getPlaceDateDetails',
+            'data-placeDateDetails.phtml'
         );
         $spec->setLine('dcterms:extent', 'getExtent');
         $spec->setLine('bf:shelfMark', 'getCallNumber');
         $spec->setLine('edm:currentLocation', 'getCurrentLocation');
         $spec->setLine('dcterms:provenance', 'getProvenance');
         $spec->setMultiLine(
-            'dc:contributor', 'getDeduplicatedAuthors', $this->getAuthorFunction()
-          );
+            'dc:contributor',
+            'getDeduplicatedAuthors',
+            $this->getAuthorFunction()
+        );
         $spec->setLine('dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-2::']);
         $spec->setTemplateLine('dc:description', 'getSummary', 'data-collapsible.phtml');
         $spec->setLine('ISBN', 'getISBNs');
         $spec->setLine('ISSN', 'getISSNs');
         $spec->setLine(
-            'Edition', 'getEdition', null,
+            'Edition',
+            'getEdition',
+            null,
             ['prefix' => '<span property="bookEdition">', 'suffix' => '</span>']
         );
         $spec->setTemplateLine('Series', 'getSeries', 'data-series.phtml');
         $spec->setLine('Genre', 'getGenres');
         $spec->setTemplateLine(
-            'dc:subject', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml', ['context' => ['extended' => true]]
+            'dc:subject',
+            'getAllSubjectHeadings',
+            'data-allSubjectHeadings.phtml',
+            ['context' => ['extended' => true]]
         );
         $spec->setTemplateLine(
-            'dcterms:hasPart', 'getChildRecordCount', 'data-childRecords.phtml',
+            'dcterms:hasPart',
+            'getChildRecordCount',
+            'data-childRecords.phtml',
             ['allowZero' => false]
         );
         $spec->setLine('Rights', 'getAccessRestrictions');
@@ -149,45 +173,45 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
      */
     public function getDefaultSeeAlsoSpecs()
     {
-      $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-      $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked','data-provLink.phtml');
-      $spec->setTemplateLine('Ask Archive', 'askArchive','data-askArchive.phtml');
-      $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink','data-licenseLink.phtml');
-      $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink','data-externalLink.phtml');
-      $spec->setTemplateLine('edm:hasView', 'getDigitalCopies','data-collapsible_.phtml');
-      $spec->setTemplateLine('edm:wasPresentAt', 'getEvents','link-event.phtml');
-      $spec->setTemplateLine('Work', 'getWorks','link-work.phtml');
-      $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks','data-internalLink.phtml');
-      return $spec->getArray();
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked', 'data-provLink.phtml');
+        $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
+        $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink', 'data-licenseLink.phtml');
+        $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink', 'data-externalLink.phtml');
+        $spec->setTemplateLine('edm:hasView', 'getDigitalCopies', 'data-collapsible_.phtml');
+        $spec->setTemplateLine('edm:wasPresentAt', 'getEvents', 'link-event.phtml');
+        $spec->setTemplateLine('Work', 'getWorks', 'link-work.phtml');
+        $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks', 'data-internalLink.phtml');
+        return $spec->getArray();
     }
 
     /**
- * Get the callback function for processing authors.
- *
- * @return Callable
- */
-protected function getAuthorFunction()
-{
-    return function ($data, $options) {
-        // Lookup array of singular/plural labels (note that Other is always
-        // plural right now due to lack of translation strings).
-        $labels = [
+     * Get the callback function for processing authors.
+     *
+     * @return Callable
+     */
+    protected function getAuthorFunction()
+    {
+        return function ($data, $options) {
+            // Lookup array of singular/plural labels (note that Other is always
+            // plural right now due to lack of translation strings).
+            $labels = [
             'primary' => 'dc:contributor',
             'secondary' => 'dc:contributor',
             'corporate' => 'Corporate Author',
         ];
-        // Lookup array of schema labels.
-        $schemaLabels = [
+            // Lookup array of schema labels.
+            $schemaLabels = [
             'primary' => 'author',
             'secondary' => 'author',
             'corporate' => 'creator'
         ];
-        // Lookup array of sort orders.
-        $order = ['primary' => 1, 'secondary' => 2, 'corporate' => 3];
-        // Sort the data:
-        $final = [];
-        foreach ($data as $type => $values) {
-            $final[] = [
+            // Lookup array of sort orders.
+            $order = ['primary' => 1, 'secondary' => 2, 'corporate' => 3];
+            // Sort the data:
+            $final = [];
+            foreach ($data as $type => $values) {
+                $final[] = [
                 'label' => $labels[$type],
                 'values' => [$type => $values],
                 'options' => [
@@ -203,8 +227,8 @@ protected function getAuthorFunction()
                     ],
                 ],
             ];
-        }
-        return $final;
-    };
-}
+            }
+            return $final;
+        };
+    }
 }

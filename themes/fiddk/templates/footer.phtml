@@ -26,7 +26,7 @@
     </li>
       <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
         <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
-          <a href="<?=$this->url('news-list', array(), array('query' => array('redirect' => 0)))?>"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?=$this->transEsc("News")?></a>
+          <a href="<?=$this->url('news-list', [], ['query' => ['redirect' => 0]])?>"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?=$this->transEsc("News")?></a>
         </li>
         <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
           <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>

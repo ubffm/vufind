@@ -72,6 +72,4 @@ class Options extends \VuFind\Search\Solr\Options
     {
         return 'author-facetlist';
     }
-
-
 }

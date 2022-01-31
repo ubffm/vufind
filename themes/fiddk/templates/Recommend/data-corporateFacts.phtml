@@ -1,6 +1,6 @@
 <?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
   <span property="biographicalInformation">
-    <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
+    <?=implode('; ', $this->info['biographicalOrHistoricalInformation'])?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['description'])) : ?>
@@ -10,31 +10,31 @@
 <?php endif; ?>
 <?php if (isset($this->info['broaderTermInstantial'])) : ?>
   <span property="broaderTermInstantial">
-    <?=implode(', ',array_column($this->info['broaderTermInstantial'],'label'))?>
+    <?=implode(', ', array_column($this->info['broaderTermInstantial'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['dateOfEstablishment'])) : ?>
   <?=$this->transEsc('established')?>
   <span property="dateOfEstablishment">
-    <?=implode('; ',$this->info['dateOfEstablishment'])?>
+    <?=implode('; ', $this->info['dateOfEstablishment'])?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['dateOfTermination'])) : ?>
   <?=$this->transEsc('terminated')?>
   <span property="dateOfTermination">
-    <?=implode('; ',$this->info['dateOfTermination'])?>
+    <?=implode('; ', $this->info['dateOfTermination'])?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['precedingCorporateBody'])) : ?>
   <b><?=$this->transEsc('precedingCorporateBody') . ': '?></b>
   <span property="precedingCorporateBody">
-    <?=implode('; ',array_column($this->info['precedingCorporateBody'],'label'))?>
+    <?=implode('; ', array_column($this->info['precedingCorporateBody'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['succeedingCorporateBody'])) : ?>
   <b><?=$this->transEsc('succeedingCorporateBody') . ': '?></b>
   <span property="succeedingCorporateBody">
-    <?=implode('; ',array_column($this->info['succeedingCorporateBody'],'label'))?>
+    <?=implode('; ', array_column($this->info['succeedingCorporateBody'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['homepage'])) : ?>
@@ -47,24 +47,24 @@
 <?php if (isset($this->info['placeOfBusiness'])) : ?>
   <b><?=$this->transEsc('placeOfBusiness') . ': '?></b>
   <span property="placeOfBusiness">
-    <?=implode('; ',array_column($this->info['placeOfBusiness'],'label'))?>
+    <?=implode('; ', array_column($this->info['placeOfBusiness'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['spatialAreaOfActivity'])) : ?>
   <b><?=$this->transEsc('spatialAreaOfActivity') . ': '?></b>
   <span property="spatialAreaOfActivity">
-    <?=implode('; ',array_column($this->info['spatialAreaOfActivity'],'label'))?>
+    <?=implode('; ', array_column($this->info['spatialAreaOfActivity'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['geographicAreaCode'])) : ?>
   <b><?=$this->transEsc('GeographicAreaCode') . ': '?></b>
   <span property="geographicAreaCode">
-    <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+    <?=implode('; ', array_column($this->info['geographicAreaCode'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['gndSubjectCategory'])) : ?>
   <b><?=$this->transEsc('gndSubjectCategory') . ': '?></b>
   <span property="Category">
-    <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
+    <?=implode(', ', array_column($this->info['gndSubjectCategory'], 'label'))?>
   </span><br/>
 <?php endif; ?>

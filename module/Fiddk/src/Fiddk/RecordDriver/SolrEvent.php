@@ -42,55 +42,53 @@ namespace Fiddk\RecordDriver;
  */
 class SolrEvent extends SolrAuthDefault
 {
-
-   /**
-    * Returns the type of the event
-    */
+    /**
+     * Returns the type of the event
+     */
     public function getEventType()
     {
-        return isset($this->fields['event_type'])
-              ? $this->fields['event_type'] : [];
+        return $this->fields['event_type'] ?? [];
     }
 
     /**
      * Returns the type of the event
      */
-     public function getEventDate()
-     {
-         return isset($this->fields['date'])
-               ? $this->fields['date'] : [];
-     }
+    public function getEventDate()
+    {
+        return $this->fields['date'] ?? [];
+    }
 
-     /**
-      * Returns the type of the event
-      */
-      public function getEventPlace()
-      {
-          return isset($this->fields['geographic'])
-                ? $this->fields['geographic'] : [];
-      }
+    /**
+     * Returns the type of the event
+     */
+    public function getEventPlace()
+    {
+        return $this->fields['geographic'] ?? [];
+    }
 
-       /**
-        * Get related works
-        */
-        public function getWorks()
-        {
-          $works = isset($this->fields['work']) ? $this->fields['work'] : [];
-          $work_ids = isset($this->fields['work_id']) ? $this->fields['work_id'] : [];
-          return array_combine($work_ids,$works);
-        }
+    /**
+     * Get related works
+     */
+    public function getWorks()
+    {
+        $works = $this->fields['work'] ?? [];
+        $work_ids = $this->fields['work_id'] ?? [];
+        return array_combine($work_ids, $works);
+    }
 
-      /**
-      * Get genres
-      */
-      public function getGenres() {
-        return isset($this->fields['genre']) ? $this->fields['genre'] : [];
-      }
+    /**
+     * Get genres
+     */
+    public function getGenres()
+    {
+        return $this->fields['genre'] ?? [];
+    }
 
-      /**
-       * Returns the agents of the event
-       */
-       /**
+    /**
+     * Returns the agents of the event
+     */
+
+    /**
      * Deduplicate author information into associative array with main/corporate/
      * secondary keys.
      *
@@ -99,61 +97,59 @@ class SolrEvent extends SolrAuthDefault
      *
      * @return array
      */
-     public function getDeduplicatedAuthors($dataFields = ['role','id'])
-     {
-       $authors = [];
-       foreach (['primary', 'corporate'] as $type) {
-           $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
-       }
-       $dedup_data = function (&$array) {
-           foreach ($array as $author => $data) {
-               foreach ($data as $field => $values) {
-                   if (is_array($values)) {
-                       $array[$author][$field] = array_unique($values);
-                   }
-               }
-           }
-       };
-       $dedup_data($authors['primary']);
-       $dedup_data($authors['corporate']);
-       return $authors;
-     }
+    public function getDeduplicatedAuthors($dataFields = ['role','id'])
+    {
+        $authors = [];
+        foreach (['primary', 'corporate'] as $type) {
+            $authors[$type] = $this->getAuthorDataFields($type, $dataFields);
+        }
+        $dedup_data = function (&$array) {
+            foreach ($array as $author => $data) {
+                foreach ($data as $field => $values) {
+                    if (is_array($values)) {
+                        $array[$author][$field] = array_unique($values);
+                    }
+                }
+            }
+        };
+        $dedup_data($authors['primary']);
+        $dedup_data($authors['corporate']);
+        return $authors;
+    }
 
-   /**
-    * Get an array of all main authors ids
-    *
-    * @return array
-    */
-   public function getPrimaryAuthorsIds()
-   {
-       return isset($this->fields['author_id']) ?
-           $this->fields['author_id'] : [];
-   }
+    /**
+     * Get an array of all main authors ids
+     *
+     * @return array
+     */
+    public function getPrimaryAuthorsIds()
+    {
+        return $this->fields['author_id'] ?? [];
+    }
 
-   /**
-    * Get the number of work records related to this event
-    *
-    * @return int Number of records
-    */
-   public function getWorkCount()
-   {
-       $id = $this->getUniqueId();
-       $query = new \VuFindSearch\Query\Query(
-           'event_id:"' . $id . '"'
-       );
-       // Disable highlighting for efficiency; not needed here:
-       $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-       return $this->searchService
+    /**
+     * Get the number of work records related to this event
+     *
+     * @return int Number of records
+     */
+    public function getWorkCount()
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            'event_id:"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        return $this->searchService
            ->search("SolrWork", $query, 0, 0, $params)
            ->getTotal();
-   }
+    }
 
-   /**
-    * Returns links to provider
-    */
+    /**
+     * Returns links to provider
+     */
     public function getSameAs()
     {
         return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:Event");
     }
-
 }

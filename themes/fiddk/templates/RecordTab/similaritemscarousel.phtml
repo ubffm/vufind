@@ -25,7 +25,7 @@
                 <?php $formats = $data->getFormats(); ?>
                 <b><?=$this->escapeHtml($data->getTitle())?></b>
                 <?php if ($data->getFormats()) :?>
-                  <p><?=implode(', ',$data->getFormats());?></p>
+                  <p><?=implode(', ', $data->getFormats());?></p>
                 <?php endif; ?>
                 <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
                 </div>
@@ -35,10 +35,10 @@
             </div>
             <p><?=$data->getTitle();?></p>
             <?php if ($data->getSubTitle()) :?>
-              <p><?=implode(', ',$data->getSubTitle());?></p>
+              <p><?=implode(', ', $data->getSubTitle());?></p>
             <?php endif; ?>
             <?php if ($data->getFormats()) :?>
-              <p><?=implode(', ',$data->getFormats());?></p>
+              <p><?=implode(', ', $data->getFormats());?></p>
             <?php endif; ?>
             <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
           <?php endif; ?>

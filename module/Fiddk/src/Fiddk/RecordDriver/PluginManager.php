@@ -28,8 +28,6 @@
  */
 namespace Fiddk\RecordDriver;
 
-use Laminas\ServiceManager\Factory\InvokableFactory;
-
 /**
  * Record driver plugin manager
  *
@@ -54,7 +52,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
         'solrwork' => SolrWork::class,
     ];
 
-  /**
+    /**
      * Default plugin factories.
      *
      * @var array
@@ -76,7 +74,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     public function getSolrAuthorRecord($data)
     {
-        return $this->getSolrRecord($data, 'SolrAuthor','');
+        return $this->getSolrRecord($data, 'SolrAuthor', '');
     }
 
     /**
@@ -88,7 +86,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     public function getSolrEventRecord($data)
     {
-        return $this->getSolrRecord($data, 'SolrEvent','');
+        return $this->getSolrRecord($data, 'SolrEvent', '');
     }
 
     /**
@@ -100,6 +98,6 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     public function getSolrWorkRecord($data)
     {
-        return $this->getSolrRecord($data, 'SolrWork','');
+        return $this->getSolrRecord($data, 'SolrWork', '');
     }
 }

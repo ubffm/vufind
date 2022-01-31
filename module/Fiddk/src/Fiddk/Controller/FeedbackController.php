@@ -80,13 +80,14 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
             return $view;
         }
 
-        list($messageParams, $template)
+        [$messageParams, $template]
             = $form->formatEmailMessage($this->params()->fromPost());
         $emailMessage = $this->getViewRenderer()->partial(
-            $template, ['fields' => $messageParams]
+            $template,
+            ['fields' => $messageParams]
         );
 
-        list($senderName, $senderEmail) = $this->getSender();
+        [$senderName, $senderEmail] = $this->getSender();
 
         $replyToName = $params->fromPost(
             'name',
@@ -103,15 +104,24 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
 
         $sendSuccess = true;
         foreach ($recipients as $recipient) {
-            list($success, $errorMsg) = $this->sendEmail(
-                $recipient['name'], $recipient['email'], $senderName, $senderEmail,
-                $replyToName, $replyToEmail, $emailSubject, $emailMessage
+            [$success, $errorMsg] = $this->sendEmail(
+                $recipient['name'],
+                $recipient['email'],
+                $senderName,
+                $senderEmail,
+                $replyToName,
+                $replyToEmail,
+                $emailSubject,
+                $emailMessage
             );
 
             $sendSuccess = $sendSuccess && $success;
             if (!$success) {
                 $this->showResponse(
-                    $view, $form, false, $errorMsg
+                    $view,
+                    $form,
+                    false,
+                    $errorMsg
                 );
             }
         }
@@ -142,5 +152,4 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
         }
         return $form;
     }
-
 }

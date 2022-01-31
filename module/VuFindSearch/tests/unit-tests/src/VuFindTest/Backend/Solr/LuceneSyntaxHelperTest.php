@@ -428,7 +428,8 @@ class LuceneSyntaxHelperTest extends \PHPUnit\Framework\TestCase
         ];
         foreach ($tests as $input => $expected) {
             $this->assertEquals(
-                $expected, $lh->normalizeSearchString($input)
+                $expected,
+                $lh->normalizeSearchString($input)
             );
         }
     }

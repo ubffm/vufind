@@ -26,6 +26,7 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Search\Factory;
+
 use VuFindSearch\Backend\Solr\Backend;
 use VuFindSearch\Backend\Solr\Connector;
 use VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory;
@@ -66,5 +67,4 @@ class SolrWorkBackendFactory extends \VuFind\Search\Factory\SolrDefaultBackendFa
         $backend->setRecordCollectionFactory($factory);
         return $backend;
     }
-
 }

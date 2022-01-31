@@ -42,83 +42,83 @@ namespace Fiddk\RecordDriver;
  */
 class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
 {
-  use EdmReaderTrait;
+    use EdmReaderTrait;
 
-  /**
-   * Returns the authority type (Personal Name, Corporate Name or Event)
-   */
-  public function getAuthType()
-  {
-     return isset($this->fields['record_type'])
-           ? $this->fields['record_type'] : '';
-  }
-
-  /**
-   * Returns the thumbnail url or []
-   */
-  public function getThumbnail($size = 'small')
-  {
-    return isset($this->fields['thumbnail'])
-        ? $this->fields['thumbnail'] : [];
-  }
-
-  /**
-   * Returns further links (Personal Name, Corporate Name or Event)
-   */
-  public function getSource()
-  {
-    $links = [];
-    if (isset($this->fields['links'])) {
-      foreach ($this->fields['links'] as $link) {
-        // TODO: Map for which kind of link
-        $links[] = ["id" => $link, "name" => "Theaterlexikon der Schweiz"];
-      }
+    /**
+     * Returns the authority type (Personal Name, Corporate Name or Event)
+     */
+    public function getAuthType()
+    {
+        return $this->fields['record_type'] ?? '';
     }
-    return $links;
-  }
 
-  public function getInstitution() {
-    return isset($this->fields['institution']) ? $this->fields['institution'] : '';
-  }
-
-  public function getIntermediates() {
-    return isset($this->fields['intermediate']) ? $this->fields['intermediate'] : [];
-  }
-
-  /**
-   * Get an array of all dataproviders, also taking in consideration if
-   * there are intermediate data providers.
-   *
-   * @return array
-   */
-  public function getInstitutionLinked() {
-    $dprovConf = $this->mainConfig->DataProvider;
-    $inters = $this->getIntermediates();
-    $inst = $this->getInstitution();
-    $res = [];
-    if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
-      $type = "inter";
-      foreach ($inters as $inter) {
-      $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-      $info = explode(',',$dprovConf[$instkey]);
-      $instlink = $info[0];
-      $instid = $info[1];
-      $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
-      $info = explode(',',$dprovConf[$interkey]);
-      $interlink = $info[0];
-      $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+    /**
+     * Returns the thumbnail url or []
+     */
+    public function getThumbnail($size = 'small')
+    {
+        return $this->fields['thumbnail'] ?? [];
     }
-    } else {
-      $type = "inst";
-      $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-      $info = explode(',',$dprovConf[$instkey]);
-      if (isset($info[1])) {
-        $res = [$type => [$inst,$info[0],$info[1]]];
-      } else {
+
+    /**
+     * Returns further links (Personal Name, Corporate Name or Event)
+     */
+    public function getSource()
+    {
+        $links = [];
+        if (isset($this->fields['links'])) {
+            foreach ($this->fields['links'] as $link) {
+                // TODO: Map for which kind of link
+                $links[] = ["id" => $link, "name" => "Theaterlexikon der Schweiz"];
+            }
+        }
+        return $links;
+    }
+
+    public function getInstitution()
+    {
+        return $this->fields['institution'] ?? '';
+    }
+
+    public function getIntermediates()
+    {
+        return $this->fields['intermediate'] ?? [];
+    }
+
+    /**
+     * Get an array of all dataproviders, also taking in consideration if
+     * there are intermediate data providers.
+     *
+     * @return array
+     */
+    public function getInstitutionLinked()
+    {
+        $dprovConf = $this->mainConfig->DataProvider;
+        $inters = $this->getIntermediates();
+        $inst = $this->getInstitution();
         $res = [];
-      }
+        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
+            $type = "inter";
+            foreach ($inters as $inter) {
+                $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+                $info = explode(',', $dprovConf[$instkey]);
+                $instlink = $info[0];
+                $instid = $info[1];
+                $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
+                $info = explode(',', $dprovConf[$interkey]);
+                $interlink = $info[0];
+                $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+            }
+        } else {
+            $type = "inst";
+            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+            $info = explode(',', $dprovConf[$instkey]);
+            if (isset($info[1])) {
+                $res = [$type => [$inst,$info[0],$info[1]]];
+            } else {
+                $res = [];
+            }
+        }
+        return $res;
     }
-    return $res;
-  }
-
 }

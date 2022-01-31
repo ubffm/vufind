@@ -40,7 +40,6 @@ namespace News\Db\Row;
  */
 class News extends \VuFind\Db\Row\RowGateway
 {
-
     /**
      * Constructor
      *

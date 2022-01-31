@@ -4,7 +4,7 @@
     <?php if($this->info['gndIdentifier'] == "1043940596"):?>
     <?='Autor, Dramatiker, Schauspieler, Regisseur, Drehbuchautor'?>
     <?php else: ?>
-    <?=implode(', ',array_column($this->info['professionOrOccupation'],'label'))?>
+    <?=implode(', ', array_column($this->info['professionOrOccupation'], 'label'))?>
   <?php endif; ?>
   </span><br/>
 <?php endif; ?>
@@ -12,14 +12,14 @@
   <?=$this->transEsc('born')?>
   <?php if (isset($this->info['dateOfBirth'])) : ?>
     <span property="birthDate">
-      <?=implode('/',array_map(function($item) use($lang) {
-          return $this->recommend->formatDisplayDate($item, $lang); },$this->info['dateOfBirth']))?>
+      <?=implode('/', array_map(function ($item) use ($lang) {
+          return $this->recommend->formatDisplayDate($item, $lang); }, $this->info['dateOfBirth']))?>
     </span>
   <?php endif; ?>
   <?php if (isset($this->info['placeOfBirth'])) : ?>
     <?=$this->transEsc('in')?>
     <span property="birthPlace">
-      <?=implode('/',array_column($this->info['placeOfBirth'],'label'))?>
+      <?=implode('/', array_column($this->info['placeOfBirth'], 'label'))?>
     </span>
   <?php endif; ?>
   <br/>
@@ -31,14 +31,14 @@
   <?=$this->transEsc('died')?>
   <?php if (isset($this->info['dateOfDeath'])) : ?>
     <span property="deathDate">
-      <?=implode('/',array_map(function($item) use($lang) {
-          return $this->recommend->formatDisplayDate($item, $lang); },$this->info['dateOfDeath']))?>
+      <?=implode('/', array_map(function ($item) use ($lang) {
+          return $this->recommend->formatDisplayDate($item, $lang); }, $this->info['dateOfDeath']))?>
     </span>
   <?php endif; ?>
   <?php if (isset($this->info['placeOfDeath'])) : ?>
     <?=$this->transEsc('in')?>
     <span property="deathPlace">
-      <?=implode('/',array_column($this->info['placeOfDeath'],'label'))?>
+      <?=implode('/', array_column($this->info['placeOfDeath'], 'label'))?>
     </span>
   <?php endif; ?>
   <br/><br/>
@@ -46,7 +46,7 @@
 <?php if (isset($this->info['biographicalOrHistoricalInformation'])) : ?>
   <b><?=$this->transEsc('BiographicalDetails')?></b>
   <br/><span property="biographicalInformation">
-    <?=implode('; ',$this->info['biographicalOrHistoricalInformation'])?>
+    <?=implode('; ', $this->info['biographicalOrHistoricalInformation'])?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['description'])) : ?>
@@ -57,54 +57,54 @@
 <?php if (isset($this->info['gender'])) : ?>
   <b><?=$this->transEsc('Gender') . ': '?></b>
   <span property="gender">
-    <?=implode('/',array_column($this->info['gender'],'label'))?>
+    <?=implode('/', array_column($this->info['gender'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['playedInstrument'])) : ?>
   <b><?=$this->transEsc('Instrument') . ': '?></b>
   <span property="playedInstrument">
-    <?=implode('; ',array_column($this->info['playedInstrument'],'label'))?>
+    <?=implode('; ', array_column($this->info['playedInstrument'], 'label'))?>
   </span><br />
 <?php endif; ?>
 <?php if (isset($this->info['affiliation'])) : ?>
   <b><?=$this->transEsc('Affiliation') . ': '?></b>
   <span property="affiliation">
-    <?=implode('/',array_column($this->info['affiliation'],'label'))?>
+    <?=implode('/', array_column($this->info['affiliation'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['placeOfActivity'])) : ?>
   <b><?=$this->transEsc('placeOfActivity') . ': '?></b>
   <span property="placeOfActivity">
-    <?=implode('/',array_column($this->info['placeOfActivity'],'label'))?>
+    <?=implode('/', array_column($this->info['placeOfActivity'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['geographicAreaCode'])) : ?>
   <b><?=$this->transEsc('GeographicAreaCode') . ': '?></b>
   <span property="geographicAreaCode">
-    <?=implode('; ',array_column($this->info['geographicAreaCode'],'label'))?>
+    <?=implode('; ', array_column($this->info['geographicAreaCode'], 'label'))?>
   </span><br />
 <?php endif; ?>
 <?php if (isset($this->info['gndSubjectCategory'])) : ?>
   <b><?=$this->transEsc('gndSubjectCategory') . ': '?></b>
   <span property="Category">
-    <?=implode(', ',array_column($this->info['gndSubjectCategory'],'label'))?>
+    <?=implode(', ', array_column($this->info['gndSubjectCategory'], 'label'))?>
   </span><br/>
 <?php endif; ?>
 <?php if (isset($this->info['publication'])) : ?>
   <b><?=$this->transEsc('Publications') . ':'?></b><br />
   <div class="publications">
-    <?=implode(' | ',$this->info['publication'])?>
+    <?=implode(' | ', $this->info['publication'])?>
   </div>
 <?php endif; ?>
 <?php if (isset($this->info['familialRelationship'])) : ?>
 <br/><b><?=$this->transEsc('Familial Relationship')?></b><br />
   <span property="familialRelationship">
-    <?=implode('; ',array_column($this->info['familialRelationship'],'label'))?>
+    <?=implode('; ', array_column($this->info['familialRelationship'], 'label'))?>
   </span>
 <?php endif; ?>
 <?php if (isset($this->info['professionalRelationship'])) : ?>
  <br/><b><?=$this->transEsc('Professional Relationship')?></b><br />
   <span property="professionalRelationship">
-    <?=implode('; ',array_column($this->info['professionalRelationship'],'label'))?>
+    <?=implode('; ', array_column($this->info['professionalRelationship'], 'label'))?>
   </span>
 <?php endif; ?>

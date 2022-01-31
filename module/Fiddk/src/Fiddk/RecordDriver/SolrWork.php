@@ -42,41 +42,39 @@ namespace Fiddk\RecordDriver;
  */
 class SolrWork extends SolrEdm
 {
-  /**
-   * Get type
-   *
-   * @return array
-   */
-  public function getAuthType()
-  {
-      return "Work";
-  }
+    /**
+     * Get type
+     *
+     * @return array
+     */
+    public function getAuthType()
+    {
+        return "Work";
+    }
 
-  /**
-   * Get the number of event records belonging to this work
-   *
-   * @return int Number of records
-   */
-  public function getEventCount()
-  {
-
-      $id = $this->getUniqueId();
-      $query = new \VuFindSearch\Query\Query(
-          'work_id:"' . $id . '"'
-      );
-      // Disable highlighting for efficiency; not needed here:
-      $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-      return $this->searchService
+    /**
+     * Get the number of event records belonging to this work
+     *
+     * @return int Number of records
+     */
+    public function getEventCount()
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            'work_id:"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        return $this->searchService
           ->search("SolrEvent", $query, 0, 0, $params)
           ->getTotal();
-  }
+    }
 
-  /**
-   * Returns links to provider
-   */
-   public function getSameAs()
-   {
-       return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
-   }
-
+    /**
+     * Returns links to provider
+     */
+    public function getSameAs()
+    {
+        return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
+    }
 }

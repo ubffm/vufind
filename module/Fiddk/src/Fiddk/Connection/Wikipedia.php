@@ -40,7 +40,6 @@ namespace Fiddk\Connection;
  */
 class Wikipedia extends \VuFind\Connection\Wikipedia
 {
-
     /**
      * This method is responsible for connecting to Wikimedia API
      * and gets JSON content from it
@@ -60,10 +59,9 @@ class Wikipedia extends \VuFind\Connection\Wikipedia
         $uri = 'http://' . $this->lang . '.wikipedia.org/w/api.php?action=query' . $request . '&format=json';
         $response = $this->client->setUri($uri)->setMethod('GET')->send();
         if ($response->isSuccess() && $body = $response->getBody()) {
-          $json = json_decode($body,true);
-          return $json["query"]["pages"];
+            $json = json_decode($body, true);
+            return $json["query"]["pages"];
         }
         return null;
     }
-
 }

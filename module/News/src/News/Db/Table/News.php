@@ -28,9 +28,9 @@
  */
 namespace News\Db\Table;
 
+use Laminas\Db\Adapter\Adapter;
 use VuFind\Db\Row\RowGateway;
 use VuFind\Db\Table\PluginManager;
-use Laminas\Db\Adapter\Adapter;
 
 /**
  * Table Definition for news
@@ -44,7 +44,6 @@ use Laminas\Db\Adapter\Adapter;
  */
 class News extends \VuFind\Db\Table\Gateway
 {
-
     /**
      * Constructor
      *
@@ -54,8 +53,12 @@ class News extends \VuFind\Db\Table\Gateway
      * @param RowGateway    $rowObj        Row prototype object (null for default)
      * @param string        $table         Name of database table to interface with
      */
-    public function __construct(Adapter $adapter, PluginManager $tm, $cfg,
-        ?RowGateway $rowObj = null, $table = 'news'
+    public function __construct(
+        Adapter $adapter,
+        PluginManager $tm,
+        $cfg,
+        ?RowGateway $rowObj = null,
+        $table = 'news'
     ) {
         parent::__construct($adapter, $tm, $cfg, $rowObj, $table);
     }
@@ -65,7 +68,7 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getArticle($guid)
     {
-      return $this->select(['guid' => $guid])->current();
+        return $this->select(['guid' => $guid])->current();
     }
 
     /*
@@ -73,7 +76,7 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getArticleById($id)
     {
-      return $this->select(['id' => $id])->current();
+        return $this->select(['id' => $id])->current();
     }
 
     /*
@@ -81,11 +84,11 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getNewsList()
     {
-      $callback = function ($select) {
-        $select->columns(['*']);
-        $select->order('news.startdate DESC');
-      };
-      return $this->select($callback);
+        $callback = function ($select) {
+            $select->columns(['*']);
+            $select->order('news.startdate DESC');
+        };
+        return $this->select($callback);
     }
 
     /*
@@ -93,12 +96,12 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function searchNews($searchTerm)
     {
-      $callback = function ($select) use ($searchTerm) {
-        $select->columns(['*']);
-        $select->where->like('title',"%$searchTerm%")->or->like('text',"%$searchTerm%");
-        $select->order('news.startdate DESC');
-      };
-      return $this->select($callback);
+        $callback = function ($select) use ($searchTerm) {
+            $select->columns(['*']);
+            $select->where->like('title', "%$searchTerm%")->or->like('text', "%$searchTerm%");
+            $select->order('news.startdate DESC');
+        };
+        return $this->select($callback);
     }
 
     /*
@@ -106,12 +109,12 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getCurrentArticles()
     {
-      $callback = function ($select) {
-        $select->columns(['*']);
-        $select->where(array('pin != true', 'active = true','startdate<=NOW()','enddate>=NOW() '));
-        $select->order('news.startdate DESC');
-      };
-      return $this->select($callback);
+        $callback = function ($select) {
+            $select->columns(['*']);
+            $select->where(['pin != true', 'active = true','startdate<=NOW()','enddate>=NOW() ']);
+            $select->order('news.startdate DESC');
+        };
+        return $this->select($callback);
     }
 
     /*
@@ -119,12 +122,12 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getPinnedArticles()
     {
-      $callback = function ($select) {
-        $select->columns(['*']);
-        $select->where(array('pin = true', 'active = true','startdate<=NOW()','enddate>=NOW() '));
-        $select->order('news.startdate DESC');
-      };
-      return $this->select($callback);
+        $callback = function ($select) {
+            $select->columns(['*']);
+            $select->where(['pin = true', 'active = true','startdate<=NOW()','enddate>=NOW() ']);
+            $select->order('news.startdate DESC');
+        };
+        return $this->select($callback);
     }
 
     /*
@@ -132,23 +135,23 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function getArchivedArticles()
     {
-      $callback = function ($select) {
-        $select->columns(['*']);
-        $select->where(array('active = true','enddate<=NOW()'));
-        $select->order('news.startdate DESC');
-      };
-      return $this->select($callback);
+        $callback = function ($select) {
+            $select->columns(['*']);
+            $select->where(['active = true','enddate<=NOW()']);
+            $select->order('news.startdate DESC');
+        };
+        return $this->select($callback);
     }
 
     /*
      * Update a certain news article
     */
-    public function updateArticle($data,$id)
+    public function updateArticle($data, $id)
     {
-      $callback = function ($select) use ($id) {
-           $select->where->equalTo('id', $id);
-       };
-       $this->update($data, $callback);
+        $callback = function ($select) use ($id) {
+            $select->where->equalTo('id', $id);
+        };
+        $this->update($data, $callback);
     }
 
     /*
@@ -156,7 +159,7 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function createArticle($data)
     {
-      return $this->insert($data);
+        return $this->insert($data);
     }
 
     /*
@@ -164,27 +167,27 @@ class News extends \VuFind\Db\Table\Gateway
     */
     public function deleteArticle($id)
     {
-      $callback = function ($select) use ($id) {
-           $select->where->equalTo('id', $id);
-       };
-       $this->delete($callback);
+        $callback = function ($select) use ($id) {
+            $select->where->equalTo('id', $id);
+        };
+        $this->delete($callback);
     }
 
     /*
      * Switch boolean values of article on or off (e.g. pin or activation)
     */
-    public function switchValue($value,$id)
+    public function switchValue($value, $id)
     {
-      $article = $this->getArticleById($id);
-      if(isset($article[$value])) {
-          if($article[$value] == 0){
-              $set = array($value => 1);
-          } else {
-              $set = array($value => 0);
-          }
-      } else {
-          $set = array($value => 1);
-      }
-      return $this->updateArticle($set,$id);
+        $article = $this->getArticleById($id);
+        if (isset($article[$value])) {
+            if ($article[$value] == 0) {
+                $set = [$value => 1];
+            } else {
+                $set = [$value => 0];
+            }
+        } else {
+            $set = [$value => 1];
+        }
+        return $this->updateArticle($set, $id);
     }
 }

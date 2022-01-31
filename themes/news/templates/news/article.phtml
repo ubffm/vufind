@@ -1,11 +1,11 @@
 <div class="news_article">
   <?php if ($article) : ?>
   <div class="news_meta">
-    <b><?php if ($article->startdate!=null) echo date_format(date_create($article->startdate), "d.m.Y");?> - <?=$this->transEsc('news::'.$article->category)?></b><br/>
-    <?php preg_match("/.+\((.+)\)/",$article->author,$match); ?>
+    <b><?php if ($article->startdate != null) echo date_format(date_create($article->startdate), "d.m.Y");?> - <?=$this->transEsc('news::' . $article->category)?></b><br/>
+    <?php preg_match("/.+\((.+)\)/", $article->author, $match); ?>
     <?=htmlentities($match[1])?>
   </div>
-  <?php if ($article->enclosure!=null || $article->enclosure='') :?>
+  <?php if ($article->enclosure != null || $article->enclosure = '') :?>
     <div class="news_pic">
       <img src="<?=$this->imageLink($article->enclosure)?>">
     </div>
@@ -25,13 +25,13 @@
         <p><strong>Downloads:</strong></p>
         <ul>
           <?php if ($article->dlname1 != null && $article->dlname1 != '') : ?>
-            <li><a href="<?=$this->imageLink("news/".$article->dl1)?>">» <?=htmlentities($article->dlname1)?></a></li>
+            <li><a href="<?=$this->imageLink("news/" . $article->dl1)?>">» <?=htmlentities($article->dlname1)?></a></li>
           <?php endif; ?>
           <?php if ($article->dlname2 != null && $article->dlname2 != '') : ?>
-            <li><a href="<?=$this->imageLink("news/".$article->dl2)?>">» <?=htmlentities($article->dlname2)?></a></li>
+            <li><a href="<?=$this->imageLink("news/" . $article->dl2)?>">» <?=htmlentities($article->dlname2)?></a></li>
           <?php endif; ?>
           <?php if ($article->dlname3 != null && $article->dlname3 != '') : ?>
-            <li><a href="<?=$this->imageLink("news/".$article->dl3)?>">» <?=htmlentities($article->dlname3)?></a></li>
+            <li><a href="<?=$this->imageLink("news/" . $article->dl3)?>">» <?=htmlentities($article->dlname3)?></a></li>
           <?php endif; ?>
         </ul>
     <?php endif; ?>

@@ -26,6 +26,7 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Search\SolrEvent;
+
 /**
  * Author Search Options
  *

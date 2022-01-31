@@ -23,8 +23,8 @@
         'filterList' => $this->params->getFilterList(true),
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
         'selectedShards' => $this->params->getSelectedShards(),
-        'ignoreHiddenFiltersInRequest' => isset($this->ignoreHiddenFiltersInRequest) ? $this->ignoreHiddenFiltersInRequest : false,
-        'ignoreHiddenFilterMemory' => isset($this->ignoreHiddenFilterMemory) ? $this->ignoreHiddenFilterMemory : false,
+        'ignoreHiddenFiltersInRequest' => $this->ignoreHiddenFiltersInRequest ?? false,
+        'ignoreHiddenFilterMemory' => $this->ignoreHiddenFilterMemory ?? false,
       ]
   );
 
@@ -91,8 +91,8 @@ foreach ($this->results->getRecommendations('top') as $index => $current): ?>
     <p>
       <?php
         $emptyMessage = $this->slot('empty-message')->get(
-          $this->translate('nohit_lookfor_entity_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)])
-        );
+      $this->translate('nohit_lookfor_entity_html', ['%%lookfor%%' => $this->escapeHtml($lookfor)])
+  );
         $this->layout()->srmessage = $emptyMessage;
         echo $emptyMessage;
       ?>
@@ -111,7 +111,7 @@ foreach ($this->results->getRecommendations('top') as $index => $current): ?>
     </form>
     <?=$this->render('search/list-' . $this->params->getView() . '.phtml')?>
     <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', ['idPrefix' => 'bottom_', 'formAttr' => 'search-cart-form'])?>
-    <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', ['results' => $this->results, 'options' => isset($this->paginationOptions) ? $this->paginationOptions : []])?>
+    <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', ['results' => $this->results, 'options' => $this->paginationOptions ?? []])?>
 
     <div class="searchtools hidden-print">
       <strong><?=$this->transEsc('Search Tools')?>:</strong>

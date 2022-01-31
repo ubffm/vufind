@@ -42,15 +42,14 @@ namespace Fiddk\RecordDriver;
  */
 class SolrEdm extends \VuFind\RecordDriver\SolrDefault
 {
-  use EdmReaderTrait;
-  use EdmBasicTrait;
-  use EdmAdvancedTrait;
+    use EdmReaderTrait;
+    use EdmBasicTrait;
+    use EdmAdvancedTrait;
 
-  protected $forbiddenSnippetFields = [
+    protected $forbiddenSnippetFields = [
         'author', 'author_id', 'title', 'title_short', 'title_full', 'event', 'event_id',
         'title_full_unstemmed', 'title_auth', 'title_sub', 'spelling', 'id', 'topic_id',
         'ctrlnum', 'author_variant', 'author2_variant', 'fullrecord', 'hierarchy_parent_id',
         'work','work_id'
     ];
-
 }

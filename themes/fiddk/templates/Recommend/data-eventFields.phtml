@@ -5,23 +5,23 @@
 <?php if (!empty($eventType)) : ?>
   <b><?=$this->transEsc('Type of Event') . ':'?></b>
   <span property="performingArtsType">
-    <?=implode($eventType,', ')?>
+    <?=implode($eventType, ', ')?>
   </span><br />
 <?php endif; ?>
 <?php if (!empty($this->info["genre"])) : ?>
   <b><?=$this->transEsc('Genre') . ':'?></b>
   <span property="genre">
-    <?=$this->escapeHtml(implode($this->info["genre"],'; '))?>
+    <?=$this->escapeHtml(implode($this->info["genre"], '; '))?>
   </span><br />
 <?php endif; ?>
 <?php if (!empty($eventDates)) : ?>
   <b><?=$this->transEsc('DateOfEvent') . ':'?></b>
   <?php $normDates = [];?>
   <?php foreach ($eventDates as $eventDate): ?>
-    <?php $normDates[] = $this->driver->translateDate($eventDate,$lang)?>
+    <?php $normDates[] = $this->driver->translateDate($eventDate, $lang)?>
   <?php endforeach; ?>
   <span property="edm:occuredAt">
-    <?=$this->escapeHtml(implode($normDates,', '))?>
+    <?=$this->escapeHtml(implode($normDates, ', '))?>
   </span><br/>
 <?php endif; ?>
 <?php if (!empty($eventPlaces)) : ?>
@@ -56,7 +56,7 @@
         <a href="<?=$authorityLookfor?>">
           <?=$this->escapeHtml($author)?>
         </a>
-        <?='(' . implode(', ', array_map(function($role) {return $this->transEsc('edm::' . $role);},array_unique($dataFields['role']))) . ')'?>
+        <?='(' . implode(', ', array_map(function ($role) {return $this->transEsc('edm::' . $role);}, array_unique($dataFields['role']))) . ')'?>
       </span>
       <?php
         // Strip whitespace before close tags to avoid spaces in front of commas:

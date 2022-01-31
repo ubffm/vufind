@@ -38,38 +38,38 @@ namespace Fiddk\View\Helper\Fiddk;
  */
 class Piwik extends \VuFind\View\Helper\Root\Piwik
 {
-  /**
-   * Returns Piwik code (if active) or empty string if not.
-   *
-   * @param array $params Parameters
-   *
-   * @return string
-   */
-  public function __invoke($params = null)
-  {
-      if (!$this->url) {
-          return '';
-      }
+    /**
+     * Returns Piwik code (if active) or empty string if not.
+     *
+     * @param array $params Parameters
+     *
+     * @return string
+     */
+    public function __invoke($params = null)
+    {
+        if (!$this->url) {
+            return '';
+        }
 
-      $this->params = $params;
-      if (isset($this->params['lightbox'])) {
-          $this->lightbox = $this->params['lightbox'];
-      }
+        $this->params = $params;
+        if (isset($this->params['lightbox'])) {
+            $this->lightbox = $this->params['lightbox'];
+        }
 
-      $results = $this->getSearchResults();
-      if ($results && ($combinedResults = $this->getCombinedSearchResults())) {
-          $code = $this->trackCombinedSearch($results, $combinedResults);
-      } elseif ($results) {
-          $code = $this->trackSearch($results);
-      } elseif ($recordDriver = $this->getRecordDriver()) {
-          $code = $this->trackRecordPage($recordDriver);
-      } else {
-          $code = $this->trackPageView();
-      }
+        $results = $this->getSearchResults();
+        if ($results && ($combinedResults = $this->getCombinedSearchResults())) {
+            $code = $this->trackCombinedSearch($results, $combinedResults);
+        } elseif ($results) {
+            $code = $this->trackSearch($results);
+        } elseif ($recordDriver = $this->getRecordDriver()) {
+            $code = $this->trackRecordPage($recordDriver);
+        } else {
+            $code = $this->trackPageView();
+        }
 
-      $inlineScript = $this->getView()->plugin('inlinescript');
-      // needed, as normally only W3C approved attributes are allowed
-      $inlineScript->setAllowArbitraryAttributes(true);
-      return $inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $code, 'SET', ['data-type' => 'application/javascript','data-name' => 'matomo'],'text/plain');
-  }
+        $inlineScript = $this->getView()->plugin('inlinescript');
+        // needed, as normally only W3C approved attributes are allowed
+        $inlineScript->setAllowArbitraryAttributes(true);
+        return $inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $code, 'SET', ['data-type' => 'application/javascript','data-name' => 'matomo'], 'text/plain');
+    }
 }

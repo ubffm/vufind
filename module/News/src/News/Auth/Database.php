@@ -43,6 +43,7 @@ namespace News\Auth;
 class Database extends \VuFind\Auth\Database
 {
     // Only admin user is allowed to log in
+
     /**
      * Does this authentication method support account creation?
      *
@@ -52,5 +53,4 @@ class Database extends \VuFind\Auth\Database
     {
         return false;
     }
-
 }
