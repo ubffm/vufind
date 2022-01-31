@@ -286,19 +286,6 @@ class User extends RowGateway implements \VuFind\Db\Table\DbTableAwareInterface,
     }
 
     /**
-     * Get tags assigned by the user to a favorite list.
-     *
-     * @param int $listId List id
-     *
-     * @return \Laminas\Db\ResultSet\AbstractResultSet
-     */
-    public function getListTags($listId)
-    {
-        return $this->getDbTable('Tags')
-            ->getForList($listId, $this->id);
-    }
-
-    /**
      * Same as getTags(), but returns a string for use in edit mode rather than an
      * array of tag objects.
      *

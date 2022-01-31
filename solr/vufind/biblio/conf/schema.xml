@@ -95,6 +95,19 @@
         <filter class="solr.ICUFoldingFilterFactory"/>
       </analyzer>
     </fieldType>
+    <!-- Field for SolrPrefix autocomplete -->
+    <fieldType name="text_autocomplete" class="solr.TextField" positionIncrementGap="100" omitNorms="true">
+      <analyzer type="index">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>
+        <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="25" />
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    <!-- Field for Playbill Search -->
     <fieldType name="playbillSearch" class="solr.TextField" omitNorms="true">
       <analyzer>
         <tokenizer class="solr.PatternTokenizerFactory" pattern="^\d{4}-(\d{2}-\d{2}).*$" group="1"/>
