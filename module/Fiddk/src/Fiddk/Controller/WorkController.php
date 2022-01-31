@@ -105,7 +105,7 @@ class WorkController extends \VuFind\Controller\AbstractSearch
         $request = $this->getRequest()->getQuery()->toArray()
         + $this->getRequest()->getPost()->toArray();
         $lastView = $this->getSearchMemory()
-        ->retrieveLastSetting($this->searchClassId, 'view');
+            ->retrieveLastSetting($this->searchClassId, 'view');
         $view->results = $results = $runner->run(
             $request,
             $this->searchClassId,
@@ -145,7 +145,7 @@ class WorkController extends \VuFind\Controller\AbstractSearch
         }
         // Search toolbar
         $config = $this->serviceLocator->get(\VuFind\Config\PluginManager::class)
-        ->get('config');
+            ->get('config');
         $view->showBulkOptions = isset($config->Site->showBulkOptions)
         && $config->Site->showBulkOptions;
         return $view;

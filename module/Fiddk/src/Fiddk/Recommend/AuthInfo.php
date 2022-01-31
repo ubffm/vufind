@@ -109,7 +109,7 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * Constructor
      *
      * @param \VuFind\Search\Results\PluginManager $results Results plugin manager
-     * @param \Laminas\Http\Client                    $client  HTTP client
+     * @param \Laminas\Http\Client                 $client  HTTP client
      * @param string                               $sources Source identifiers
      * (currently, only 'wikipedia' is supported)
      */
@@ -148,8 +148,8 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      * be needed.
      *
      * @param \VuFind\Search\Base\Params $params  Search parameter object
-     * @param \Laminas\StdLib\Parameters    $request Parameter object representing user
-     * request.
+     * @param \Laminas\StdLib\Parameters $request Parameter object representing user
+     *                                            request.
      *
      * @return void
      */
@@ -194,7 +194,8 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
     {
         preg_match('/(\d{4})-(\d{2})-(\d{2})/', $date, $matches, PREG_OFFSET_CAPTURE);
         if (!empty($matches) && isset($matches[1][0]) && isset($matches[2][0])
-          && isset($matches[3][0])) {
+            && isset($matches[3][0])
+        ) {
             $str = '';
             if ($matches[3][0][0] == '0') {
                 $str .= $matches[3][0][1];
@@ -288,16 +289,16 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
      */
     public function getPicSource($thumbnail)
     {
-        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)):
-        $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
-        $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
-        if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])):
-          return [$imageInfo["Artist"]["value"],
+        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)) :
+            $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
+            $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
+            if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])) :
+                return [$imageInfo["Artist"]["value"],
                   "https://commons.wikimedia.org/wiki/File:" . $fname[1],
                   $imageInfo["LicenseShortName"]["value"]]; else:
-          return null;
-        endif; else:
-        return null;
-        endif;
+                      return null;
+                  endif; else:
+                      return null;
+                  endif;
     }
 }

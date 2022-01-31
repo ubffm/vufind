@@ -124,15 +124,15 @@ class NewsController extends \VuFind\Controller\AbstractBase
             // set actions
             if (isset($setParam)) {
                 switch ($setParam) {
-                    case 'act':
-                        $news->switchValue('active', $idParam);
-                        break;
-                    case 'pin':
-                        $news->switchValue('pin', $idParam);
-                        break;
-                    case 'del':
-                        $news->deleteArticle($idParam);
-                        break;
+                case 'act':
+                    $news->switchValue('active', $idParam);
+                    break;
+                case 'pin':
+                    $news->switchValue('pin', $idParam);
+                    break;
+                case 'del':
+                    $news->deleteArticle($idParam);
+                    break;
                 }
             }
 
@@ -176,10 +176,12 @@ class NewsController extends \VuFind\Controller\AbstractBase
         $feed->setTitle('Fachinformationsdienst Darstellende Kunst');
         $feed->setLink($url);
         $feed->setFeedLink($url . '/news/rss', 'atom');
-        $feed->setDescription('An der Universitätsbibliothek Johann Christian Senckenberg (UB Frankfurt am Main) wird ab 2015 der
+        $feed->setDescription(
+            'An der Universitätsbibliothek Johann Christian Senckenberg (UB Frankfurt am Main) wird ab 2015 der
         Fachinformationsdienst (FID) Darstellende Kunst für die Theater- und Tanzwissenschaft aufgebaut. Hervorgegangen sind die
         von der DFG-geförderten Fachinformationsdienste für die Wissenschaft aus dem System der Sondersammelgebiete, die durch
-        dieses Förderangebot abgelöst werden.');
+        dieses Förderangebot abgelöst werden.'
+        );
         $feed->setLanguage('de-de');
         $feed->setCopyright('Fachinformationsdienst Darstellende Kunst');
         $feed->setDateModified(time());

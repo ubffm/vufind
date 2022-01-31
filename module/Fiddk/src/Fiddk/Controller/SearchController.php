@@ -21,10 +21,10 @@
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org Main Site
+ * @link https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
 
@@ -33,10 +33,10 @@ namespace Fiddk\Controller;
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org Main Site
+ * @link https://vufind.org Main Site
  */
 class SearchController extends \VuFind\Controller\SearchController
 {

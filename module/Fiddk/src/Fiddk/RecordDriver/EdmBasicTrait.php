@@ -340,12 +340,14 @@ trait EdmBasicTrait
         $retVal = [];
         if (isset($this->fields['related_to'])) {
             $ids = $this->fields['related_to'];
-            array_walk($ids, function (&$id) use (&$retVal) {
-                $title = $this->getTitleIfExists($id, $this->sourceIdentifier);
-                if ($title) {
-                    $retVal[$id] = $title;
+            array_walk(
+                $ids, function (&$id) use (&$retVal) {
+                    $title = $this->getTitleIfExists($id, $this->sourceIdentifier);
+                    if ($title) {
+                        $retVal[$id] = $title;
+                    }
                 }
-            });
+            );
         }
         return $retVal;
     }
@@ -374,10 +376,10 @@ trait EdmBasicTrait
         if ($extended) {
             foreach ($headings as $i => $heading) {
                 $retVal[] = [
-              'heading' => $heading,
-              'type' => $contextRoles[$i] ?? '',
-              'source' => $contextIds[$i] ?? ''
-            ];
+                'heading' => $heading,
+                'type' => $contextRoles[$i] ?? '',
+                'source' => $contextIds[$i] ?? ''
+                ];
             }
         }
 

@@ -80,9 +80,9 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
     /**
      * Constructor
      *
-     * @param ResultsManager    $results  Results manager
-     * @param SearchRunner      $sr       Search runner
-     * @param SessionSettings   $ss       Session settings
+     * @param ResultsManager  $results Results manager
+     * @param SearchRunner    $sr      Search runner
+     * @param SessionSettings $ss      Session settings
      */
     public function __construct(
         SessionSettings $ss,

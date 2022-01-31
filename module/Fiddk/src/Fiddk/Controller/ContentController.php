@@ -16,7 +16,7 @@ class ContentController extends \VuFind\Controller\ContentController
         $licenseView = $this->createViewModel(
             [
               'link'    => $this->licenceLink($this->link),
-      ]
+            ]
         );
 
         // render page without vufind/fid layout
@@ -52,10 +52,10 @@ class ContentController extends \VuFind\Controller\ContentController
             $page = "{$page}_$defaultLanguage";
         }
         if (empty($page) || 'content' === $page
-        || null === $themeInfo->findContainingTheme(
-            "templates/content/$page.phtml"
-        )
-    ) {
+            || null === $themeInfo->findContainingTheme(
+                "templates/content/$page.phtml"
+            )
+        ) {
             return $this->notFoundAction($this->getResponse());
         }
         $view = $this->createViewModel(['page' => $page]);

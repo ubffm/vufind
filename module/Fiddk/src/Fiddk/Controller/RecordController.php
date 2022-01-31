@@ -21,10 +21,10 @@
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org Main Site
+ * @link https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
 
@@ -33,10 +33,10 @@ namespace Fiddk\Controller;
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org Main Site
+ * @link https://vufind.org Main Site
  */
 class RecordController extends \VuFind\Controller\RecordController
 {
@@ -82,20 +82,20 @@ class RecordController extends \VuFind\Controller\RecordController
 
         // Set default values if applicable:
         if ((!isset($view->to) || empty($view->to)) && $user
-          && isset($config->Mail->user_email_in_to)
-          && $config->Mail->user_email_in_to
-      ) {
+            && isset($config->Mail->user_email_in_to)
+            && $config->Mail->user_email_in_to
+        ) {
             $view->to = $user->email;
         }
         if (!isset($view->from) || empty($view->from)) {
             if ($user && isset($config->Mail->user_email_in_from)
-              && $config->Mail->user_email_in_from
-          ) {
+                && $config->Mail->user_email_in_from
+            ) {
                 $view->userEmailInFrom = true;
                 $view->from = $user->email;
             } elseif (isset($config->Mail->default_from)
-              && $config->Mail->default_from
-          ) {
+                && $config->Mail->default_from
+            ) {
                 $view->from = $config->Mail->default_from;
             }
         }

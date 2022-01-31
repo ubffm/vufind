@@ -47,11 +47,11 @@ class News extends \VuFind\Db\Table\Gateway
     /**
      * Constructor
      *
-     * @param Adapter       $adapter       Database adapter
-     * @param PluginManager $tm            Table manager
-     * @param array         $cfg           Laminas Framework configuration
-     * @param RowGateway    $rowObj        Row prototype object (null for default)
-     * @param string        $table         Name of database table to interface with
+     * @param Adapter       $adapter Database adapter
+     * @param PluginManager $tm      Table manager
+     * @param array         $cfg     Laminas Framework configuration
+     * @param RowGateway    $rowObj  Row prototype object (null for default)
+     * @param string        $table   Name of database table to interface with
      */
     public function __construct(
         Adapter $adapter,

@@ -199,13 +199,13 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'primary' => 'dc:contributor',
             'secondary' => 'dc:contributor',
             'corporate' => 'Corporate Author',
-        ];
+            ];
             // Lookup array of schema labels.
             $schemaLabels = [
             'primary' => 'author',
             'secondary' => 'author',
             'corporate' => 'creator'
-        ];
+            ];
             // Lookup array of sort orders.
             $order = ['primary' => 1, 'secondary' => 2, 'corporate' => 3];
             // Sort the data:
@@ -226,7 +226,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
                         ],
                     ],
                 ],
-            ];
+                ];
             }
             return $final;
         };

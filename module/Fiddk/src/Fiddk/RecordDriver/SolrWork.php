@@ -19,12 +19,12 @@
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Ere Maijala <ere.maijala@helsinki.fi>
- * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @author  Ere Maijala <ere.maijala@helsinki.fi>
+ * @author  Julia Beck <j.beck@ub.uni-frankfurt.de>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
+ * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 namespace Fiddk\RecordDriver;
 
@@ -33,12 +33,12 @@ namespace Fiddk\RecordDriver;
  *
  * @category VuFind
  *
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Ere Maijala <ere.maijala@helsinki.fi>
- * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @author  Demian Katz <demian.katz@villanova.edu>
+ * @author  Ere Maijala <ere.maijala@helsinki.fi>
+ * @author  Julia Beck <j.beck@ub.uni-frankfurt.de>
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  *
- * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
+ * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 class SolrWork extends SolrEdm
 {
@@ -66,8 +66,8 @@ class SolrWork extends SolrEdm
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
         return $this->searchService
-          ->search("SolrEvent", $query, 0, 0, $params)
-          ->getTotal();
+            ->search("SolrEvent", $query, 0, 0, $params)
+            ->getTotal();
     }
 
     /**

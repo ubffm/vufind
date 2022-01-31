@@ -136,7 +136,7 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
     /**
      * Prefill form callNumber field for ask archive requests
      *
-     * @param Form  $form Form
+     * @param Form  $form       Form
      * @param array $callNumber
      *
      * @return Form

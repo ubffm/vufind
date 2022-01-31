@@ -5,17 +5,15 @@
  *
  * PHP version 7
  *
- *
- * @category  File_Formats
- * @package   EDM
- * @author    Julia Beck <j.beck@ub.uni-frankfurt.de>
+ * @category File_Formats
+ * @package  EDM
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  */
 
 /**
  * Represents a single EDM record
  *
  * An EDM record contains core and zero or more contextual classes with one or more properties.
- *
  */
 namespace Fiddk\RecordDriver\EDM;
 
