@@ -58,6 +58,11 @@ class Module
     public function getAutoloaderConfig()
     {
         return [
+            'Laminas\Loader\ClassMapAutoloader' => [
+                'classes' => [
+                    'minSO' => __DIR__ . '/src/VuFind/Search/minSO.php'
+                ]
+            ],
             'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,

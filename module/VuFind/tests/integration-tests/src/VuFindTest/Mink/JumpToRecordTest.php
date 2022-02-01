@@ -39,7 +39,6 @@ namespace VuFindTest\Mink;
  */
 class JumpToRecordTest extends \VuFindTest\Integration\MinkTestCase
 {
-    use \VuFindTest\Unit\AutoRetryTrait;
 
     /**
      * Test that we can jump to the first record in a single-record result set.
