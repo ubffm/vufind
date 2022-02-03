@@ -4,6 +4,7 @@ return [
     'js' => [
         'klaro-config.js',
         'klaro-no-css.js',
+        'custom.js',
     ],
     'favicon' => 'fid-dk_favicon.png',
     'helpers' => [

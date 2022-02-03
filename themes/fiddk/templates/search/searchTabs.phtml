@@ -5,26 +5,15 @@
         <li id="<?=$tab['id']?>"<?=$tab['selected'] ? ' class="active"' : ''?>>
           <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>>
             <?=$this->transEsc($tab['label']); ?></a>
-        <?php if ($tab['id'] == "SolrEvent" && !$tab['selected']) :
-                $url = str_replace("/EventSearch/Results", "/AJAX/json", $tab['url']);
-              elseif ($tab['id'] === "SolrAuthor" && !$tab['selected']):
-                $url = str_replace("/AgentSearch/Results", "/AJAX/json", $tab['url']);
-              elseif ($tab['id'] === "SolrWork" && !$tab['selected']):
-                $url = str_replace("/WorkSearch/Results", "/AJAX/json", $tab['url']);
-              elseif (!$tab['selected']):
-                $url = str_replace("/Search/Results", "/AJAX/json", $tab['url']);
-              endif;
-              if (isset($url) && !$tab['selected']) {
-                $var = <<<JS
-                  $(document).ready(function() {
-                    $.getJSON("{$url}", {method: "GetTotalResults",searchClassId: "{$tab['id']}"},
-                  function (data) {
-                    $("#{$tab['id']} > a").append(data['data']['localizedTotal']);
-                  });
-                });
-JS;
-              $this->headScript()->appendScript($var);
-          }?>
+          <?php if(!$tab['selected']):?>
+            <?php $script = <<<JS
+              $(document).ready(function() {
+                addTotalResults("{$tab['id']}","{$tab['url']}");
+              })
+              JS;
+            ?>
+            <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+            <?php endif; ?>
         </li>
       <?php elseif ($block = $this->permission()->getAlternateContent($tab['permission'])): ?>
             <?=$block?>

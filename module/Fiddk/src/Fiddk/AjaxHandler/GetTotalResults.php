@@ -32,7 +32,6 @@ use Laminas\Mvc\Controller\Plugin\Params;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Renderer\RendererInterface;
 use VuFind\Search\Results\PluginManager as ResultsManager;
-use VuFind\Search\SearchRunner;
 use VuFind\Session\Settings as SessionSettings;
 
 /**
@@ -66,13 +65,6 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
     /**
      * Search runner
      *
-     * @var SearchRunner
-     */
-    protected $searchRunner;
-
-    /**
-     * Search runner
-     *
      * @var RendererInterface
      */
     protected $renderer;
@@ -87,12 +79,10 @@ class GetTotalResults extends \VuFind\AjaxHandler\AbstractBase
     public function __construct(
         SessionSettings $ss,
         ResultsManager $rm,
-        SearchRunner $sr,
         RendererInterface $renderer
     ) {
         $this->sessionSettings = $ss;
         $this->resultsManager = $rm;
-        $this->searchRunner = $sr;
         $this->renderer = $renderer;
     }
 

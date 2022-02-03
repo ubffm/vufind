@@ -40,68 +40,88 @@ var dprovs = {
 function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, dprovs)
 {
   var json = [];
+  var selected = VuFind.translate('Selected');
+  var separator = VuFind.translate('number_thousands_separator');
 
-  $(data).each(function facetNodesEach() {
-    var $html = $('<div/>').addClass('facet');
-    var url = currentPath + this.href;
-    var $item = $('<span/>')
-      .addClass('main text' + (this.isApplied ? ' applied' : ''))
-      .attr('role', 'menuitem')
-      .attr('title', this.displayText);
+  for (var i = 0; i < data.length; i++) {
+    var facet = data[i];
+    var html = document.createElement('div');
+    html.className = 'facet';
 
-    var $description = $('<span/>')
-      .addClass('facet-value')
-      .append(this.displayText);
-    $item.append($description);
+    var url = currentPath + facet.href;
+    var item = document.createElement('span');
+    item.className = 'main text';
+    if (facet.isApplied) {
+      item.className += ' applied';
+    }
+    item.setAttribute('title', facet.displayText);
+    item.setAttribute('role', 'menuitem');
+    var icon = document.createElement('i');
+    icon.className = 'fa';
+    if (facet.operator === 'OR') {
+      if (facet.isApplied) {
+        //icon.className += ' fa-check-square-o';
+        icon.title = selected;
+      } else {
+        //icon.className += ' fa-square-o';
+        icon.setAttribute('aria-hidden', 'true');
+      }
+      item.appendChild(icon);
+    } else if (facet.isApplied) {
+      icon.className += ' fa-check pull-right';
+      icon.setAttribute('title', selected);
+      item.appendChild(icon);
+    }
+    var description = document.createElement('span');
+    description.className = 'facet-value';
+    description.appendChild(document.createTextNode(facet.displayText));
+    item.appendChild(description);
+    html.appendChild(item);
 
-    $item.appendTo($html);
-
-    if (!this.isApplied && counts) {
-      $('<span/>')
-        .addClass('badge')
-        .html(
-          this.count.toString().replace(/\B(?=(\d{3})+\b)/g, VuFind.translate('number_thousands_separator'))
-        )
-        .appendTo($html);
-
+    if (!facet.isApplied && counts) {
+      var badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.appendChild(document.createTextNode(facet.count.toString().replace(/\B(?=(\d{3})+\b)/g, separator)));
+      html.appendChild(badge);
       if (allowExclude) {
-        var excludeUrl = currentPath + this.exclude;
-        var $a = $('<a/>')
-          .addClass('exclude')
-          .attr('href', excludeUrl)
-          .attr('title', excludeTitle);
-        $('<i/>').addClass('fa fa-times').appendTo($a);
-        $a.appendTo($html);
+        var excludeUrl = currentPath + facet.exclude;
+        var a = document.createElement('a');
+        a.className = 'exclude';
+        a.setAttribute('href', excludeUrl);
+        a.setAttribute('title', excludeTitle);
+
+        var inIcon = document.createElement('i');
+        inIcon.className = 'fa fa-times';
+        a.appendChild(inIcon);
+        html.appendChild(a);
       }
     }
 
-    $html = $('<div/>').append($html);
-
     var children = null;
-    if (typeof this.children !== 'undefined' && this.children.length > 0) {
-      children = buildFacetNodes(this.children, currentPath, allowExclude, excludeTitle, counts, dprovs);
+    if (typeof facet.children !== 'undefined' && facet.children.length > 0) {
+      children = buildFacetNodes(facet.children, currentPath, allowExclude, excludeTitle, counts, dprovs);
     }
 
     var dprov = '';
-    var normText = this.displayText.replace(/(\n|\s)/gm,"");
+    var normText = facet.displayText.replace(/(\n|\s)/gm,"");
     if (dprovs.hasOwnProperty(normText)) {
       dprov = dprovs[normText];
     }
 
     json.push({
-      'text': $html.html(),
+      'text': html.outerHTML,
       'children': children,
-      'applied': this.isApplied,
+      'applied': facet.isApplied,
       'state': {
-        'opened': this.hasAppliedChildren
+        'opened': facet.hasAppliedChildren
       },
-      'li_attr': this.isApplied ? { 'class': 'active' } : {},
+      'li_attr': facet.isApplied ? { 'class': 'active' } : {},
       'dprov': dprov,
       'data': {
         'url': url.replace(/&amp;/g, '&')
       }
     });
-  });
+  }
 
   return json;
 }
@@ -119,7 +139,7 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
   var operator = treeNode.data('operator');
 
   var results = buildFacetNodes(facetData, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
-  treeNode.find('.fa-spinner').parent().remove();
+  treeNode.find('.loading-spinner').parent().remove();
   if (inSidebar) {
     treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
       var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
@@ -198,9 +218,9 @@ function initFacetTree(treeNode, inSidebar)
   treeNode.data('loaded', true);
 
   if (inSidebar) {
-    treeNode.prepend('<li class="list-group-item"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></li>');
+      treeNode.prepend('<li class="list-group-item">' + VuFind.loading() + '</li>');
   } else {
-    treeNode.prepend('<div><i class="fa fa-spinner fa-spin" aria-hidden="true"></i><div>');
+    treeNode.prepend('<div>' + VuFind.loading() + '<div>');
   }
   var request = {
     method: "getFacetData",
@@ -240,8 +260,9 @@ VuFind.register('sideFacets', function SideFacets() {
   function showLoadingOverlay(e, data) {
     e.preventDefault();
     var overlay = '<div class="facet-loading-overlay">'
-      + '<span class="facet-loading-overlay-label">' + VuFind.translate('loading')
-      + "...</span></div>";
+      + '<span class="facet-loading-overlay-label">'
+      + VuFind.loading()
+      + "</span></div>";
     $(this).closest(".collapse").append(overlay);
     // This callback operates both as a click handler and a JSTree callback;
     // if the data element is undefined, we assume we are handling a click.
@@ -438,6 +459,10 @@ VuFind.register('lightbox_facets', function LightboxFacets() {
 
   return { setup: setup };
 });
+
+function registerSideFacetTruncation() {
+  VuFind.truncate.initTruncate('.truncate-facets', '.facet');
+}
 
 function registerMoreLessFacetsEventHandlers() {
   $('.more-facets, .less-facets').off('click');
