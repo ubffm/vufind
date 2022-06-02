@@ -25,6 +25,10 @@
               <xsl:when test="text()">
                 <div class="breaking"><xsl:value-of select="text()"/></div>
               </xsl:when>
+              <xsl:when test="@rdf:label">
+                <div class="breaking edm-attr"><xsl:value-of select="concat('rdf:label=&quot;',./@rdf:label,'&quot;')"/></div>
+                <div class="breaking edm-attr"><xsl:value-of select="concat('rdf:resource=&quot;',./@rdf:resource,'&quot;')"/></div>
+              </xsl:when>
               <xsl:otherwise>
                 <div class="breaking edm-attr"><xsl:value-of select="concat('rdf:resource=&quot;',./@rdf:resource,'&quot;')"/></div>
               </xsl:otherwise>
