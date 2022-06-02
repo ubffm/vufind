@@ -124,6 +124,11 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'data-publicationDetails.phtml'
         );
         $spec->setTemplateLine(
+            'dcterms:created',
+            'getCreationDetails',
+            'data-placeDateDetails.phtml'
+        );
+        $spec->setTemplateLine(
             'DatesPlaces',
             'getPlaceDateDetails',
             'data-placeDateDetails.phtml'

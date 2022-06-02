@@ -95,7 +95,12 @@ class EdmRecord
                 $resLink = $this->getResourceVal($prop);
                 if ($resLink) {
                     if (in_array($name[1], ["temporal","issued", "created"])) {
+                      $label = $this->getLabel($prop);
+                      if ($label) {
+                        $vals[] = $label;
+                      } else {
                         $vals[] = $resLink;
+                      }
                     } else {
                         $vals[] = $this->findMatchingPropVal($resLink, $fieldName);
                     }
@@ -118,6 +123,12 @@ class EdmRecord
     {
         $attrs = $prop->attributes("rdf", true);
         return isset($attrs["resource"]) ? $attrs["resource"]->__toString() : "";
+    }
+
+    public function getLabel($prop = null)
+    {
+        $attrs = $prop->attributes("rdf", true);
+        return isset($attrs["label"]) ? $attrs["label"]->__toString() : "";
     }
 
     public function getLinkedPropValues($prop = "", $class = "", $fieldName = "")

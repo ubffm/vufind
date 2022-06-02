@@ -22,4 +22,5 @@ public/swagger-ui
 composer.lock
 .vagrant
 local/config/vufind/config.ini
+local/harvest/oai.ini
 *.conf

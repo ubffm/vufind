@@ -76,10 +76,11 @@
           <?php endif; ?>
           <?php $placeDateDetails = $this->driver->getPlaceDateDetails();?>
           <?php if (empty($pubDetails) && !empty($placeDateDetails)): ?>
+            <?=!empty($journalTitles || $summAuthors) ? '<br />' : ''?>
             <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver, 'highlight' => true]);?>
           <?php endif; ?>
           <?php $extent = $this->driver->getExtent();?>
-            <?php if (!empty($extent)): ?>
+            <?php if (!empty($extent) && ($this->driver->getSummary() && $this->record($this->driver)->getFormatList())): ?>
               <?php if (!empty($pubDetails) && empty($journalTitles)):?>
                 <br/>
               <?php endif; ?>
@@ -171,7 +172,7 @@
 
       <?php if ($institution = $this->driver->getInstitution()): ?>
       <div class="result-institutions">
-          <span class="badge"><?=$this->transEsc("dprov::" . $institution);?></span>
+          <p class="provider-badge"><?=$this->transEsc("dprov::" . $institution);?></p>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
           <a class="badge badge-secondary" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
         <?php endif; ?>

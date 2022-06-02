@@ -1,4 +1,4 @@
-<?php foreach ($data as $field):
+<?php foreach ($data as $key => $field):
   $place = $field->getPlace();
   $date = $field->getDate(); ?>
   <span property="publisher" typeof="Organization">
@@ -12,6 +12,6 @@
       <span property="date"><?=$this->driver->translateDate($date, 'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
-  </span>
-  <br/>
+</span><?php if ($key + 1 != count($data)):?>; <?php endif; ?>
 <?php endforeach; ?>
+<br/>

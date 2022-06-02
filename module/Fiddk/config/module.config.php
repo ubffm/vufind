@@ -94,6 +94,16 @@ $config = [
           'GetTotalResults' => 'Fiddk\AjaxHandler\GetTotalResults',
         ],
       ],
+      'autocomplete' => [
+        'factories' => [
+          'Fiddk\Autocomplete\SolrAuthor' => 'VuFind\Autocomplete\SolrFactory',
+          'Fiddk\Autocomplete\SolrEvent' => 'VuFind\Autocomplete\SolrFactory',
+        ],
+        'aliases' => [
+          'solrauthor' => 'Fiddk\Autocomplete\SolrAuthor',
+          'solrevent' => 'Fiddk\Autocomplete\SolrEvent',
+        ],
+      ],
       'recommend' => [
         'factories' => [
           'Fiddk\Recommend\AuthInfo' => 'VuFind\Recommend\AuthorInfoFactory',

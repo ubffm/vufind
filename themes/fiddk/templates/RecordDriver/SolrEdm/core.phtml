@@ -8,7 +8,7 @@
   <?php if ($QRCode || $cover || $preview): ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
       <?php /* Display thumbnail if appropriate: */ ?>
-      <?php if($cover): ?>
+      <?php if($coverDetails['cover']): ?>
         <?=$cover?>
       <?php endif; ?>
 

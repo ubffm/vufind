@@ -10,7 +10,7 @@ AllFields:
     - see_also_keywords^100
     - allfields
   DismaxParams:
-    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name")^500]
+    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name" OR record_type:"Event")^500]
   DismaxHandler: edismax
 
 Heading:
@@ -19,14 +19,14 @@ Heading:
     - use_for_keywords^400
     - see_also_keywords^100
   DismaxParams:
-    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name")^500]
+    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name" OR record_type:"Event")^500]
   DismaxHandler: edismax
 
 MainHeading:
   DismaxFields:
     - heading_keywords^750
   DismaxParams:
-    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name")^500]
+    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name" OR record_type:"Event")^500]
   DismaxHandler: edismax
 
 Agent:

@@ -16,31 +16,44 @@
       <div class="item active">
         <?php foreach ($similarRecords as $index => $data): ?>
           <div class="carousel-item">
-            <a class="hover-overlay" href="<?=$this->recordLink()->getUrl($data)?>">
-              <?php $thumb = $this->record($data)->getThumbnail('large'); ?>
-              <?php if ($thumb) :?>
-              <img src="<?=$thumb ?>" alt="<?=$this->escapeHtml($data->getTitle()) ?>" title="<?=$this->escapeHtml($data->getTitle()) ?>"/>
+            <a class="hover-overlay record-cover-link" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getUrl($data))?>">
+              <?php $thumb = $this->record($data)->getCoverDetails('similar-items', 'small')['html'];
+                    $formats = $data->getFormats(); ?>
+              <?php if (strpos($thumb,"Cover/Unavailable") === false) :?>
+              <?=$thumb?>
               <div class="content">
                 <div class="contentDarker">
-                <?php $formats = $data->getFormats(); ?>
-                <b><?=$this->escapeHtml($data->getTitle())?></b>
-                <?php if ($data->getFormats()) :?>
-                  <p><?=implode(', ', $data->getFormats());?></p>
+                <b><?=$this->escapeHtml($data->getTitle())?></b><br/>
+                <?php if ($formats) :?>
+                  <?=implode(', ', $formats);?><br/>
                 <?php endif; ?>
-                <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
+                <?php $pubDetails = $data->getPublicationDetails();
+                      $placeDateDetails = $data->getPlaceDateDetails();?>
+                <?php if (!empty($pubDetails)): ?>
+                  <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
+                <?php endif; ?>
+                <?php if (!empty($placeDateDetails)): ?>
+                  <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
+                <?php endif; ?>
+                <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitution());?></p>
                 </div>
               </div>
             <?php else: ?>
             <div class="content">
             </div>
-            <p><?=$data->getTitle();?></p>
-            <?php if ($data->getSubTitle()) :?>
-              <p><?=implode(', ', $data->getSubTitle());?></p>
+            <b><?=$this->escapeHtml($data->getTitle())?></b><br/>
+            <?php if ($formats) :?>
+              <?=implode(', ', $formats);?><br/>
             <?php endif; ?>
-            <?php if ($data->getFormats()) :?>
-              <p><?=implode(', ', $data->getFormats());?></p>
+            <?php $pubDetails = $data->getPublicationDetails();
+                  $placeDateDetails = $data->getPlaceDateDetails();?>
+            <?php if (!empty($pubDetails)): ?>
+              <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
             <?php endif; ?>
-            <p><?=$this->transEsc("Institution") . ': ' . $data->getInstitution();?></p>
+            <?php if (!empty($placeDateDetails)): ?>
+              <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
+            <?php endif; ?>
+            <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitution());?></p>
           <?php endif; ?>
             </a>
           </div>
@@ -53,18 +66,19 @@
     </div>
 
     <!-- Controls -->
-    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev" aria-label="<?=$this->transEsc('Prev') ?>">
-      <span class="fa fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEsc('Prev') ?>"></span>
+    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev" aria-label="<?=$this->transEscAttr('Prev') ?>">
+      <span class="fa fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEscAttr('Prev') ?>"></span>
     </a>
-    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next" aria-label="<?=$this->transEsc('Next') ?>">
-      <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEsc('Next') ?>"></span>
+    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next" aria-label="<?=$this->transEscAttr('Next') ?>">
+      <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEscAttr('Next') ?>"></span>
     </a>
   </div>
 <?php else: ?>
   <p><?=$this->transEsc('Cannot find similar records')?></p>
 <?php endif; ?>
 <?php
-  $script = <<<JS
+  $script = $this->config()->ajaxCoversEnabled() ? "loadCovers();\n" : "";
+  $script .= <<<JS
 var normalizeHeightCount = $('#similar-items-carousel img').length;
 function normalizeHeights() {
   if(--normalizeHeightCount > 0) return;
@@ -77,7 +91,7 @@ function normalizeHeights() {
   });
   items.css('min-height', (tallest+25) + 'px');
 }
-$('#similar-items-carousel img').load(normalizeHeights);
+$('#similar-items-carousel img').on('load', normalizeHeights);
 JS;
 ?>
 <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET') ?>

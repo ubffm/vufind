@@ -110,20 +110,27 @@ trait EdmReaderTrait
         } else {
             return $date;
         }
-        $start = isset($dateParts[0]) ? substr($dateParts[0], 0, 10) : "";
-        $end = isset($dateParts[1]) ? substr($dateParts[1], 0, 10) : "";
+        $start = isset($dateParts[0]) ? explode("T",$dateParts[0])[0] : "";
+        $end = isset($dateParts[1]) ? explode("T",$dateParts[1])[0] : "";
         if ($start == $end) {
             // exact date
             return $this->formatToDate($start, $lang);
-        } elseif (substr($start, 0, 4) == substr($end, 0, 4)) {
-            if (substr($start, 5, 5) == "01-01" && substr($end, 5, 5) == "12-31") {
+        // catching bc dates as well
+        } elseif (substr($start, 0, 5) == substr($end, 0, 5)) {
+            if (preg_match("/01-01$/",$start) && preg_match("/12-31$/",$end)) {
                 // whole year
-                return substr($start, 0, 4);
+                // BC
+                if (strpos($start,"-") === 0) {
+                  return substr($start, 0, 5);
+                }
+                else {
+                  return substr($start, 0, 4);
+                }
             } else {
                 // two exact dates in same year
                 return $this->formatToDate($start, $lang) . " - " . $this->formatToDate($end, $lang);
             }
-        } elseif (substr($start, 5, 5) == "01-01" && substr($end, 5, 5) == "12-31") {
+        } elseif (preg_match("/01-01$/",$start) && preg_match("/12-31$/",$end)) {
             if (intval(substr($start, 0, 4)) + 1 == intval(substr($end, 0, 4))) {
                 // season
                 return substr($start, 0, 4) . "/" . substr($end, 0, 4);
@@ -148,7 +155,12 @@ trait EdmReaderTrait
         if ($lang == 'en') {
             return $date;
         } else {
+          // BC
+          if (strpos($date,"-") === 0) {
+            return substr($date, 9, 2) . "." . substr($date, 6, 2) . "." . substr($date, 1, 5) . " v. Chr.";
+          } else {
             return substr($date, 8, 2) . "." . substr($date, 5, 2) . "." . substr($date, 0, 4);
+          }
         }
     }
 }

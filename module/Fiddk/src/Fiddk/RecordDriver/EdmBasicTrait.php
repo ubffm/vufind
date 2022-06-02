@@ -113,6 +113,32 @@ trait EdmBasicTrait
         return $retval;
     }
 
+    /**
+     * Get an array of detail lines combining information from
+     * getDates() and getPlaces(). This is the version that has nothing
+     * to do with publication but contains vague dates and places.
+     *
+     * @return array
+     */
+    public function getCreationDetails()
+    {
+        $places = $this->getPlacesOfManufacture();
+        $dates = $this->getHumanReadableCreationDates();
+        $i = 0;
+        $retval = [];
+        while (isset($places[$i]) || isset($dates[$i])) {
+            // Build objects to represent each set of data; these will
+            // transform seamlessly into strings in the view layer.
+            $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
+                $places[$i] ?? '',
+                '',
+                $dates[$i] ?? ''
+            );
+            $i++;
+        }
+        return $retval;
+    }
+
     /* All those fields that are not in the index, but need to be displayed */
     /* Literals*/
     public function getExtent()
@@ -170,6 +196,11 @@ trait EdmBasicTrait
     public function getHumanReadableDates()
     {
         return $this->getEdmRecord()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
+    }
+
+    public function getHumanReadableCreationDates()
+    {
+        return $this->getEdmRecord()->getPropValues("dcterms:created", "edm:ProvidedCHO", "");
     }
 
     public function getPlacesOfPublication()

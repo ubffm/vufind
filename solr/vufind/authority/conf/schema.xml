@@ -21,7 +21,7 @@
       </analyzer>
     </fieldType>
     <!-- add range field to represent edm timespans -->
-    <fieldType name="range" class="solr.DateRangeField" omitNorms="true"/>
+    <fieldType name="range" class="solr.DateRangeField"/>
   </types>
   <fields>
     <!-- Required by Solr 4.x -->
