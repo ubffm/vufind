@@ -138,7 +138,7 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
   treeNode.find('.loading-spinner').parent().remove();
   if (inSidebar) {
     treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
-      VuFind.emit('VuFind.sidefactes.treenodeloaded');
+      VuFind.emit('VuFind.sidefacets.treenodeloaded');
       var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
       treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
       treeItems.addClass('list-group-item');
@@ -457,4 +457,4 @@ function registerHierarchicalFacetTruncation() {
 }
 
 VuFind.listen('VuFind.sidefacets.loaded', registerSideFacetTruncation);
-VuFind.listen('VuFind.sidefactes.treenodeloaded', registerHierarchicalFacetTruncation);
+VuFind.listen('VuFind.sidefacets.treenodeloaded', registerHierarchicalFacetTruncation);
