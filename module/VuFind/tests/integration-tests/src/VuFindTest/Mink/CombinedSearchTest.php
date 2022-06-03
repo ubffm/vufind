@@ -84,6 +84,8 @@ class CombinedSearchTest extends \VuFindTest\Integration\MinkTestCase
             );
             // Check for sample driver location/call number in output (this will
             // only appear after AJAX returns):
+            $this->unFindCss($page, '.callnumber.ajax-availability');
+            $this->unFindCss($page, '.location.ajax-availability');
             $this->assertEquals(
                 'A1234.567',
                 $this->findCss($page, "$container .callnumber")->getText()
@@ -112,7 +114,8 @@ class CombinedSearchTest extends \VuFindTest\Integration\MinkTestCase
         $this->findCss($page, '#searchForm_lookfor')
             ->setValue('id:"testsample1" OR id:"theplus+andtheminus-"');
         $this->clickCss($page, '.btn.btn-primary');
-        $this->snooze();
+        $this->waitForPageLoad($page);
+        $this->unFindCss($page, '.fa-spinner.icon--spin');
         $this->assertResultsForDefaultQuery($page);
     }
 
@@ -136,7 +139,7 @@ class CombinedSearchTest extends \VuFindTest\Integration\MinkTestCase
         $this->findCss($page, '#searchForm_lookfor')
             ->setValue('id:"testsample1" OR id:"theplus+andtheminus-"');
         $this->clickCss($page, '.btn.btn-primary');
-        $this->snooze();
+        $this->waitForPageLoad($page);
         $this->assertResultsForDefaultQuery($page);
     }
 
@@ -159,7 +162,7 @@ class CombinedSearchTest extends \VuFindTest\Integration\MinkTestCase
         $this->findCss($page, '#searchForm_lookfor')
             ->setValue('id:"testsample1" OR id:"theplus+andtheminus-"');
         $this->clickCss($page, '.btn.btn-primary');
-        $this->snooze();
+        $this->waitForPageLoad($page);
         $this->assertResultsForDefaultQuery($page);
     }
 }
