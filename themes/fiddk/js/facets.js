@@ -16,6 +16,7 @@ var dprovs = {
   'Universitäts-undLandesbibliothekDüsseldorf':'dtz',
   'UniversitätsbibliothekFrankfurtamMain':'fub',
   'DonJuanArchivWien':'kom',
+  'GottfriedWilhelmLeibnizBibliothek':'gwlb',
   'InternationalesTheaterinstitut–MimeCentruminInternationalesTheaterinstitut–MediathekfürTanzundTheater(MTT)':'mcb',
   'OnlineContents':'olc',
   'TheaterwissenschaftlicheSammlungderUniversitätzuKöln':'slw',
@@ -79,10 +80,12 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts, 
     html.appendChild(item);
 
     if (!facet.isApplied && counts) {
-      var badge = document.createElement('span');
-      badge.className = 'badge';
-      badge.appendChild(document.createTextNode(facet.count.toString().replace(/\B(?=(\d{3})+\b)/g, separator)));
-      html.appendChild(badge);
+      if (facet.count) {
+        var badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.appendChild(document.createTextNode(facet.count.toString().replace(/\B(?=(\d{3})+\b)/g, separator)));
+        html.appendChild(badge);
+      }
       if (allowExclude) {
         var excludeUrl = currentPath + facet.exclude;
         var a = document.createElement('a');
@@ -137,58 +140,41 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
   var results = buildFacetNodes(facetData, currentPath, allowExclude, excludeTitle, inSidebar, dprovs);
   treeNode.find('.loading-spinner').parent().remove();
   if (inSidebar) {
-    treeNode.on('loaded.jstree', function treeLoad(/*e, data*/) {
-      VuFind.emit('VuFind.sidefacets.treenodeloaded');
+    treeNode.on('loaded.jstree open_node.jstree', function treeLoad(/*e, data*/) {
       var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
       treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
       treeItems.addClass('list-group-item');
-      treeItems.each(function addInfo(i) {
-          if (results[i].dprov) {
-            var flex = document.createElement('div');
-            flex.className = 'flex';
-            var provInfo = document.createElement('a');
-            provInfo.className = 'providerInfo';
-            provInfo.href = VuFind.path + '/DataProvider/' + results[i].dprov;
-            provInfo.setAttribute('data-lightbox','');
-            var infoIcon = document.createElement('i');
-            infoIcon.className = 'fa fa-info-circle';
-            infoIcon.setAttribute('aria-hidden', 'true');
-            provInfo.appendChild(infoIcon);
-            flex.appendChild(provInfo);
-            $(this.childNodes[1]).appendTo(flex);
-            $(this).append(flex);
-      }
-      });
-      // reinit lightbox
-      VuFind.init('lightbox');
-    });
-    treeNode.on('open_node.jstree', function treeNodeOpen(e,data) {
-      var treeItems = treeNode.find('ul.jstree-container-ul > li.jstree-node');
-      treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
-      treeItems.addClass('list-group-item');
-      treeItems.each(function addInfo(i) {
-        if (this.id == data.node.id) {
-          var treeChildren = $(this).find('ul.jstree-children > li.jstree-node');
-          // add info to each child
-          data.node.children.forEach(function(child,j) {
-            if (results[i].children[j].dprov) {
-              var flex = document.createElement('div');
-              flex.className = 'flex';
-              var provInfo = document.createElement('a');
-              provInfo.className = 'providerInfo';
-              provInfo.href = VuFind.path + '/DataProvider/' + results[i].dprov;
-              provInfo.setAttribute('data-lightbox','');
-              var infoIcon = document.createElement('i');
-              infoIcon.className = 'fa fa-info-circle';
-              infoIcon.setAttribute('aria-hidden', 'true');
-              provInfo.appendChild(infoIcon);
-              flex.appendChild(provInfo);
-              $(treeChildren[j].childNodes[1]).appendTo(flex);
-              $(treeChildren[j]).append(flex);
-            }
+      if (treeNode.parent().hasClass('truncate-hierarchy')) {
+        VuFind.truncate.initTruncate(treeNode.parent(), '.list-group-item');
+        if (treeItems.find('div.flex').length === 0) {
+          treeItems.each(function addInfo(i) {
+            if (results[i].dprov) {
+              var flex = addFlex(results[i].dprov, this.children[1]);
+              this.insertBefore(flex,this.children[1]);
+              if (this.children[2]) {
+                var treeChildren = treeItems.find('ul.jstree-children > li.jstree-node');
+                treeChildren.each(function addInfo(j) {
+                  if (results[i].children[j].dprov) {
+                    var flex = addFlex(results[i].children[j].dprov, this.children[1]);
+                    this.insertBefore(flex,this.children[1]);
+                  }
+               });
+             }
+             }
+        }); 
+        } else if(treeItems.find('ul.jstree-children')) {
+          var treeChildren = treeItems.find('ul.jstree-children > li.jstree-node');
+          treeChildren.each(function addInfo(j) {
+            //var i2
+            console.log(this);
+            console.log(results);
+              //if (results[i].children[j].dprov) {
+              //    var flex = addFlex(results[i].children[j].dprov, this.children[1]);
+              //    this.insertBefore(flex,this.children[1]);
+             //}
           });
-        }
-      });
+      }
+      }
       // reinit lightbox
       VuFind.init('lightbox');
     });
@@ -200,6 +186,23 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
   });
 }
 
+function addFlex(dprov,child)
+{
+  var flex = document.createElement('div');
+  flex.className = 'flex';
+  var provInfo = document.createElement('a');
+  provInfo.className = 'providerInfo';
+  provInfo.href = VuFind.path + '/DataProvider/' + dprov;
+  provInfo.setAttribute('data-lightbox','');
+  var infoIcon = document.createElement('i');
+  infoIcon.className = 'fa fa-info-circle';
+  infoIcon.setAttribute('aria-hidden', 'true');
+  provInfo.appendChild(infoIcon);
+  flex.appendChild(provInfo);     
+  flex.appendChild(child);
+  return flex;
+}
+
 function initFacetTree(treeNode, inSidebar)
 {
   var loaded = treeNode.data('loaded');
@@ -207,8 +210,9 @@ function initFacetTree(treeNode, inSidebar)
     return;
   }
   treeNode.data('loaded', true);
+
   if (inSidebar) {
-      treeNode.prepend('<li class="list-group-item">' + VuFind.loading() + '</li>');
+    treeNode.prepend('<li class="list-group-item">' + VuFind.loading() + '</li>');
   } else {
     treeNode.prepend('<div>' + VuFind.loading() + '<div>');
   }
@@ -220,7 +224,7 @@ function initFacetTree(treeNode, inSidebar)
     facetOperator: treeNode.data('operator'),
     query: treeNode.data('query'),
     querySuppressed: treeNode.data('querySuppressed'),
-    extraFields: treeNode.data('extraFields'),
+    extraFields: treeNode.data('extraFields')
   };
   $.getJSON(VuFind.path + '/AJAX/JSON?' + request.query,
     request,
@@ -253,6 +257,10 @@ VuFind.register('sideFacets', function SideFacets() {
       + VuFind.loading()
       + "</span></div>";
     $(this).closest(".collapse").append(overlay);
+    if (typeof data !== "undefined") {
+      // Remove jstree-clicked class from JSTree links to avoid the color change:
+      data.instance.get_node(data.node, true).children().removeClass('jstree-clicked');
+    }
     // This callback operates both as a click handler and a JSTree callback;
     // if the data element is undefined, we assume we are handling a click.
     var href = typeof data === "undefined" || typeof data.node.data.url === "undefined"
@@ -303,7 +311,7 @@ VuFind.register('sideFacets', function SideFacets() {
               );
             }
           } else if (typeof facetData.html !== 'undefined') {
-            //$facetContainer.html(VuFind.updateCspNonce(facetData.html));
+            $facetContainer.html(VuFind.updateCspNonce(facetData.html));
             activateFacetBlocking($facetContainer);
           } else {
             var treeNode = $facetContainer.find('.jstree-facet');
@@ -392,11 +400,11 @@ VuFind.register('lightbox_facets', function LightboxFacets() {
       var sort = $(button).data('sort');
       var list = $('#facet-list-' + sort);
       if (list.find('.js-facet-item').length === 0) {
-        list.find('.js-facet-next-page').html(VuFind.translate('loading') + '...');
+        list.find('.js-facet-next-page').html(VuFind.translate('loading_ellipsis'));
         $.ajax(button.href + '&layout=lightbox')
           .done(function facetSortTitleDone(data) {
             list.prepend($('<span>' + data + '</span>').find('.js-facet-item'));
-            list.find('.js-facet-next-page').html(VuFind.translate('more') + ' ...');
+            list.find('.js-facet-next-page').html(VuFind.translate('more_ellipsis'));
           });
       }
       $('.full-facet-list').addClass('hidden');
@@ -419,7 +427,7 @@ VuFind.register('lightbox_facets', function LightboxFacets() {
         return false;
       }
       button.attr('disabled', 1);
-      button.html(VuFind.translate('loading') + '...');
+      button.html(VuFind.translate('loading_ellipsis'));
       $.ajax(this.href + '&layout=lightbox')
         .done(function facetLightboxMoreDone(data) {
           var htmlDiv = $('<div>' + data + '</div>');
@@ -428,7 +436,7 @@ VuFind.register('lightbox_facets', function LightboxFacets() {
           if (list.length && htmlDiv.find('.js-facet-next-page').length) {
             button.attr('data-page', page + 1);
             button.attr('href', button.attr('href').replace(/facetpage=\d+/, 'facetpage=' + (page + 1)));
-            button.html(VuFind.translate('more') + ' ...');
+            button.html(VuFind.translate('more_ellipsis'));
             button.removeAttr('disabled');
           } else {
             button.remove();
@@ -453,7 +461,7 @@ function registerSideFacetTruncation() {
 }
 
 function registerHierarchicalFacetTruncation() {
-  VuFind.truncate.initTruncate('.truncate-hierarchy', '.jstree-node');
+  VuFind.truncate.initTruncate('.truncate-hierarchy', '.list-group-item');
 }
 
 VuFind.listen('VuFind.sidefacets.loaded', registerSideFacetTruncation);

@@ -36,9 +36,7 @@ class ContentController extends \VuFind\Controller\ContentController
     {
         $page = $this->params()->fromRoute('page');
         $themeInfo = $this->serviceLocator->get(\VuFindTheme\ThemeInfo::class);
-        $language = "de";
-        //$this->serviceLocator->get(\Laminas\Mvc\I18n\Translator::class)
-        //->getLocale();
+        $language = $this->serviceLocator->get(\Laminas\Mvc\I18n\Translator::class)->getLocale();
         $defaultLanguage = $this->getConfig()->Site->language;
         // Try to find a template using
         // 1.) Current language suffix

@@ -7,7 +7,7 @@
   if ($containerIDs) :
     //TODO: Fix me!
     $containers = sizeof($containerIDs) == sizeof($data) ? array_combine($containerIDs, $data) : [];
-    $volumes = sizeof($containerIDs) == sizeof($volumes) ? $volumes : [implode($volumes, ', ')];
+    $volumes = sizeof($containerIDs) == sizeof($volumes) ? $volumes : [implode(", ",$volumes)];
     $containerLinks = [];
     foreach ($containers as $containerID => $containerTitle) :
       ob_start();

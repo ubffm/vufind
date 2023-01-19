@@ -23,6 +23,8 @@ class EdmRecord
 
     protected $ns;
 
+    protected $baseUrl = "http://performing-arts.eu/";
+
     /**
      * create a new SimpleXML EDM Record with all namespaces registered
      *
@@ -74,8 +76,13 @@ class EdmRecord
         if (array_key_exists($name[0], $this->ns)) {
             $props = $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
             foreach ($props as $prop) {
-                $attr = $prop->attributes("rdf", true);
-                $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
+                $attr = $prop->attributes("rdfs", true);
+                if ($attr) {
+                    $attrs[] = isset($attr["label"]) ? $attr["label"]->__toString() : "";
+                } else {
+                    $attr = $prop->attributes("rdf", true);
+                    $attrs[] = isset($attr["resource"]) ? $attr["resource"]->__toString() : "";
+                }
             }
             return $attrs;
         } else {
@@ -94,15 +101,15 @@ class EdmRecord
             foreach ($props as $prop) {
                 $resLink = $this->getResourceVal($prop);
                 if ($resLink) {
-                    if (in_array($name[1], ["temporal","issued", "created"])) {
-                      $label = $this->getLabel($prop);
-                      if ($label) {
-                        $vals[] = $label;
-                      } else {
-                        $vals[] = $resLink;
-                      }
-                    } else {
+                    if ($class == "ore:Aggregation" or str_starts_with($resLink,$this->baseUrl)) {
                         $vals[] = $this->findMatchingPropVal($resLink, $fieldName);
+                    }
+                } else if (in_array($name[1], ["temporal","issued", "created"])) {
+                    $label = $this->getLabel($prop);
+                    if ($label) {
+                      $vals[] = $label; 
+                    } else {
+                      $vals[] = $resLink;
                     }
                 } else {
                     $vals[] = $prop->__toString();
@@ -116,7 +123,7 @@ class EdmRecord
 
     public function findMatchingPropVal($attr = "", $fieldName = "")
     {
-        return implode(array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName)), ", ");
+        return implode(", ", array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName)));
     }
 
     public function getResourceVal($prop = null)
@@ -127,7 +134,7 @@ class EdmRecord
 
     public function getLabel($prop = null)
     {
-        $attrs = $prop->attributes("rdf", true);
+        $attrs = $prop->attributes("rdfs", true);
         return isset($attrs["label"]) ? $attrs["label"]->__toString() : "";
     }
 

@@ -183,7 +183,8 @@ trait EdmBasicTrait
 
     public function getAccessRestrictions()
     {
-        return $this->getEdmRecord()->getLiteralVals("dc:rights", "ore:Aggregation");
+        $rights = $this->getEdmRecord()->getLiteralVals("dc:rights", "ore:Aggregation");
+        return empty($rights) ? $this->getEdmRecord()->getLiteralVals("dc:rights", "edm:ProvidedCHO") : $rights;
     }
 
     /* Attribute Vals */
@@ -287,7 +288,7 @@ trait EdmBasicTrait
 
     public function getCatalogueLink()
     {
-        return $this->getEdmRecord()->getLinkedPropValues("dm2e:hasAnnotatableVersionAt", "ore:Aggregation", "dc:description");
+        return $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
     }
 
     /**

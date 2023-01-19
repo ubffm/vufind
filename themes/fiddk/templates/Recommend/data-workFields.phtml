@@ -19,7 +19,7 @@
   <?php if (!empty($this->info["genre"])) : ?>
     <b><?=$this->transEsc('Genre') . ':'?></b>
     <span property="genre">
-      <?=$this->escapeHtml(implode($this->info["genre"], '; '))?>
+      <?=$this->escapeHtml('; ', implode($this->info["genre"]))?>
     </span><br />
   <?php endif; ?>
   <?php if (!empty($this->info["formOfWorkAndExpression"])) : ?>
@@ -55,19 +55,19 @@
   <?php if (isset($this->info["udkCode"])) : ?>
     <b><?=$this->transEsc("Date") . ': '?></b>
     <span property="udkCode">
-      <?=$this->escapeHtml(implode($this->info["udkCode"], '; '))?>
+      <?=$this->escapeHtml(implode('; ', $this->info["udkCode"]))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['dateOfProduction'])) : ?>
     <b><?=$this->transEsc('dateOfProduction') . ': '?></b>
     <span property="dateOfProduction">
-      <?=$this->escapeHtml(implode($this->info["dateOfProduction"], '; '))?>
+      <?=$this->escapeHtml(implode('; ', $this->info["dateOfProduction"]))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['dateOfPublication'])) : ?>
     <b><?=$this->transEsc('Published') . ': '?></b>
     <span property="dateOfPublication">
-      <?=$this->escapeHtml(implode($this->info["dateOfPublication"], '; '))?>
+      <?=$this->escapeHtml(implode('; ', $this->info["dateOfPublication"]))?>
     </span><br />
   <?php endif; ?>
   <?php if (isset($this->info['geographicAreaCode'])) : ?>
@@ -79,7 +79,7 @@
   <?php if (isset($this->info["thematicIndexNumericDesignationOfMusicalWork"])) : ?>
     <b><?=$this->transEsc("thematicIndexNumericDesignationOfMusicalWork") . ": "?></b>
     <span property="thematicIndexNumericDesignationOfMusicalWork">
-    <?=$this->escapeHtml(implode($this->info["thematicIndexNumericDesignationOfMusicalWork"], "; "))?>
+    <?=$this->escapeHtml(implode('; ', $this->info["thematicIndexNumericDesignationOfMusicalWork"]))?>
     </span><br />
   <?php endif; ?>
 <?php if (!empty($this->agents["primary"]) || !empty($this->info["firstAuthor"])) : ?>

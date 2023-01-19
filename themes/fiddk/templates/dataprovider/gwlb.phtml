@@ -1,0 +1,32 @@
+<?php
+ if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+    // Set page title
+    $this->headTitle('Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover');
+?>
+
+<h2>Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</h2>
+<img src="<?=$this->imageLink('logos_s/gwlb.png')?>" alt="GWLB Logo"/><br/><br/>
+<p><a href="http://digitale-sammlungen.gwlb.de/sammlungen" target="_blank" data-lightbox-ignore>Direkt zur digitalen Sammlung beim Datenpartner</a></p>
+
+<p>Die Theaterzettel-Sammlung der Gottfried Wilhelm Leibniz Bibliothek - Niedersächsisches Landesbibliothek umfasst 
+      ca. 700 Stück aus dem Zeitraum von 1785-1796. Die Stücke wurden alle im Königlichen Hoftheater Hannover aufgeführt. 
+      Außer der Nennung des Stückes findet man auf den Theaterzetteln umfangreiche Informationen über die Besetzung, 
+      Preise und den Spielbeginn. Die Sammlung gewährt einen Einblick in 10 Jahre Theatergeschichte in Hannover, welche 
+      Stücke sich besonderer Beliebtheit erfreuten und welche Schauspieler am Theater wirkten.</p>
+
+<?php } else {
+      // Set page title
+      $this->headTitle('Playbills at Gottfried Wilhelm Leibniz Bibliothek Hannover');
+?>
+
+<h2>Playbills at Gottfried Wilhelm Leibniz Bibliothek Hannover</h2>
+<img src="<?=$this->imageLink('logos_s/gwlb.png')?>" alt="GWLB Logo"/><br/><br/>
+<p><a href="http://digitale-sammlungen.gwlb.de/sammlungen" target="_blank" data-lightbox-ignore>Direct to the website</a></p>
+
+<p>Die Theaterzettel-Sammlung der Gottfried Wilhelm Leibniz Bibliothek - Niedersächsisches Landesbibliothek umfasst 
+      ca. 700 Stück aus dem Zeitraum von 1785-1796. Die Stücke wurden alle im Königlichen Hoftheater Hannover aufgeführt. 
+      Außer der Nennung des Stückes findet man auf den Theaterzetteln umfangreiche Informationen über die Besetzung, 
+      Preise und den Spielbeginn. Die Sammlung gewährt einen Einblick in 10 Jahre Theatergeschichte in Hannover, welche 
+      Stücke sich besonderer Beliebtheit erfreuten und welche Schauspieler am Theater wirkten.</p>
+
+<?php } ?>

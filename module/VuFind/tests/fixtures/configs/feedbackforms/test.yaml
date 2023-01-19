@@ -20,7 +20,7 @@ forms:
              - option-1
              - option-2
         label: select2
-
+        
       - name: select3
         type: select
         options:

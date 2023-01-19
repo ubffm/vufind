@@ -181,8 +181,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked', 'data-provLink.phtml');
         $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
+        $spec->setTemplateLine('edm:isShownAt', 'getCatalogueLink', 'data-externalLink.phtml');
         $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink', 'data-licenseLink.phtml');
-        $spec->setTemplateLine('dm2e:hasAnnotatableVersionAt', 'getCatalogueLink', 'data-externalLink.phtml');
         $spec->setTemplateLine('edm:hasView', 'getDigitalCopies', 'data-collapsible_.phtml');
         $spec->setTemplateLine('edm:wasPresentAt', 'getEvents', 'link-event.phtml');
         $spec->setTemplateLine('Work', 'getWorks', 'link-work.phtml');

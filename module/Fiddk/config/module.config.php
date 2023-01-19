@@ -185,10 +185,11 @@ $recordRoutes = [
 ];
 
 $staticRoutes = ['EventSearch/Home','EventSearch/Results',
-                 'AgentSearch/Home','AgentSearch/Results',
-                 'Agent/FacetList','Event/FacetList',
+                 'Event/FacetList','AgentSearch/Home',
+                 'AgentSearch/Results','Agent/FacetList',
                  'WorkSearch/Home','WorkSearch/Results',
-                 'Showcase/Home', 'Showcase/Playbills'];
+                 'Work/FacetList','Showcase/Home',
+                 'Showcase/Playbills'];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);

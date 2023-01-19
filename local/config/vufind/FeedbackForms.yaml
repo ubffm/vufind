@@ -231,6 +231,33 @@ forms:
         type: text
         label: edm::bf:shelfMark
         required: true
+  
+  AskArchiveDTM:
+    enabled: true
+    title: AskAboutResource
+    onlyForLoggedUsers: false
+    senderEmailRequired: true
+    senderNameRequired: true
+    emailSubject: Anfrage zu einer Ressource aus Ihrem Bestand via FID Darstellende Kunst
+    response: Thank you for your request.
+
+    recipient:
+      name: Deutsches Theatermuseum München
+      email: info@deutschestheatermuseum.de
+
+    help:
+      pre: askArchiveDTM_info_pre
+
+    fields:
+      - name: Request
+        type: textarea
+        label: Your Request
+        required: true
+
+      - name: CallNumber
+        type: text
+        label: edm::bf:shelfMark
+        required: true
 
   AskArchiveMCB:
     enabled: true

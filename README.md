@@ -1,5 +1,6 @@
 [![CI Status](https://github.com/vufind-org/vufind/actions/workflows/ci.yaml/badge.svg?branch=dev)](https://github.com/vufind-org/vufind/actions/workflows/ci.yaml)
 VuFind®
+=======
 
 Introduction
 ------------

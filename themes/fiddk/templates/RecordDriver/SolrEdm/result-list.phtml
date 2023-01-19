@@ -23,7 +23,7 @@
         <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title getFull" data-view="<?=$this->params->getOptions()->getListViewOption() ?>">
           <?php $subtitles = $this->driver->getSubtitle(); ?>
           <?php if(!empty($subtitles)): ?>
-            <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode($subtitles, '; '), 180));?>
+            <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode('; ', $subtitles), 180));?>
           <?php else: ?>
             <?=$this->record($this->driver)->getTitleHtml();?>
           <?php endif; ?>

@@ -20,6 +20,7 @@
                 "reference": "c02055dbe9baee63aab11438f4d7b5d25075d347",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -3173,6 +3174,14 @@
                 "laminas",
                 "math"
             ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-math/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-math/issues",
+                "rss": "https://github.com/laminas/laminas-math/releases.atom",
+                "source": "https://github.com/laminas/laminas-math"
+            },
             "funding": [
                 {
                     "url": "https://funding.communitybridge.org/projects/laminas-project",
@@ -3226,6 +3235,14 @@
                 "laminas",
                 "mime"
             ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-mime/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-mime/issues",
+                "rss": "https://github.com/laminas/laminas-mime/releases.atom",
+                "source": "https://github.com/laminas/laminas-mime"
+            },
             "funding": [
                 {
                     "url": "https://funding.communitybridge.org/projects/laminas-project",
@@ -4466,6 +4483,12 @@
                 "laminas",
                 "zf"
             ],
+            "support": {
+                "forum": "https://discourse.laminas.dev/",
+                "issues": "https://github.com/laminas/laminas-zendframework-bridge/issues",
+                "rss": "https://github.com/laminas/laminas-zendframework-bridge/releases.atom",
+                "source": "https://github.com/laminas/laminas-zendframework-bridge"
+            },
             "funding": [
                 {
                     "url": "https://funding.communitybridge.org/projects/laminas-project",

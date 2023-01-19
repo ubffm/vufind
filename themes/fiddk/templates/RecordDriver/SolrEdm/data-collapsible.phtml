@@ -7,10 +7,10 @@
     $lang = $this->plugin('translate')->getTranslator()->getLocale();
     $start = array_slice($words, 0, 28);
     $rest = array_slice($words, 28);?>
-    <?=implode($start, ' ') . ' ';?>
+    <?=implode(' ', $start) . ' ';?>
     <span class="toggleContainer">
       <input type="checkbox" class="toggle" id="toggle_<?=$n?>">
-      <span><?=implode($rest, ' ');?></span>
+      <span><?=implode(' ', $rest);?></span>
       <?php if ($lang == 'de') : ?>
         <label for="toggle_<?=$n?>" class="label_de"></label>
       <?php else : ?>

@@ -137,7 +137,7 @@
    <!-- Institutional Fields -->
    <field name="institution" type="string" indexed="true" stored="true"/>
    <field name="collection" type="string" indexed="true" stored="true" multiValued="true"/>
-   <!-- <field name="building" type="string" indexed="true" stored="true" multiValued="true"/> -->
+   <field name="building" type="string" indexed="true" stored="true" multiValued="true"/>
    <!-- Generic Fields -->
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="format" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -158,6 +158,7 @@
    <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="publishDateSort" type="string" indexed="true" stored="false"/>
    <field name="edition" type="string" indexed="true" stored="true"/>
    <field name="description" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>

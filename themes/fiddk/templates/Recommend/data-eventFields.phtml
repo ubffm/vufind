@@ -5,13 +5,13 @@
 <?php if (!empty($eventType)) : ?>
   <b><?=$this->transEsc('Type of Event') . ':'?></b>
   <span property="performingArtsType">
-    <?=implode($eventType, ', ')?>
+    <?=implode(', ', $eventType)?>
   </span><br />
 <?php endif; ?>
 <?php if (!empty($this->info["genre"])) : ?>
   <b><?=$this->transEsc('Genre') . ':'?></b>
   <span property="genre">
-    <?=$this->escapeHtml(implode($this->info["genre"], '; '))?>
+    <?=$this->escapeHtml(implode('; ', $this->info["genre"]))?>
   </span><br />
 <?php endif; ?>
 <?php if (!empty($eventDates)) : ?>
@@ -21,7 +21,7 @@
     <?php $normDates[] = $this->driver->translateDate($eventDate, $lang)?>
   <?php endforeach; ?>
   <span property="edm:occuredAt">
-    <?=$this->escapeHtml(implode($normDates, ', '))?>
+    <?=$this->escapeHtml(implode(', ', $normDates))?>
   </span><br/>
 <?php endif; ?>
 <?php if (!empty($eventPlaces)) : ?>
