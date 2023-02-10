@@ -27,6 +27,8 @@
  */
 namespace VuFind\ILS\Driver;
 
+use DateTime;
+use DateTimeZone;
 use Exception;
 use VuFind\Exception\ILS as ILSException;
 use VuFind\I18n\Translator\TranslatorAwareInterface;
@@ -648,6 +650,9 @@ class Folio extends AbstractAPI implements
             '/authn/login',
             json_encode($credentials)
         );
+        if ($response->getStatusCode() >= 400) {
+            throw new ILSException($response->getBody());
+        }
         $debugMsg = 'User logged in. User: ' . $username . '.';
         // We've authenticated the user with Okapi, but we only have their
         // username; set up a query to retrieve full info below.
@@ -897,12 +902,31 @@ class Folio extends AbstractAPI implements
             '/circulation/loans',
             $query
         ) as $trans) {
-            $date = date_create($trans->dueDate);
+            $date = new DateTime($trans->dueDate, new DateTimeZone('UTC'));
+            $localTimezone = (new DateTime)->getTimezone();
+            $date->setTimezone($localTimezone);
+
+            $dueStatus = false;
+            $dueDateTimestamp = $date->getTimestamp();
+
+            $now = time();
+            if ($now > $dueDateTimestamp) {
+                $dueStatus = 'overdue';
+            } elseif ($now > $dueDateTimestamp - (1 * 24 * 60 * 60)) {
+                $dueStatus = 'due';
+            }
             $transactions[] = [
-                'duedate' => date_format($date, "j M Y"),
-                'dueTime' => date_format($date, "g:i:s a"),
-                // TODO: Due Status
-                // 'dueStatus' => $trans['itemId'],
+                'duedate' =>
+                    $this->dateConverter->convertToDisplayDate(
+                        'U',
+                        $dueDateTimestamp
+                    ),
+                'dueTime' =>
+                    $this->dateConverter->convertToDisplayTime(
+                        'U',
+                        $dueDateTimestamp
+                    ),
+                'dueStatus' => $dueStatus,
                 'id' => $this->getBibId($trans->item->instanceId),
                 'item_id' => $trans->item->id,
                 'barcode' => $trans->item->barcode,
@@ -1087,7 +1111,8 @@ class Folio extends AbstractAPI implements
                 'id' => $this->getBibId(null, null, $hold->itemId),
                 'item_id' => $hold->itemId,
                 'reqnum' => $hold->id,
-                'title' => $hold->item->title
+                // Title moved from item to instance in Lotus release:
+                'title' => $hold->instance->title ?? $hold->item->title ?? '',
             ];
         }
         return $holds;

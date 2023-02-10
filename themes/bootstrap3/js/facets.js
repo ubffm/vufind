@@ -95,6 +95,11 @@ function buildFacetTree(treeNode, facetData, inSidebar) {
       treeNode.find('a.exclude').click(VuFind.sideFacets.showLoadingOverlay);
       VuFind.emit('VuFind.sidefactes.treenodeloaded');
     });
+    if (treeNode.parent().hasClass('truncate-hierarchy')) {
+      treeNode.on('loaded.jstree', function initHierarchyTruncate(/*e, data*/) {
+        VuFind.truncate.initTruncate(treeNode.parent(), '.list-group-item');
+      });
+    }
   }
   treeNode.jstree({
     'core': {
