@@ -1,5 +1,5 @@
 <?php
-  $institution = $this->driver->getInstitution();
+  $institution = $this->driver->getInstitutions()[0];
   if ($institution == "Deutsches Tanzarchiv Köln") {
     $archive = "AskArchiveDTK";
   } elseif ($institution == "Deutsches Theatermuseum München") {

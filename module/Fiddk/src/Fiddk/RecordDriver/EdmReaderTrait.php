@@ -64,7 +64,7 @@ trait EdmReaderTrait
             } else {
             }
             if (!$this->edmRecord) {
-                throw new EDM\EdmException('Cannot Process Edm Record');
+                       
             }
         }
         return $this->edmRecord;

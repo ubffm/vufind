@@ -41,7 +41,6 @@ use Behat\Mink\Element\Element;
  */
 class ChannelsTest extends \VuFindTest\Integration\MinkTestCase
 {
-
     /**
      * Get a reference to a standard search results page.
      *

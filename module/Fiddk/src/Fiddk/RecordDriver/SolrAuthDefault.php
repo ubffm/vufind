@@ -75,11 +75,6 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
         return $links;
     }
 
-    public function getInstitution()
-    {
-        return $this->fields['institution'] ?? '';
-    }
-
     public function getIntermediates()
     {
         return $this->fields['intermediate'] ?? [];
@@ -95,7 +90,7 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
     {
         $dprovConf = $this->mainConfig->DataProvider;
         $inters = $this->getIntermediates();
-        $inst = $this->getInstitution();
+        $inst = $this->getInstitutions()[0];
         $res = [];
         if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
             $type = "inter";

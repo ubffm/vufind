@@ -39,7 +39,6 @@ namespace VuFindTest\Mink;
  */
 class BasicTest extends \VuFindTest\Integration\MinkTestCase
 {
-
     /**
      * Test that the home page is available.
      *

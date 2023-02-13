@@ -39,7 +39,6 @@ namespace VuFindTest\Mink;
  */
 class RecordTest extends \VuFindTest\Integration\MinkTestCase
 {
-
     /**
      * Test record tabs for a particular ID.
      *

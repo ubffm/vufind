@@ -254,11 +254,6 @@ forms:
         label: Your Request
         required: true
 
-      - name: CallNumber
-        type: text
-        label: edm::bf:shelfMark
-        required: true
-
   AskArchiveMCB:
     enabled: true
     title: AskAboutResource

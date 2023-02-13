@@ -34,7 +34,7 @@
       <?php endforeach; ?>
     </div>
     <div class="resultItemLine3">
-        <?=$this->escapeHtml(implode($eventGenres, '; '))?>
+        <?=$this->escapeHtml(implode('; ', $eventGenres))?>
     </div>
     <?php $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();?>
     <?php if ($places || $dates): ?>
@@ -44,16 +44,16 @@
           <?php foreach ($dates as $date): ?>
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
-          <?=$this->escapeHtml(implode($places, ', ')) . ', ' . $this->escapeHtml(implode($normDates, ', '))?>
+          <?=$this->escapeHtml(implode(', ', $places)) . ', ' . $this->escapeHtml(implode(', ', $normDates))?>
         <?php else : ?>
         <?php if ($places): ?>
-          <?=$this->escapeHtml(implode($places, ', '))?>
+          <?=$this->escapeHtml(implode(', ', $places))?>
         <?php else: ?>
           <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
-          <?=$this->escapeHtml(implode($normDates, ', '))?>
+          <?=$this->escapeHtml(implode(', ', $normDates))?>
         <?php endif; ?>
       <?php endif; ?>
       </div>

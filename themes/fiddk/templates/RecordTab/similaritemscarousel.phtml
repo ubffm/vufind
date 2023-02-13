@@ -35,7 +35,7 @@
                 <?php if (!empty($placeDateDetails)): ?>
                   <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
                 <?php endif; ?>
-                <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitution());?></p>
+                <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitutions()[0]);?></p>
                 </div>
               </div>
             <?php else: ?>
@@ -53,7 +53,7 @@
             <?php if (!empty($placeDateDetails)): ?>
               <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
             <?php endif; ?>
-            <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitution());?></p>
+            <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitutions()[0]);?></p>
           <?php endif; ?>
             </a>
           </div>

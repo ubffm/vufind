@@ -41,7 +41,6 @@ use Behat\Mink\Element\Element;
  */
 class CombinedSearchTest extends \VuFindTest\Integration\MinkTestCase
 {
-
     /**
      * Get config settings for combined.ini.
      *

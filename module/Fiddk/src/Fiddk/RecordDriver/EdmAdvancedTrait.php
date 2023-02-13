@@ -55,8 +55,12 @@ trait EdmAdvancedTrait
     public function askArchive()
     {
         $mail = "";
-        if ($this->isArchiveRecord() && (strpos($this->getUniqueId(), "DTK") === 0 || strpos($this->getUniqueId(), "MCB") === 0) && $this->getCallNumber()) {
-            $mail = $this->getCallNumber()[0];
+        if ($this->isArchiveRecord() && (strpos($this->getUniqueId(), "DTK") === 0 || strpos($this->getUniqueId(), "DTMA") === 0 || strpos($this->getUniqueId(), "MCB") === 0)) {
+            if ($this->getCallNumber()) {
+                $mail = $this->getCallNumber()[0];
+            } else {
+                $mail = substr($this->getUniqueId(),strpos($this->getUniqueId(), "_") + 1);
+            }
         }
         return $mail;
     }
@@ -65,7 +69,7 @@ trait EdmAdvancedTrait
     {
         $url = "";
         $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
-        $inst = $this->getInstitution();
+        $inst = $this->getInstitutions()[0];
         $exclude = in_array($inst, ["Tanzfonds Erbe", "Thüringer Universitäts- und Landesbibliothek Jena"]) or $this->isArchiveRecord();
 
         if (!$exclude) {

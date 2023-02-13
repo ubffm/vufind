@@ -40,10 +40,6 @@ namespace Fiddk\RecordDriver;
  */
 trait EdmBasicTrait
 {
-    public function getInstitution()
-    {
-        return $this->fields['institution'] ?? '';
-    }
 
     public function getIntermediates()
     {
@@ -228,7 +224,7 @@ trait EdmBasicTrait
     public function getLicenseLink()
     {
         $licenseLinks = [];
-        $inst = $this->getInstitution();
+        $inst = $this->getInstitutions()[0];
         if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
             $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
         }
@@ -245,7 +241,7 @@ trait EdmBasicTrait
     {
         $dprovConf = $this->mainConfig->DataProvider;
         $inters = $this->getIntermediates();
-        $inst = $this->getInstitution();
+        $inst = $this->getInstitutions()[0];
         $res = [];
         if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
             $type = "inter";
@@ -277,7 +273,7 @@ trait EdmBasicTrait
     public function getDigitalCopies()
     {
         $links = [];
-        $inst = $this->getInstitution();
+        $inst = $this->getInstitutions()[0];
         // prevent duplicates
         if ($inst != 'transcript Verlag' and $inst != 'Alexander Street Press' and $inst != 'Adam Matthew Digital') {
             $links = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");

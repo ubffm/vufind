@@ -144,16 +144,6 @@
   color: #000;
 }
 
-.collection-hierarchytree {
-  .jstree-clicked {
-    color: $list-group-active-color;
-    background-color: $list-group-active-bg;
-    .jstree-icon {
-      color: #fff;
-    }
-  }
-}
-
 /* --- Facets --- */
 /* facet list styling */
 .jstree-facet li span.main {

@@ -154,9 +154,9 @@
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
         <?php if(count($licenseLinks) == 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitution()]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitutions()[0]]);?>
         <?php elseif(count($licenseLinks) >= 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitution()]);?>
+          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitutions()[0]]);?>
         <?php endif; ?>
       </div>
 
@@ -170,7 +170,7 @@
         <?php endif; ?>
       </div>
 
-      <?php if ($institution = $this->driver->getInstitution()): ?>
+      <?php if ($institution = $this->driver->getInstitutions()[0]): ?>
       <div class="result-institutions">
           <p class="provider-badge"><?=$this->transEsc("dprov::" . $institution);?></p>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>

@@ -40,8 +40,8 @@
     <field name="links" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="record_type" type="string" indexed="true" stored="true"/>
     <field name="lccn" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="institution" type="string" indexed="true" stored="true"/>
-    <field name="institution_id" type="string" indexed="true" stored="false"/>
+    <field name="institution" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
     <field name="intermediate" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="intermediate_id" type="string" indexed="true" stored="false" multiValued="true"/>
 

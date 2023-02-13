@@ -41,7 +41,6 @@ use Behat\Mink\Element\Element;
  */
 class CollectionsTest extends \VuFindTest\Integration\MinkTestCase
 {
-
     /**
      * Go to a collection page.
      *
