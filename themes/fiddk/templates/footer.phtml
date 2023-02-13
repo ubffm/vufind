@@ -2,59 +2,11 @@
 <footer class="hidden-print">
   <div class="footer-container">
     <div class="footer-column">
-      <h5><?=$this->transEsc('FID Darstellende Kunst')?></h5>
-      <ul>
-        <li><a href="<?=$this->url('content-page', ['page' => 'uber'])?>"><?=$this->transEsc('About us')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'beirat'])?>"><?=$this->transEsc('Advisory Board')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'netzwerke'])?>"><?=$this->transEsc('Networks')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'dokumentation'])?>"><?=$this->transEsc('Documentation')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'trailer'])?>"><?=$this->transEsc('Videotrailer')?></a></li>
-        <li><a href="<?=$this->url('showcase-playbills')?>"><?=$this->transEsc('PlaybillPortal')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'mediatheken'])?>"><?=$this->transEsc('MediaLibrariesProject')?></a></li>
-      </ul>
-    </div>
-    <div class="footer-column flexshrink">
-      <h5><?=$this->transEsc('Subject Service')?></h5>
-      <ul>
-    <li><a href="<?=$this->url('content-page', ['page' => 'kontakt'])?>"><?=$this->transEsc('Contact')?></a></li>
-    <li><a href="<?=$this->url('content-page', ['page' => 'suchen'])?>"><?=$this->transEsc('Search in SIS Portal')?></a></li>
-    <li><a href="<?=$this->url('content-page', ['page' => 'faq'])?>"><?=$this->transEsc('FAQ')?></a></li>
-    <li><a target="_blank" href="https://twitter.com/fid_dk" aria-label="Twitter Link">
-          <span class="fa fa-twitter"></span>
-        </a>
-    </li>
-      <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
-        <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
-          <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>
-        </li>
-        <li id="loginOptions"<?php if($account->isLoggedIn()): ?> class="hidden"<?php endif ?>>
-          <?php if ($account->getSessionInitiator($this->serverUrl($this->url('myresearch-home')))): ?>
-            <a href="<?=$this->url('myresearch-userlogin')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> <?=$this->transEsc("Internal")?></a>
-          <?php else: ?>
-            <a href="<?=$this->url('myresearch-userlogin')?>" data-lightbox><i class="fa fa-sign-in" aria-hidden="true"></i> <?=$this->transEsc("Internal")?></a>
-          <?php endif; ?>
-        </li>
-      <?php endif; ?>
-    </ul>
-    </div>
-    <div class="footer-column">
-      <h5><?=$this->transEsc('Librarian Services')?></h5>
-      <ul>
-        <li><a href="<?=$this->url('content-page', ['page' => 'contents'])?>"><?=$this->transEsc('Online Contents')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'neuerwerb'])?>"><?=$this->transEsc('Acquisition Strategy')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'fernleihe'])?>"><?=$this->transEsc('Interlibrary Loan')?></a></li>
-        <li><a href="<?=$this->url('feedback-form', ['id' => 'AcquisitionRequest'])?>"><?=$this->transEsc('Acquisition Request')?></a></li>
-      </ul>
-    </div>
-    <div class="footer-column">
       <h5><?=$this->transEsc('Legal Information')?></h5>
       <ul>
         <li><a href="<?=$this->url('content-page', ['page' => 'impressum'])?>"><?=$this->transEsc('Imprint')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'copyright'])?>"><?=$this->transEsc('Copyright')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'verweise'])?>"><?=$this->transEsc('Links to from')?></a></li>
         <li><a href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a></li>
         <li><a onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a></li>
-        <li><a href="<?=$this->url('content-page', ['page' => 'haftung'])?>"><?=$this->transEsc('Liability Information')?></a></li>
       </ul>
     </div>
     <div class="footer-column">
