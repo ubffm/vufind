@@ -1,6 +1,6 @@
 <?php
 return [
-    'extends' => 'news',
+    'extends' => 'bootstrap3',
     'js' => [
         'klaro-config.js',
         'klaro-no-css.js',

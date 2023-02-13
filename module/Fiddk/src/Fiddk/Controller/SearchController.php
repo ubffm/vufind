@@ -63,13 +63,6 @@ class SearchController extends \VuFind\Controller\SearchController
         $request = ['lookfor' => $date,'type'=> 'playbills'];
         $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
 
-        try {
-            $news = $this->getTable('news');
-            $view->newslist= $news->getCurrentArticles();
-            $view->pinnedlist= $news->getPinnedArticles();
-        } catch (\Exception $e) {
-        }
-
         return $view;
     }
 }

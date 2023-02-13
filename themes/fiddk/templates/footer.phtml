@@ -19,15 +19,11 @@
     <li><a href="<?=$this->url('content-page', ['page' => 'kontakt'])?>"><?=$this->transEsc('Contact')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'suchen'])?>"><?=$this->transEsc('Search in SIS Portal')?></a></li>
     <li><a href="<?=$this->url('content-page', ['page' => 'faq'])?>"><?=$this->transEsc('FAQ')?></a></li>
-    <li><a href="<?=$this->url('content-page', ['page' => 'news'])?>"><?=$this->transEsc('News')?></a>&ensp;<font color="#fff">/</font>&ensp;
-        <a target="_blank" href="https://twitter.com/fid_dk" aria-label="Twitter Link">
+    <li><a target="_blank" href="https://twitter.com/fid_dk" aria-label="Twitter Link">
           <span class="fa fa-twitter"></span>
         </a>
     </li>
       <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
-        <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
-          <a href="<?=$this->url('news-list', [], ['query' => ['redirect' => 0]])?>"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?=$this->transEsc("News")?></a>
-        </li>
         <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
           <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>
         </li>
