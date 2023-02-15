@@ -4,7 +4,7 @@
  *
  * PHP version 7
  *
- * Copyright (C) The National Library of Finland 2016-2020.
+ * Copyright (C) The National Library of Finland 2016-2023.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -43,7 +43,8 @@ use VuFindHttp\HttpServiceAwareInterface;
  * @link     https://vufind.org/wiki/development:plugins:ils_drivers Wiki
  */
 class SierraRest extends AbstractBase implements TranslatorAwareInterface,
-    HttpServiceAwareInterface, LoggerAwareInterface
+    HttpServiceAwareInterface, LoggerAwareInterface,
+    \VuFind\I18n\HasSorterInterface
 {
     public const HOLDINGS_LINE_NUMBER = 40;
 
@@ -53,6 +54,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
     }
     use \VuFindHttp\HttpServiceAwareTrait;
     use \VuFind\I18n\Translator\TranslatorAwareTrait;
+    use \VuFind\I18n\HasSorterTrait;
 
     /**
      * Driver configuration
@@ -146,6 +148,20 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
     ];
 
     /**
+     * Status codes indicating that a hold is available for pickup
+     *
+     * @var array
+     */
+    protected $holdAvailableCodes = ['b', 'j', 'i'];
+
+    /**
+     * Status codes indicating that a hold is in transit
+     *
+     * @var array
+     */
+    protected $holdInTransitCodes = ['t'];
+
+    /**
      * Available API version
      *
      * Functionality requiring a specific minimum version:
@@ -178,6 +194,21 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
      * @var array
      */
     protected $sortItemsByEnumChron;
+
+    /**
+     * Whether to allow canceling of available holds
+     *
+     * @var bool
+     */
+    protected $allowCancelingAvailableRequests = false;
+
+    /**
+     * Whether to check hold freezability up front. Not enabled by default since
+     * Sierra versions prior to 5.6 return holds slowly if canFreeze is requested.
+     *
+     * @var bool
+     */
+    protected $checkFreezability = false;
 
     /**
      * Constructor
@@ -246,11 +277,17 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
             ? explode(':', $this->config['Holds']['title_hold_bib_levels'])
             : ['a', 'b', 'm', 'd'];
 
+        $this->allowCancelingAvailableRequests
+            = $this->config['Holds']['allowCancelingAvailableRequests'] ?? false;
+
         $this->defaultPickUpLocation
             = $this->config['Holds']['defaultPickUpLocation'] ?? '';
         if ($this->defaultPickUpLocation === 'user-selected') {
             $this->defaultPickUpLocation = false;
         }
+
+        $this->checkFreezability
+            = !empty($this->config['Holds']['checkFreezability']);
 
         if (!empty($this->config['ItemStatusMappings'])) {
             $this->itemStatusMappings = array_merge(
@@ -485,7 +522,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
         $result = $this->makeRequest(
             [$this->apiBase, 'patrons', $patron['id']],
             [
-                'fields' => 'names,emails,phones,addresses,expirationDate'
+                'fields' => 'names,emails,phones,addresses,birthDate,expirationDate'
             ],
             'GET',
             $patron
@@ -528,6 +565,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
             'address1' => $address,
             'zip' => $zip,
             'city' => $city,
+            'birthdate' => $result['birthDate'] ?? '',
             'expiration_date' => $expirationDate
         ];
     }
@@ -580,6 +618,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
                     'Y-m-d',
                     $entry['dueDate']
                 ),
+                'dueStatus' => $this->getDueStatus($entry),
                 'renew' => $entry['numberOfRenewals'],
                 'renewable' => true // assumption, who knows?
             ];
@@ -764,6 +803,14 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
         if ($this->apiVersion >= 5) {
             $fields .= ',pickupByDate';
         }
+        $freezeEnabled = in_array(
+            'frozen',
+            explode(':', $this->config['Holds']['updateFields'] ?? '')
+        );
+        if ($useCanFreeze = $freezeEnabled && $this->checkFreezability) {
+            $fields .= ',canFreeze';
+        }
+
         $result = $this->makeRequest(
             [$this->apiBase, 'patrons', $patron['id'], 'holds'],
             [
@@ -805,7 +852,10 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
                 $title = $bib['title'] ?? '';
                 $publicationYear = $bib['publishYear'] ?? '';
             }
-            $available = in_array($entry['status']['code'], ['b', 'j', 'i']);
+            $available
+                = in_array($entry['status']['code'], $this->holdAvailableCodes);
+            $inTransit
+                = in_array($entry['status']['code'], $this->holdInTransitCodes);
             if ($entry['priority'] >= $entry['priorityQueueLength']) {
                 // This can happen, no idea why
                 $position = $entry['priorityQueueLength'] . ' / '
@@ -819,9 +869,18 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
                     'Y-m-d',
                     $entry['pickupByDate']
                 ) : '';
-            $inTransit = $entry['status']['code'] === 't';
             $requestId = $this->extractId($entry['id']);
-            $updateDetails = ($available || $inTransit) ? '' : $requestId;
+            // Allow the user to attempt update if frozen status is togglable or the
+            // hold is not available or in transit.
+            // Checking if the hold can be frozen is optional since it's slow on
+            // Sierra versions prior to 5.6.
+            $frozenTogglable = $useCanFreeze
+                ? !empty($entry['frozen']) || !empty($entry['canFreeze'])
+                : $freezeEnabled;
+            $updateDetails = ($frozenTogglable || (!$available && !$inTransit))
+                ? $requestId : '';
+            $cancelDetails = $this->allowCancelingAvailableRequests
+                || (!$available && !$inTransit) ? $requestId : '';
             $holds[] = [
                 'id' => $this->formatBibId($bibId),
                 'reqnum' => $requestId,
@@ -841,7 +900,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
                 'publication_year' => $publicationYear,
                 'title' => $title,
                 'frozen' => !empty($entry['frozen']),
-                'cancel_details' => $updateDetails,
+                'cancel_details' => $cancelDetails,
                 'updateDetails' => $updateDetails,
             ];
         }
@@ -914,32 +973,70 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
     ): array {
         $results = [];
         foreach ($holdsDetails as $requestId) {
-            $updateFields = [];
-            if (isset($fields['frozen'])) {
-                $updateFields['freeze'] = $fields['frozen'];
-            }
-            if (isset($fields['pickUpLocation'])) {
-                $updateFields['pickupLocation'] = $fields['pickUpLocation'];
-            }
-
-            $result = $this->makeRequest(
+            // Fetch existing hold status:
+            $reqFields = 'status,pickupLocation,frozen'
+                . (isset($fields['frozen']) ? ',canFreeze' : '');
+            $hold = $this->makeRequest(
                 [$this->apiBase, 'patrons', 'holds', $requestId],
-                json_encode($updateFields),
-                'PUT',
+                [
+                    'fields' => $reqFields
+                ],
+                'GET',
                 $patron
             );
+            $available
+                = in_array($hold['status']['code'], $this->holdAvailableCodes);
+            $inTransit
+                = in_array($hold['status']['code'], $this->holdInTransitCodes);
 
-            if (!empty($result['code'])) {
+            // Check if we can do the requested changes:
+            $updateFields = [];
+            $fieldsSkipped = false;
+            if (isset($fields['frozen']) && $hold['frozen'] !== $fields['frozen']) {
+                if ($fields['frozen'] && !$hold['canFreeze']) {
+                    $fieldsSkipped = true;
+                } else {
+                    $updateFields['freeze'] = $fields['frozen'];
+                }
+            }
+            if (isset($fields['pickUpLocation'])) {
+                if ($available || $inTransit) {
+                    $fieldsSkipped = true;
+                } else {
+                    $updateFields['pickupLocation'] = $fields['pickUpLocation'];
+                }
+            }
+
+            if (!$updateFields) {
                 $results[$requestId] = [
                     'success' => false,
-                    'status' => $this->formatErrorMessage(
-                        $result['description'] ?? $result['name']
-                    )
+                    'status' => 'hold_error_update_blocked_status'
                 ];
             } else {
-                $results[$requestId] = [
-                    'success' => true
-                ];
+                $result = $this->makeRequest(
+                    [$this->apiBase, 'patrons', 'holds', $requestId],
+                    json_encode($updateFields),
+                    'PUT',
+                    $patron
+                );
+
+                if (!empty($result['code'])) {
+                    $results[$requestId] = [
+                        'success' => false,
+                        'status' => $this->formatErrorMessage(
+                            $result['description'] ?? $result['name']
+                        )
+                    ];
+                } elseif ($fieldsSkipped) {
+                    $results[$requestId] = [
+                        'success' => false,
+                        'status' => 'hold_error_update_blocked_status'
+                    ];
+                } else {
+                    $results[$requestId] = [
+                        'success' => true
+                    ];
+                }
             }
         }
 
@@ -1304,7 +1401,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getConfig($function, $params = null)
+    public function getConfig($function, $params = [])
     {
         if ('getMyTransactions' === $function) {
             return [
@@ -1772,6 +1869,32 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
     }
 
     /**
+     * Get due status for a checkout
+     *
+     * @param array $checkout Checkout
+     *
+     * @return string
+     */
+    protected function getDueStatus(array $checkout): string
+    {
+        try {
+            $dueDateTime = $this->dateConverter
+                ->convertToDateTime('Y-m-d', $checkout['dueDate']);
+            $dueDateTime->setTime(23, 59, 59, 999);
+            $now = new \DateTime();
+            if ($now > $dueDateTime) {
+                return 'overdue';
+            }
+            if ($dueDateTime->diff($now)->days < 1) {
+                return 'due';
+            }
+        } catch (\VuFind\Date\DateException $e) {
+            // Due date not parseable, do nothing...
+        }
+        return '';
+    }
+
+    /**
      * Get Item Statuses
      *
      * This is responsible for retrieving the status information of a certain
@@ -2122,7 +2245,7 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
      */
     protected function statusSortFunction($a, $b)
     {
-        $result = strcmp($a['location'], $b['location']);
+        $result = $this->getSorter()->compare($a['location'], $b['location']);
         if ($result === 0 && $this->sortItemsByEnumChron) {
             $result = strnatcmp($b['number'] ?? '', $a['number'] ?? '');
         }
@@ -2301,7 +2424,10 @@ class SierraRest extends AbstractBase implements TranslatorAwareInterface,
      */
     protected function pickupLocationSortFunction($a, $b)
     {
-        $result = strcmp($a['locationDisplay'], $b['locationDisplay']);
+        $result = $this->getSorter()->compare(
+            $a['locationDisplay'],
+            $b['locationDisplay']
+        );
         if ($result == 0) {
             $result = $a['locationID'] - $b['locationID'];
         }
