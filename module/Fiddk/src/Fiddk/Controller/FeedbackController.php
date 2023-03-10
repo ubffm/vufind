@@ -65,7 +65,8 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
         $params = $this->params();
         $form->setData($params->fromPost());
 
-        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMCB') && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
+        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMCB' || $formId == 'AskArchiveDTM') 
+             && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
             $callNumber = $this->params()->fromRoute('callNumber', $this->params()->fromQuery('callNumber'));
             $form = $this->prefillRecordInfo($form, $callNumber);
             return $view;

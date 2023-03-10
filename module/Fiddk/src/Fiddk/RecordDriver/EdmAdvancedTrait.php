@@ -54,15 +54,15 @@ trait EdmAdvancedTrait
 
     public function askArchive()
     {
-        $mail = "";
+        $callNumber = "";
         if ($this->isArchiveRecord() && (strpos($this->getUniqueId(), "DTK") === 0 || strpos($this->getUniqueId(), "DTMA") === 0 || strpos($this->getUniqueId(), "MCB") === 0)) {
             if ($this->getCallNumber()) {
-                $mail = $this->getCallNumber()[0];
+                $callNumber = $this->getCallNumber()[0];
             } else {
-                $mail = substr($this->getUniqueId(),strpos($this->getUniqueId(), "_") + 1);
+                $callNumber = substr($this->getUniqueId(),strpos($this->getUniqueId(), "_") + 1);
             }
         }
-        return $mail;
+        return $callNumber;
     }
 
     public function getKVKLink()

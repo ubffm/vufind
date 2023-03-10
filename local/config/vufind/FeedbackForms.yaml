@@ -243,7 +243,7 @@ forms:
 
     recipient:
       name: Deutsches Theatermuseum München
-      email: info@deutschestheatermuseum.de
+      email: bibliothek@deutschestheatermuseum.de
 
     help:
       pre: askArchiveDTM_info_pre
@@ -252,6 +252,11 @@ forms:
       - name: Request
         type: textarea
         label: Your Request
+        required: true
+      
+      - name: CallNumber
+        type: text
+        label: edm::bf:shelfMark
         required: true
 
   AskArchiveMCB:
