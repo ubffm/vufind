@@ -224,7 +224,11 @@ trait EdmBasicTrait
     public function getLicenseLink()
     {
         $licenseLinks = [];
-        $inst = $this->getInstitutions()[0];
+        if (isset($this->getInstitutions()[0])) {
+            $inst = $this->getInstitutions()[0]; 
+        } else {
+            $inst = "";
+        }
         if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
             $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
         }

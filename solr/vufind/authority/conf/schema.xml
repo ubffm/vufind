@@ -76,6 +76,7 @@
     <field name="genre_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="description" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="thumbnail" type="string" indexed="false" stored="true"/>
+    <field name="has_thumb" type="boolean" indexed="true" stored="false"/>
     <field name="orga_domain" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="author" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
     <field name="author_facet" type="string" indexed="true" stored="true" multiValued="true"/>

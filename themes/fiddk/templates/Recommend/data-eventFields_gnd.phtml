@@ -30,9 +30,13 @@
    or isset($this->info['description'])) : ?>
   <br/><b><?=$this->transEsc('Description')?></b>
   <br/><span property="description">
+  <?php if (isset($this->info['biographicalOrHistoricalInformation'])): ?>
     <?=implode('; ', $this->info['biographicalOrHistoricalInformation'])?>
+    <?php endif; ?>
+    <?php if (isset($this->info['description'])) : ?>
     <?php foreach($this->info['description'] as $descr): ?>
         <?=$descr?><br />
     <?php endforeach; ?>
+    <?php endif; ?>
   </span><br/><br/>
 <?php endif; ?>
