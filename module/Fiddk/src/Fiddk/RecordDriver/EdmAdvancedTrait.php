@@ -47,9 +47,9 @@ trait EdmAdvancedTrait
         );
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        $command = new \VuFindSearch\Command\SearchCommand($this->sourceIdentifier, $query, 0, 0, $params);
         return $this->searchService
-            ->search($this->sourceIdentifier, $query, 0, 0, $params)
-            ->getTotal();
+            ->invoke($command)->getResult()->getTotal();
     }
 
     public function askArchive()
@@ -93,7 +93,7 @@ trait EdmAdvancedTrait
             return null;
         }
     }
-
+    
     public function queryRecordId($id, $source)
     {
         $query = new \VuFindSearch\Query\Query(
@@ -101,8 +101,8 @@ trait EdmAdvancedTrait
         );
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        $response = $this->searchService
-            ->search($source, $query, 0, 1, $params);
+        $command = new \VuFindSearch\Command\SearchCommand($source, $query, 0, 1, $params);
+        $response = $this->searchService->invoke($command)->getResult();
         return $response;
     }
 
