@@ -225,6 +225,7 @@ trait EdmBasicTrait
     {
         $licenseLinks = [];
         if (isset($this->getInstitutions()[0])) {
+<<<<<<< HEAD
             $inst = $this->getInstitutions()[0];
             if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
                 $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
@@ -232,6 +233,14 @@ trait EdmBasicTrait
             return $licenseLinks;
         } else {
             return [];
+=======
+            $inst = $this->getInstitutions()[0]; 
+        } else {
+            $inst = "";
+        }
+        if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
+            $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
+>>>>>>> 73508bae13f20b2e5edc721ced1bbeef43073f38
         }
     }
 

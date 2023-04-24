@@ -42,7 +42,11 @@
           <?php endif; ?>
       <?php endif; ?>
       <?php foreach ($prof as $current): ?>
+<<<<<<< HEAD
         <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation_facet%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
+=======
+        <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a> |
+>>>>>>> 73508bae13f20b2e5edc721ced1bbeef43073f38
       <?php endforeach; ?>
       </div>
     <?php endif; ?>

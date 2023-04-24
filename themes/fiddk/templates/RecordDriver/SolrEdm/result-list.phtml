@@ -170,7 +170,12 @@
         <?php endif; ?>
       </div>
 
+<<<<<<< HEAD
       <?php foreach ($this->driver->getInstitutions() as $institution):?>
+=======
+      <?php if (isset($this->driver->getInstitutions()[0])): ?>
+        <?php $institution = $this->driver->getInstitutions()[0]; ?>
+>>>>>>> 73508bae13f20b2e5edc721ced1bbeef43073f38
       <div class="result-institutions">
           <p class="provider-badge"><?=$this->transEsc("dprov::" . $institution);?></p>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
