@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract helper to get IDs for a sitemap from a backend (if supported).
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org
  */
+
 namespace VuFind\Sitemap\Plugin\Index;
 
 use VuFindSearch\Service;
@@ -48,7 +50,7 @@ abstract class AbstractIdFetcher
     protected $searchService;
 
     /**
-     * CallMethodCommand constructor.
+     * Constructor.
      *
      * @param Service $searchService Search service
      */

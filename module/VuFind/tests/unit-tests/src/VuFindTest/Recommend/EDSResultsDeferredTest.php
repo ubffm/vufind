@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EDSResultsDeferred recommendation module Test Class
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:testing:unit_tests Wiki
  */
+
 namespace VuFindTest\Recommend;
 
 /**
@@ -46,7 +48,7 @@ class EDSResultsDeferredTest extends \VuFindTest\Unit\RecommendDeferredTestCase
     public function testStandardOperation()
     {
         $mod = $this->getRecommend(
-            'VuFind\Recommend\EDSResultsDeferred',
+            \VuFind\Recommend\EDSResultsDeferred::class,
             ':3',
             new \Laminas\Stdlib\Parameters(['lookfor' => 'foo'])
         );

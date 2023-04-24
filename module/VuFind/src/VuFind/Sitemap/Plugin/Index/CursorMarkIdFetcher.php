@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Plugin to get IDs for a sitemap from a backend using cursor marks (if supported).
  *
  * PHP version 7
  *
- * Copyright (C) Villanova University 2021.
+ * Copyright (C) Villanova University 2021, 2022.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -25,9 +26,11 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org
  */
+
 namespace VuFind\Sitemap\Plugin\Index;
 
 use VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory;
+use VuFindSearch\Command\GetIdsCommand;
 use VuFindSearch\ParamBag;
 use VuFindSearch\Query\Query;
 
@@ -48,6 +51,20 @@ class CursorMarkIdFetcher extends AbstractIdFetcher
      * @var string
      */
     protected $prevCursorMark = '';
+
+    /**
+     * Default parameters to send to Solr with each request
+     *
+     * @var array
+     */
+    protected $defaultParams = [
+        'q' => '*:*',
+        'start' => 0, // Always 0 when using a cursorMark
+        'wt' => 'json',
+        // Override any default timeAllowed since it cannot be used with
+        // cursorMark
+        'timeAllowed' => -1,
+    ];
 
     /**
      * Get the initial offset to seed the search process
@@ -114,29 +131,25 @@ class CursorMarkIdFetcher extends AbstractIdFetcher
         $getKeyCommand = new \VuFindSearch\Command\GetUniqueKeyCommand($backend, []);
         $key = $this->searchService->invoke($getKeyCommand)->getResult();
         $params = new ParamBag(
-            [
-                'q' => '*:*',
+            $this->defaultParams + [
                 'rows' => $countPerPage,
-                'start' => 0, // Always 0 when using a cursorMark
-                'wt' => 'json',
                 'sort' => $key . ' asc',
-                // Override any default timeAllowed since it cannot be used with
-                // cursorMark
-                'timeAllowed' => -1,
-                'cursorMark' => $cursorMark
+                'cursorMark' => $cursorMark,
             ]
         );
         // Apply filters:
         foreach ($filters as $filter) {
             $params->add('fq', $filter);
         }
-        $results = $this->searchService->getIds(
+        $command = new GetIdsCommand(
             $backend,
             new Query('*:*'),
             0,
             $countPerPage,
             $params
         );
+
+        $results = $this->searchService->invoke($command)->getResult();
         $ids = [];
         foreach ($results->getRecords() as $doc) {
             $ids[] = $doc->get($key);

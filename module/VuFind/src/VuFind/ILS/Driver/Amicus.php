@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Amicus ILS Driver
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:ils_drivers Wiki
  */
+
 namespace VuFind\ILS\Driver;
 
 use PDO;
@@ -161,12 +163,12 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
         $otherStatuses = [];
         foreach ($statusArray as $status) {
             switch ($status) {
-            case 'Disponible':
-                $notCharged = true;
-                break;
-            default:
-                $otherStatuses[] = $status;
-                break;
+                case 'Disponible':
+                    $notCharged = true;
+                    break;
+                default:
+                    $otherStatuses[] = $status;
+                    break;
             }
         }
 
@@ -314,6 +316,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
             $this->throwAsIlsException($e);
         }
 
+        $multiple = '';
         // Read results
         while ($row = $sqlStmt->fetch(PDO::FETCH_ASSOC)) {
             $multiple = $row['MULTIPLE'];
@@ -350,7 +353,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                             'status_array' => [$prestados],
                             'location' => $textoLoc,
                             'reserve' => $reservados,
-                            'callnumber' => $textoSign
+                            'callnumber' => $textoSign,
                         ];
                     } else {
                         $multiple = $row['LOCATION'];
@@ -366,7 +369,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                             'status_array' => [$prestados],
                             'location' => $multiple,
                             'reserve' => $reservados,
-                            'callnumber' => $row['CALLNUMBER']
+                            'callnumber' => $row['CALLNUMBER'],
                         ];
                     }
                 } else {
@@ -385,7 +388,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                     'status_array' => [$prestados],
                     'location' => $this->translate("No copies"),
                     'reserve' => $reservados,
-                    'callnumber' => $this->translate("No copies")
+                    'callnumber' => $this->translate("No copies"),
                 ];
                 break;
             }
@@ -503,7 +506,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                     'returnDate' => false,
                     'number' => count($data) + 1,
                     'item_id' => $row['CPY_ID_NBR'],
-                    'barcode' => $row['BRCDE_NBR']
+                    'barcode' => $row['BRCDE_NBR'],
                 ];
                 $data[] = $currentItem;
             }

@@ -26,12 +26,12 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:architecture Wiki
  */
+
 namespace VuFindSearch\Backend\EIT;
 
 use Laminas\Http\Client;
 use Laminas\Http\Request;
 use VuFindSearch\Backend\Exception\HttpErrorException;
-
 use VuFindSearch\ParamBag;
 
 /**
@@ -119,13 +119,13 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
         $response = $this->call('GET', $params->getArrayCopy());
         $xml = simplexml_load_string($response);
         $finalDocs = [];
-        foreach ($xml->SearchResults->records->rec as $doc) {
+        foreach ($xml->SearchResults->records->rec ?? [] as $doc) {
             $finalDocs[] = simplexml_load_string($doc->asXML());
         }
         return [
             'docs' => $finalDocs,
             'offset' => $offset,
-            'total' => (int)$xml->Hits
+            'total' => (int)$xml->Hits,
         ];
     }
 
@@ -211,13 +211,13 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
         $response = $this->call('GET', $params->getArrayCopy());
         $xml = simplexml_load_string($response);
         $finalDocs = [];
-        foreach ($xml->SearchResults->records->rec as $doc) {
+        foreach ($xml->SearchResults->records->rec ?? [] as $doc) {
             $finalDocs[] = simplexml_load_string($doc->asXML());
         }
         return [
             'docs' => $finalDocs,
             'offset' => 0,
-            'total' => (int)$xml->Hits
+            'total' => (int)$xml->Hits,
         ];
     }
 }

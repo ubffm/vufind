@@ -1,7 +1,7 @@
-/*global checkSaveStatuses, registerAjaxCommentRecord, registerTabEvents, syn_get_widget, VuFind */
+/*global registerAjaxCommentRecord, registerTabEvents, syn_get_widget, VuFind */
 VuFind.register('embedded', function embedded() {
   var _STORAGEKEY = 'vufind_search_open';
-  var _SEPERATOR = ':::';
+  var _SEPARATOR = ':::';
   var _DELIM = ',';
   var _STATUS = {};
 
@@ -11,7 +11,7 @@ VuFind.register('embedded', function embedded() {
     for (str in _STATUS) {
       if ({}.hasOwnProperty.call(_STATUS, str)) {
         if (_STATUS[str]) {
-          str += _SEPERATOR + _STATUS[str];
+          str += _SEPARATOR + _STATUS[str];
         }
         storage.push(str);
       }
@@ -64,7 +64,7 @@ VuFind.register('embedded', function embedded() {
         success: function ajaxTabSuccess(data) {
           var html = data.trim();
           if (html.length > 0) {
-            $('#' + tabid + '-content').html(html);
+            $('#' + tabid + '-content').html(VuFind.updateCspNonce(html));
             registerTabEvents();
           } else {
             $('#' + tabid + '-content').html(VuFind.translate('collection_empty'));
@@ -134,7 +134,7 @@ VuFind.register('embedded', function embedded() {
           }),
           success: function getRecordDetailsSuccess(response) {
             // Insert tabs html
-            longNode.html(response.data.html);
+            longNode.html(VuFind.updateCspNonce(response.data.html));
             // Hide loading
             loadingNode.addClass('hidden');
             longNode.collapse('show');
@@ -165,8 +165,8 @@ VuFind.register('embedded', function embedded() {
             });
             // Add events to record toolbar
             VuFind.lightbox.bind(longNode);
-            if (typeof checkSaveStatuses == 'function') {
-              checkSaveStatuses(longNode);
+            if (typeof VuFind.saveStatuses.init === 'function') {
+              VuFind.saveStatuses.init(longNode);
             }
           }
         });
@@ -203,7 +203,7 @@ VuFind.register('embedded', function embedded() {
     var j;
     hiddenIds = $('.hiddenId');
     for (i = 0; i < items.length; i++) {
-      parts = items[i].split(_SEPERATOR);
+      parts = items[i].split(_SEPARATOR);
       _STATUS[parts[0]] = parts[1] || null;
       result = null;
       for (j = 0; j < hiddenIds.length; j++) {
@@ -226,7 +226,7 @@ VuFind.register('embedded', function embedded() {
   }
 
   function init() {
-    $('.getFull').click(function linkToggle() { return toggleDataView(this); });
+    $('.getFull').on('click', function linkToggle() { return toggleDataView(this); });
     loadStorage();
   }
 

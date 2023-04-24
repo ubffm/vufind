@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AJAX handler plugin manager
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace VuFind\AjaxHandler;
 
 /**
@@ -56,10 +58,12 @@ class PluginManager extends \VuFind\ServiceManager\AbstractPluginManager
         'getRecordCommentsAsHTML' => GetRecordCommentsAsHTML::class,
         'getRecordCover' => GetRecordCover::class,
         'getRecordDetails' => GetRecordDetails::class,
+        'getRecordRating' => GetRecordRating::class,
         'getRecordTags' => GetRecordTags::class,
         'getRecordVersions' => GetRecordVersions::class,
         'getRequestGroupPickupLocations' => GetRequestGroupPickupLocations::class,
         'getResolverLinks' => GetResolverLinks::class,
+        'getResultCount' => GetResultCount::class,
         'getSaveStatuses' => GetSaveStatuses::class,
         'getSideFacets' => GetSideFacets::class,
         'getUserFines' => GetUserFines::class,
@@ -95,11 +99,13 @@ class PluginManager extends \VuFind\ServiceManager\AbstractPluginManager
         GetRecordCommentsAsHTML::class => GetRecordCommentsAsHTMLFactory::class,
         GetRecordCover::class => GetRecordCoverFactory::class,
         GetRecordDetails::class => GetRecordDetailsFactory::class,
+        GetRecordRating::class => GetRecordRatingFactory::class,
         GetRecordTags::class => GetRecordTagsFactory::class,
         GetRecordVersions::class => GetRecordVersionsFactory::class,
         GetRequestGroupPickupLocations::class =>
             AbstractIlsAndUserActionFactory::class,
         GetResolverLinks::class => GetResolverLinksFactory::class,
+        GetResultCount::class => GetResultCountFactory::class,
         GetSaveStatuses::class => GetSaveStatusesFactory::class,
         GetSideFacets::class => GetSideFacetsFactory::class,
         GetUserFines::class => GetUserFinesFactory::class,

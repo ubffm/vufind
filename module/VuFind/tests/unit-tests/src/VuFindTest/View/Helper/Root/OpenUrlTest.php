@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OpenUrl Test Class
  *
@@ -26,6 +27,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:testing:unit_tests Wiki
  */
+
 namespace VuFindTest\View\Helper\Root;
 
 use Laminas\Config\Config;
@@ -61,7 +63,7 @@ class OpenUrlTest extends \PHPUnit\Framework\TestCase
     public function testCheckContextDefaults()
     {
         $config = [
-            'url' => 'http://foo/bar'
+            'url' => 'http://foo/bar',
         ];
         $driver = $this->getMockDriver();
         $openUrl = ($this->getOpenUrl(null, $config))($driver, 'results');
@@ -142,7 +144,7 @@ class OpenUrlTest extends \PHPUnit\Framework\TestCase
     {
         $driver = $this->getMockDriver(
             'fake-data',
-            'VuFind\RecordDriver\SolrMarc',
+            \VuFind\RecordDriver\SolrMarc::class,
             ['Article'],
             false
         );
@@ -177,7 +179,7 @@ class OpenUrlTest extends \PHPUnit\Framework\TestCase
     {
         $driver = $this->getMockDriver(
             'fake-openurl',
-            'VuFind\RecordDriver\SolrDefault',
+            \VuFind\RecordDriver\SolrDefault::class,
             ['CrazyFormat']
         );
         $fixture = $this->getJsonFixture("openurlrules/rule5.json");
@@ -211,12 +213,12 @@ class OpenUrlTest extends \PHPUnit\Framework\TestCase
         $formats = ['Article'];
         $defaultDriver = $this->getMockDriver(
             'fake-data',
-            'VuFind\RecordDriver\SolrDefault',
+            \VuFind\RecordDriver\SolrDefault::class,
             $formats
         );
         $marcDriver = $this->getMockDriver(
             'fake-data',
-            'VuFind\RecordDriver\SolrMarc',
+            \VuFind\RecordDriver\SolrMarc::class,
             $formats
         );
         $openUrl = $this
@@ -248,7 +250,7 @@ class OpenUrlTest extends \PHPUnit\Framework\TestCase
      */
     protected function getMockDriver(
         $openUrl = 'fake-data',
-        $class = 'VuFind\RecordDriver\SolrDefault',
+        $class = \VuFind\RecordDriver\SolrDefault::class,
         $formats = ['ElectronicArticle', 'Article'],
         $issn = '1234-5678'
     ) {

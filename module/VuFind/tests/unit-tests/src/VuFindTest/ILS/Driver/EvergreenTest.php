@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ILS driver test
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Page
  */
+
 namespace VuFindTest\ILS\Driver;
 
 use VuFind\ILS\Driver\Evergreen;
@@ -47,6 +49,6 @@ class EvergreenTest extends \VuFindTest\Unit\ILSDriverTestCase
      */
     public function setUp(): void
     {
-        $this->driver = new Evergreen();
+        $this->driver = new Evergreen(new \VuFind\Date\Converter());
     }
 }

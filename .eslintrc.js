@@ -1,4 +1,5 @@
 module.exports = {
+  ignorePatterns: ["themes/**/vendor/**"],
   extends: "eslint:recommended",
   env: {
     "browser": true,
@@ -8,7 +9,7 @@ module.exports = {
   rules: {
     // errors
     "block-scoped-var": "error",
-    "func-names": "error",
+    "func-names": ["error", "as-needed"],
     "no-loop-func": "error",
     "no-param-reassign": "error",
     "no-shadow": "error",

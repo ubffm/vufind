@@ -1,4 +1,5 @@
 <?php
+
 /**
  * VuFind Locale Settings
  *
@@ -27,6 +28,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace VuFind\I18n\Locale;
 
 use Laminas\Config\Config;
@@ -80,6 +82,13 @@ class LocaleSettings
     protected $initializedLocales = [];
 
     /**
+     * Should we use auto-detect language based on browser settings?
+     *
+     * @var bool
+     */
+    protected $browserDetectLanguage;
+
+    /**
      * Constructor
      *
      * @param Config $config Configuration object
@@ -88,9 +97,21 @@ class LocaleSettings
     {
         $this->enabledLocales = $config->Languages ? $config->Languages->toArray()
             : [];
+        $this->browserDetectLanguage
+            = (bool)($config->Site->browserDetectLanguage ?? true);
         $this->defaultLocale = $this->parseDefaultLocale($config);
         $this->fallbackLocales = $this->parseFallbackLocales($config);
         $this->rightToLeftLocales = $this->parseRightToLeftLocales($config);
+    }
+
+    /**
+     * Should we use auto-detect language based on browser settings?
+     *
+     * @return bool
+     */
+    public function browserLanguageDetectionEnabled(): bool
+    {
+        return $this->browserDetectLanguage;
     }
 
     /**
