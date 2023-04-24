@@ -25,3 +25,4 @@ public/swagger-ui
 local/config/vufind/*.ini
 local/config/vufind/*.json
 local/config/vufind/*.yaml
+local/http*
