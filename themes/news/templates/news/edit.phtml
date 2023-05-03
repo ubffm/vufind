@@ -31,10 +31,10 @@
   </div>
 
   <fieldset class="form-group">
-    <legend><?=$this->transEsc("Author RSS")?></legend>
+    <legend><?=$this->transEsc("Author RSS")?> *</legend>
     <div class="form-check">
       <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="author" id="fid"
+        <input type="radio" class="form-check-input" required="true" name="author" id="fid"
         value="redaktion@performing-arts.eu (Fachinformationsdienst Darstellende Kunst)"
         <?php if ($article['author'] == 'redaktion@performing-arts.eu (Fachinformationsdienst Darstellende Kunst)') {echo 'checked';}?>>
         Fachinformationsdienst Darstellende Kunst
@@ -42,7 +42,7 @@
     </div>
     <div class="form-check">
     <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="author" id="gtw"
+        <input type="radio" class="form-check-input" required="true" name="author" id="gtw"
         value="info@theater-wissenschaft.de (Gesellschaft fuer Theaterwissenschaft)"
         <?php if ($article['author'] == 'info@theater-wissenschaft.de (Gesellschaft fuer Theaterwissenschaft)') {echo 'checked';}?>>
         Gesellschaft für Theaterwissenschaft
