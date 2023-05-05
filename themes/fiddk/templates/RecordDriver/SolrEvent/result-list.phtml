@@ -5,7 +5,7 @@
   }
   $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
-  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLink()->getUrl($this->driver));
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLinker()->getUrl($this->driver));
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
@@ -24,7 +24,7 @@
 
   <div class="media-body">
     <div class="resultItemLine1">
-      <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
+      <a href="<?=$this->recordLinker()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
     <?php $eventTypes = $this->driver->getEventType();
           $eventGenres = $this->driver->getGenres();?>

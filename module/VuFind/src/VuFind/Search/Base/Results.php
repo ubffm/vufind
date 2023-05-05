@@ -833,7 +833,7 @@ abstract class Results
             foreach ($data as $value => $count) {
                 $displayText = $this->getParams()
                     ->getFacetValueRawDisplayText($field, $value);
-                if ($hierarchical) {
+                /** if ($hierarchical) {
                     if (!$this->hierarchicalFacetHelper) {
                         throw new \Exception(
                             get_class($this)
@@ -842,7 +842,7 @@ abstract class Results
                     }
                     $displayText = $this->hierarchicalFacetHelper
                         ->formatDisplayText($displayText);
-                }
+                } */
                 $displayText = $translate
                     ? $this->getParams()->translateFacetValue($field, $displayText)
                     : $displayText;

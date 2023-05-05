@@ -77,23 +77,21 @@ $config = [
     'factories' => [
       'Fiddk\ContentBlock\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
       'Fiddk\RecordDriver\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+      'Fiddk\Search\Options\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+      'Fiddk\Search\Params\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+      'Fiddk\Search\Results\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
     ],
     'aliases' => [
       'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager',
       'VuFind\RecordDriver\PluginManager' => 'Fiddk\RecordDriver\PluginManager',
+      'VuFind\Search\Options\PluginManager' => 'Fiddk\Search\Options\PluginManager',
+      'VuFind\Search\Params\PluginManager' => 'Fiddk\Search\Params\PluginManager',
+      'VuFind\Search\Results\PluginManager' => 'Fiddk\Search\Results\PluginManager',
+
     ],
   ],
   'vufind' => [
     'plugin_managers' => [
-      'ajaxhandler' => [
-        'factories' => [
-          'Fiddk\AjaxHandler\GetTotalResults' =>
-              'Fiddk\AjaxHandler\GetTotalResultsFactory',
-                ],
-        'aliases' => [
-          'GetTotalResults' => 'Fiddk\AjaxHandler\GetTotalResults',
-        ],
-      ],
       'autocomplete' => [
         'factories' => [
           'Fiddk\Autocomplete\SolrAuthor' => 'VuFind\Autocomplete\SolrFactory',
@@ -112,55 +110,15 @@ $config = [
           'authinfo' => 'Fiddk\Recommend\AuthInfo',
         ],
       ],
+      'search_options' => [ /* See Fiddk\Search\Options\PluginManager for defaults */ ],
+      'search_params' => [ /* See Fiddk\Search\Params\PluginManager for defaults */ ],
+      'search_results' => [ /* See Fiddk\Search\Results\PluginManager for defaults */ ],
       'search_backend' => [
         'factories' => [
           'SolrEvent' => 'Fiddk\Search\Factory\SolrEventBackendFactory',
           'SolrAuthor' => 'Fiddk\Search\Factory\SolrAuthorBackendFactory',
           'SolrWork' => 'Fiddk\Search\Factory\SolrWorkBackendFactory',
         ],
-      ],
-      'search_options' => [
-        'factories' => [
-          'Fiddk\Search\SolrAuthority\Options' => 'VuFind\Search\Options\OptionsFactory',
-          'Fiddk\Search\SolrAuthor\Options' => 'VuFind\Search\Options\OptionsFactory',
-          'Fiddk\Search\SolrEvent\Options' => 'VuFind\Search\Options\OptionsFactory',
-          'Fiddk\Search\SolrWork\Options' => 'VuFind\Search\Options\OptionsFactory',
-          ],
-        'aliases' => [
-          'solrauthority' => 'Fiddk\Search\SolrAuthority\Options',
-          'VuFind\Search\SolrAuthor\Options' => 'Fiddk\Search\SolrAuthor\Options',
-          'solrevent' => 'Fiddk\Search\SolrEvent\Options',
-          'solrwork' => 'Fiddk\Search\SolrWork\Options',
-          ],
-      ],
-      'search_params' => [
-        'factories' => [
-          'Fiddk\Search\SolrEvent\Params' => 'VuFind\Search\Solr\ParamsFactory',
-          'Fiddk\Search\SolrAuthority\Params' => 'VuFind\Search\Solr\ParamsFactory',
-          'Fiddk\Search\SolrAuthor\Params' => 'VuFind\Search\Solr\ParamsFactory',
-          'Fiddk\Search\SolrWork\Params' => 'VuFind\Search\Solr\ParamsFactory',
-          ],
-        'aliases' => [
-          'solrauthority' => 'Fiddk\Search\SolrAuthority\Params',
-          'VuFind\Search\SolrAuthor\Params' => 'Fiddk\Search\SolrAuthor\Params',
-          'solrevent' => 'Fiddk\Search\SolrEvent\Params',
-          'solrwork' => 'Fiddk\Search\SolrWork\Params',
-          ],
-      ],
-      'search_results' => [
-        'factories' => [
-          'Fiddk\Search\SolrAuthority\Results' => 'VuFind\Search\Solr\ResultsFactory',
-          'Fiddk\Search\SolrAuthor\Results' => 'VuFind\Search\Solr\ResultsFactory',
-          'Fiddk\Search\SolrEvent\Results' => 'VuFind\Search\Solr\ResultsFactory',
-          'Fiddk\Search\SolrWork\Results' => 'VuFind\Search\Solr\ResultsFactory',
-          ],
-        'aliases' => [
-          'VuFind\Search\SolrAuthor\Results' => 'Fiddk\Search\SolrAuthor\Results',
-          'solrauthor' => 'Fiddk\Search\SolrAuthor\Results',
-          'solrevent' => 'Fiddk\Search\SolrEvent\Results',
-          'solrwork' => 'Fiddk\Search\SolrWork\Results',
-          'solrauthority' => 'Fiddk\Search\SolrAuthority\Results',
-          ],
       ],
       'recordtab' => [
         'aliases' => [

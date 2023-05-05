@@ -5,19 +5,19 @@
         ->get($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
   $this->headTitle($headTitle);
 
-  $searchIndex = $this->params->getSearchHandler();
-  $searchType = $this->params->getSearchType();
-  $searchClassId = $this->params->getsearchClassId();
+  $this->searchIndex = $this->params->getSearchHandler();
+  $this->searchType = $this->params->getSearchType();
+  $this->searchClassId = $this->params->getsearchClassId();
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
         'lookfor' => $lookfor,
-        'searchIndex' => $searchIndex,
-        'searchType' => $searchType,
+        'searchIndex' => $this->searchIndex,
+        'searchType' => $this->searchType,
         'searchId' => $this->results->getSearchId(),
-        'searchClassId' => $searchClassId,
+        'searchClassId' => $this->searchClassId,
         'checkboxFilters' => $this->params->getCheckboxFacets(),
         'filterList' => $this->params->getFilterList(true),
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
@@ -30,6 +30,9 @@
   // Set up breadcrumbs:
   $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
 
+  // Store search id:
+  $this->layout()->searchId = $this->results->getSearchId();
+
   // Enable cart if appropriate:
   $this->showBulkOptions = $this->params->getOptions()->supportsCart() && $this->showBulkOptions;
   // Checkboxes if appropriate:
@@ -37,6 +40,12 @@
     && ($this->showBulkOptions || !$this->cart()->isActiveInSearch());
   // Enable bulk options if appropriate:
   $this->showCheckboxes = $this->showCartControls || $this->showBulkOptions;
+  // Create a css class for results from the search class:
+  $searchClass = $this->searchClassId;
+  if (!ctype_upper($searchClass)) {
+      $searchClass = preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $searchClass);
+  }
+  $this->resultsClass = 'search-results-' . strtolower($searchClass);
 
   $this->render('search/results-scripts.phtml', ['displayVersions' => !empty($this->params->getOptions()->getVersionsAction())]);
 
@@ -48,22 +57,22 @@
 
   $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
-  $hiddenFilters = $this->searchTabs()->getHiddenFilters($searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $searchTabs = $this->searchTabs()->getTabConfig($searchClassId, $lookfor, $searchIndex, $searchType, $hiddenFilters);
-  $recordTotal = $this->results->getResultTotal();
+  $hiddenFilters = $this->searchTabs()->getHiddenFilters($this->searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
+  $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchIndex, $this->searchType, $hiddenFilters);
 ?>
 
 <div class="<?=$this->layoutClass('mainbody')?>">
-  <?php $tabs = $this->context($this)->renderInContext('search/searchTabs', ['searchTabs' => $searchTabs['tabs']]); ?>
-  <?php if (!empty($tabs)): ?><?=$tabs ?><?php endif; ?>
-  <?php if ($recordTotal > 0): // only display these at very top if we have results ?>
+  <?php $tabs = $this->context($this)->renderInContext('search/searchTabs', ['searchTabs' => $tabConfig['tabs'], 'showCounts' => true]); ?>
+  <?php if (!empty($tabs)): ?><?=$tabs ?><div class="tab-content clearfix"><?php endif; ?>
+  <?php if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
     <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
       <?=$this->recommend($current, 'top', $index)?>
     <?php endforeach; ?>
   <?php endif; ?>
   <?=$this->flashmessages()?>
   <div class="search-header hidden-print">
-    <div class="search-stats">
+    <?php // Data-record-total attribute is for analytics use.  Do not remove. ?>
+    <div class="search-stats" data-record-total="<?=$this->escapeHtmlAttr($recordTotal)?>">
       <?php if ($recordTotal > 0): ?>
         <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
         <a class="search-filter-toggle visible-xs" href="#search-sidebar" data-toggle="offcanvas" title="<?=$this->transEscAttr('sidebar_expand') ?>">
@@ -87,11 +96,11 @@
   <?php if ($recordTotal < 1): ?>
     <p>
       <?php
-        if ($searchClassId == "Solr"):
+        if ($this->searchClassId == "Solr"):
           $noMessage = 'nohit_lookfor_html';
-        elseif ($searchClassId == "SolrAuthor"):
+        elseif ($this->searchClassId == "SolrAuthor"):
           $noMessage = 'nohit_lookfor_agents_html';
-        elseif ($searchClassId == "SolrEvent"):
+        elseif ($this->searchClassId == "SolrEvent"):
           $noMessage = 'nohit_lookfor_events_html';
         else:
           $noMessage = 'nohit_lookfor_works_html';
@@ -122,13 +131,14 @@
     <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', ['results' => $this->results, 'options' => $this->paginationOptions ?? []])?>
     <?=$this->context($this)->renderInContext('search/controls/results-tools.phtml', ['results' => $this->results])?>
   <?php endif; ?>
+  <?php if (!empty($tabs)): ?></div><?php endif; ?>
 </div>
 <?php /* End Main Listing */ ?>
 
-<?php /* Narrow Search Options */ ?>
+<?php /* Refine Search Options */ ?>
 <div class="<?=$this->layoutClass('sidebar')?>" id="search-sidebar">
   <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>
     <?=$this->recommend($current, 'side', $index)?>
   <?php endforeach; ?>
 </div>
-<?php /* End Narrow Search Options */ ?>
+<?php /* End Refine Search Options */ ?>
