@@ -104,7 +104,7 @@ trait EdmAdvancedTrait
         );
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        $command = new \VuFindSearch\Command\SearchCommand("Solr", $query, 0, 1, $params);
+        $command = new \VuFindSearch\Command\SearchCommand($source, $query, 0, 1, $params);
         return $this->searchService->invoke($command)->getResult();
     }
 
