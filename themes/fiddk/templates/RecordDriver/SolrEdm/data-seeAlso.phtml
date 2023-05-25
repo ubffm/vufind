@@ -55,15 +55,9 @@
          <?php elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
        <?php elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>
              <?php $trans = $this->transEsc(substr($seeAlso, 0, 7)) . substr($seeAlso, 7);?>
-<<<<<<< HEAD
-             <a class="mail-record" data-lightbox href="<?=$this->recordLinker()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
-         <?php elseif ($key == 'child_records') : ?>
-             <a href="<?=$this->recordLinker()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
-=======
              <a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
          <?php elseif ($key == 'child_records') : ?>
              <a href="<?=$this->recordLink()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
->>>>>>> 73508bae13f20b2e5edc721ced1bbeef43073f38
         <?php else: ?>
           <a href="<?=$resource?>" target="_blank"><?=$this->escapeHtml($seeAlso)?></a><br/>
         <?php endif; ?>

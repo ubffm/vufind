@@ -65,9 +65,8 @@ class SolrWork extends SolrEdm
         );
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        return $this->searchService
-            ->search("SolrEvent", $query, 0, 0, $params)
-            ->getTotal();
+        $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 0, $params);
+        return $this->searchService->invoke($command)->getResult()->getTotal();
     }
 
     /**

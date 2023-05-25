@@ -7,10 +7,12 @@ AllFields:
   DismaxFields:
     - heading_keywords^750
     - use_for_keywords^400
+    - occupation^100
     - see_also_keywords^100
     - allfields
   DismaxParams:
-    - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name" OR record_type:"Event")^500]
+    - [bq, (record_type:"Personal Name")^50]
+    - [bq, (has_thumb:"true")^50]
   DismaxHandler: edismax
 
 Heading:

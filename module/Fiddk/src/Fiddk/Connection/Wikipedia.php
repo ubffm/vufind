@@ -56,7 +56,7 @@ class Wikipedia extends \VuFind\Connection\Wikipedia
         }
 
         // Get information from Wikimedia API
-        $uri = 'http://' . $this->lang . '.wikipedia.org/w/api.php?action=query' . $request . '&format=json';
+        $uri = 'https://' . $this->lang . '.wikipedia.org/w/api.php?action=query' . $request . '&format=json';
         $response = $this->client->setUri($uri)->setMethod('GET')->send();
         if ($response->isSuccess() && $body = $response->getBody()) {
             $json = json_decode($body, true);

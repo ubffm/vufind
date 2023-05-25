@@ -1,5 +1,5 @@
 <?php
-  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLinker()->getUrl($this->driver));
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLink()->getUrl($this->driver));
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
@@ -20,7 +20,7 @@
   <div class="media-body">
     <div class="result-body">
       <div>
-        <a href="<?=$this->recordLinker()->getUrl($this->driver)?>" class="title getFull" data-view="<?=$this->params->getOptions()->getListViewOption() ?>">
+        <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title getFull" data-view="<?=$this->params->getOptions()->getListViewOption() ?>">
           <?php $subtitles = $this->driver->getSubtitle(); ?>
           <?php if(!empty($subtitles)): ?>
             <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode('; ', $subtitles), 180));?>
@@ -107,14 +107,14 @@
           $i = 0;
           foreach ($dedupData as $source => $current) {
             if (++$i == 1) {
-              ?><span class="currentSource"><a href="<?=$this->recordLinker()->getUrl($this->driver)?>"><?=$this->transEsc("source_$source", [], $source)?></a></span><?php
+              ?><span class="currentSource"><a href="<?=$this->recordLink()->getUrl($this->driver)?>"><?=$this->transEsc("source_$source", [], $source)?></a></span><?php
             } else {
               if ($i == 2) {
                 ?> <span class="otherSources">(<?=$this->transEsc('Other Sources')?>: <?php
               } else {
                 ?>, <?php
               }
-              ?><a href="<?=$this->recordLinker()->getUrl($current['id'])?>"><?=$this->transEsc("source_$source", [], $source)?></a><?php
+              ?><a href="<?=$this->recordLink()->getUrl($current['id'])?>"><?=$this->transEsc("source_$source", [], $source)?></a><?php
             }
           }
           if ($i > 1) {
@@ -153,9 +153,9 @@
 
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
-        <?php if(count($licenseLinks) == 1): ?>
+        <?php if(isset($licenseLinks) && count($licenseLinks) == 1): ?>
           <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitutions()[0]]);?>
-        <?php elseif(count($licenseLinks) >= 1): ?>
+        <?php elseif(isset($licenseLinks) && count($licenseLinks) >= 1): ?>
           <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitutions()[0]]);?>
         <?php endif; ?>
       </div>
@@ -170,18 +170,17 @@
         <?php endif; ?>
       </div>
 
-<<<<<<< HEAD
       <?php foreach ($this->driver->getInstitutions() as $institution):?>
-=======
       <?php if (isset($this->driver->getInstitutions()[0])): ?>
         <?php $institution = $this->driver->getInstitutions()[0]; ?>
->>>>>>> 73508bae13f20b2e5edc721ced1bbeef43073f38
+
       <div class="result-institutions">
           <p class="provider-badge"><?=$this->transEsc("dprov::" . $institution);?></p>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
           <a class="badge badge-secondary" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
         <?php endif; ?>
       </div>
+      <?php endif; ?>
     <?php endforeach; ?>
 
       <div class="result-previews">
@@ -213,7 +212,7 @@
         <?php if ($this->permission()->allowDisplay('feature.Favorites')): ?>
           <?php /* Add to favorites */ ?>
           <i class="result-link-icon fa fa-fw fa-star" aria-hidden="true"></i>
-          <a href="<?=$this->recordLinker()->getActionUrl($this->driver, 'Save')?>" data-lightbox class="save-record result-link-label" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>"><?=$this->transEsc('Add to favorites')?></a><br/>
+          <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" data-lightbox class="save-record result-link-label" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>"><?=$this->transEsc('Add to favorites')?></a><br/>
         <?php elseif ($block = $this->permission()->getAlternateContent('feature.Favorites')): ?>
           <?=$block?>
         <?php endif; ?>
@@ -229,7 +228,7 @@
           <div class="hierarchyTreeLink">
             <input type="hidden" value="<?=$this->escapeHtmlAttr($hierarchyID)?>" class="hiddenHierarchyId" />
             <i class="result-link-icon fa fa-fw fa-sitemap" aria-hidden="true"></i>
-            <a class="hierarchyTreeLinkText result-link-label" data-lightbox href="<?=$this->recordLinker()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>" data-lightbox-href="<?=$this->recordLinker()->getTabUrl($this->driver, 'AjaxTab')?>?hierarchy=<?=urlencode($hierarchyID)?>" data-lightbox-post="tab=hierarchytree">
+            <a class="hierarchyTreeLinkText result-link-label" data-lightbox href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>" data-lightbox-href="<?=$this->recordLink()->getTabUrl($this->driver, 'AjaxTab')?>?hierarchy=<?=urlencode($hierarchyID)?>" data-lightbox-post="tab=hierarchytree">
               <?=$this->transEsc('hierarchy_view_context')?><?php if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><?php endif; ?>
             </a>
           </div>

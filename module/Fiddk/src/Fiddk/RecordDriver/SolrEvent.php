@@ -140,9 +140,8 @@ class SolrEvent extends SolrAuthDefault
         );
         // Disable highlighting for efficiency; not needed here:
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        return $this->searchService
-            ->search("SolrWork", $query, 0, 0, $params)
-            ->getTotal();
+        $command = new \VuFindSearch\Command\SearchCommand("SolrWork", $query, 0, 0, $params);
+        return $this->searchService->invoke($command)->getResult()->getTotal();
     }
 
     /**

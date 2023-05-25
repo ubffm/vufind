@@ -4,7 +4,7 @@
         $year = $driver->getYear();
         $yearsAgo = date('Y') - $year;
         $date = date('d.m.') . $year;
-        $link = $this->recordLink()->getUrl($driver);
+        $link = $this->recordLinker()->getUrl($driver);
         $coverDetails = $this->record($driver)->getCoverDetails('result-list', 'medium', $link);
         $cover = $coverDetails['html'];?>
     <div class="flexing">
@@ -35,8 +35,8 @@
       <div class="item active">
         <?php foreach ($recommend as $index => $driver): ?>
           <div class="carousel-item">
-              <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLink()->getUrl($driver));?>
-              <a class="content" href="<?=$this->recordLink()->getUrl($driver)?>">
+              <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLinker()->getUrl($driver));?>
+              <a class="content" href="<?=$this->recordLinker()->getUrl($driver)?>">
                 <div class="imgDescr card">
                   <p class="title"><?=$this->record($driver)->getTitleHtml()?></p>
                   <?php if ($driver->getContainerTitle()) :?>

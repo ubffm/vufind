@@ -13,6 +13,10 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
+use Laminas\Mail\Address;
+use Laminas\View\Model\ViewModel;
+use VuFind\Exception\Mail as MailException;
+use VuFind\Form\Form;
 
 /**
  * Controller for configurable forms (feedback etc).
@@ -29,9 +33,9 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
 {
     /**
      * Handles rendering and submit of dynamic forms.
-     * Form configurations are specified in FeedbackForms.json
+     * Form configurations are specified in FeedbackForms.yaml.
      *
-     * @return void
+     * @return mixed
      */
     public function formAction()
     {
@@ -44,9 +48,11 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
 
         $form = $this->serviceLocator->get($this->formClass);
         $params = [];
-        if ($refererHeader = $this->getRequest()->getHeader('Referer')
-        ) {
+        if ($refererHeader = $this->getRequest()->getHeader('Referer')) {
             $params['referrer'] = $refererHeader->getFieldValue();
+        }
+        if ($userAgentHeader = $this->getRequest()->getHeader('User-Agent')) {
+            $params['userAgent'] = $userAgentHeader->getFieldValue();
         }
         $form->setFormId($formId, $params);
 
@@ -65,7 +71,8 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
         $params = $this->params();
         $form->setData($params->fromPost());
 
-        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMCB') && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
+        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMCB' || $formId == 'AskArchiveDTM') 
+             && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
             $callNumber = $this->params()->fromRoute('callNumber', $this->params()->fromQuery('callNumber'));
             $form = $this->prefillRecordInfo($form, $callNumber);
             return $view;
@@ -87,7 +94,7 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
             ['fields' => $messageParams]
         );
 
-        [$senderName, $senderEmail] = $this->getSender();
+        [$senderName, $senderEmail] = $this->getSender($form);
 
         $replyToName = $params->fromPost(
             'name',
