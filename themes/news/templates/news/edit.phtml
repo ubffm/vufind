@@ -1,3 +1,5 @@
+<?php $account = $this->auth()->getManager(); ?>
+<?php if ($account->isLoggedIn()) : ?>
 <h2><?=$this->transEsc("news::CreateOrEdit")?></h2>
 
 <form action="<?=$this->url('news-list')?>">
@@ -169,4 +171,8 @@
   <?php if(isset($article->user)) : ?>
     <?=' ' . $this->transEsc("by") . ' ' . $article->user;?>
   <?php endif; ?></div><br/>
+<?php endif; ?>
+
+<?php else : ?>
+  <h1> You don't have permission to be here!</h1>
 <?php endif; ?>
