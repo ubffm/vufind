@@ -7,7 +7,27 @@
 
   $this->searchIndex = $this->params->getSearchHandler();
   $this->searchType = $this->params->getSearchType();
-  $this->searchClassId = $this->params->getsearchClassId();
+
+  // Initialize from current search (if available) or defaults:
+  if ($results = ($this->results ?? $this->searchMemory()->getCurrentSearch())) {
+    $params = $results->getParams();
+    $this->searchClassId = $params->getSearchClassId();
+    $hiddenFilters = $params->getHiddenFilters();
+    $lastSort = $params->getSort();
+    $lastLimit = $params->getLimit();
+    $options = $results->getOptions();
+    } else {
+          if (!isset($this->searchClassId)) {
+              $config = $this->config()->get('config');
+              $this->searchClassId = $config->Site->defaultSearchBackend ?? 'Solr';
+          }
+          $options = $this->searchOptions($this->searchClassId);
+          $hiddenFilters = $this->searchTabs()->getHiddenFilters($this->searchClassId, true, $this->ignoreHiddenFiltersInRequest ?? false);
+          $lastSort = $this->searchMemory()->getLastSort($this->searchClassId);
+          $lastLimit = $this->searchMemory()->getLastLimit($this->searchClassId);
+          $params = null;
+        }
+    
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
@@ -57,8 +77,7 @@
 
   $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
-  $hiddenFilters = $this->searchTabs()->getHiddenFilters($this->searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchIndex, $this->searchType, $hiddenFilters);
+  $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $lookfor, $this->searchIndex, $this->searchType, $hiddenFilters);
 ?>
 
 <div class="<?=$this->layoutClass('mainbody')?>">
