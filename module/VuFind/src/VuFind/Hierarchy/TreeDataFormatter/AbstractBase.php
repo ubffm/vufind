@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Hierarchy Tree Data Formatter (abstract base)
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:hierarchy_components Wiki
  */
+
 namespace VuFind\Hierarchy\TreeDataFormatter;
 
 /**
@@ -121,7 +123,8 @@ abstract class AbstractBase implements \VuFind\I18n\HasSorterInterface
     protected function getHierarchyPositionsInParents($fields)
     {
         $retVal = [];
-        if (isset($fields->hierarchy_parent_id)
+        if (
+            isset($fields->hierarchy_parent_id)
             && isset($fields->hierarchy_sequence)
         ) {
             foreach ($fields->hierarchy_parent_id as $key => $val) {
@@ -142,7 +145,8 @@ abstract class AbstractBase implements \VuFind\I18n\HasSorterInterface
     protected function getTitlesInHierarchy($fields)
     {
         $retVal = [];
-        if (isset($fields->title_in_hierarchy)
+        if (
+            isset($fields->title_in_hierarchy)
             && is_array($fields->title_in_hierarchy)
         ) {
             $titles = $fields->title_in_hierarchy;
@@ -170,14 +174,14 @@ abstract class AbstractBase implements \VuFind\I18n\HasSorterInterface
     {
         // Check config setting for what constitutes a collection
         switch ($this->collectionType) {
-        case 'All':
-            return isset($fields->is_hierarchy_id);
-        case 'Top':
-            return isset($fields->is_hierarchy_id)
-                && in_array($fields->is_hierarchy_id, $fields->hierarchy_top_id);
-        default:
-            // Default to not be a collection level record
-            return false;
+            case 'All':
+                return isset($fields->is_hierarchy_id);
+            case 'Top':
+                return isset($fields->is_hierarchy_id)
+                    && in_array($fields->is_hierarchy_id, $fields->hierarchy_top_id);
+            default:
+                // Default to not be a collection level record
+                return false;
         }
     }
 
