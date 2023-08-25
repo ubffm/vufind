@@ -81,6 +81,20 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             [$this, 'getDefaultCollectionRecordSpecs']
         );
         $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
+        $helper->setDefaults('Person', [$this, 'getDefaultPersonSpecs']);
+        $helper->setDefaults('PersonGnd', [$this, 'getDefaultPersonGndSpecs']);
+        $helper->setDefaults('PersonRelated', [$this, 'getDefaultPersonRelatedSpecs']);
+        $helper->setDefaults('Corporation', [$this, 'getDefaultCorporateSpecs']);
+        $helper->setDefaults('CorporationGnd', [$this, 'getDefaultCorporateGndSpecs']);
+        $helper->setDefaults('CorporationRelated', [$this, 'getDefaultCorporateRelatedSpecs']);
+        $helper->setDefaults('Event', [$this, 'getDefaultEventSpecs']);
+        $helper->setDefaults('EventGnd', [$this, 'getDefaultEventGndSpecs']);
+        $helper->setDefaults('EventRelated', [$this, 'getDefaultEventRelatedSpecs']);
+        $helper->setDefaults('Work', [$this, 'getDefaultCoreSpecs']);
+        $helper->setDefaults('WorkGnd', [$this, 'getDefaultWorkGndSpecs']);
+        $helper->setDefaults('WorkRelated', [$this, 'getDefaultWorkRelatedSpecs']);
+        $helper->setDefaults('related', [$this, 'getDefaultRelatedSpecs']);
+        $helper->setDefaults('Provider', [$this, 'getDefaultProviderSpecs']);
         $helper->setDefaults('seeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
         return $helper;
     }
@@ -172,6 +186,217 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
     /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultPersonSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('Alternative', 'getUseFor');
+        $spec->setLine('Occupation', 'getOccupation');
+        return $spec->getArray();
+    }
+
+        /**
+     * Get default specifications for displaying event data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultPersonGndSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('GndIdentifier', 'getGndIdentifier');
+        $spec->setTemplateLine('Entitätstyp', 'getEntityType', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('gndSubjectCategory', 'getGndSubjectCategory', 'data-label-array.phtml');
+        $spec->setTemplateLine('Occupation', 'getGndOccuptaions', 'data-label-array.phtml');
+        $spec->setTemplateLine('Lebensdaten', 'getGndBirthDeath', 'data-birthDeath.phtml');
+        $spec->setTemplateLine('Wirkungsdaten', 'getGndPeriodOfActivity', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('placeOfActivity', 'getGndPlaceOfActivity', 'data-label-array.phtml');
+        $spec->setTemplateLine('GeographicAreaCode', 'getGndGeographicAreaCode', 'data-label-array.phtml');
+        $spec->setTemplateLine('Gender', 'getGndGenders', 'data-label-array.phtml');
+        $spec->setTemplateLine('BiographicalDetails', 'getGndBio', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('Description', 'getGndDescription', 'data-label-array.phtml');
+        $spec->setTemplateLine('Publications', 'getGndPublications', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('Instrument', 'getGndInstrument', 'data-label-array.phtml');
+        $spec->setTemplateLine('Affiliation', 'getGndAffiliation', 'data-label-array.phtml');
+        $spec->setTemplateLine('Homepage', 'getGndHomepage', 'data-id-label-array.phtml');
+        $spec->setTemplateLine('Familial Relationship', 'getGndFamilialRel', 'data-label-array.phtml');
+        $spec->setTemplateLine('Professional Relationship', 'getGndProfessionalRel', 'data-label-array.phtml');
+        $spec->setTemplateLine('Pseudonym', 'getGndPseudonym', 'data-label-array.phtml');
+        $spec->setTemplateLine('RealIdentity', 'getGndRealIdentity', 'data-label-array.phtml');
+        $spec->setTemplateLine('edm::skos:altLabel', 'getGndVariants', 'data-collapsible_str.phtml');
+        return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultPersonRelatedSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        // events
+        // works
+        // records
+        return $spec->getArray();
+    }
+
+        /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultCorporateSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('Alternative', 'getUseFor');
+        return $spec->getArray();
+    }
+
+       /**
+     * Get default specifications for displaying event data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultCorporateGndSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('GndIdentifier', 'getGndIdentifier');
+        $spec->setTemplateLine('Entitätstyp', 'getEntityType', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('gndSubjectCategory', 'getGndSubjectCategory', 'data-label-array.phtml');
+        $spec->setTemplateLine('broaderTermInstantial', 'getGndBroaderTermInstantial', 'data-label-array.phtml');
+        $spec->setTemplateLine('established', 'getGndEstablishment', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('terminated', 'getGndTermination', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('placeOfBusiness', 'getGndPlaceOfBusiness', 'data-label-array.phtml');
+        $spec->setTemplateLine('spatialAreaOfActivity', 'getGndSpatialAreaOfActivity', 'data-label-array.phtml');
+        $spec->setTemplateLine('GeographicAreaCode', 'getGndGeographicAreaCode', 'data-label-array.phtml');
+        $spec->setTemplateLine('BiographicalDetails', 'getGndBio', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('Description', 'getGndDescription', 'data-label-array.phtml');
+        $spec->setTemplateLine('Homepage', 'getGndHomepage', 'data-id-label-array.phtml');
+        $spec->setTemplateLine('precedingCorporateBody', 'getGndPrecedingCorp', 'data-label-array.phtml');
+        $spec->setTemplateLine('succeedingCorporateBody', 'getGndSucceedingCorp', 'data-label-array.phtml');
+        $spec->setTemplateLine('Abbreviation', 'getGndAbbreviation', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('edm::skos:altLabel', 'getGndVariants', 'data-collapsible_str.phtml');
+        return $spec->getArray();
+    }
+
+        /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultCorporateRelatedSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setMultiLine(
+            'dc:contributor',
+            'getDeduplicatedAuthors',
+            $this->getAuthorFunction()
+        );
+        return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying event data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultEventSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('Alternative', 'getUseFor');
+        $spec->setLine('Type of Event', 'getEventType');
+        $spec->setLine('Genre', 'getGenres');
+        $spec->setLine('DateOfEvent', 'getEventDate');
+        $spec->setLine('PlaceOfEvent', 'getEventPlace');
+        $spec->setLine('edm::dc:description', 'getDescription');
+        return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying event data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultEventGndSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('GndIdentifier', 'getGndIdentifier');
+        $spec->setTemplateLine('Entitätstyp', 'getEntityType', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('gndSubjectCategory', 'getGndSubjectCategory', 'data-label-array.phtml');
+        $spec->setTemplateLine('DateOfEvent', 'getGndDateOfEvent', 'data-label-array.phtml');
+        $spec->setTemplateLine('PlaceOfEvent', 'getGndPlaceOfEvent', 'data-label-array.phtml');
+        $spec->setTemplateLine('placeOfActivity', 'getGndSpatialAreaOfActivity', 'data-label-array.phtml');
+        $spec->setTemplateLine('GeographicAreaCode', 'getGndGeographicAreaCode', 'data-label-array.phtml');
+        $spec->setTemplateLine('BiographicalDetails', 'getGndBio', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('Description', 'getGndDescription', 'data-label-array.phtml');
+        $spec->setTemplateLine('Homepage', 'getGndHomepage', 'data-id-label-array.phtml');
+        $spec->setTemplateLine('edm::skos:altLabel', 'getGndVariants', 'data-collapsible_str.phtml');
+        return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultEventRelatedSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setMultiLine(
+            'dc:contributor',
+            'getDeduplicatedAuthors',
+            $this->getAuthorFunction()
+        );
+        $spec->setTemplateLine(
+            'RelatedWorksEve',
+            'getWorks',
+            'data-related.phtml'
+        );
+        return $spec->getArray();
+    }
+
+     /**
+     * Get default specifications for displaying event data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultWorkGndSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setLine('GndIdentifier', 'getGndIdentifier');
+        $spec->setTemplateLine('Entitätstyp', 'getEntityType', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('gndSubjectCategory', 'getGndSubjectCategory', 'data-label-array.phtml');
+        $spec->setTemplateLine('BiographicalDetails', 'getGndBio', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('Published', 'getGndDateOfPublication', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('edm::skos:altLabel', 'getGndVariants', 'data-collapsible_str.phtml');
+        return $spec->getArray();
+    }
+
+    /**
+     * Get default specifications for displaying data in core metadata.
+     *
+     * @return array
+     */
+    public function getDefaultWorkRelatedSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setMultiLine(
+            'dc:contributor',
+            'getDeduplicatedAuthors',
+            $this->getAuthorFunction()
+        );
+        $spec->setTemplateLine(
+            'RelatedWorksEve',
+            'getWorks',
+            'data-related.phtml'
+        );
+        return $spec->getArray();
+    }
+
+    /**
      * Get default specifications for displaying see also metadata.
      *
      * @return array
@@ -179,14 +404,25 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function getDefaultSeeAlsoSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-        $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked', 'data-provLink.phtml');
-        $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
         $spec->setTemplateLine('edm:isShownAt', 'getCatalogueLink', 'data-externalLink.phtml');
         $spec->setTemplateLine('edm:isShownAt', 'getLicenseLink', 'data-licenseLink.phtml');
         $spec->setTemplateLine('edm:hasView', 'getDigitalCopies', 'data-collapsible_.phtml');
         $spec->setTemplateLine('edm:wasPresentAt', 'getEvents', 'link-event.phtml');
         $spec->setTemplateLine('Work', 'getWorks', 'link-work.phtml');
         $spec->setTemplateLine('edm:isRelatedTo', 'getAllRecordLinks', 'data-internalLink.phtml');
+        return $spec->getArray();
+    }
+
+        /**
+     * Get default specifications for displaying see also metadata.
+     *
+     * @return array
+     */
+    public function getDefaultProviderSpecs()
+    {
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec->setTemplateLine('edm:dataProvider', 'getInstitutionLinked', 'data-provLink.phtml');
+        $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
         return $spec->getArray();
     }
 

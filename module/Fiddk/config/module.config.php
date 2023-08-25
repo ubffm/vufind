@@ -25,8 +25,8 @@ $config = [
               'controller' => 'Showcase',
               'action'     => 'Home',
             ]
-          ]
-],
+            ]
+          ],
       ],
   ],
   'controllers' => [
@@ -34,13 +34,14 @@ $config = [
       'Fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\DataProviderController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\AgentSearchController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\PersonController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
       'Fiddk\Controller\EventSearchController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\WorkSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\WorkController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\SearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\FeedbackController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\ShowcaseController' => 'VuFind\Controller\AbstractBaseFactory',
     ],
@@ -57,6 +58,8 @@ $config = [
       'eventsearch' => 'Fiddk\Controller\EventSearchController',
       'Event' => 'Fiddk\Controller\EventController',
       'event' => 'Fiddk\Controller\EventController',
+      'Search' => 'Fiddk\Controller\SearchController',
+      'search' => 'Fiddk\Controller\SearchController',
       'WorkSearch' => 'Fiddk\Controller\WorkSearchController',
       'worksearch' => 'Fiddk\Controller\WorkSearchController',
       'Work' => 'Fiddk\Controller\WorkController',
@@ -67,7 +70,6 @@ $config = [
       // Overrides
       'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
       'VuFind\Controller\RecordController' => 'Fiddk\Controller\RecordController',
-      'VuFind\Controller\AuthorController' => 'Fiddk\Controller\AgentSearchController',
       'VuFind\Controller\SearchController' => 'Fiddk\Controller\SearchController',
       'VuFind\Controller\FeedbackController' => 'Fiddk\Controller\FeedbackController',
     ]
@@ -81,42 +83,47 @@ $config = [
       'Fiddk\Search\Params\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
       'Fiddk\Search\Results\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
     ],
+    // Overrides
     'aliases' => [
       'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager',
       'VuFind\RecordDriver\PluginManager' => 'Fiddk\RecordDriver\PluginManager',
       'VuFind\Search\Options\PluginManager' => 'Fiddk\Search\Options\PluginManager',
       'VuFind\Search\Params\PluginManager' => 'Fiddk\Search\Params\PluginManager',
       'VuFind\Search\Results\PluginManager' => 'Fiddk\Search\Results\PluginManager',
-
     ],
   ],
   'vufind' => [
     'plugin_managers' => [
       'autocomplete' => [
         'factories' => [
-          'Fiddk\Autocomplete\SolrAuthor' => 'VuFind\Autocomplete\SolrFactory',
+          'Fiddk\Autocomplete\SolrPerson' => 'VuFind\Autocomplete\SolrFactory',
+          'Fiddk\Autocomplete\SolrCorporation' => 'VuFind\Autocomplete\SolrFactory',
           'Fiddk\Autocomplete\SolrEvent' => 'VuFind\Autocomplete\SolrFactory',
+          'Fiddk\Autocomplete\SolrWork' => 'VuFind\Autocomplete\SolrFactory',
         ],
         'aliases' => [
-          'solrauthor' => 'Fiddk\Autocomplete\SolrAuthor',
+          'solrperson' => 'Fiddk\Autocomplete\SolrPerson',
+          'solrcorporation' => 'Fiddk\Autocomplete\SolrCorporation',
           'solrevent' => 'Fiddk\Autocomplete\SolrEvent',
+          'solrwork' => 'Fiddk\Autocomplete\SolrWork',
         ],
       ],
       'recommend' => [
         'factories' => [
-          'Fiddk\Recommend\AuthInfo' => 'VuFind\Recommend\AuthorInfoFactory',
+          'Fiddk\Recommend\AuthorityInfo' => 'VuFind\Recommend\AuthorInfoFactory',
         ],
         'aliases' => [
-          'authinfo' => 'Fiddk\Recommend\AuthInfo',
+          'authorityinfo' => 'Fiddk\Recommend\AuthorityInfo',
         ],
       ],
       'search_options' => [ /* See Fiddk\Search\Options\PluginManager for defaults */ ],
       'search_params' => [ /* See Fiddk\Search\Params\PluginManager for defaults */ ],
       'search_results' => [ /* See Fiddk\Search\Results\PluginManager for defaults */ ],
       'search_backend' => [
-        'factories' => [
+        'factories' => [ 
+          'SolrPerson' => 'Fiddk\Search\Factory\SolrPersonBackendFactory',
+          'SolrCorporation' => 'Fiddk\Search\Factory\SolrCorporationBackendFactory',
           'SolrEvent' => 'Fiddk\Search\Factory\SolrEventBackendFactory',
-          'SolrAuthor' => 'Fiddk\Search\Factory\SolrAuthorBackendFactory',
           'SolrWork' => 'Fiddk\Search\Factory\SolrWorkBackendFactory',
         ],
       ],
@@ -126,24 +133,27 @@ $config = [
         ],
       ],
     ],
-    ],
+  ],
 ];
 
 // Define record view routes -- route name => controller
 $recordRoutes = [
     'record' => 'Record',
     'eventrecord' => 'event',
+    'gndeventrecord' => 'gnd',
     'solreventrecord' => 'event',
+    'agentrecord' => 'agent',
+    'solrpersonrecord' => 'agent',
+    'solrcorporationrecord' => 'agent',
     'collection' => 'Collection',
     'missingrecord' => 'MissingRecord',
-    'agentrecord' => 'agent',
-    'solrauthorrecord' => 'agent',
     'workrecord' => 'work',
     'solrworkrecord' => 'work',
 ];
 
 $staticRoutes = ['EventSearch/Home','EventSearch/Results',
                  'Event/FacetList','AgentSearch/Home',
+                 'Agent/Home',
                  'AgentSearch/Results','Agent/FacetList',
                  'WorkSearch/Home','WorkSearch/Results',
                  'Work/FacetList','Showcase/Home',

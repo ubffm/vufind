@@ -1,6 +1,6 @@
 <?php
 /**
- * Model for EDM authority records in Solr.
+ * Model for EDM authority corporation records in Solr.
  *
  * PHP version 7
  *
@@ -29,7 +29,7 @@
 namespace Fiddk\RecordDriver;
 
 /**
- * Model for EDM authority records in Solr.
+ * Model for EDM authority corporation records in Solr.
  *
  * @category VuFind
  *
@@ -40,17 +40,8 @@ namespace Fiddk\RecordDriver;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrAuthor extends SolrAuthDefault
+class SolrCorporation extends SolrAuthDefault
 {
-    /**
-     * Get the occupation of the person.
-     *
-     * @return array
-     */
-    public function getOccupation()
-    {
-        return $this->fields['occupation'] ?? [];
-    }
 
     /**
      * Get domain of organization.
@@ -63,9 +54,19 @@ class SolrAuthor extends SolrAuthDefault
     }
 
     /**
-     * Get birth date of person or date of establishment of organization.
+     * Get icon for this entity type.
      *
      * @return string
+     */
+    public function getRecordIcon()
+    {
+        return 'fa-building';
+    }
+
+    /**
+     * Get date of establishment of organization.
+     *
+     * @return array
      */
     public function getBirthDate()
     {
@@ -73,9 +74,9 @@ class SolrAuthor extends SolrAuthDefault
     }
 
     /**
-     * Get death date of person or date of termination of organization.
+     * Get date of termination of organization.
      *
-     * @return string
+     * @return array
      */
     public function getDeathDate()
     {
@@ -83,37 +84,67 @@ class SolrAuthor extends SolrAuthDefault
     }
 
     /**
-     * Get homepage of person
-     *
-     * @return string
+     * Get GND establishment date of corporate body
      */
-    public function getHomepage()
+    public function getGndEstablishment()
     {
-        return $this->fields['homepage'] ?? '';
+        return $this->extraDetails['dateOfEstablishment'] ?? [];
+    }
+
+        /**
+     * Get GND termination date of corporate body
+     */
+    public function getGndTermination()
+    {
+        return $this->extraDetails['dateOfTermination'] ?? [];
     }
 
     /**
-     * Get gender of person.
+     * Get GND broader term instantial of corporate body
      */
-    public function getGender()
+    public function getGndBroaderTermInstantial()
     {
-        return $this->getEdmRecord()->getLiteralVals("rdau:P60531", "foaf:Person");
+        return $this->extraDetails['broaderTermInstantial'] ?? [];
     }
 
     /**
-     * Get place of birth of person.
+     * Get GND place of business of corporate body
      */
-    public function getPlaceOfBirth()
+    public function getGndPlaceOfBusiness()
     {
-        return $this->getEdmRecord()->getPropValues("rdau:P60593", "foaf:Person");
+        return $this->extraDetails['placeOfBusiness'] ?? [];
     }
 
     /**
-     * Get place of death of person.
+     * Get GND spatial area of activity of corporate body
      */
-    public function getPlaceOfDeath()
+    public function getGndSpatialAreaOfActivity()
     {
-        return $this->getEdmRecord()->getPropValues("rdau:P60592", "foaf:Person");
+        return $this->extraDetails['spatialAreaOfActivity'] ?? [];
+    }
+
+    /**
+     * Get GND preceding corporate body
+     */
+    public function getGndPrecedingCorp()
+    {
+        return $this->extraDetails['precedingCorporateBody'] ?? [];
+    }
+
+    /**
+     * Get GND succeeding corporate body
+     */
+    public function getGndSucceedingCorp()
+    {
+        return $this->extraDetails['succeedingCorporateBody'] ?? [];
+    }
+
+    /**
+     * Get GND abbreviation of corporate body
+     */
+    public function getGndAbbreviation()
+    {
+        return $this->extraDetails['abbreviatedNameForTheCorporateBody'] ?? [];
     }
 
     /**

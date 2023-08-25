@@ -8,6 +8,9 @@
   $this->searchIndex = $this->params->getSearchHandler();
   $this->searchType = $this->params->getSearchType();
   $this->searchClassId = $this->params->getsearchClassId();
+  $filterList = $this->params->getFilterList(true);
+  $ftype = $this->results->getEntityType($filterList);
+  $ftype_ = empty($ftype) ? "Record" : $ftype;
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
@@ -19,7 +22,7 @@
         'searchId' => $this->results->getSearchId(),
         'searchClassId' => $this->searchClassId,
         'checkboxFilters' => $this->params->getCheckboxFacets(),
-        'filterList' => $this->params->getFilterList(true),
+        'filterList' => $filterList,
         'hasDefaultsApplied' => $this->params->hasDefaultsApplied(),
         'selectedShards' => $this->params->getSelectedShards(),
         'ignoreHiddenFiltersInRequest' => $this->ignoreHiddenFiltersInRequest ?? false,
@@ -29,6 +32,8 @@
 
   // Set up breadcrumbs:
   $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
+  // Set up section:
+  $this->layout()->section = '<div class="section container title ' . $ftype_ . '"><h1 class="sectionHeader">' . $this->translate('Search Results') . '</h1></div> ';
 
   // Store search id:
   $this->layout()->searchId = $this->results->getSearchId();
@@ -43,7 +48,7 @@
   // Create a css class for results from the search class:
   $searchClass = $this->searchClassId;
   if (!ctype_upper($searchClass)) {
-      $searchClass = preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $searchClass);
+    $searchClass = preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $searchClass);
   }
   $this->resultsClass = 'search-results-' . strtolower($searchClass);
 
@@ -61,6 +66,7 @@
   $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchIndex, $this->searchType, $hiddenFilters);
 ?>
 
+<div id="content" class="container">
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?php $tabs = $this->context($this)->renderInContext('search/searchTabs', ['searchTabs' => $tabConfig['tabs'], 'showCounts' => true]); ?>
   <?php if (!empty($tabs)): ?><?=$tabs ?><div class="tab-content clearfix"><?php endif; ?>
@@ -98,8 +104,10 @@
       <?php
         if ($this->searchClassId == "Solr"):
           $noMessage = 'nohit_lookfor_html';
-        elseif ($this->searchClassId == "SolrAuthor"):
-          $noMessage = 'nohit_lookfor_agents_html';
+        elseif ($this->searchClassId == "SolrPerson"):
+          $noMessage = 'nohit_lookfor_persons_html';
+        elseif ($this->searchClassId == "SolrCorporation"):
+            $noMessage = 'nohit_lookfor_corporations_html';
         elseif ($this->searchClassId == "SolrEvent"):
           $noMessage = 'nohit_lookfor_events_html';
         else:
@@ -142,3 +150,4 @@
   <?php endforeach; ?>
 </div>
 <?php /* End Refine Search Options */ ?>
+</div>

@@ -25,26 +25,27 @@
   $this->layout()->breadcrumbs = $this->searchMemory()->getLastSearchLink($this->transEsc('Search'), '<li>', '</li> ') .
     '<li class="active" aria-current="page">' . $this->recordLinker()->getBreadcrumbHtml($this->driver) . '</li> ';
   $this->layout()->title = $this->driver->getShortTitle();
+  // Set up section:
+  $this->layout()->section = '<div class="section container title ' . $this->driver->getRecordType() . '"><h1 class="sectionHeader">' . $this->transEsc("SearchResults") . '</h1></div>';
 ?>
 
+<div id="content" class="container <?=$this->driver->getRecordType() . 'R'?>">
 <?php if (isset($this->scrollData) && ($this->scrollData['previousRecord'] || $this->scrollData['nextRecord'])): ?>
   <?=$this->render('record/prev-next.phtml'); ?>
 <?php endif; ?>
 
-<?=$this->record($this->driver)->getToolbar()?>
-
 <div class="record source<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>">
   <?php $sidebarList = $this->related()->getList($this->driver); ?>
-  <div class="<?=$this->layoutClass('mainbody')?><?=' solo'?>">
-    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueId())?>" class="hiddenId" />
-    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+  <div class="<?=$this->layoutClass('mainbodyRecord')?> solo">
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueId())?>" class="hiddenId">
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource">
     <?=$this->flashmessages()?>
     <?=$this->record($this->driver)->getCoreMetadata()?>
 
     <?php if (count($this->tabs) > 0): ?>
-      <a name="tabnav"></a>
+      <a id="tabnav"></a>
       <div class="record-tabs">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" role="tablist">
           <?php foreach ($this->tabs as $tab => $obj): ?>
             <?php
               $desc = $obj->getDescription();
@@ -60,7 +61,7 @@
               if (!$obj->isVisible()) { $tabClasses[] = 'hidden'; }
               if (!$obj->supportsAjax()) { $tabClasses[] = 'noajax'; }
             ?>
-            <li class="<?=implode(' ', $tabClasses)?>" data-tab="<?=$this->escapeHtmlAttr($tabName)?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>>
+            <li class="<?=implode(' ', $tabClasses)?>" role="tab" data-tab="<?=$this->escapeHtmlAttr($tabName)?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>>
               <a href="<?=$this->escapeHtmlAttr($this->recordLinker()->getTabUrl($this->driver, $tab))?>#tabnav" data-lightbox-ignore>
                 <?=$this->transEsc($desc)?>
               </a>
@@ -78,8 +79,10 @@
       </div>
     <?php endif; ?>
 
-    <?=$this->driver->supportsCoinsOpenURL()?'<span class="Z3988" title="' . $this->escapeHtmlAttr($this->driver->getCoinsOpenURL()) . '"></span>':''?>
+    <?=$this->driver->supportsCoinsOpenURL() ? '<span class="Z3988" title="' . $this->escapeHtmlAttr($this->driver->getCoinsOpenURL()) . '"></span>' : ''?>
   </div>
 
+  <?=$this->record($this->driver)->getToolbar()?>
 </div>
 <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$(document).ready(recordDocReady);', 'SET'); ?>
+</div>

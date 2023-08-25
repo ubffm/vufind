@@ -60,7 +60,7 @@
     <field name="birth_date" type="string" indexed="true" stored="true"/>
     <field name="death_date" type="string" indexed="true" stored="true"/>
     <field name="birth_place" type="string" indexed="true" stored="true"/>
-    <field name="death_place" type="string" indexed="true" stored="true"/>
+    <field name="death_place" type="string" indexed="true" stored="true"/>    
     <field name="country" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="related_place" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="field_of_activity" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -68,6 +68,7 @@
     <field name="gender" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
     <!-- additional authority fields-->
+    <field name="entity_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="date" type="range" indexed="true" stored="true" multiValued="true"/>
     <field name="date_sort" type="date" indexed="true" stored="true"/>
     <field name="geographic" type="string" indexed="true" stored="true" multiValued="true"/>

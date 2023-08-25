@@ -1,0 +1,14 @@
+<table class="table">
+    <caption class="sr-only"><?=$this->transEsc('Provider Details')?></caption>
+    <tr><th><?=$this->transEsc('Homepage')?>:</th><td><a href="https://www.dnb.de/" target="_blank"><?=$this->transEsc('DNB')?></a></td></tr>
+    <tr><th><?=$this->transEsc('Originaldatensatz')?>:</th><td><a href="<?=$data['id']?>" target="_blank"><?=$data['id']?></a></td></tr>
+    <tr><th><?=$this->transEsc('MetadataLicense')?>:</th><td><a href="<?=$data['license']['id']?>" target="_blank">
+        <?php if ($data['license']['label'] ==
+        'http://creativecommons.org/publicdomain/zero/1.0/') : ?>
+          <?="CC0 1.0"?>
+        <?php else: ?>
+          <?=$data['license']['label']?>
+        <?php endif; ?></td></tr>
+    <tr><th><?=$this->transEsc('changedLast')?>:</th><td><?=strtok($data['dateModified'],'T')?></a></td></tr>
+    <tr><th><?=$this->transEsc('Via')?>:</th><td><a href="https://lobid.org/gnd/<?=$gnd?>" target="_blank">lobid-gnd</a></td></tr>
+</table>

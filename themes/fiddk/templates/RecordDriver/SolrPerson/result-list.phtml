@@ -1,0 +1,57 @@
+<?php
+  $heading = $this->driver->getTitle();
+  if (empty($heading)) {
+    $heading = $this->translate('Heading unavailable.');
+  }
+
+  $authType = $this->driver->getRecordType();
+
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLinker()->getUrl($this->driver));
+  $cover = $coverDetails['html'];
+  $thumbnail = false;
+  $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
+  if ($coverDetails['cover'] && $cover):
+    ob_start(); ?>
+      <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
+       <?=$cover ?>
+      </div>
+    <?php $thumbnail = ob_get_contents();
+    ob_end_clean();?>
+  <?php endif; ?>
+      <div class="media <?=$authType?>L">
+        <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
+        <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+        <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
+        <div><i class="fa fa-regular fa-user fa-lg recordIcon"></i></div>
+      </div>
+
+    <div class="media-body">
+    <div class="resultItemLine1">
+    <a href="<?=$this->recordLinker()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
+    </div>
+  <?php $prof = $this->driver->getOccupation();
+    $birth = $this->driver->getBirthDate();
+    $death = $this->driver->getDeathDate();
+    if (!empty($prof) || !empty($birth) || !empty($death)): ?>
+      <div class="resultItemLine2">
+      <?php if ($birth || $death) : ?>
+        <i class="fa fa-regular fa-calendar"></i>&nbsp;
+          <?php if (!$death) : ?>
+              <?='* ' . $this->driver->translateDate($birth, 'de')?><br/>
+          <?php elseif(!$birth) : ?>
+              <?='† ' . $this->driver->translateDate($death, 'de')?><br/>
+          <?php else : ?>
+              <?='* ' . $this->driver->translateDate($birth, 'de') . ' - † ' . $this->driver->translateDate($death, 'de')?><br/>
+          <?php endif; ?>
+      <?php endif; ?>
+      <?php foreach ($prof as $i => $current): ?>
+        <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
+        <?php if ($i < sizeof($prof) - 1): ?> | <?php endif; ?>
+      <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </div>
+  <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>
+    <?=$thumbnail ?>
+  <?php endif ?>
+</div>

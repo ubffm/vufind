@@ -28,6 +28,8 @@
  */
 namespace Fiddk\RecordDriver;
 
+use \Fiddk\Connection\Lobid;
+
 /**
  * Model for EDM work authority records in Solr.
  *
@@ -40,19 +42,135 @@ namespace Fiddk\RecordDriver;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrWork extends SolrEdm
+class SolrWork extends SolrEdm implements
+\VuFindHttp\HttpServiceAwareInterface
 {
+    use \VuFindHttp\HttpServiceAwareTrait;
+
+    /**
+     * HTTP client
+     *
+     * @var \Laminas\Http\Client
+     */
+    protected $client;
+
+    /**
+     * Lobid client
+     *
+     * @var Lobid
+     */
+    protected $lobid;
+
+
+    /**
+     * Get icon for this entity type.
+     *
+     * @return string
+     */
+    public function getRecordIcon()
+    {
+        return 'fa-star';
+    }
+
     /**
      * Get type
      *
      * @return array
      */
-    public function getAuthType()
+    public function getRecordType()
     {
         return "Work";
     }
 
+        /**
+     * is this a GND record?
+     */
+    public function isGndRecord()
+    {
+        return str_starts_with($this->fields['id'],'gnd_') ?? false;
+    }
+
     /**
+     * Get GND record, but only in details pages
+     */
+    public function getGndRecord()
+    {
+        $gnd = substr($this->fields['id'], 4);
+        $this->client = $this->httpService->createClient();
+        $this->lobid = new Lobid($this->client);
+        $this->extraDetails = $this->lobid->get($gnd);
+        return $this->extraDetails;
+    }
+
+    /**
+     * Get GND variant names
+     */
+    public function getGndVariants()
+    {
+        return $this->extraDetails['variantName'] ?? [];
+    }
+
+    /**
+     * Get GND Number
+     */
+    public function getGndIdentifier()
+    {
+        return $this->extraDetails['gndIdentifier'] ?? [];
+    }
+
+    /**
+     * Get biographical or historical information of Gnd entity.
+     *
+     * @return string
+     */
+    public function getGndBio()
+    {
+        return $this->extraDetails['biographicalOrHistoricalInformation'] ?? [];
+    }
+
+    /**
+     * Get desciption of Gnd entity.
+     *
+     * @return string
+     */
+    public function getGndDescription()
+    {
+        return $this->extraDetails['description'] ?? [];
+    }
+
+    /**
+     * Get GND date of publication of entity.
+     */
+    public function getGndDateOfPublication()
+    {
+        return $this->extraDetails['dateOfPublication'] ?? [];
+    }
+
+    /**
+     * Get GND subject category of entity.
+     */
+    public function getGndSubjectCategory()
+    {
+        return $this->extraDetails['gndSubjectCategory'] ?? [];
+    }
+
+    /**
+     * Get GND sameAs list
+     */
+    public function getGndSameAs()
+    {
+        return $this->extraDetails['sameAs'] ?? [];
+    }
+
+    /**
+     * Returns links to provider
+     */
+    public function getSameAs()
+    {
+        return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
+    }
+
+        /**
      * Get the number of event records belonging to this work
      *
      * @return int Number of records
@@ -67,13 +185,5 @@ class SolrWork extends SolrEdm
         $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
         $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 0, $params);
         return $this->searchService->invoke($command)->getResult()->getTotal();
-    }
-
-    /**
-     * Returns links to provider
-     */
-    public function getSameAs()
-    {
-        return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
     }
 }

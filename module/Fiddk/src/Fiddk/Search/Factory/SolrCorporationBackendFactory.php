@@ -1,10 +1,10 @@
 <?php
 /**
- * Solr Author Autocomplete Module
+ * Factory for a second Solr auth backend
  *
  * PHP version 7
  *
- * Copyright (C) Villanova University 2010.
+ * Copyright (C) Frankfurt University Library 2019.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -20,38 +20,44 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  Autocomplete
- * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Chris Hallberg <challber@villanova.edu>
+ * @package  Search_Factory
  * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development:plugins:autosuggesters Wiki
+ * @link     https://vufind.org Main Site
  */
-namespace Fiddk\Autocomplete;
+namespace Fiddk\Search\Factory;
 
 /**
- * Solr Author Autocomplete Module
- *
- * This class provides suggestions by using the local Solr author index.
+ * Factory for a second Solr backend
  *
  * @category VuFind
- * @package  Autocomplete
- * @author   Demian Katz <demian.katz@villanova.edu>
+ * @package  Search_Factory
  * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development:plugins:autosuggesters Wiki
+ * @link     https://vufind.org Main Site
  */
-class SolrAuthor extends \VuFind\Autocomplete\Solr
+class SolrCorporationBackendFactory extends \VuFind\Search\Factory\SolrAuthBackendFactory
 {
     /**
      * Constructor
-     *
-     * @param \VuFind\Search\Results\PluginManager $results Results plugin manager
      */
-    public function __construct(\VuFind\Search\Results\PluginManager $results)
+    public function __construct()
     {
-        parent::__construct($results);
-        $this->defaultDisplayField = 'heading';
-        $this->searchClassId = 'SolrAuthor';
+        parent::__construct();
+        $this->searchConfig = $this->facetConfig = 'corporation';
+    }
+
+    /**
+     * Get the callback for creating a record.
+     *
+     * Returns a callable or null to use RecordCollectionFactory's default method.
+     *
+     * @return callable|null
+     */
+    protected function getCreateRecordCallback(): ?callable
+    {
+        $manager = $this->serviceLocator
+            ->get(\VuFind\RecordDriver\PluginManager::class);
+        return [$manager, 'getSolrCorporationRecord'];
     }
 }

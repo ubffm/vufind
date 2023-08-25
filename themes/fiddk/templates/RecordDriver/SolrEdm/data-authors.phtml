@@ -23,7 +23,7 @@ $formattedAuthors = [];
       endif; ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
       <a href="<?=$authorityLookfor?>">
-        <?=$this->escapeHtml($author)?>
+        <?=$this->escapeHtml(rtrim($author, ','))?>
       </a>
       <?php
         // Display additional data using the appropriate translation prefix

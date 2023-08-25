@@ -42,13 +42,17 @@ namespace Fiddk\RecordDriver;
  */
 class SolrEvent extends SolrAuthDefault
 {
+
     /**
-     * Returns the type of the event
+     * Get icon for this entity type.
+     *
+     * @return string
      */
-    public function getEventType()
+    public function getRecordIcon()
     {
-        return $this->fields['event_type'] ?? [];
+        return 'fa-calendar';
     }
+
 
     /**
      * Returns the type of the event
@@ -82,6 +86,26 @@ class SolrEvent extends SolrAuthDefault
     public function getGenres()
     {
         return $this->fields['genre'] ?? [];
+    }
+
+    /**
+     * Get place of Gnd event
+     *
+     * @return array
+     */
+    public function getGndPlaceOfEvent()
+    {
+        return $this->extraDetails['placeOfConferenceOrEvent'] ?? [];
+    }
+
+    /**
+     * Get date of Gnd event
+     *
+     * @return array
+     */
+    public function getGndDateOfEvent()
+    {
+        return $this->extraDetails['dateOfConferenceOrEvent'] ?? [];
     }
 
     /**

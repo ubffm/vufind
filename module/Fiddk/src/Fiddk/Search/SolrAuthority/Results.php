@@ -28,7 +28,6 @@
 namespace Fiddk\Search\SolrAuthority;
 
 use VuFind\Record\Loader;
-use VuFind\Search\Solr\Results as SolrResults;
 use VuFindSearch\Service as SearchService;
 
 /**
@@ -40,7 +39,7 @@ use VuFindSearch\Service as SearchService;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class Results extends SolrResults
+class Results extends \VuFind\Search\Solr\Results
 {
     /**
      * Constructor

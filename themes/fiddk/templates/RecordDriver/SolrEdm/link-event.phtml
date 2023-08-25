@@ -3,6 +3,6 @@
         $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
   <a href="<?=$this->url('eventrecord')?><?=$id?>"><?=$this->escapeHtml($field)?></a>
   <?php if (isset($eventDate)):?>
-    <?="(" . $this->driver->translateDate($eventDate[0], $lang) . ")"?>
+    <?="("?><i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->driver->translateDate($eventDate[0], $lang) . ")"?>
   <?php endif;?><br/>
 <?php endforeach; ?>

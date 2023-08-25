@@ -1,6 +1,6 @@
 <?php
 /**
- * Author aspect of the Search Multi-class (Results)
+ * Solr Person Autocomplete Module
  *
  * PHP version 7
  *
@@ -20,42 +20,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category VuFind
- * @package  Search_SolrAuthor
+ * @package  Autocomplete
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Chris Hallberg <challber@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org Main Site
+ * @link     https://vufind.org/wiki/development:plugins:autosuggesters Wiki
  */
-namespace Fiddk\Search\SolrAuthor;
-
-use VuFind\Record\Loader;
-use VuFind\Search\Solr\Results as SolrResults;
-use VuFindSearch\Service as SearchService;
+namespace Fiddk\Autocomplete;
 
 /**
- * Author Search Options
+ * Solr Author Autocomplete Module
+ *
+ * This class provides suggestions by using the local Solr author index.
  *
  * @category VuFind
- * @package  Search_SolrAuthor
+ * @package  Autocomplete
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org Main Site
+ * @link     https://vufind.org/wiki/development:plugins:autosuggesters Wiki
  */
-class Results extends SolrResults
+class SolrPerson extends \VuFind\Autocomplete\Solr
 {
     /**
      * Constructor
      *
-     * @param \VuFind\Search\Base\Params $params        Object representing user
-     * search parameters.
-     * @param SearchService              $searchService Search service
-     * @param Loader                     $recordLoader  Record loader
+     * @param \VuFind\Search\Results\PluginManager $results Results plugin manager
      */
-    public function __construct(
-        \VuFind\Search\Base\Params $params,
-        SearchService $searchService,
-        Loader $recordLoader
-    ) {
-        parent::__construct($params, $searchService, $recordLoader);
-        $this->backendId = 'SolrAuthor';
+    public function __construct(\VuFind\Search\Results\PluginManager $results)
+    {
+        parent::__construct($results);
+        $this->defaultDisplayField = 'heading';
+        $this->searchClassId = 'SolrPerson';
     }
 }

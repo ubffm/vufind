@@ -1,35 +1,17 @@
-<?php if(!empty($describedBy)) : ?>
-  <p class="bottom">
-  <b><?=$this->transEsc('Institution') . ':'?></b><br>
-  <a href="<?=$describedBy['id']?>" target="_blank">
-    <?=$describedBy['id']?>
-  </a><?=' (' . $this->transEsc('License') . ': '?>
-    <a href="<?=$describedBy['license']['id']?>" target="_blank">
-    <?php if ($describedBy['license']['label'] ==
-        'http://creativecommons.org/publicdomain/zero/1.0/') : ?>
-        <?="CC0 1.0"?>
-    <?php else: ?>
-        <?=$describedBy['license']['label']?>
-    <?php endif; ?>
-  </a><?=') '?><?=$this->transEsc('via')?> <a href="https://lobid.org/gnd" target="_blank">lobid-gnd</a>
-</p>
-<?php elseif (!empty($dprov)) : ?>
-  <b><?=$this->transEsc('Institution') . ':'?></b><br/>
-  <?php foreach ($dprov as $inter => $info): ?>
-    <?php if ($inter == "inst"): ?>
-      <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
-      <?php if ($info[2] == "THULB" && !empty($sameAs)): ?>
-        <?php if ($type == "Event"): ?>
-          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('PerAtProv')?></a>
-        <?php elseif ($type == "Work"): ?>
-          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('WorkAtProv')?></a>
-        <?php else: ?>
-          <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('AgeAtProv')?></a>
-        <?php endif; ?>
+<?php foreach ($dprov as $inter => $info): ?>
+  <?php if ($inter == "inst"): ?>
+    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <?php if ($info[2] == "THULB" && !empty($sameAs)): ?>
+      <?php if ($type == "Event"): ?>
+        <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('PerAtProv')?></a>
+      <?php elseif ($type == "Work"): ?>
+        <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('WorkAtProv')?></a>
+      <?php else: ?>
+        <a href="<?=$sameAs[0]?>" target="_blank"><?=$this->transEsc('AgeAtProv')?></a>
       <?php endif; ?>
-    <?php else: ?>
-      <a href="<?=$info[4]?>" target="_blank"><?=$this->escapeHtml($info[3])?></a><?=" via "?>
-      <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
     <?php endif; ?>
-  <?php endforeach; ?>
-<?php endif; ?>
+  <?php else: ?>
+    <a href="<?=$info[4]?>" target="_blank"><?=$this->escapeHtml($info[3])?></a><?=" via "?>
+    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+  <?php endif; ?>
+<?php endforeach; ?>

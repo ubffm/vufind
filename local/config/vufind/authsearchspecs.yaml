@@ -31,7 +31,14 @@ MainHeading:
     - [bq, (record_type:"Personal Name" OR record_type:"Corporate Name" OR record_type:"Event")^500]
   DismaxHandler: edismax
 
-Agent:
+Person:
+  QueryFields:
+    author_id:
+      - [onephrase, 100]
+    institution_id:
+      - [onephrase, ~]
+
+Corporation:
   QueryFields:
     author_id:
       - [onephrase, 100]

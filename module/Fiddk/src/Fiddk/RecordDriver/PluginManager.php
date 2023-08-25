@@ -47,9 +47,11 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     protected $aliases = [
         'solredm' => SolrEdm::class,
-        'solrauthor' => SolrAuthor::class,
+        'solrperson' => SolrPerson::class,
+        'solrcorporation' => SolrCorporation::class,
         'solrevent' => SolrEvent::class,
         'solrwork' => SolrWork::class,
+        \VuFind\RecordDriver\SolrAuthDefault::class => \Fiddk\RecordDriver\SolrAuthDefault::class,
     ];
 
     /**
@@ -59,23 +61,37 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     protected $factories = [
         SolrEdm::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
-        SolrAuthDefault::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
-        SolrAuthor::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
+        \Fiddk\RecordDriver\SolrAuthDefault::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
+        SolrPerson::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
+        SolrCorporation::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrEvent::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrWork::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
     ];
 
     /**
-     * Convenience method to retrieve a populated Solr author record driver.
+     * Convenience method to retrieve a populated Solr person record driver.
      *
      * @param array $data Raw Solr data
      *
      * @return AbstractBase
      */
-    public function getSolrAuthorRecord($data)
+    public function getSolrPersonRecord($data)
     {
-        return $this->getSolrRecord($data, 'SolrAuthor', '');
+        return $this->getSolrRecord($data, 'SolrPerson', '');
     }
+
+    /**
+     * Convenience method to retrieve a populated Solr corporation record driver.
+     *
+     * @param array $data Raw Solr data
+     *
+     * @return AbstractBase
+     */
+    public function getSolrCorporationRecord($data)
+    {
+        return $this->getSolrRecord($data, 'SolrCorporation', '');
+    }
+
 
     /**
      * Convenience method to retrieve a populated Solr event record driver.

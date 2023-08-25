@@ -40,7 +40,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class AgentSearchController extends \VuFind\Controller\AuthorController
+class AgentSearchController extends \VuFind\Controller\AbstractSearch
 {
     /**
      * Constructor
@@ -49,7 +49,7 @@ class AgentSearchController extends \VuFind\Controller\AuthorController
      */
     public function __construct(ServiceLocatorInterface $sm)
     {
-        $this->searchClassId = 'SolrAuthor';
+        //$this->searchClassId = 'Combined';
         parent::__construct($sm);
     }
 
@@ -68,8 +68,18 @@ class AgentSearchController extends \VuFind\Controller\AuthorController
      *
      * @return mixed
      */
-    public function homeAction()
-    {
-        return $this->forwardTo('AgentSearch', 'Results');
-    }
+    /*public function homeAction()
+     {
+        // If we came in with a record ID, forward to the record action; this
+        // provides backward compatibility with multiple legacy routes.
+        /* if ($id = $this->params()->fromRoute('id', false)) {
+            if ($id === 'Record') {
+                $id = $this->params()->fromQuery('id', $id);
+            }
+            return $this->redirect()->toRoute('solrauthrecord', compact('id'));
+        }
+
+        // Default behavior:
+        return parent::homeAction();
+    } */
 }

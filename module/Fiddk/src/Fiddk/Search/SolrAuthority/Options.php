@@ -56,7 +56,8 @@ class Options extends \VuFind\Search\Solr\Options
         // Load the Agent- or the EventModuleRecommendations configuration if available,
         // depending on the type
         $recommend = [];
-        if (($handler == 'Agent' or $handler == 'Event' or $handler == 'Work') and isset($ss->AuthModuleRecommendations)) {
+        if (($handler == 'Person' or $handler == 'Corporation' or $handler == 'Event' or $handler == 'Work') 
+            and isset($ss->AuthModuleRecommendations)) {
             foreach ($ss->AuthModuleRecommendations as $section => $content) {
                 $recommend[$section] = [];
                 foreach ($content as $current) {

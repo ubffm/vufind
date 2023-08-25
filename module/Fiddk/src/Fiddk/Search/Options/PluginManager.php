@@ -47,7 +47,8 @@ class PluginManager extends \VuFind\Search\Options\PluginManager
      */
     protected $aliases = [
         'solrauthority' => \Fiddk\Search\SolrAuthority\Options::class,
-        'VuFind\Search\SolrAuthor\Options' => \Fiddk\Search\SolrAuthor\Options::class,
+        'solrperson' => \Fiddk\Search\SolrPerson\Options::class,
+        'solrcorporation' => \Fiddk\Search\SolrCorporation\Options::class,
         'solrevent' => \Fiddk\Search\SolrEvent\Options::class,
         'solrwork' => \Fiddk\Search\SolrWork\Options::class,
     ];
@@ -59,7 +60,8 @@ class PluginManager extends \VuFind\Search\Options\PluginManager
      */
     protected $factories = [
         \Fiddk\Search\SolrAuthority\Options::class => \VuFind\Search\Options\OptionsFactory::class,
-        \Fiddk\Search\SolrAuthor\Options::class => \VuFind\Search\Options\OptionsFactory::class,
+        \Fiddk\Search\SolrPerson\Options::class => \VuFind\Search\Options\OptionsFactory::class,
+        \Fiddk\Search\SolrCorporation\Options::class => \VuFind\Search\Options\OptionsFactory::class,
         \Fiddk\Search\SolrEvent\Options::class => \VuFind\Search\Options\OptionsFactory::class,
         \Fiddk\Search\SolrWork\Options::class => \VuFind\Search\Options\OptionsFactory::class,
     ];

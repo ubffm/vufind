@@ -1,6 +1,6 @@
 <?php
 /**
- * Agent "Record" Controller (which is a Search Controller with Recommendation)
+ * Agent Record Controller
  *
  * PHP version 7
  *
@@ -29,8 +29,11 @@
  */
 namespace Fiddk\Controller;
 
+use Laminas\Config\Config;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+
 /**
- * Agent "Record" Controller (which is a Search Controller with Recommendation)
+ * Agent Record Controller
  *
  * @category VuFind
  * @package  Controller
@@ -39,11 +42,39 @@ namespace Fiddk\Controller;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class AgentController extends \VuFind\Controller\AbstractSearch
+class AgentController extends \VuFind\Controller\AbstractRecord
 {
-    protected $driver = null;
 
-    public function homeAction()
+     /**
+     * Constructor
+     *
+     * @param ServiceLocatorInterface $sm Service locator
+     */
+    public function __construct(ServiceLocatorInterface $sm)
+    {
+        // assume it's a person if we call an agent
+        $this->sourceId = 'SolrPerson';
+        // Call standard record controller initialization:
+        parent::__construct($sm);
+    }
+
+    public function homeAction() {
+        try {
+            $this->driver = $this->loadRecord();
+        } catch (\Exception $e) {
+            // it's a corporation agent
+            $this->sourceId = 'SolrCorporation';
+        }
+        // Apply template for simplified authority record display:
+        $result = parent::homeAction();
+        if (is_callable([$result, 'setTemplate'])) {
+           $result->setTemplate('RecordDriver/SolrAuthDefault/view');
+        }
+        return $result;
+    }
+
+
+    /* public function homeAction()
     {
         $this->searchClassId = 'SolrAuthor';
         $this->driver = $this->loadRecord();
@@ -56,7 +87,7 @@ class AgentController extends \VuFind\Controller\AbstractSearch
         $query->set('name', $name);
         return !empty($id) ?
         $this->forwardTo('Agent', 'Results') : $this->forwardTo('Search', 'Home');
-    }
+    } */
 
     /**
      * Load the record requested by the user; note that this is not done in the
@@ -65,7 +96,7 @@ class AgentController extends \VuFind\Controller\AbstractSearch
      *
      * @return AbstractRecordDriver
      */
-    protected function loadRecord()
+    /* protected function loadRecord()
     {
         // Only load the record if it has not already been loaded.  Note that
         // when determining record ID, we check both the route match (the most
@@ -84,14 +115,14 @@ class AgentController extends \VuFind\Controller\AbstractSearch
             );
         }
         return $this->driver;
-    }
+    } */
 
     /**
      * Send search results to results view
      *
      * @return \Laminas\View\Model\ViewModel
      */
-    public function resultsAction()
+    /* public function resultsAction()
     {
         $view = $this->createViewModel(['driver' => $this->driver]);
 
@@ -149,5 +180,5 @@ class AgentController extends \VuFind\Controller\AbstractSearch
         $view->showBulkOptions = isset($config->Site->showBulkOptions)
         && $config->Site->showBulkOptions;
         return $view;
-    }
+    } */
 }

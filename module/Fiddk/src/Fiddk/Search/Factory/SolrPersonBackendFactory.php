@@ -27,10 +27,6 @@
  */
 namespace Fiddk\Search\Factory;
 
-use VuFindSearch\Backend\Solr\Backend;
-use VuFindSearch\Backend\Solr\Connector;
-use VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory;
-
 /**
  * Factory for a second Solr backend
  *
@@ -40,7 +36,7 @@ use VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class SolrAuthorBackendFactory extends \VuFind\Search\Factory\SolrAuthBackendFactory
+class SolrPersonBackendFactory extends \VuFind\Search\Factory\SolrAuthBackendFactory
 {
     /**
      * Constructor
@@ -48,23 +44,20 @@ class SolrAuthorBackendFactory extends \VuFind\Search\Factory\SolrAuthBackendFac
     public function __construct()
     {
         parent::__construct();
-        $this->searchConfig = $this->facetConfig = 'author';
+        $this->searchConfig = $this->facetConfig = 'person';
     }
 
     /**
-     * Create the SOLR backend.
+     * Get the callback for creating a record.
      *
-     * @param Connector $connector Connector
+     * Returns a callable or null to use RecordCollectionFactory's default method.
      *
-     * @return \VuFindSearch\Backend\Solr\Backend
+     * @return callable|null
      */
-    protected function createBackend(Connector $connector)
+    protected function getCreateRecordCallback(): ?callable
     {
-        $backend = parent::createBackend($connector);
         $manager = $this->serviceLocator
             ->get(\VuFind\RecordDriver\PluginManager::class);
-        $factory = new RecordCollectionFactory([$manager,'getSolrAuthorRecord']);
-        $backend->setRecordCollectionFactory($factory);
-        return $backend;
+        return [$manager, 'getSolrPersonRecord'];
     }
 }

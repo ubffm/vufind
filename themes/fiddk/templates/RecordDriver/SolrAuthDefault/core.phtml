@@ -1,0 +1,117 @@
+<?php $authType = $this->driver->getRecordType();
+      $authIcon = $this->driver->getRecordIcon();
+      $isGnd = $this->driver->isGndRecord();?>
+<h2><i class="fa fa-regular <?=$authIcon?> fa-lg recordIcon"></i>&nbsp;&nbsp;<?=$this->escapeHtml($this->driver->getTitle())?></h2>
+<div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
+  <?php
+    $QRCode = $this->record($this->driver)->getQRCode("core");
+    $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $this->record($this->driver)->getThumbnail('large'));
+    $cover = $coverDetails['html'];
+    $alignment = $this->record($this->driver)->getThumbnailAlignment('result');
+    $preview = $this->record($this->driver)->getPreviews();
+  ?>
+  <?php if (($QRCode || $cover || $preview) && $alignment == 'left'): ?>
+    <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
+      <?php /* Display thumbnail if appropriate: */ ?>
+      <?php if($coverDetails['cover']): ?>
+        <?=$cover?>
+      <?php endif; ?>
+
+      <?php /* Display qrcode if appropriate: */ ?>
+      <?php if($QRCode): ?>
+        <span class="hidden-xs">
+          <br/><img alt="<?=$this->transEsc('QR Code')?>" class="qrcode" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
+        </span>
+      <?php endif; ?>
+
+      <?php // if you have a preview tab but want to move or remove the preview link
+         // from this area of the record view, this can be split into
+         // getPreviewData() (should stay here) and
+         // getPreviewLink() (can go in your desired tab) ?>
+      <?php if ($preview): ?>
+        <div class="record-previews">
+          <?=$preview?>
+        </div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
+  <div class="media-body">
+
+    <?php /* Display Main Details */ ?>
+    <?php
+      $formatter = $this->recordDataFormatter();
+      if ($isGnd) {
+        $driver->getGndRecord();
+        //var_dump($driver->getGndRecord());
+        $coreFields = $formatter->getData($driver, $formatter->getDefaults($authType . 'Gnd'));
+        $gndProvider = $this->driver->getGndDescribedBy();
+        $sameAs = $this->driver->getGndSameAs();
+      } else {
+        $coreFields = $formatter->getData($driver, $formatter->getDefaults($authType));
+        $provider = [];//$formatter->getData($driver, $formatter->getDefaults('Provider'));
+        $sameAs = [];
+      }
+      $relatedFields = $formatter->getData($driver, $formatter->getDefaults($authType . 'Related'));
+    ?>
+    <?php if (!empty($coreFields)): ?>
+      <div class="data-table">
+        <table class="table">
+          <caption class="sr-only"><?=$this->transEsc('Details')?></caption>
+          <?php foreach ($coreFields as $current): ?>
+            <tr><th><?=$this->transEsc($current['label'])?>:</th><td><?=$current['value']?></td></tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+    <?php endif; ?>    
+    <div class="Platzhalter">
+        <h3 property="context"><?=$this->transEsc("Platzhalter Record-Verlinkungen")?></h3>
+    </div>
+    <?php foreach ($relatedFields as $current): ?>
+      <?php switch ($current['label']) {
+        case 'dc:contributor':
+          $authCurrent = 'Person';
+          $icon = 'fa-user';
+          break;
+        case '':
+          break; 
+        }
+        ?>
+      <div class="data-table <?=$authCurrent?>">
+        <table class="table">
+            <tr><th><?=$this->transEsc('edm::' . $current['label'])?><div><i class="fa fa-regular <?=$icon?> fa-lg recordIcon"></i></div></th><td><?=$current['value']?></td></tr>
+        </table>
+      </div>
+    <?php endforeach; ?>
+    <?php /* End Main Details */ ?>
+  </div>
+  <div class="media-body-right">
+    <?php if ($coverDetails['cover'] && $alignment == 'right'): ?>
+      <div class="media-right <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
+        <?=$cover?>
+        <?php $picSource = $this->driver->getPicSource($coverDetails['cover']);?>
+        <?php if (!empty($picSource)): ?>
+          <figcaption><?=$this->transEsc("PicSource") . ": " . $picSource[0] . " | "?>
+          <a href="<?=$picSource[1]?>">Wikimedia Commons</a>
+          <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
+        <?php endif; ?>
+      </div>
+    <?php endif ?>
+      <div class="provider">
+        <h3><i class="fa fa-regular fa-building"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
+        <?php if (isset($gndProvider)): ?>
+          <?=$this->render('RecordDriver/SolrAuthDefault/data-gndSource.phtml', ['data' => $gndProvider, 'gnd' => $this->driver->getGndIdentifier()]);?>
+        <?php elseif (isset($provider)): ?>
+          <table class="table">
+            <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
+            <?php foreach ($provider as $current): ?>
+              <?php //$this->driver->getInstitutionLinked(); ?>
+              <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
+            <?php endforeach; ?>
+          </table>
+        <?php endif; ?>
+      </div>
+    <?php if (!empty($sameAs)): ?>
+        <?=$this->render('RecordDriver/DefaultRecord/data-sameAs.phtml', ['data' => $sameAs]);?>
+    <?php endif; ?>
+  </div>
+</div>

@@ -370,7 +370,14 @@ Event:
     topic_id:
       - [onephrase, 50]
 
-Agent:
+Person:
+  QueryFields:
+    author_id:
+      - [onephrase, 100]
+    topic_id:
+      - [onephrase, 50]
+
+Corporation:
   QueryFields:
     author_id:
       - [onephrase, 100]

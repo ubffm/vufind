@@ -41,6 +41,21 @@ namespace Fiddk\RecordDriver;
 trait EdmBasicTrait
 {
 
+    public function getRecordType() {
+        return 'Record';
+    }
+
+    /**
+     * Get icon for this entity type.
+     *
+     * @return string
+     */
+    public function getRecordIcon()
+    {
+        return 'fa-archive';
+    }
+
+
     public function getIntermediates()
     {
         return $this->fields['intermediate'] ?? [];
@@ -49,6 +64,11 @@ trait EdmBasicTrait
     public function getAlternativeTitles()
     {
         return $this->fields['title_alt'] ?? [];
+    }
+
+    public function getShortTitle()
+    {
+        return parent::getTitle();
     }
 
     public function getGenres()

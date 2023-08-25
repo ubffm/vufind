@@ -46,23 +46,13 @@ class PluginManager extends \VuFind\Search\Params\PluginManager
      * @var array
      */
     protected $aliases = [
+        'blender' => \VuFind\Search\Blender\Params::class,
         'solrauthority' => \Fiddk\Search\SolrAuthority\Params::class,
-        'solrauthor' => \Fiddk\Search\SolrAuthor\Params::class,
-        \VuFind\Search\SolrAuthor\Params::class => \Fiddk\Search\SolrAuthor\Params::class,
+        'solrperson' => \Fiddk\Search\SolrPerson\Params::class,
+        'solrcorporation' => \Fiddk\Search\SolrCorporation\Params::class,
         'solrevent' => \Fiddk\Search\SolrEvent\Params::class,
         'solrwork' => \Fiddk\Search\SolrWork\Params::class,
-    ];
-
-    /**
-     * Default plugin factories.
-     *
-     * @var array
-     */
-    protected $factories = [
-        \Fiddk\Search\SolrEvent\Params::class => \VuFind\Search\Solr\ParamsFactory::class,
-        \Fiddk\Search\SolrAuthority\Params::class => \VuFind\Search\Solr\ParamsFactory::class,
-        \Fiddk\Search\SolrAuthor\Params::class => \VuFind\Search\Solr\ParamsFactory::class,
-        \Fiddk\Search\SolrWork\Params::class => \VuFind\Search\Solr\ParamsFactory::class,
+        \VuFind\Search\SolrAuth\Params::class => \Fiddk\Search\SolrAuthority\Params::class,
     ];
 
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * AuthorInfo Recommendations Module
+ * AuthorityInfo Recommendations Module
  *
- * PHP version 7
+ * PHP version 8
  *
  * Copyright (C) Villanova University 2010.
  *
@@ -46,7 +46,7 @@ use VuFindSearch\Query\Query;
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  * @view     AuthorInfoFacets.phtml
  */
-class AuthInfo implements \VuFind\Recommend\RecommendInterface
+class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
 {
     /**
      * HTTP client
@@ -284,21 +284,4 @@ class AuthInfo implements \VuFind\Recommend\RecommendInterface
         return $res;
     }
 
-    /**
-     * Returns the source of the picture (ajax?)
-     */
-    public function getPicSource($thumbnail)
-    {
-        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)) :
-            $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
-            $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
-            if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])) :
-                return [$imageInfo["Artist"]["value"],
-                  "https://commons.wikimedia.org/wiki/File:" . $fname[1],
-                  $imageInfo["LicenseShortName"]["value"]]; else:
-                      return null;
-                  endif; else:
-                      return null;
-                  endif;
-    }
 }

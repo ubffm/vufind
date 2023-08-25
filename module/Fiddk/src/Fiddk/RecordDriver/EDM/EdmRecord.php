@@ -60,11 +60,11 @@ class EdmRecord
     public function getLiteralVals($prop = "", $class = "")
     {
         $name = explode(":", $prop);
-        if (array_key_exists($name[0], $this->ns)) {
-            return $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
-        } else {
+        //if (array_key_exists($name[0], $this->ns)) {
+        //    return $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
+        //} else {
             return [];
-        }
+        //}
     }
 
     /* for temporal attributes that will never have an associated

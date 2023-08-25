@@ -60,8 +60,10 @@ class Params extends \VuFind\Search\Solr\Params
 
         $this->name = $request->get('name');
         // Set the correct search handler depending on authority type:
-        if ($type == 'Agent') {
-            $this->setBasicSearch($lookfor, 'Agent');
+        if ($type == 'Person') {
+            $this->setBasicSearch($lookfor, 'Person');
+        } elseif ($type == 'Corporation') {
+            $this->setBasicSearch($lookfor, 'Corporation');
         } elseif ($type == 'Event') {
             $this->setBasicSearch($lookfor, 'Event');
         } elseif ($type == 'Work') {

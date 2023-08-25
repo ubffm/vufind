@@ -28,6 +28,9 @@
  */
 namespace Fiddk\RecordDriver;
 
+use \Fiddk\Connection\Lobid;
+use \Fiddk\Connection\Wikipedia;
+
 /**
  * Model for EDM authority records in Solr.
  *
@@ -40,16 +43,169 @@ namespace Fiddk\RecordDriver;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
+class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
+\VuFindHttp\HttpServiceAwareInterface
 {
     use EdmReaderTrait;
+    use \VuFindHttp\HttpServiceAwareTrait;
+
+        /**
+     * HTTP client
+     *
+     * @var \Laminas\Http\Client
+     */
+    protected $client;
+
+    /**
+     * Lobid client
+     *
+     * @var Lobid
+     */
+    protected $lobid;
+
+    /**
+     * Wikipedia client
+     *
+     * @var Wikipedia
+     */
+    protected $wikipedia;
+
+    /**
+     * No support for citation of authority data
+     */
+    protected function getSupportedCitationFormats()
+    {
+        return [];
+    }
 
     /**
      * Returns the authority type (Personal Name, Corporate Name or Event)
      */
-    public function getAuthType()
+    public function getRecordType()
     {
-        return $this->fields['record_type'] ?? '';
+        switch ($this->fields['record_type']) {
+            case 'Personal Name':
+                return 'Person';
+                break;
+            case 'Corporate Name':
+                return 'Corporation';
+                break;
+            default:
+              return $this->fields['record_type'] ?? '';
+        }
+    }
+
+    /**
+     * Returns the type of the entity
+     */
+    public function getEntityType()
+    {
+        return $this->fields['entity_type'] ?? [];
+    }
+
+    /**
+     * Get GND Type
+     */
+    public function getGndType()
+    {
+        return $this->fields['type'] ?? [];
+    }
+
+    /**
+     * is this a GND record?
+     */
+    public function isGndRecord()
+    {
+        return str_starts_with($this->fields['id'],'gnd_') ?? false;
+    }
+
+    /**
+     * Get GND record, but only in details pages
+     */
+    public function getGndRecord()
+    {
+        $gnd = substr($this->fields['id'], 4);
+        $this->client = $this->httpService->createClient();
+        $this->lobid = new Lobid($this->client);
+        $this->wikipedia = new Wikipedia($this->client);
+        $this->extraDetails = $this->lobid->get($gnd);
+        return $this->extraDetails;
+    }
+
+    /**
+     * Get GND variant names
+     */
+    public function getGndVariants()
+    {
+        return $this->extraDetails['variantName'] ?? [];
+    }
+
+    /**
+     * Get GND Number
+     */
+    public function getGndIdentifier()
+    {
+        return $this->extraDetails['gndIdentifier'] ?? [];
+    }
+
+    /**
+     * Get biographical or historical information of Gnd entity.
+     *
+     * @return string
+     */
+    public function getGndBio()
+    {
+        return $this->extraDetails['biographicalOrHistoricalInformation'] ?? [];
+    }
+
+    /**
+     * Get desciption of Gnd entity.
+     *
+     * @return string
+     */
+    public function getGndDescription()
+    {
+        return $this->extraDetails['description'] ?? [];
+    }
+
+    /**
+     * Get geographic area code of entity.
+     */
+    public function getGndGeographicAreaCode()
+    {
+        return $this->extraDetails['geographicAreaCode'] ?? [];
+    }
+
+    /**
+     * Get GND subject category of entity.
+     */
+    public function getGndSubjectCategory()
+    {
+        return $this->extraDetails['gndSubjectCategory'] ?? [];
+    }
+
+    /**
+     * Get homepage of person.
+     */
+    public function getGndHomepage()
+    {
+        return $this->extraDetails['homepage'] ?? [];
+    }
+
+    /**
+     * Get GND sameAs list
+     */
+    public function getGndSameAs()
+    {
+        return $this->extraDetails['sameAs'] ?? [];
+    }
+
+    /**
+     * Get GND provider info
+     */
+    public function getGndDescribedBy()
+    {
+        return $this->extraDetails['describedBy'] ?? [];
     }
 
     /**
@@ -78,6 +234,11 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
     public function getIntermediates()
     {
         return $this->fields['intermediate'] ?? [];
+    }
+
+    public function getDescription()
+    {
+        return $this->fields['description'] ?? [];
     }
 
     /**
@@ -115,5 +276,42 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault
             }
         }
         return $res;
+    }
+
+    public function queryRecordId($id, $source)
+    {
+        $query = new \VuFindSearch\Query\Query(
+            'id:"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here:
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
+        $command = new \VuFindSearch\Command\SearchCommand($source, $query, 0, 1, $params);
+        $response = $this->searchService->invoke($command)->getResult();
+        return $response;
+    }
+
+    // test if record exists
+    public function checkExistence($id, $source)
+    {
+        $response = $this->queryRecordId($id, $source);
+        return $response->getTotal();
+    }
+
+    /**
+     * Returns the source of the picture (ajax?)
+     */
+    public function getPicSource($thumbnail)
+    {
+        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)) :
+            $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
+            $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
+            if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])) :
+                return [$imageInfo["Artist"]["value"],
+                  "https://commons.wikimedia.org/wiki/File:" . $fname[1],
+                  $imageInfo["LicenseShortName"]["value"]]; else:
+                      return null;
+                  endif; else:
+                      return null;
+                  endif;
     }
 }

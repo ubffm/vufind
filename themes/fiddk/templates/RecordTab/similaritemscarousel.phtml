@@ -30,7 +30,7 @@
                 <?php $pubDetails = $data->getPublicationDetails();
                       $placeDateDetails = $data->getPlaceDateDetails();?>
                 <?php if (!empty($pubDetails)): ?>
-                  <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
+                  <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
                 <?php endif; ?>
                 <?php if (!empty($placeDateDetails)): ?>
                   <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
@@ -48,7 +48,7 @@
             <?php $pubDetails = $data->getPublicationDetails();
                   $placeDateDetails = $data->getPlaceDateDetails();?>
             <?php if (!empty($pubDetails)): ?>
-              <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails_.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
+              <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
             <?php endif; ?>
             <?php if (!empty($placeDateDetails)): ?>
               <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>

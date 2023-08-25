@@ -1,15 +1,22 @@
 <?php
+
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+
+  $recordLinker = $this->recordLinker();
+  //$recordLinker = $this->recordLinker($this->results);
   $heading = $this->driver->getTitle();
   if (empty($heading)) {
     $heading = $this->translate('Heading unavailable.');
   }
   $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
-  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $this->recordLinker()->getUrl($this->driver));
+  $authType = $this->driver->getRecordType();
+
+  $coverDetails = $this->record($this->driver)->getCoverDetails('result-list', 'medium', $recordLinker->getUrl($this->driver));
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
-  if ($coverDetails['cover']):
+  if ($coverDetails['cover'] && $cover):
     ob_start(); ?>
       <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
        <?=$cover ?>
@@ -17,46 +24,59 @@
     <?php $thumbnail = ob_get_contents();
     ob_end_clean();?>
     <?php endif; ?>
-    <div class="media">
-    <?php if ($thumbnail): ?>
-      <?=$thumbnail ?>
-    <?php endif ?>
+    <div class="media <?=$authType?>L">
+      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
+      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+      <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
+        <div><i class="fa fa-regular fa-calendar fa-lg recordIcon"></i></div>
+      </div>
 
   <div class="media-body">
-    <div class="resultItemLine1">
-      <a href="<?=$this->recordLinker()->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
+    <div class="resultItemLine">
+      <a href="<?=$recordLinker->getUrl($this->driver)?>" class="title"><?=$this->escapeHtml($heading)?></a>
     </div>
-    <?php $eventTypes = $this->driver->getEventType();
-          $eventGenres = $this->driver->getGenres();?>
-    <div class="resultItemLine2">
-      <?php foreach ($eventTypes as $type): ?>
-        <?=$this->escapeHtml($type)?>
-      <?php endforeach; ?>
-    </div>
-    <div class="resultItemLine3">
+    <?php $eventTypes = $this->driver->getEntityType();
+          $eventGenres = $this->driver->getGenres();
+    if ($eventTypes): ?>
+      <div class="resultItemLine">
+        <?=$this->escapeHtml(implode('; ', $eventTypes))?>
+       </div>    
+    <?php endif;
+    if ($eventGenres): ?>
+    <div class="resultItemLine">
         <?=$this->escapeHtml(implode('; ', $eventGenres))?>
     </div>
-    <?php $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();?>
+    <?php endif;
+     $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();
+     $normDates = [];?>
     <?php if ($places || $dates): ?>
-      <div class="resultItemLine4">
         <?php if ($places && $dates): ?>
-          <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
-          <?=$this->escapeHtml(implode(', ', $places)) . ', ' . $this->escapeHtml(implode(', ', $normDates))?>
+          <div class="resultItemLine">
+            <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
+          </div>
+          <div class="resultItemLine">
+            <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
+          </div>
         <?php else : ?>
         <?php if ($places): ?>
-          <?=$this->escapeHtml(implode(', ', $places))?>
+          <div class="resultItemLine">
+            <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
+          </div>
         <?php else: ?>
-          <?php $normDates = [];?>
           <?php foreach ($dates as $date): ?>
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
-          <?=$this->escapeHtml(implode(', ', $normDates))?>
+          <div class="resultItemLine">
+            <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
+          </div>
         <?php endif; ?>
       <?php endif; ?>
-      </div>
     <?php endif; ?>
   </div>
+  <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>
+    <?=$thumbnail ?>
+  <?php endif ?>
 </div>

@@ -4,7 +4,7 @@
   $pubDate = $field->getDate(); ?>
   <span property="publisher" typeof="Organization">
   <?php if (!empty($pubPlace)): ?>
-    <span property="location"><?=$this->escapeHtml($pubPlace)?></span>
+    <i class="fa fa-regular fa-map-marker"></i>&nbsp;<span property="location"><?=$this->escapeHtml($pubPlace)?></span>
   <?php endif; ?>
   <?php  if (!empty($pubName)):
     if (!empty($pubPlace) && !empty($pubDate)): ?>
@@ -22,7 +22,7 @@
     if (empty($pubName) && !empty($pubPlace)): ?>
       : <span property="publicationDate"><?=$this->driver->translateDate($pubDate, 'de')?></span>
     <?php else: ?>
-      <span property="publicationDate"><?=$this->driver->translateDate($pubDate, 'de')?></span>
+      <i class="fa fa-regular fa-calendar"></i>&nbsp;<span property="publicationDate"><?=$this->driver->translateDate($pubDate, 'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
   <br />

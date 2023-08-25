@@ -46,11 +46,13 @@ class PluginManager extends \VuFind\Search\Results\PluginManager
      * @var array
      */
     protected $aliases = [
-        'VuFind\Search\SolrAuthor\Results' => \Fiddk\Search\SolrAuthor\Results::class,
-        'solrauthor' => \Fiddk\Search\SolrAuthor\Results::class,
+        'blender' => \Fiddk\Search\Blender\Results::class,
+        'solrauthority' => \Fiddk\Search\SolrAuthority\Results::class,
+        'solrperson' => \Fiddk\Search\SolrPerson\Results::class,
+        'solrcorporation' => \Fiddk\Search\SolrCorporation\Results::class,
         'solrevent' => \Fiddk\Search\SolrEvent\Results::class,
         'solrwork' => \Fiddk\Search\SolrWork\Results::class,
-        'solrauthority' => \Fiddk\Search\SolrAuthority\Results::class,
+        \VuFind\Search\Blender\Results::class => \Fiddk\Search\Blender\Results::class,
     ];
 
     /**
@@ -59,30 +61,18 @@ class PluginManager extends \VuFind\Search\Results\PluginManager
      * @var array
      */
     protected $factories = [
-        \Fiddk\Search\SolrAuthor\Results::class =>
+        \Fiddk\Search\SolrAuthority\Results::class =>
+            \VuFind\Search\Solr\ResultsFactory::class,
+        \Fiddk\Search\SolrPerson\Results::class =>
+            \VuFind\Search\Solr\ResultsFactory::class,
+        \Fiddk\Search\SolrCorporation\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
         \Fiddk\Search\SolrEvent\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
         \Fiddk\Search\SolrWork\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
-        \Fiddk\Search\SolrAuthority\Results::class =>
+        \Fiddk\Search\Blender\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
     ];
-
-        /**
-     * Constructor
-     *
-     * Make sure plugins are properly initialized.
-     *
-     * @param mixed $configOrContainerInstance Configuration or container instance
-     * @param array $v3config                  If $configOrContainerInstance is a
-     * container, this value will be passed to the parent constructor.
-     */
-    public function __construct(
-        $configOrContainerInstance = null,
-        array $v3config = []
-    ) {
-        parent::__construct($configOrContainerInstance, $v3config);
-    }
 
 }

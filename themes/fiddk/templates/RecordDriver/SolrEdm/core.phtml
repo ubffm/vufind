@@ -1,14 +1,22 @@
+<?php
+  $this->metadata()->generateMetatags($this->driver);
+  $recordType = $this->driver->getRecordType();
+  $authIcon = $this->driver->getRecordIcon();
+?>
+<h2><i class="fa fa-regular <?=$authIcon?> fa-lg recordIcon"></i>&nbsp;&nbsp;<?=$this->escapeHtml($this->driver->getTitle())?></h2>
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
   <?php
     $QRCode = $this->record($this->driver)->getQRCode("core");
     $coverDetails = $this->record($this->driver)->getCoverDetails('core', 'medium', $this->record($this->driver)->getThumbnail('large'));
     $cover = $coverDetails['html'];
-    $preview = $this->record($this->driver)->getPreviews();
+    $alignment = $this->record($this->driver)->getThumbnailAlignment('result');
+    $preview = ($this->previewOverride ?? false)
+      ? $this->previewOverride : $this->record($this->driver)->getPreviews();
   ?>
-  <?php if ($QRCode || $cover || $preview): ?>
+  <?php if (($QRCode || $cover || $preview) && $alignment == 'left') : ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
       <?php /* Display thumbnail if appropriate: */ ?>
-      <?php if($coverDetails['cover']): ?>
+      <?php if($cover): ?>
         <?=$cover?>
       <?php endif; ?>
 
@@ -37,12 +45,11 @@
       $formatter = $this->recordDataFormatter();
       $coreFields = $formatter->getData($driver, $formatter->getDefaults('core'));
       $eventFields = $formatter->getData($driver, $formatter->getDefaults('event'));
-      $seeAlsoFields = $formatter->getData($driver, $formatter->getDefaults('seeAlso'));
+      $provider = $formatter->getData($driver, $formatter->getDefaults('Provider'));
     ?>
     <?php if (!empty($coreFields)): ?>
-      <div class="card">
-        <h3 property="name"><?=$this->escapeHtml($this->driver->getTitle())?></h3>
-        <table class="table table-striped">
+      <div class="data-table">
+        <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
           <?php foreach ($coreFields as $current): ?>
             <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
@@ -51,27 +58,35 @@
       </div>
     <?php endif; ?>
     <?php if (!empty($eventFields)): ?>
-      <div class="card">
+      <div class="data-table">
         <h3 property="context"><?=$this->transEsc("Event")?></h3>
-        <table class="table table-striped">
+        <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
           <?php foreach ($eventFields as $current): ?>
             <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
       </div>
-    <?php endif; ?>
-    <?php if (!empty($seeAlsoFields)): ?>
-      <div class="card">
+    <?php endif; ?>    
+    <?php /* End Main Details */ ?>
+  </div>
+  <div class="media-body-right">
+    <?php if ($coverDetails['cover'] && $alignment == 'right'): ?>
+      <div class="media-right <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
+        <?=$cover?>
+      </div>
+    <?php endif ?>
+    <?php if (!empty($provider)): ?>
+      <div class="provider">
         <h3 property="context"><?=$this->transEsc("See also")?></h3>
-        <table class="table table-striped">
+        <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
-          <?php foreach ($seeAlsoFields as $current): ?>
+          <?php foreach ($provider as $current): ?>
             <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
       </div>
     <?php endif; ?>
-    <?php /* End Main Details */ ?>
   </div>
+
 </div>

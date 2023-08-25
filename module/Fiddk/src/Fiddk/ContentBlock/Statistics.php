@@ -78,7 +78,7 @@ class Statistics implements \VuFind\ContentBlock\ContentBlockInterface
     public function getContext()
     {
         $rresult = $this->ResultsManager->get("Solr");
-        $aresult = $this->ResultsManager->get("SolrAuthor");
+        $aresult = $this->ResultsManager->get("SolrPerson");
         $eresult = $this->ResultsManager->get("SolrEvent");
         $wresult = $this->ResultsManager->get("SolrWork");
         $rresults = $rresult->getResultTotal();

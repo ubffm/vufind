@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Author aspect of the Search Multi-class (Params)
+ * Author aspect of the Search Multi-class (Options)
  *
  * PHP version 7
  *
@@ -25,10 +26,10 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-namespace Fiddk\Search\SolrAuthor;
+namespace Fiddk\Search\SolrPerson;
 
 /**
- * Author Search Options
+ * Person Search Options
  *
  * @category VuFind
  * @package  Search_SolrAuthor
@@ -36,6 +37,29 @@ namespace Fiddk\Search\SolrAuthor;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class Params extends \VuFind\Search\Solr\Params
+class Options extends \VuFind\Search\Solr\Options
 {
+    /**
+     * Constructor
+     *
+     * @param \VuFind\Config\PluginManager $configLoader Config loader
+     */
+    public function __construct(\VuFind\Config\PluginManager $configLoader)
+    {
+        $this->facetsIni = $this->searchIni = 'person';
+        parent::__construct($configLoader);
+
+        // No spell check needed in author module:
+        //$this->spellcheck = false;
+    }
+
+    /**
+     * Return the route name for the search results action.
+     *
+     * @return string
+     */
+    public function getSearchAction()
+    {
+        return 'agentsearch-results';
+    }
 }

@@ -1,0 +1,31 @@
+<?php if (!(empty($this->data['dateOfBirth'])) || !(empty($this->data['placeOfBirth']))) : ?>
+  <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->transEsc('born')?>
+  <?php if (!(empty($this->data['dateOfBirth']))) : ?>
+    <span property="birthDate">
+      <?=implode('/', $this->data['dateOfBirth'])?>
+    </span>
+  <?php endif; ?>
+  <?php if (!(empty($this->data['placeOfBirth']))) : ?>
+    <?=$this->transEsc('in')?>
+    <span property="birthPlace">
+      <?=implode('/', array_column($this->data['placeOfBirth'], 'label'))?>
+    </span>
+  <?php endif; ?>
+  <?php if (!(empty($this->data['dateOfDeath'])) || !(empty($this->data['placeOfDeath']))) : ?>
+  <br/>
+  <?php endif; ?>
+<?php endif; ?>
+<?php if (!(empty($this->data['dateOfDeath'])) || !(empty($this->data['placeOfDeath']))) : ?>
+  <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->transEsc('died')?>
+  <?php if (!(empty($this->data['dateOfDeath']))) : ?>
+    <span property="deathDate">
+      <?=implode('/', $this->data['dateOfDeath'])?>
+    </span>
+  <?php endif; ?>
+  <?php if (!(empty($this->data['placeOfDeath']))) : ?>
+    <?=$this->transEsc('in')?>
+    <span property="deathPlace">
+      <?=implode('/', array_column($this->data['placeOfDeath'], 'label'))?>
+    </span>
+  <?php endif; ?>
+<?php endif; ?>
