@@ -47,12 +47,14 @@ class PluginManager extends \VuFind\Search\Results\PluginManager
      */
     protected $aliases = [
         'blender' => \Fiddk\Search\Blender\Results::class,
+        'solr' => \Fiddk\Search\Solr\Results::class,
         'solrauthority' => \Fiddk\Search\SolrAuthority\Results::class,
         'solrperson' => \Fiddk\Search\SolrPerson\Results::class,
         'solrcorporation' => \Fiddk\Search\SolrCorporation\Results::class,
         'solrevent' => \Fiddk\Search\SolrEvent\Results::class,
         'solrwork' => \Fiddk\Search\SolrWork\Results::class,
         \VuFind\Search\Blender\Results::class => \Fiddk\Search\Blender\Results::class,
+        \VuFind\Search\Solr\Results::class => \Fiddk\Search\Solr\Results::class,
     ];
 
     /**
@@ -61,6 +63,8 @@ class PluginManager extends \VuFind\Search\Results\PluginManager
      * @var array
      */
     protected $factories = [
+        \Fiddk\Search\Solr\Results::class =>
+            \VuFind\Search\Solr\ResultsFactory::class,
         \Fiddk\Search\SolrAuthority\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
         \Fiddk\Search\SolrPerson\Results::class =>

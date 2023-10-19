@@ -1,0 +1,21 @@
+<?php
+    $resources = $this->driver->getRelatedProviderResources(); 
+    if ($resources):
+      if ($data > 1): ?>
+    <ul class="list-group">
+    <?php foreach ($resources as $record): ?>
+      <?php $formats = $record->getFormats();
+            $title = $record->getTitle(); ?>
+      <li class="list-group-item"><a href="<?=$this->recordLinker()->getUrl($record)?>"><?=!empty($title) ? $title : $this->transEsc("Title not available")?></a>
+      <?php if ($formats):?><?=" ("?><?=implode(" | ",$formats) . ")"?><?php endif;?></li>
+    <?php endforeach; ?>
+  </ul>
+  <a href="<?=$this->url('search-results') . '?lookfor=' . $this->driver->getUniqueID() . '&type=Provider'?>"><?=$this->translate("RelatedEntityHits", ['%%count%%' => $this->localizedNumber($data)]);?></a>
+  <?php else: ?>
+    <?php $record = $resources[0];
+          $formats = $record->getFormats();
+          $title = $record->getTitle();?>
+    <a href="<?=$this->recordLinker()->getUrl($record)?>"><?=!empty($title) ? $title : $this->transEsc("Title not available")?></a>
+    <?php if ($formats):?><?=" ("?><?=implode(" | ",$formats) . ")"?><?php endif;?></li>
+  <?php endif; ?>
+<?php endif; ?>

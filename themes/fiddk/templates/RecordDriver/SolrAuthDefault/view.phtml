@@ -41,11 +41,47 @@
     <?=$this->flashmessages()?>
     <?=$this->render('core.phtml'); ?>
 
+    <?php if (count($this->tabs) > 0): ?>
+      <a id="tabnav"></a>
+      <div class="record-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+          <?php foreach ($this->tabs as $tab => $obj): ?>
+            <?php
+              $desc = $obj->getDescription();
+              $tabName = preg_replace("/\W/", "-", strtolower($tab));
+              $tabClasses = [ 'record-tab', $tabName ];
+              if (0 === strcasecmp($this->activeTab, $tab)) {
+                if (!$this->loadInitialTabWithAjax || !$obj->supportsAjax()) {
+                  $tabClasses[] = 'active';
+                }
+                $tabClasses[] = 'initiallyActive';
+                $activeTabObj = $obj;
+              }
+              if (!$obj->isVisible()) { $tabClasses[] = 'hidden'; }
+              if (!$obj->supportsAjax()) { $tabClasses[] = 'noajax'; }
+            ?>
+            <li class="<?=implode(' ', $tabClasses)?>" role="tab" data-tab="<?=$this->escapeHtmlAttr($tabName)?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>>
+              <a href="<?=$this->escapeHtmlAttr($this->recordLinker()->getTabUrl($this->driver, $tab))?>#tabnav" data-lightbox-ignore>
+                <h3><?=$this->transEsc($desc)?></h3>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+
+        <div class="tab-content">
+          <?php if (!$this->loadInitialTabWithAjax || !isset($activeTabObj) || !$activeTabObj->supportsAjax()): ?>
+            <div class="tab-pane active <?=$this->escapeHtmlAttr($this->activeTab) ?>-tab">
+              <?=isset($activeTabObj) ? $this->record($this->driver)->getTab($activeTabObj) : '' ?>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    <?php endif; ?>
+
+
     <?=$this->driver->supportsCoinsOpenURL() ? '<span class="Z3988" title="' . $this->escapeHtmlAttr($this->driver->getCoinsOpenURL()) . '"></span>' : ''?>
   </div>
 </div>
-
-<?=$this->record($this->driver)->getToolbar()?>
 
 <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$(document).ready(recordDocReady);', 'SET'); ?>
 </div>

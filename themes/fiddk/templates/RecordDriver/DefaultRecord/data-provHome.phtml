@@ -1,0 +1,10 @@
+<?php foreach ($data as $inter => $info): ?>
+  <?php if ($inter == "inst"): ?>
+    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <!--a class="providerInfo" data-lightbox href="/vufind/DataProvider/dtk"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/-->
+  <?php else: ?>
+    <a href="<?=$info[3]?>" target="_blank"><?=$this->escapeHtml($info[2])?></a><?=" via "?>
+    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <!--a class="providerInfo" data-lightbox href="/vufind/DataProvider/dtk"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/-->
+  <?php endif; ?>
+<?php endforeach; ?>

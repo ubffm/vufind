@@ -45,7 +45,7 @@
           <?php endif; ?>
       <?php endif; ?>
       <?php foreach ($domain as $i => $current): ?>
-        <a href="<?=$this->url('agentsearch-results')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
+        <a href="<?=$this->url('corporationsearch-results')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
         <?php if ($i < sizeof($domain) - 1): ?> | <?php endif; ?>
       <?php endforeach; ?>
       </div>

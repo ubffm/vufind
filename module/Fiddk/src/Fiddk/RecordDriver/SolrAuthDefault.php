@@ -46,7 +46,7 @@ use \Fiddk\Connection\Wikipedia;
 class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
 \VuFindHttp\HttpServiceAwareInterface
 {
-    use EdmReaderTrait;
+    use Feature\EdmReaderTrait;
     use \VuFindHttp\HttpServiceAwareTrait;
 
         /**
@@ -69,6 +69,12 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
      * @var Wikipedia
      */
     protected $wikipedia;
+
+    protected $relatedResources;
+
+    protected $relatedWorks;
+
+    protected $relatedEvents;
 
     /**
      * No support for citation of authority data
@@ -295,6 +301,119 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
     {
         $response = $this->queryRecordId($id, $source);
         return $response->getTotal();
+    }
+
+    /**
+     * Get the number of work records related to this entity
+     *
+     *
+     */
+    public function getRelatedWorkCount($field)
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            $field . ':"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here. And only get titles
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false'], 'fl' => 'id, title, format, date_span_sort']);
+        $command = new \VuFindSearch\Command\SearchCommand("SolrWork", $query, 0, 5, $params);
+        $collection = $this->searchService->invoke($command)->getResult();
+        $this->relatedWorks = $collection->getRecords();
+        return $collection->getTotal();
+    }
+
+    /**
+     * Get related work records
+     *
+     *
+     */
+    public function getRelatedWorks()
+    {
+        return $this->relatedWorks;
+    }
+
+    /**
+     * Get the number of resource records related to this entity
+     *
+     *
+     */
+    /* public function getRelatedResourceCount($field)
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            $field . ':"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here. And only get titles
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false'], 'fl' => 'id, title, format, date_span_sort']);
+        $command = new \VuFindSearch\Command\SearchCommand("Solr", $query, 0, 5, $params);
+        $collection = $this->searchService->invoke($command)->getResult();
+        $this->relatedResources = $collection->getRecords();
+        return $collection->getTotal();
+    } */
+
+    /**
+     * Get the number of resource records related to this entity
+     *
+     *
+     */
+    public function getRelatedResourceCount($fields)
+    {
+        $id = $this->getUniqueId();
+        $queryStr = "";
+        foreach ($fields as $field) {
+            if (empty($queryStr)) {
+                $queryStr .= $field . ':"' . $id . '"';
+            }
+            else {
+                $queryStr .= " OR " . $field . ':"' . $id . '"';
+            }
+        }
+        $query = new \VuFindSearch\Query\Query($queryStr);
+        // Disable highlighting for efficiency; not needed here. And only get titles
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false'], 'fl' => 'id, title, format, date_span_sort']);
+        $command = new \VuFindSearch\Command\SearchCommand("Solr", $query, 0, 5, $params);
+        $collection = $this->searchService->invoke($command)->getResult();
+        $this->relatedResources = $collection->getRecords();
+        return $collection->getTotal();
+    }
+
+    /**
+     * Get related resource records
+     *
+     *
+     */
+    public function getRelatedResources()
+    {
+        return $this->relatedResources;
+    }
+
+        /**
+     * Get the number of event records related to this entity
+     *
+     *
+     */
+    public function getRelatedEventCount($field)
+    {
+        $id = $this->getUniqueId();
+        $query = new \VuFindSearch\Query\Query(
+            $field . ':"' . $id . '"'
+        );
+        // Disable highlighting for efficiency; not needed here. And only get titles
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false'], 'fl' => 'id, heading, date']);
+        $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 5, $params);
+        $collection = $this->searchService->invoke($command)->getResult();
+        $this->relatedEvents = $collection->getRecords();
+        return $collection->getTotal();
+    }
+
+    /**
+     * Get related event records
+     *
+     *
+     */
+    public function getRelatedEvents()
+    {
+        return $this->relatedEvents;
     }
 
     /**

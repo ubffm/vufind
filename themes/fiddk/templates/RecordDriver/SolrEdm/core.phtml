@@ -44,30 +44,50 @@
     <?php
       $formatter = $this->recordDataFormatter();
       $coreFields = $formatter->getData($driver, $formatter->getDefaults('core'));
-      $eventFields = $formatter->getData($driver, $formatter->getDefaults('event'));
+      $relatedFields = $formatter->getData($driver, $formatter->getDefaults('ResourceRelated'));
       $provider = $formatter->getData($driver, $formatter->getDefaults('Provider'));
+      $seeAlso = $formatter->getData($driver, $formatter->getDefaults('SeeAlso'));
     ?>
     <?php if (!empty($coreFields)): ?>
       <div class="data-table">
         <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
           <?php foreach ($coreFields as $current): ?>
-            <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
+            <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
-        </table>
-      </div>
-    <?php endif; ?>
-    <?php if (!empty($eventFields)): ?>
-      <div class="data-table">
-        <h3 property="context"><?=$this->transEsc("Event")?></h3>
-        <table class="table">
-          <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
-          <?php foreach ($eventFields as $current): ?>
-            <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
+          <?php foreach ($relatedFields as $current): ?>
+            <?php switch ($current['label']) {
+        case 'dc:contributor':
+          $entity = 'Person';
+          $icon = 'fa-user';
+          break;
+        case 'RelatedEvents':
+            $entity = 'Event';
+            $icon = 'fa-calendar';
+            break;
+        case 'RelatedWorks':
+            $entity = 'Work';
+            $icon = 'fa-star';
+            break;
+        case '':
+          break; 
+        } ?>
+            <tr><th><?=$this->transEsc("edm::".$current['label'])?><div><i class="fa fa-regular <?=$icon?> fa-lg recordIcon"></i></div></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
       </div>
     <?php endif; ?>    
+    <?php if (!empty($seeAlso)): ?>
+      <hr class="wmar">
+      <div class="seeAlso">
+      <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Zugänge")?></h3>
+        <table class="table">
+          <?php foreach ($seeAlso as $current): ?>
+            <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
+    <?php endif; ?> 
     <?php /* End Main Details */ ?>
   </div>
   <div class="media-body-right">
@@ -78,15 +98,15 @@
     <?php endif ?>
     <?php if (!empty($provider)): ?>
       <div class="provider">
-        <h3 property="context"><?=$this->transEsc("See also")?></h3>
+      <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
         <table class="table">
-          <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
           <?php foreach ($provider as $current): ?>
-            <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
+            <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
       </div>
     <?php endif; ?>
+    <?=$this->record($this->driver)->getToolbar()?>
   </div>
 
 </div>

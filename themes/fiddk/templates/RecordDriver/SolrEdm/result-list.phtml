@@ -69,7 +69,7 @@
                <?php if (isset($ids[$i]) && $ids[$i] != ''): ?>
                  <a href="<?=$this->record($this->driver)->getLink('author', $ids[$i])?>"><?=$this->highlight($summAuthor)?></a>
                <?php else : ?>
-                 <a href="<?=$this->record($this->driver)->getLink('name', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
+                 <a href="<?=$this->record($this->driver)->getLink('personsearch', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
                <?php endif; ?>
                <?='(' . $this->transEsc('edm::' . $roles[$i]) . ')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
              <?php endif; ?>
@@ -220,7 +220,7 @@
         <?php $institution = $this->driver->getInstitutions()[0]; ?>
 
       <div class="result-institutions">
-          <p class="provider-badge"><?=$this->transEsc("dprov::" . $institution);?></p>
+      <i class="fa fa-solid fa-arrow-right"></i>&nbsp;<?=$this->transEsc("dprov::" . $institution);?></i>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
           <a class="badge badge-secondary" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
         <?php endif; ?>

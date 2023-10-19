@@ -19,7 +19,7 @@ $formattedAuthors = [];
       if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) :
         $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
       else :
-        $authorityLookfor = $this->record($this->driver)->getLink('name', $author);
+        $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
       endif; ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
       <a href="<?=$authorityLookfor?>">

@@ -47,33 +47,23 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
         <?=$this->escapeHtml(implode('; ', $eventGenres))?>
     </div>
     <?php endif;
-     $places = $this->driver->getEventPlace(); $dates = $this->driver->getEventDate();
-     $normDates = [];?>
+     $places = $this->driver->getEventPlace(); 
+     $dates = $this->driver->getEventDate();?>
     <?php if ($places || $dates): ?>
-        <?php if ($places && $dates): ?>
+        <?php if ($dates): 
+              $normDates = []; ?>
           <?php foreach ($dates as $date): ?>
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
           <div class="resultItemLine">
             <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
           </div>
-          <div class="resultItemLine">
-            <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
-          </div>
-        <?php else : ?>
+          <?php endif; ?>
         <?php if ($places): ?>
           <div class="resultItemLine">
             <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
           </div>
-        <?php else: ?>
-          <?php foreach ($dates as $date): ?>
-            <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
-          <?php endforeach; ?>
-          <div class="resultItemLine">
-            <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
-          </div>
         <?php endif; ?>
-      <?php endif; ?>
     <?php endif; ?>
   </div>
   <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>

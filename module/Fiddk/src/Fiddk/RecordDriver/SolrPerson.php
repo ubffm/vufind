@@ -288,44 +288,25 @@ class SolrPerson extends SolrAuthDefault
     }
 
     /**
-     * Get the number of work records related to this agent
-     *
-     * @return int Number of records
-     */
-    public function getWorkCount()
-    {
-        $id = $this->getUniqueId();
-        $query = new \VuFindSearch\Query\Query(
-            'author_id:"' . $id . '"'
-        );
-        // Disable highlighting for efficiency; not needed here:
-        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        $command = new \VuFindSearch\Command\SearchCommand("SolrWork", $query, 0, 0, $params);
-        return $this->searchService->invoke($command)->getResult()->getTotal();
-    }
-
-    /**
-     * Get the number of event records related to this agent
-     *
-     * @return int Number of records
-     */
-    public function getEventCount()
-    {
-        $id = $this->getUniqueId();
-        $query = new \VuFindSearch\Query\Query(
-            'author_id:"' . $id . '"'
-        );
-        // Disable highlighting for efficiency; not needed here:
-        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 0, $params);
-        return $this->searchService->invoke($command)->getResult()->getTotal();
-    }
-
-    /**
      * Returns links to provider
      */
     public function getSameAs()
     {
         return $this->getEdmRecord()->getAttrVals("owl:sameAs", "foaf:Person");
+    }
+
+    public function getPersonRelatedEventCount()
+    {
+        return parent::getRelatedEventCount('author_id');
+    }
+
+    public function getPersonRelatedWorkCount()
+    {
+        return parent::getRelatedWorkCount('author_id');
+    }
+
+    public function getPersonRelatedResourceCount()
+    {
+        return parent::getRelatedResourceCount(['author_id','topic_id']);
     }
 }

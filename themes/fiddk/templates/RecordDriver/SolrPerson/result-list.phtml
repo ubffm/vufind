@@ -45,7 +45,7 @@
           <?php endif; ?>
       <?php endif; ?>
       <?php foreach ($prof as $i => $current): ?>
-        <a href="<?=$this->url('agentsearch-results')?>?filter[]=occupation%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
+        <a href="<?=$this->url('personsearch-results')?>?filter[]=occupation%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
         <?php if ($i < sizeof($prof) - 1): ?> | <?php endif; ?>
       <?php endforeach; ?>
       </div>

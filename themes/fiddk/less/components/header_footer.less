@@ -1,0 +1,138 @@
+/* HEADER */
+header {
+  .navbar {
+    border: 0;
+    min-height: 0;
+
+    .navbar-form {
+      width: 100%;
+      margin-bottom: -1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .form-control {
+        padding: 0.5rem 0.75rem;
+        margin-right: 1rem;
+        font-size: 1.5rem;
+        height: inherit;
+        &:focus {
+          box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+        }
+      }
+      input {
+        width: 65%;
+        max-width: 65%;
+        @media(max-width: 992px) {
+          width: 100%;
+          max-width: 100%;
+          margin-bottom: 0.5rem;
+        }
+      }
+      select {
+        max-width: 175px;
+      }
+
+    }
+
+    #header-collapse .nav {
+      font-family: "Big Shoulders Text";
+      font-size: 1.8rem;
+      color: rgba(0,0,0,.55);
+    }
+
+    .language {
+      color: @white;
+    }
+  }
+  .banner.container.navbar {
+    padding: 2rem 2rem 1rem 2rem;
+    ul {
+      margin-top: 5px;
+    }
+    .navbar-brand {
+      background: @logo no-repeat scroll left center transparent;
+      width: 500px;
+      height: 100px;
+    }
+  }
+
+  #feedbackLink {
+    position: fixed;
+    transform: rotate(270deg);
+    transform-origin: top;
+    top: 40%;
+    right: 0;
+    a:hover {     
+      background-color: @white;
+    }
+  }
+
+}
+
+nav.breadcrumbs div.container {
+  padding: 0;
+  ul.breadcrumb {
+    padding: 0.6rem 3rem;
+    margin: 0;
+    background-color: @lightgrey;
+  }
+}
+
+.nav {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   li a:hover {
+      color: @brand-primary;
+      background-color: @white;
+      border: 1px solid @brand-primary;
+   }
+}
+
+.record-nav {
+  ul.action-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    li a {
+      color: @brand-primary;
+      border-radius: 0;
+    }
+  }
+}
+
+.sectionHeader {
+  margin: 3rem 0 1rem 0;
+}
+
+footer {
+  padding: 0.5rem;
+  background-color: @brand-primary;
+  color: @white;
+  hr {
+    width: 90%;
+    margin: 0.5rem auto;
+    opacity: 0.5;
+    &.vr {
+      margin: 0.5rem;
+      border-right: 1px solid @white;
+      min-height: 1.5em;
+      width: 1px;
+    }
+  }
+  .nav-text { 
+    padding: 0.7rem 1rem;
+  }
+  .nav-link {
+    color: @white;
+  }
+  div#logos {
+    img {
+      max-height: 90px;
+    }
+    .nav-link:hover {
+      background-color: @brand-primary;
+      border: 1px solid @white;
+    }
+  }
+}

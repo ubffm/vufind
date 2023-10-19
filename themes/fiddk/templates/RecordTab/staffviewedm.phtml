@@ -5,7 +5,9 @@
     $edm = $this->driver->getXML('edm');
 ?>
 <!-- pre><?php //=$edm?></pre -->
+<?php if ($edm): ?>
 <?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
+<?php endif; ?>
 
 <div class="solrTab"><table class="citation table table-striped">
   <?php foreach ($this->driver->getRawData() as $field => $values): ?>

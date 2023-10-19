@@ -4,12 +4,7 @@
   <xsl:output method="html" indent="yes"/>
 
   <xsl:template match="/rdf:RDF">
-    <table class="citation table">
-      <tr class="pace-car">
-        <th width="25%"/>
-        <td width="25%"/>
-        <td width="*"/>
-      </tr>
+    <table class="dataview table">
       <xsl:for-each select="./*">
         <xsl:variable name="tag" select="name()"/>
         <xsl:variable name="count" select="count(./*)+1"/>

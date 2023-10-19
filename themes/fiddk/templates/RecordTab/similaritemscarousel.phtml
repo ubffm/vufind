@@ -1,7 +1,7 @@
-<h4><?=$this->transEsc('Similar Items')?></h4>
 <?php $similarRecords = $this->tab->getResults(); ?>
 <?php if (!empty($similarRecords)): ?>
-  <?php $perPage = 4 ?>
+  <?php $perPage = 4;
+  $recordType = $this->driver->getRecordType();?>
   <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -15,45 +15,20 @@
     <div class="carousel-inner">
       <div class="item active">
         <?php foreach ($similarRecords as $index => $data): ?>
-          <div class="carousel-item">
+          <div class="carousel-item <?=$recordType?>Ls">
             <a class="hover-overlay record-cover-link" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getUrl($data))?>">
-              <?php $thumb = $this->record($data)->getCoverDetails('similar-items', 'small')['html'];
-                    $formats = $data->getFormats(); ?>
+              <?php $thumb = $this->record($data)->getCoverDetails('similar-items', 'small')['html'];?>
               <?php if (strpos($thumb,"Cover/Unavailable") === false) :?>
               <?=$thumb?>
               <div class="content">
                 <div class="contentDarker">
-                <b><?=$this->escapeHtml($data->getTitle())?></b><br/>
-                <?php if ($formats) :?>
-                  <?=implode(', ', $formats);?><br/>
-                <?php endif; ?>
-                <?php $pubDetails = $data->getPublicationDetails();
-                      $placeDateDetails = $data->getPlaceDateDetails();?>
-                <?php if (!empty($pubDetails)): ?>
-                  <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
-                <?php endif; ?>
-                <?php if (!empty($placeDateDetails)): ?>
-                  <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
-                <?php endif; ?>
-                <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitutions()[0]);?></p>
+                  <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType] );?>
                 </div>
               </div>
             <?php else: ?>
-            <div class="content">
+            <div class="contentDarker">
+              <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType] );?>
             </div>
-            <b><?=$this->escapeHtml($data->getTitle())?></b><br/>
-            <?php if ($formats) :?>
-              <?=implode(', ', $formats);?><br/>
-            <?php endif; ?>
-            <?php $pubDetails = $data->getPublicationDetails();
-                  $placeDateDetails = $data->getPlaceDateDetails();?>
-            <?php if (!empty($pubDetails)): ?>
-              <?=$this->render('RecordDriver/SolrEdm/data-publicationDetails.phtml', ['data' => $pubDetails,'driver' => $this->driver]);?>
-            <?php endif; ?>
-            <?php if (!empty($placeDateDetails)): ?>
-              <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
-            <?php endif; ?>
-            <p class="provider-badge"><?=$this->transEsc("dprov::" . $data->getInstitutions()[0]);?></p>
           <?php endif; ?>
             </a>
           </div>

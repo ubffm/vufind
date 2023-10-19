@@ -25,7 +25,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
-namespace Fiddk\RecordDriver;
+namespace Fiddk\RecordDriver\Feature;
 
 /**
  * Additional functionality for Edm Solr records.
@@ -41,11 +41,9 @@ namespace Fiddk\RecordDriver;
 trait EdmReaderTrait
 {
     /**
-     * EDM record. Access only via getEdmRecord().
-     *
-     * @var EDM\EdmRecord
-     */
-    protected $edmRecord = null;
+    * Edm reader. Access only via getEdmReader() as this is initialized lazily.
+    */
+   protected $edmRecord = null;
 
     protected $loader = null;
 
@@ -57,16 +55,28 @@ trait EdmReaderTrait
     public function getEdmRecord()
     {
         if (null === $this->edmRecord) {
-            $edm = $this->fields['fullrecord'];
+            $edm = $this->fields['fullrecord'] ?? '';
             // check if we are dealing with EDMXML
             if (substr($edm, 0, 1) == '<') {
-                $this->edmRecord = new EDM\EdmRecord($edm);
+                $this->edmRecord = new EdmRecord($edm);
+                return $this->edmRecord;
             } else {
-            }
-            if (!$this->edmRecord) {
-                       
+                throw new \Exception("Not an EDM record: " . implode(';',$this->fields));
             }
         }
+    }
+
+        /**
+     * Get access to the raw File_EDM object.
+     *
+     * @return EDM\EdmRecord
+     */
+    public function getEdmReader()
+    {
+        if (null === $this->edmRecord) {
+            $this->edmRecord = $this->getEdmRecord();
+        }
+
         return $this->edmRecord;
     }
 
@@ -87,7 +97,7 @@ trait EdmReaderTrait
     {
         // Special case for EDM:
         if ($format == 'edm') {
-            $xml = $this->getEdmRecord()->toXML();
+            $xml = $this->edmRecord !== null ?? $this->getEdmRecord()->toXML();
             if (!$xml) {
                 return false;
             }

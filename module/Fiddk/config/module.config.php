@@ -33,10 +33,9 @@ $config = [
     'factories' => [
       'Fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\DataProviderController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\AgentSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\PersonController' => 'VuFind\Controller\AbstractBaseFactory',
-      'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseWithConfigFactory',
+      'Fiddk\Controller\CorporationSearchController' => 'VuFind\Controller\AbstractBaseFactory',
+      'Fiddk\Controller\PersonSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\EventSearchController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\EventController' => 'VuFind\Controller\AbstractBaseFactory',
       'Fiddk\Controller\WorkSearchController' => 'VuFind\Controller\AbstractBaseFactory',
@@ -50,14 +49,16 @@ $config = [
       'dataprovider' => 'Fiddk\Controller\DataProviderController',
       'Showcase' => 'Fiddk\Controller\ShowcaseController',
       'showcase' => 'Fiddk\Controller\ShowcaseController',
-      'AgentSearch' => 'Fiddk\Controller\AgentSearchController',
-      'agentsearch' => 'Fiddk\Controller\AgentSearchController',
       'Agent' => 'Fiddk\Controller\AgentController',
       'agent' => 'Fiddk\Controller\AgentController',
+      'CorporationSearch' => 'Fiddk\Controller\CorporationSearchController',
+      'corporationsearch' => 'Fiddk\Controller\CorporationSearchController',
       'EventSearch' => 'Fiddk\Controller\EventSearchController',
       'eventsearch' => 'Fiddk\Controller\EventSearchController',
       'Event' => 'Fiddk\Controller\EventController',
       'event' => 'Fiddk\Controller\EventController',
+      'PersonSearch' => 'Fiddk\Controller\PersonSearchController',
+      'personsearch' => 'Fiddk\Controller\PersonSearchController',
       'Search' => 'Fiddk\Controller\SearchController',
       'search' => 'Fiddk\Controller\SearchController',
       'WorkSearch' => 'Fiddk\Controller\WorkSearchController',
@@ -69,7 +70,6 @@ $config = [
 
       // Overrides
       'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
-      'VuFind\Controller\RecordController' => 'Fiddk\Controller\RecordController',
       'VuFind\Controller\SearchController' => 'Fiddk\Controller\SearchController',
       'VuFind\Controller\FeedbackController' => 'Fiddk\Controller\FeedbackController',
     ]
@@ -152,9 +152,9 @@ $recordRoutes = [
 ];
 
 $staticRoutes = ['EventSearch/Home','EventSearch/Results',
-                 'Event/FacetList','AgentSearch/Home',
+                 'Event/FacetList','CorporationSearch/Results',
                  'Agent/Home',
-                 'AgentSearch/Results','Agent/FacetList',
+                 'PersonSearch/Results','Agent/FacetList',
                  'WorkSearch/Home','WorkSearch/Results',
                  'Work/FacetList','Showcase/Home',
                  'Showcase/Playbills'];

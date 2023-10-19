@@ -1,7 +1,7 @@
-<?php $authType = $this->driver->getRecordType();
-      $authIcon = $this->driver->getRecordIcon();
+<?php $recordType = $this->driver->getRecordType();
+      $recordIcon = $this->driver->getRecordIcon();
       $isGnd = $this->driver->isGndRecord();?>
-<h2><i class="fa fa-regular <?=$authIcon?> fa-lg recordIcon"></i>&nbsp;&nbsp;<?=$this->escapeHtml($this->driver->getTitle())?></h2>
+<h2><i class="fa fa-regular <?=$recordIcon?> fa-lg recordIcon"></i><?=$this->escapeHtml($this->driver->getTitle())?></h2>
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
   <?php
     $QRCode = $this->record($this->driver)->getQRCode("core");
@@ -43,45 +43,56 @@
       if ($isGnd) {
         $driver->getGndRecord();
         //var_dump($driver->getGndRecord());
-        $coreFields = $formatter->getData($driver, $formatter->getDefaults($authType . 'Gnd'));
+        $coreFields = $formatter->getData($driver, $formatter->getDefaults($recordType . 'Gnd'));
         $gndProvider = $this->driver->getGndDescribedBy();
         $sameAs = $this->driver->getGndSameAs();
       } else {
-        $coreFields = $formatter->getData($driver, $formatter->getDefaults($authType));
-        $provider = [];//$formatter->getData($driver, $formatter->getDefaults('Provider'));
+        $coreFields = $formatter->getData($driver, $formatter->getDefaults($recordType));
+        $provider = $formatter->getData($driver, $formatter->getDefaults('Provider'));
         $sameAs = [];
       }
-      $relatedFields = $formatter->getData($driver, $formatter->getDefaults($authType . 'Related'));
+      $relatedFields = $formatter->getData($driver, $formatter->getDefaults($recordType . 'Related'));
     ?>
     <?php if (!empty($coreFields)): ?>
       <div class="data-table">
         <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Details')?></caption>
           <?php foreach ($coreFields as $current): ?>
-            <tr><th><?=$this->transEsc($current['label'])?>:</th><td><?=$current['value']?></td></tr>
+            <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
-      </div>
-    <?php endif; ?>    
-    <div class="Platzhalter">
-        <h3 property="context"><?=$this->transEsc("Platzhalter Record-Verlinkungen")?></h3>
-    </div>
-    <?php foreach ($relatedFields as $current): ?>
-      <?php switch ($current['label']) {
+        <?php if (!empty($relatedFields)): ?>
+          <hr class="wmar">
+          <div class="relations">
+          <?php foreach ($relatedFields as $i => $current): ?>
+            <?php switch ($current['label']) {
         case 'dc:contributor':
-          $authCurrent = 'Person';
-          $icon = 'fa-user';
+          $icon = '<i class="fa fa-regular fa-user fa-lg recordIcon"></i><i class="fa fa-regular fa-building fa-lg recordIcon"></i>';
           break;
-        case '':
+        case 'RelatedEvents':
+          $icon = '<i class="fa fa-regular fa-calendar fa-lg recordIcon"></i>';
+          break;
+        case 'RelatedWorks':
+          $icon = '<i class="fa fa-regular fa-star fa-lg recordIcon"></i>';
+          break;
+        default:
+          $icon = '<i class="fa fa-regular fa-archive fa-lg recordIcon"></i>';
           break; 
         }
         ?>
-      <div class="data-table <?=$authCurrent?>">
-        <table class="table">
-            <tr><th><?=$this->transEsc('edm::' . $current['label'])?><div><i class="fa fa-regular <?=$icon?> fa-lg recordIcon"></i></div></th><td><?=$current['value']?></td></tr>
-        </table>
+         <h3><?=$icon?><?=$this->transEsc('edm::' . $current['label'])?></h3>
+         <?=$current['value']?>
+         <?php if ($i < sizeof($relatedFields) - 1): ?><hr class="wmar"><?php endif; ?>
+        <?php endforeach; ?>
+          </div>
+          <?php endif; ?>
+        <?php if (!empty($sameAs)): ?>
+          <hr class="wmar">
+          <?=$this->render('RecordDriver/DefaultRecord/data-sameAs.phtml', ['data' => $sameAs]);?>
+        <?php endif; ?>
       </div>
-    <?php endforeach; ?>
+    <?php endif; ?>
+    
     <?php /* End Main Details */ ?>
   </div>
   <div class="media-body-right">
@@ -97,21 +108,18 @@
       </div>
     <?php endif ?>
       <div class="provider">
-        <h3><i class="fa fa-regular fa-building"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
-        <?php if (isset($gndProvider)): ?>
+        <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
+        <?php if (isset($gndProvider) and $gndProvider != null): ?>
           <?=$this->render('RecordDriver/SolrAuthDefault/data-gndSource.phtml', ['data' => $gndProvider, 'gnd' => $this->driver->getGndIdentifier()]);?>
         <?php elseif (isset($provider)): ?>
           <table class="table">
-            <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
             <?php foreach ($provider as $current): ?>
               <?php //$this->driver->getInstitutionLinked(); ?>
-              <tr><th><?=$this->transEsc('edm::' . $current['label'])?>:</th><td><?=$current['value']?></td></tr>
+              <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
             <?php endforeach; ?>
           </table>
         <?php endif; ?>
       </div>
-    <?php if (!empty($sameAs)): ?>
-        <?=$this->render('RecordDriver/DefaultRecord/data-sameAs.phtml', ['data' => $sameAs]);?>
-    <?php endif; ?>
+    <?=$this->record($this->driver)->getToolbar()?>
   </div>
 </div>

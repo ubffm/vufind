@@ -15,11 +15,11 @@
  *
  * An EDM record contains core and zero or more contextual classes with one or more properties.
  */
-namespace Fiddk\RecordDriver\EDM;
+namespace Fiddk\RecordDriver\Feature;
 
 class EdmRecord
 {
-    protected $record;
+    protected $edmRecord;
 
     protected $ns;
 
@@ -32,20 +32,19 @@ class EdmRecord
      */
     public function __construct($edm = null)
     {
-        if ($this->record === null) {
-            $this->record = new \SimpleXMLElement($edm);
-            if ($this->record->getNamespaces(true)) {
-                foreach ($this->record->getDocNamespaces(true) as $names => $namesLink) {
+        if ($this->edmRecord === null) {
+            $this->edmRecord = new \SimpleXMLElement($edm);
+            if ($this->edmRecord->getNamespaces(true)) {
+                foreach ($this->edmRecord->getDocNamespaces(true) as $names => $namesLink) {
                     $this->ns[$names] = $namesLink;
-                    $this->record->registerXPathNamespace($names, $namesLink);
+                    $this->edmRecord->registerXPathNamespace($names, $namesLink);
                 }
             } else {
-                //TODO: Exception instead
-                var_dump("something went wrong");
+                throw new \Exception("Namespace error");
             }
         }
 
-        return $this->record;
+        return $this->edmRecord;
     }
 
     /**
@@ -53,18 +52,18 @@ class EdmRecord
      */
     public function __destruct()
     {
-        $this->record = null;
+        $this->edmRecord = null;
     }
 
     /* for fields that always return literal values */
     public function getLiteralVals($prop = "", $class = "")
     {
         $name = explode(":", $prop);
-        //if (array_key_exists($name[0], $this->ns)) {
-        //    return $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
-        //} else {
+        if (array_key_exists($name[0], $this->ns)) {
+            return $this->edmRecord->xpath("/rdf:RDF/" . $class . "/" . $prop);
+        } else {
             return [];
-        //}
+        }
     }
 
     /* for temporal attributes that will never have an associated
@@ -74,7 +73,7 @@ class EdmRecord
         $attrs = [];
         $name = explode(":", $prop);
         if (array_key_exists($name[0], $this->ns)) {
-            $props = $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
+            $props = $this->edmRecord->xpath("/rdf:RDF/" . $class . "/" . $prop);
             foreach ($props as $prop) {
                 $attr = $prop->attributes("rdfs", true);
                 if ($attr) {
@@ -97,7 +96,7 @@ class EdmRecord
         $vals = [];
         $name = explode(":", $prop);
         if (array_key_exists($name[0], $this->ns)) {
-            $props = $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
+            $props = $this->edmRecord->xpath("/rdf:RDF/" . $class . "/" . $prop);
             foreach ($props as $prop) {
                 $resLink = $this->getResourceVal($prop);
                 if ($resLink) {
@@ -123,7 +122,7 @@ class EdmRecord
 
     public function findMatchingPropVal($attr = "", $fieldName = "")
     {
-        return implode(", ", array_unique($this->record->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName)));
+        return implode(", ", array_unique($this->edmRecord->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName)));
     }
 
     public function getResourceVal($prop = null)
@@ -143,7 +142,7 @@ class EdmRecord
         $vals = [];
         $name = explode(":", $prop);
         if (array_key_exists($name[0], $this->ns)) {
-            $props = $this->record->xpath("/rdf:RDF/" . $class . "/" . $prop);
+            $props = $this->edmRecord->xpath("/rdf:RDF/" . $class . "/" . $prop);
             $links = [];
             foreach ($props as $p) {
                 $links[] = $this->getResourceVal($p);
@@ -158,6 +157,6 @@ class EdmRecord
 
     public function toXML()
     {
-        return $this->record->asXML();
+        return $this->edmRecord->asXML();
     }
 }

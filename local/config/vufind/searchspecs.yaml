@@ -388,6 +388,13 @@ Corporation:
     topic_id:
       - [onephrase, 50]
 
+Provider:
+  QueryFields:
+    institution_id:
+      - [onephrase, ~]
+    intermediate_id:
+      - [onephrase, ~]
+
 Work:
   QueryFields:
     work_id:

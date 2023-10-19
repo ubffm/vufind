@@ -2,164 +2,59 @@
 
   .carousel-inner {
     height: 100%;
-    border: 1px solid @btn-default-border;
-    padding-bottom: 25px;
+    padding: 0 1.5rem 0.5rem 1.5rem;
+    .carousel-item {
+      margin: 0 1rem;
+      min-width: 250px;
+    }
   }
   .carousel-indicators {
-    bottom: -5px;
+    bottom: -3rem;
   }
-  .hover-overlay .content {
-      background-color: rgba(119, 165, 227, 0.2);
-      .contentDarker {
-        background-color: rgba(250, 250, 250, 0.9);
-        color: @brand-primary;
-        padding: 15px;
-        text-align: left;
-      }
+   /* Controls */
+  .carousel-control {
+    width: 6%;
+    color: @brand-primary;
+    background: none;
+    &.left, &.right {
+      background: none;
+    }
+    .glyphicon-chevron-right {
+      right: 0;
+      font-size: 36px;
+    }
+    .glyphicon-chevron-left {
+      left: 0;
+      font-size: 36px;
+    }
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
   }
   .hover-overlay {
-      padding-top: 12px;
-      padding-left: 12px;
+    .contentDarker {
+      color: @brand-primary;
+      padding: 0.5rem 1.5rem 1rem 1.75rem;
       text-align: left;
-      &:hover .content {
-        background: none;
-      }
-      &:hover .contentDarker {
-        box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
-      }
+    }
+    .content {
+      background-color: rgba(119, 165, 227, 0.2);
+    }
+    &:hover .content {
+      background: none;
+      padding: 0;
+    }
+    &:hover .contentDarker {
+      background-color: rgba(250, 250, 250, 0.9);
+    }
+    &:hover {
+      box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
+      background-color: rgba(250, 250, 250, 0.9);
+    }
   }
   img[title] {
       font-weight: bold;
   }
 }
 
-.tab-content {
-    /* Controls */
-  .carousel-control {
-      width: 6%;
-      &.left, &.left:focus {
-        background-image: linear-gradient(to right, rgba(119, 165, 227, 1) 0%, transparent 100%);
-      }
-      &.right, &.right:focus {
-        background-image: linear-gradient(to right, transparent 0%, rgba(119, 165, 227, 1) 100%);
-      }
-      &:focus {
-        outline: none;
-        box-shadow: none;
-      }
-  }
-}
-
-.random {
-  height: auto;
-  width: 100%;
-  padding: 10px 0px;
-  background-image: none;
-  .title {
-    font-weight: bold;
-    text-align: center;
-  }
-  #similar-items-carousel {
-    height: 350px;
-    .item {
-      padding: 2em 2em;
-    }
-    .carousel-inner {
-      border: None;
-    }
-    .carousel-item {
-      display: flex;
-      flex-basis: 100%;
-      justify-content: space-evenly;
-      text-align: center;
-    }
-    .carousel-control {
-      background-image: none;
-    }
-    .imgDescr {
-      float: right;
-      height: 100%;
-      max-width: 320px;
-    }
-  }
-}
-
-#logo-carousel {
-
-  margin: 1em 0em 3em 0em;
-
-  .carousel-inner {
-    height: 80px;
-    width: auto;
-    padding-bottom: 25px;
-    margin: 0px 30px;
-  }
-
-  @media (max-width: 991px) {
-    .carousel-inner .item.left.active {
-      transform: translateX(-100%);
-    }
-    .carousel-inner .item.right.active {
-      transform: translateX(100%);
-    }
-    .carousel-inner .item.next {
-      transform: translateX(100%)
-    }
-    .carousel-inner .item.prev {
-      transform: translateX(-100%)
-    }
-  }
-
-  @media (min-width: 992px) {
-    .carousel-inner .item.left.active {
-      transform: translateX(-25%);
-    }
-    .carousel-inner .item.right.active {
-      transform: translateX(25%);
-    }
-    .carousel-inner .item.next {
-      transform: translateX(25%)
-    }
-    .carousel-inner .item.prev {
-      transform: translateX(-25%)
-    }
-  }
-
-  .carousel-inner .item.right,
-  .carousel-inner .item.left {
-    transform: translateX(0);
-  }
-
-  .carousel-item {
-    vertical-align: middle;
-    display: table-cell;
-    height: 80px;
-    width: 225px;
-    text-align: center;
-  }
-
-  .carousel-control {
-      width: 1%;
-      text-shadow: 0 3px 2px rgba(0,0,0,0.6);
-      &.left, &.left:focus {
-        background-image: none;
-      }
-      &.right, &.right:focus {
-        background-image: none;
-      }
-  }
-  .item {
-    &.prev,
-    &.active,
-    &.next { display: block; }
-
-    img {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
-    a[target="_blank"]:after {
-        content: none;
-    }
-  }
-}

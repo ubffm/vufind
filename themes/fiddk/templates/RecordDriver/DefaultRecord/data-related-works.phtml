@@ -1,0 +1,20 @@
+<?php
+    $works = $this->driver->getRelatedWorks(); 
+    if ($works):
+      $type = $this->driver->getRecordType();
+      if ($data > 1): ?>
+    <ul class="list-group related">
+    <?php foreach ($works as $record): ?>
+      <?php $formats = $record->getFormats();?>
+      <li class="list-group-item"><a href="<?=$this->recordLinker()->getUrl($record)?>"><?=$record->getTitle()?></a>
+      <?php if ($formats):?><?=" ("?><?=implode(" | ",$formats) . ")"?><?php endif;?></li>
+    <?php endforeach; ?>
+  </ul>
+  <a href="<?=$this->url('worksearch-results') . '?lookfor=' . $this->driver->getUniqueID() . '&type=' . $type?>"><?=$this->translate("RelatedEntityHits", ['%%count%%' => $this->localizedNumber($data)]);?></a>
+  <?php else: ?>
+    <?php $record = $works[0];
+          $formats = $record->getFormats();?>
+    <a href="<?=$this->recordLinker()->getUrl($record)?>"><?=$record->getTitle()?></a>
+    <?php if ($formats):?><?=" ("?><?=implode(" | ",$formats) . ")"?><?php endif;?></li>
+  <?php endif; ?>
+<?php endif; ?>

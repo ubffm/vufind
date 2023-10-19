@@ -25,7 +25,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
-namespace Fiddk\RecordDriver;
+namespace Fiddk\RecordDriver\Feature;
 
 /**
  * Additional functionality for Edm Solr records.
@@ -42,6 +42,10 @@ trait EdmBasicTrait
 {
 
     public function getRecordType() {
+        return 'Record';
+    }
+
+    public function getEntityType() {
         return 'Record';
     }
 
@@ -159,32 +163,32 @@ trait EdmBasicTrait
     /* Literals*/
     public function getExtent()
     {
-        return $this->getEdmRecord()->getLiteralVals("dcterms:extent", "edm:ProvidedCHO");
+        return $this->getEdmReader()->getLiteralVals("dcterms:extent", "edm:ProvidedCHO");
     }
 
     public function getCallNumber()
     {
-        return $this->getEdmRecord()->getLiteralVals("bf:shelfMark", "edm:ProvidedCHO");
+        return $this->getEdmReader()->getLiteralVals("bf:shelfMark", "edm:ProvidedCHO");
     }
 
     public function getVolume()
     {
-        $vol = $this->getEdmRecord()->getLiteralVals("bf:partNumber", "edm:ProvidedCHO");
+        $vol = $this->getEdmReader()->getLiteralVals("bf:partNumber", "edm:ProvidedCHO");
         if ($vol) {
             return $vol;
         } else {
-            return $this->getEdmRecord()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
+            return $this->getEdmReader()->getLiteralVals("bibo:volume", "edm:ProvidedCHO");
         }
     }
 
     public function getProvenance()
     {
-        return $this->getEdmRecord()->getLiteralVals("dcterms:provenance", "edm:ProvidedCHO");
+        return $this->getEdmReader()->getLiteralVals("dcterms:provenance", "edm:ProvidedCHO");
     }
 
     public function getTOC()
     {
-        $tocs = $this->getEdmRecord()->getLiteralVals("dcterms:tableOfContents", "edm:ProvidedCHO");
+        $tocs = $this->getEdmReader()->getLiteralVals("dcterms:tableOfContents", "edm:ProvidedCHO");
         if ($tocs) {
             $res = [];
             foreach ($tocs as $toc) {
@@ -199,45 +203,45 @@ trait EdmBasicTrait
 
     public function getAccessRestrictions()
     {
-        $rights = $this->getEdmRecord()->getLiteralVals("dc:rights", "ore:Aggregation");
-        return empty($rights) ? $this->getEdmRecord()->getLiteralVals("dc:rights", "edm:ProvidedCHO") : $rights;
+        $rights = $this->getEdmReader()->getLiteralVals("dc:rights", "ore:Aggregation");
+        return empty($rights) ? $this->getEdmReader()->getLiteralVals("dc:rights", "edm:ProvidedCHO") : $rights;
     }
 
     /* Attribute Vals */
     public function getHumanReadablePublicationDates()
     {
-        return $this->getEdmRecord()->getAttrVals("dcterms:issued", "edm:ProvidedCHO");
+        return $this->getEdmReader()->getAttrVals("dcterms:issued", "edm:ProvidedCHO");
     }
 
     /* Literal or Attribute Vals */
     public function getHumanReadableDates()
     {
-        return $this->getEdmRecord()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
+        return $this->getEdmReader()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
     }
 
     public function getHumanReadableCreationDates()
     {
-        return $this->getEdmRecord()->getPropValues("dcterms:created", "edm:ProvidedCHO", "");
+        return $this->getEdmReader()->getPropValues("dcterms:created", "edm:ProvidedCHO", "");
     }
 
     public function getPlacesOfPublication()
-    {
-        return $this->getEdmRecord()->getPropValues("rdau:P60163", "edm:ProvidedCHO", "skos:prefLabel");
+    {   
+        return $this->getEdmReader()->getPropValues("rdau:P60163", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     public function getPlacesOfManufacture()
     {
-        return $this->getEdmRecord()->getPropValues("rdau:P60162", "edm:ProvidedCHO", "skos:prefLabel");
+        return $this->getEdmReader()->getPropValues("rdau:P60162", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     public function getPlaces()
     {
-        return $this->getEdmRecord()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "skos:prefLabel");
+        return $this->getEdmReader()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "");
     }
 
     public function getCurrentLocation()
     {
-        return $this->getEdmRecord()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
+        return $this->getEdmReader()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     /* Prepare attribute val with link */
@@ -252,14 +256,14 @@ trait EdmBasicTrait
         if (isset($this->getInstitutions()[0])) {
             $inst = $this->getInstitutions()[0];
             if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-                $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
+                $licenseLinks = [$inst => $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
             }
             return $licenseLinks;
         } else {
             return [];
             $inst = $this->getInstitutions()[0]; 
         if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-            $licenseLinks = [$inst => $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
+            $licenseLinks = [$inst => $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
         }
     }
     }
@@ -280,7 +284,7 @@ trait EdmBasicTrait
             $type = "inter";
             foreach ($inters as $inter) {
                 if ($inter == "BASE - Bielefeld Academic Search Engine") {
-                    $instkey = explode("_", $this->getEdmRecord()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
+                    $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
                     $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
                     $instid = "BASE";
                 } else {
@@ -292,15 +296,44 @@ trait EdmBasicTrait
                 $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
                 $info = explode(',', $dprovConf[$interkey]);
                 $interlink = $info[0];
-                $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
+                $res = [$type => [$inter,$interlink,$inst,$instlink]];
             }
         } else {
             $type = "inst";
             $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
             $info = explode(',', $dprovConf[$instkey]);
-            $res = [$type => [$inst,$info[0],$info[1]]];
+            $res = [$type => [$inst,$info[0]]];
         }
         return $res;
+    }
+
+    /**
+     * Get an array of all dataproviders, also taking in consideration if
+     * there are intermediate data providers.
+     *
+     * @return array
+     */
+    public function getMoreAboutProvider()
+    {
+        $dprovConf = $this->mainConfig->DataProvider;
+        $inters = $this->getIntermediates();
+        $inst = $this->getInstitutions()[0];
+        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
+            foreach ($inters as $inter) {
+                if ($inter == "BASE - Bielefeld Academic Search Engine") {
+                    $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
+                    return "BASE";
+                } else {
+                    $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+                    $info = explode(',', $dprovConf[$instkey]);
+                    return $info[1];
+                }
+            }
+        } else {
+            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+            $info = explode(',', $dprovConf[$instkey]);
+            return $info[1];
+        }
     }
 
     public function getDigitalCopies()
@@ -309,15 +342,15 @@ trait EdmBasicTrait
         $inst = $this->getInstitutions()[0];
         // prevent duplicates
         if ($inst != 'transcript Verlag' and $inst != 'Alexander Street Press' and $inst != 'Adam Matthew Digital') {
-            $links = $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
+            $links = $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
         }
-        return $links + $this->getEdmRecord()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
-             $this->getEdmRecord()->getLinkedPropValues("edm:hasView", "ore:Aggregation", "dc:description");
+        return $links + $this->getEdmReader()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
+        $this->getEdmReader()->getLinkedPropValues("edm:hasView", "ore:Aggregation", "dc:description");
     }
 
     public function getCatalogueLink()
     {
-        return $this->getEdmRecord()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
+        return $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
     }
 
     /**

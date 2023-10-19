@@ -57,4 +57,14 @@ class Results extends \VuFind\Search\Solr\Results
         parent::__construct($params, $searchService, $recordLoader);
         $this->backendId = 'SolrCorporation';
     }
+
+    /**
+     * 
+     *
+     * @return String
+     */
+    public function getEntityType()
+    {
+        return "Corporation";
+    }
 }

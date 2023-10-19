@@ -1,33 +1,44 @@
 <?php $account = $this->auth()->getManager(); ?>
-<footer class="hidden-print">
-  <div class="footer-container">
-    <div class="footer-column">
-      <ul>
-        <li><a href="<?=$this->url('content-page', ['page' => 'impressum'])?>"><?=$this->transEsc('Imprint')?></a></li>
-        <li><a href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a></li>
-        <li><a onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a></li>
-      </ul>
-    </div>
-    <div class="footer-column">
-        <figure style="padding-left:30px;">
-          <a href="https://www.uni-frankfurt.de">
-            <img src="<?=$this->imageLink('bottom_logos/ublogo.png')?>" alt="Goethe Universität Frankfurt Logo">
-          </a>
-        </figure>
-    </div>
-    <div class="footer-column">
-      <figure>
-        <a href="https://www.dfg.de">
-          <img src="<?=$this->imageLink('bottom_logos/dfg_logo_schriftzug_weiss_foerderung_en.png')?>"  alt="DFG Logo">
+<footer>
+  <ul class="nav" role="menu">
+    <li class="nav-item">
+			<div class="nav-text">© 2015 - <?=date("Y");?></div>
+    </li>
+    <hr class="vr">
+    <li class="nav-item" role="menuitem">
+      <a class="nav-link" target="_blank" href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a>
+    </li>
+    <hr class="vr">
+    <li class="nav-item" role="menuitem">
+      <a class="nav-link" href="/sitemap.xml">Sitemap</a>
+    </li>
+    <hr class="vr">
+    <li class="nav-item" role="menuitem">
+      <a class="nav-link" target="_blank" href="https://www.uni-frankfurt.de/impressum"><?=$this->transEsc('Imprint')?></a>
+    </li>
+    <hr class="vr">
+    <li class="nav-item" role="menuitem">
+      <a class="nav-link" id="klaro-privacy-popup" onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a>
+    </li>
+  </ul>
+  <hr>
+  <div id="logos">
+    <ul class="nav justify-content-center" role="menu">
+      <li class="nav-item" role="menuitem">
+        <a class="nav-link" href="https://www.ub.uni-frankfurt.de/">
+          <img alt="Logo: UB Frankfurt am Main" src="<?=$this->imageLink('bottom_logos/ublogo.png')?>">
         </a>
-      </figure><hr/>
-        <figure>
-          <figcaption><?=$this->transEsc("Partner")?></figcaption>
-          <a href="https://nfdi4culture.de">
-            <img src="<?=$this->imageLink('bottom_logos/NFDI4C_Logo_DyptichText_w.png')?>" alt="NFDI4Culture Logo">
-          </a>
-          <figcaption style="font-size: 7px;"><?=$this->transEsc("NFDI")?></figcaption>
-        </figure>
-    </div>
+      </li>
+      <li class="nav-item" role="menuitem">
+        <a class="nav-link" href="https://www.dfg.de/">
+          <img alt="Logo: Deutsche Forschungsgemeinschaft (DFG)" src="<?=$this->imageLink('bottom_logos/dfg_logo_schriftzug_weiss_foerderung_en.png')?>">
+        </a>
+      </li>
+      <li class="nav-item" role="menuitem">
+        <a class="nav-link" href="https://nfdi4culture.de">
+          <img alt="NFDI4Culture Logo" src="<?=$this->imageLink('bottom_logos/NFDI4C_Logo_DyptichText_w.png')?>">
+        </a>
+      </li>
+    </ul>
   </div>
 </footer>

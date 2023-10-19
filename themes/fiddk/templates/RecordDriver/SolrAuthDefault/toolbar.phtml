@@ -4,7 +4,7 @@
     $this->headScript()->appendFile('https://s7.addthis.com/js/250/addthis_widget.js?pub=' . urlencode($addThis));
   }
 ?>
-<nav class="record-nav" aria-label="<?=$this->transEscAttr('ajaxview_label_tools'); ?>">
+<nav class="record-nav hidden-print" aria-label="<?=$this->transEscAttr('ajaxview_label_tools'); ?>">
   <ul class="action-toolbar">
     <?php if (count($this->driver->getCitationFormats()) > 0): ?>
       <li role="none">

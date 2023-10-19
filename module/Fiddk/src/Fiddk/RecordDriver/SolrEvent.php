@@ -175,4 +175,14 @@ class SolrEvent extends SolrAuthDefault
     {
         return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:Event");
     }
+
+    public function getEventRelatedWorkCount()
+    {
+        return parent::getRelatedWorkCount('event_id');
+    }
+
+    public function getEventRelatedResourceCount()
+    {
+        return parent::getRelatedResourceCount(['event_id','topic_id']);
+    }
 }

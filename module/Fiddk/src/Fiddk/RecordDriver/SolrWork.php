@@ -61,6 +61,8 @@ class SolrWork extends SolrEdm implements
      */
     protected $lobid;
 
+    protected $relatedEvents;
+
 
     /**
      * Get icon for this entity type.
@@ -75,14 +77,22 @@ class SolrWork extends SolrEdm implements
     /**
      * Get type
      *
-     * @return array
+     * @return string
      */
     public function getRecordType()
     {
         return "Work";
     }
 
-        /**
+    /**
+     * Returns the type of the entity
+     */
+    public function getEntityType()
+    {
+        return $this->fields['entity_type'] ?? [];
+    }
+
+    /**
      * is this a GND record?
      */
     public function isGndRecord()
@@ -121,7 +131,7 @@ class SolrWork extends SolrEdm implements
     /**
      * Get biographical or historical information of Gnd entity.
      *
-     * @return string
+     * @return array
      */
     public function getGndBio()
     {
@@ -147,12 +157,101 @@ class SolrWork extends SolrEdm implements
     }
 
     /**
+     * Get GND date of production of entity.
+     */
+    public function getGndDateOfProduction()
+    {
+        return $this->extraDetails['dateOfProduction'] ?? [];
+    }
+
+    /**
      * Get GND subject category of entity.
      */
     public function getGndSubjectCategory()
     {
         return $this->extraDetails['gndSubjectCategory'] ?? [];
     }
+
+    /**
+     * Get geographic area code of entity.
+     */
+    public function getGndGeographicAreaCode()
+    {
+        return $this->extraDetails['geographicAreaCode'] ?? [];
+    }
+
+    /**
+     * Get GND opus number of entity.
+     */
+    public function getGndOpusNum()
+    {
+        return $this->extraDetails['opusNumericDesignationOfMusicalWork'] ?? [];
+    }
+
+    /**
+     * Get GND author of entity.
+     */
+    public function getGndAuthor()
+    {
+        return $this->extraDetails['author'] ?? [];
+    }
+
+    /**
+     * Get GND librettist of entity.
+     */
+    public function getGndLibrettist()
+    {
+        return $this->extraDetails['librettist'] ?? [];
+    }
+
+    /**
+     * Get GND composer of entity.
+     */
+    public function getGndComposer()
+    {
+        return $this->extraDetails['firstComposer'] ?? [];
+    }
+
+    /**
+     * Get GND form of work or expression of entity.
+     */
+    public function getGndFormOfWork()
+    {
+        return $this->extraDetails['formOfWorkAndExpression'] ?? [];
+    }
+
+    /**
+     * Get GND literary source of entity.
+     */
+    public function getGndLiterarySource()
+    {
+        return $this->extraDetails['literarySource'] ?? [];
+    }
+
+    /**
+     * Get GND medium of performance of entity.
+     */
+    public function getGndMediumOfPerformance()
+    {
+        return $this->extraDetails['mediumOfPerformance'] ?? [];
+    }
+
+        /**
+     * Get GND number of ensembles of entity.
+     */
+    public function getGndTotalNumberOfEnsembles()
+    {
+        return $this->extraDetails['totalNumberOfEnsembles'] ?? "";
+    }
+
+        /**
+     * Get GND number of performers of entity.
+     */
+    public function getGndTotalNumberOfPerformers()
+    {
+        return $this->extraDetails['totalNumberOfPerformers'] ?? "";
+    }
+
 
     /**
      * Get GND sameAs list
@@ -163,6 +262,14 @@ class SolrWork extends SolrEdm implements
     }
 
     /**
+     * Get GND provider info
+     */
+    public function getGndDescribedBy()
+    {
+        return $this->extraDetails['describedBy'] ?? [];
+    }
+
+    /**
      * Returns links to provider
      */
     public function getSameAs()
@@ -170,20 +277,38 @@ class SolrWork extends SolrEdm implements
         return $this->getEdmRecord()->getAttrVals("owl:sameAs", "edm:ProvidedCHO");
     }
 
-        /**
-     * Get the number of event records belonging to this work
+    public function getWorkRelatedEventCount()
+    {
+        return $this->getRelatedEventCount('work_id');
+    }
+
+     /**
+     * Get the number of event records related to this entity
      *
-     * @return int Number of records
+     *
      */
-    public function getEventCount()
+    public function getRelatedEventCount($field)
     {
         $id = $this->getUniqueId();
         $query = new \VuFindSearch\Query\Query(
-            'work_id:"' . $id . '"'
+            $field . ':"' . $id . '"'
         );
-        // Disable highlighting for efficiency; not needed here:
-        $params = new \VuFindSearch\ParamBag(['hl' => ['false']]);
-        $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 0, $params);
-        return $this->searchService->invoke($command)->getResult()->getTotal();
+        // Disable highlighting for efficiency; not needed here. Get titles only.
+        $params = new \VuFindSearch\ParamBag(['hl' => ['false'], 'fl' => 'id, heading, date']);
+        $command = new \VuFindSearch\Command\SearchCommand("SolrEvent", $query, 0, 5, $params);
+        $collection = $this->searchService->invoke($command)->getResult();
+        $this->relatedEvents = $collection->getRecords();
+        return $collection->getTotal();
     }
+
+    /**
+     * Get related event records
+     *
+     *
+     */
+    public function getRelatedEvents()
+    {
+        return $this->relatedEvents;
+    }
+
 }

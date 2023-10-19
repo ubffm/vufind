@@ -1,6 +1,6 @@
 <?php
 /**
- * Author Controller
+ * Event Controller
  *
  * PHP version 7
  *
@@ -22,7 +22,6 @@
  * @category VuFind
  * @package  Controller
  * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
@@ -31,16 +30,15 @@ namespace Fiddk\Controller;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Authority Controller
+ * Event Controller
  *
  * @category VuFind
  * @package  Controller
  * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Julia Beck <j.beck@ub.uni-frankfurt.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class AgentSearchController extends \VuFind\Controller\AbstractSearch
+class CorporationSearchController extends \VuFind\Controller\AbstractSearch
 {
     /**
      * Constructor
@@ -49,37 +47,17 @@ class AgentSearchController extends \VuFind\Controller\AbstractSearch
      */
     public function __construct(ServiceLocatorInterface $sm)
     {
-        //$this->searchClassId = 'Combined';
+        $this->searchClassId = 'SolrCorporation';
         parent::__construct($sm);
     }
 
     /**
-     * Sets the configuration for performing an author search
+     * Search action -- call standard results action
      *
      * @return mixed
      */
     public function searchAction()
     {
-        return parent::resultsAction();
+        return $this->resultsAction();
     }
-
-    /**
-     * Displays the proper page for a search action
-     *
-     * @return mixed
-     */
-    /*public function homeAction()
-     {
-        // If we came in with a record ID, forward to the record action; this
-        // provides backward compatibility with multiple legacy routes.
-        /* if ($id = $this->params()->fromRoute('id', false)) {
-            if ($id === 'Record') {
-                $id = $this->params()->fromQuery('id', $id);
-            }
-            return $this->redirect()->toRoute('solrauthrecord', compact('id'));
-        }
-
-        // Default behavior:
-        return parent::homeAction();
-    } */
 }

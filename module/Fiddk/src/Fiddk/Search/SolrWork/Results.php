@@ -58,4 +58,14 @@ class Results extends SolrResults
         parent::__construct($params, $searchService, $recordLoader);
         $this->backendId = 'SolrWork';
     }
+
+    /**
+     * 
+     *
+     * @return String
+     */
+    public function getEntityType()
+    {
+        return "Work";
+    }
 }

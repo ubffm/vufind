@@ -1,8 +1,8 @@
 .container {
   background-color: @white;
-  padding: 0 3rem 0 3rem;
+  padding: 0 4rem 0 4rem;
   @media(min-width: 1400px) {
-    width: 1365px;
+    width: 80%;
   }
   @media(max-width: 992px) {
     width: 100%;
@@ -13,10 +13,48 @@ h1, h2, h3, h4, h5, h6, .title {
    font-family: "Big Shoulders Text";
 }
 
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 23px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+.btn-primary {
+  color: @white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  a {
+    color: @white;
+    &:hover {
+      color: @brand-primary;
+      background-color: @white;
+    }
+  }
+  &:hover {
+    border: 1px solid @brand-primary;
+  }
+}
+
+.btn-group {
+  .btn-primary.active {
+    background-color: #0a58ca;
+    color: @white;
+  }
+}
+
 .title {
   font-size: 1.5rem;
 }
 
+i.recordIcon {
+  margin-right: 1rem;
+}
 
 .facet-group .title, .facet {
   padding: 0.4rem 0.4rem 0.4rem 1rem;  
@@ -24,14 +62,6 @@ h1, h2, h3, h4, h5, h6, .title {
 }
 
 /** Searchbar/-box ***/
-
-.well {
-    background-color: @lightgrey;
-    text-align: left;
-    min-width: 240px;
-    //box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.28);
-    border: 1px solid @btn-default-border;
-}
 
 #advanced {
   padding-left: 0px;
@@ -45,71 +75,33 @@ h1, h2, h3, h4, h5, h6, .title {
   min-width: 50%;
 }
 
+.autocomplete-results {
+ .ac-item:hover {
+  background-color: @brand-primary;
+  color: @white;
+ }
+}
+
 .adv_search_links {
   margin: 0px;
 }
 
 /* Tabs */
 .tab-content {
-  padding: 10px 0px;
+  padding: 2.5rem 0 2rem 0;
+}
+
+li.record-tab a h3 {
+  margin-top: 10px;
 }
 
 .feedback-content {
   padding: 10px 15px;
 }
 
-/* SEARCH_TABS */
-.loader {
-  display: none;
-}
-
-ul.nav-tabs li:not(.active) a:hover .loader {
-    display: inline;
-    float: left;
-    margin-right: 5px;
-    border: 3px solid @lightgrey;
-    border-top: 3px solid @brand-primary;
-    width: 15px;
-    height: 15px;
-    animation: spin 1s linear infinite;
-}
-
-.nav li a:hover {
-  background-color: #004393;
-}
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-/* FOOTER */
-footer {
-  background-color: @brand-primary;
-  color: #fff;
-  padding-top: 0px;
-  ul {
-    padding-left: 0px;
-    list-style-type: none;
-  }
-}
-
-.footer-container {
-    padding: 15px;
-    .footer-column {
-      padding-left: 10px;
-      flex-basis: 17%;
-      figure {
-        margin: 0.8em;
-      }
-    }
-    a {
-      color: #fff;
-    }
-    .flexshrink {
-      padding-left: 10px;
-      flex-basis: 14%;
-    }
 }
 
 /* FACETS */
@@ -154,10 +146,6 @@ body {
 
 }
 
-.table {
-  table-layout: auto;
-}
-
 option:hover {
   background-color: #004393;
 }
@@ -175,6 +163,10 @@ ol.record-list > li.result:not(.last) {
   }
 }
 
+ul.list-group {
+  margin-bottom: 0.5rem;
+}
+
 .iconPlaceholder {
   width: 75px;
   height: 80%;
@@ -184,7 +176,10 @@ ol.record-list > li.result:not(.last) {
 
 #content {
   background-color: #fff;
-  padding: 0rem 3rem;
+  padding: 2rem 4rem 1rem 4rem;
+  @media(max-width: 767px) {
+    padding: 2rem 2.5rem 1rem 2.5rem;
+  }
 }
 
 .badge {
@@ -275,10 +270,30 @@ a[target="_blank"]:after {
     padding-left: 7px;
 }
 
-.Platzhalter {
-  background-color: @lightgrey;
-  height: 15rem;
-  padding-bottom: 2rem;
+.data-table table {
+  width: auto;
+  @media(max-width: 575px) {
+    th {
+      max-width: 110px;
+    }
+  }
+  @media(min-width: 576px) {
+    th {
+      min-width: 210px;
+    }
+  }
+  td {
+    width: 100%;
+  }
+  tbody tr th {
+    padding-left: 0;
+  }
+  margin-bottom: 3rem;
+}
+
+.links, .relations {
+  margin-bottom: 3rem;
+  padding-right: 1rem;
 }
 
 .highlight,
@@ -286,14 +301,10 @@ mark {
   background: @highlighter-color;
 }
 
-hr {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+hr.wmar {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-color: lightgray;
-}
-
-.record-nav {
-  float: right;
 }
 
 div#accordion .panel-collapse {
@@ -396,9 +407,7 @@ div.flex-content {
 /* Detailed Record View */
 .mainbody.solo {
   clear: right;
-  .media {
-    padding: 10px 0px 20px 0px;
-  }
+  width: 100%;
   .medium > a {
     width: 100%;
   }
@@ -411,7 +420,8 @@ div.flex-content {
 .record .media {
   flex-wrap: wrap-reverse;
   justify-content: space-between;
-  gap: 4rem;
+  gap: 5rem;
+  padding: 0 0 2rem 0;
 }
 
 /* Toggle MORE/LESS without js */
@@ -458,6 +468,16 @@ span.toggleContainer {
     font-size: 80%;
     color: @brand-primary;
     cursor: pointer;
+  }
+}
+
+ul.pagination li a.btn-primary {
+  font-size: inherit;
+  background-color: @brand-primary;
+  color: @white;
+  &:hover {
+    color: @brand-primary;
+    background-color: @white;
   }
 }
 

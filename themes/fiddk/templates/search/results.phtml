@@ -5,19 +5,19 @@
         ->get($this->translate('Search Results') . (empty($lookfor) ? '' : " - {$lookfor}"));
   $this->headTitle($headTitle);
 
-  $this->searchIndex = $this->params->getSearchHandler();
+  $this->searchHandler = $this->params->getSearchHandler();
   $this->searchType = $this->params->getSearchType();
   $this->searchClassId = $this->params->getsearchClassId();
   $filterList = $this->params->getFilterList(true);
-  $ftype = $this->results->getEntityType($filterList);
-  $ftype_ = empty($ftype) ? "Record" : $ftype;
+  $ftype = $this->results->getEntityType($this->searchClassId);
+  $ftype_ = empty($ftype) ? "AllRecord" : $ftype;
 
   // Set up search box:
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
         'lookfor' => $lookfor,
-        'searchIndex' => $this->searchIndex,
+        'searchIndex' => $this->searchHandler,
         'searchType' => $this->searchType,
         'searchId' => $this->results->getSearchId(),
         'searchClassId' => $this->searchClassId,
@@ -33,7 +33,7 @@
   // Set up breadcrumbs:
   $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
   // Set up section:
-  $this->layout()->section = '<div class="section container title ' . $ftype_ . '"><h1 class="sectionHeader">' . $this->translate('Search Results') . '</h1></div> ';
+  $this->layout()->section = '<div class="section container title ' . $ftype_ . '"><h1 class="sectionHeader">' . $this->translate('Search Results') . ' in ' . $this->translate($ftype_ . 's'). '</h1></div> ';
 
   // Store search id:
   $this->layout()->searchId = $this->results->getSearchId();
@@ -63,7 +63,7 @@
   $ignoreHiddenFilterMemory = isset($this->ignoreHiddenFilterMemory) && $this->ignoreHiddenFilterMemory;
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
   $hiddenFilters = $this->searchTabs()->getHiddenFilters($this->searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
-  $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchIndex, $this->searchType, $hiddenFilters);
+  $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchHandler, $this->searchType, $hiddenFilters);
 ?>
 
 <div id="content" class="container">

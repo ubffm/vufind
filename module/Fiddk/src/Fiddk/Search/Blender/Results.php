@@ -45,27 +45,27 @@ class Results extends \VuFind\Search\Blender\Results
      *
      * @return String
      */
-    public function getEntityType($filterList)
+    public function getEntityType($searchClass)
     {
-        $entityType = $filterList['Source'][0]['displayText'] ?? '';
+        $entityType = $searchClass ?? '';
         switch ($entityType) {
-        case "Ressourcen":
+        case "SolrEdm":
             return "Record";
             break;
-        case "Persons":
+        case "SolrPerson":
             return "Person";
             break;
-        case "Corporations":
+        case "SolrCorporation":
             return "Corporation";
             break;
-        case "Ereignisse":
+        case "SolrEvent":
             return "Event";
             break;
-        case "Werke / Produktionen":
+        case "SolrWork":
             return "Work";
             break;
         default:
-            return "";
+            return "AllRecord";
         }
     }
 }

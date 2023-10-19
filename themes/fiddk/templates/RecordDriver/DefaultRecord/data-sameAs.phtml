@@ -1,27 +1,22 @@
 <div class="links">
-  <h4 property="context"><?=$this->transEsc("More Links")?></h4>
-  <table class="table">
-    <caption class="sr-only"><?=$this->transEsc('More Links')?></caption>
-    <?php foreach ($data as $k => $current):
+  <h3 property="context"><i class="fa fa-regular fa-link recordIcon"></i><?=$this->transEsc("More Links")?></h3>
+  <?php foreach ($data as $i => $current):
     if (isset($current['id']) && isset($current['collection'])) :
     $abbr = $current['collection']['abbr'] ?? '';
     $name = $current['collection']['name'] ?? '';
     $icon = $current['collection']['icon'] ?? '';?>
-      <tr><th><?php if ($icon): ?>
+      <?php if ($icon): ?>
         <img class="external-icon" src="<?=$icon?>" alt="<?=$abbr?>"/>
-        <?php elseif ($current['collection']['id'] == "http://isni.org"): ?>
-          <span class="sr-only"><?="ISNI"?></span>
-        <?php else: ?>
-          <?=$abbr?>
-        <?php endif;?></th>
-        <td><a href="<?=$current['id']?>" target="_blank">
+      <?php endif;?>
+      <a href="<?=$current['id']?>" target="_blank">
         <?php if ($name): ?>
           <?=$name?>
         <?php else: ?>
           <?=$current['id']?>
         <?php endif;?>
-      </a></td></tr>
+      </a>
+      <?php if ($i < sizeof($data) - 1): ?><?="&nbsp;|&nbsp;"?>
+      <?php endif; ?>
   <?php endif;
 endforeach; ?>
-  </table>
 </div>

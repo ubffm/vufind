@@ -55,34 +55,32 @@
           <?php endif; ?>
 
           <!-- FID Menu in Wagtail. TODO: Real links -->
-          <li>
-            <a href="search-home"><?=$this->transEsc("Recherche")?></a>
+          <li class="nav-item">
+            <a class="nav-link" href="search-home"><?=$this->transEsc("Search")?></a>
           </li>
-          <li>
-            <a href="service-home"><?=$this->transEsc("Service")?></a>
+          <li class="nav-item">
+            <a class="nav-link" href="news-home"><?=$this->transEsc("News")?></a>
           </li>
-          <li>
-            <a href="news-home"><?=$this->transEsc("News")?></a>
+          <li class="nav-item">
+            <a class="nav-link" href="service-home"><?=$this->transEsc("Service")?></a>
           </li>
-          <li>
-            <a href="about-home"><?=$this->transEsc("About us")?></a>
+          <li class="nav-item">
+            <a class="nav-link" href="about-home"><?=$this->transEsc("About us")?></a>
           </li>
 
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
-            <li class="language">
+            <li class="language nav-item">
               <div class="btn-group">
                 <?php foreach ($this->layout()->allLangs as $langCode => $langName): ?>
-                  <button type="button" class="<?=$this->layout()->userLang == $langCode ? ' active' : ''?>">
-                    <a href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['lng' => $langCode])) ?>" rel="nofollow">
-                      <?=$this->displayLanguageOption($langName) ?>
+                    <a class="btn btn-primary<?=$this->layout()->userLang == $langCode ? ' active' : ''?>" href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['lng' => $langCode])) ?>" rel="nofollow">
+                      <?=strToUpper(substr($this->displayLanguageOption($langName),0,2))?>
                     </a>
-                </button>
                 <?php endforeach; ?>
             </li>
           <?php endif; ?>
           <?php if ($this->feedback()->tabEnabled()): ?>
-            <li>
-              <a id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
+            <li class="nav-item" id="feedbackLink">
+              <a class="nav-link btn btn-primary" data-lightbox href="<?=$this->url('feedback-home') ?>"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
             </li>
           <?php endif; ?>
         </ul>
@@ -96,5 +94,5 @@
       <?=$this->layout()->searchbox ?>
     </div>
   </div>
-  <?=$this->layout()->section ?>
 <?php endif; ?>
+<?=$this->layout()->section ?>
