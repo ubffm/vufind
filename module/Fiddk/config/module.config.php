@@ -156,7 +156,7 @@ $staticRoutes = ['EventSearch/Home','EventSearch/Results',
                  'Agent/Home',
                  'PersonSearch/Results','Agent/FacetList',
                  'WorkSearch/Home','WorkSearch/Results',
-                 'Work/FacetList','Showcase/Home',
+                 'Work/FacetList','Search/More','Showcase/Home',
                  'Showcase/Playbills'];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();

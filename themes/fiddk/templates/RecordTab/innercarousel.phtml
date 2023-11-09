@@ -10,9 +10,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
   <?=implode(', ', $formats);?><br>
 <?php endif; ?>
 <?php if ($this->type == "Record"):
-  $placeDateDetails = $data->getPlaceDateDetails();
-  if (!empty($placeDateDetails)): ?>
-  <?=$this->render('RecordDriver/SolrEdm/data-placeDateDetails.phtml', ['data' => $placeDateDetails,'driver' => $this->driver]);?>
+  $places = $data->getGeographicsCon();
+  if (!empty($places)): ?>
+  <?=$this->render('RecordDriver/DefaultRecord/data-places.phtml', ['data' => $places,'driver' => $this->driver]);?>
   <?php endif; ?>
 <?php elseif ($this->type == "Person") :
   $prof = $data->getOccupation();
@@ -30,6 +30,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
   <?php endif; ?>
   <?php if ($prof) : ?>
     <p><?=implode(' | ', $prof)?></p>
+  <?php endif; ?>
+  <?php elseif ($this->type == "Corporation") :
+  $orga = $data->getOrgaDomain();?>
+  <?php if ($orga) : ?>
+    <p><?=implode(' | ', $orga)?></p>
   <?php endif; ?>
   <?php elseif ($this->type == "Event") :
   $places = $data->getEventPlace(); 

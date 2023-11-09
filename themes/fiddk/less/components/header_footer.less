@@ -72,7 +72,7 @@ header {
 nav.breadcrumbs div.container {
   padding: 0;
   ul.breadcrumb {
-    padding: 0.6rem 3rem;
+    padding: 0.6rem 4rem;
     margin: 0;
     background-color: @lightgrey;
   }
@@ -82,11 +82,22 @@ nav.breadcrumbs div.container {
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   li a:hover {
-      color: @brand-primary;
-      background-color: @white;
-      border: 1px solid @brand-primary;
-   }
+   li > a.nav-link::after {
+    display: block;
+    content: '';
+    border-bottom: solid 2px @brand-primary; 
+    transform: scaleX(0);
+    transition: transform 300ms ease-in-out;
+    transform-origin:  0% 50%;
+  }
+  li > a.nav-link:hover {
+    color: @brand-primary;
+    background-color: @white;
+    outline: none;
+    &::after {
+    transform: scaleX(1);
+    }
+  }
 }
 
 .record-nav {

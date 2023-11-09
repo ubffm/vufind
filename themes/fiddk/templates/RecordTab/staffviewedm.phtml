@@ -6,9 +6,11 @@
 ?>
 <!-- pre><?php //=$edm?></pre -->
 <?php if ($edm): ?>
-<?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm);?>
+<h3><?=$this->translate('Extended EDM View')?></h3>
+<?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm->toXML());?>
 <?php endif; ?>
 
+<h3><?=$this->translate('Solr Index View')?></h3>
 <div class="solrTab"><table class="citation table table-striped">
   <?php foreach ($this->driver->getRawData() as $field => $values): ?>
     <tr>

@@ -13,9 +13,6 @@
  * @link     https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
-use Laminas\Mail\Address;
-use Laminas\View\Model\ViewModel;
-use VuFind\Exception\Mail as MailException;
 use VuFind\Form\Form;
 
 /**
@@ -71,7 +68,7 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
         $params = $this->params();
         $form->setData($params->fromPost());
 
-        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMCB' || $formId == 'AskArchiveDTM') 
+        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMTT' || $formId == 'AskArchiveDTM') 
              && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
             $callNumber = $this->params()->fromRoute('callNumber', $this->params()->fromQuery('callNumber'));
             $form = $this->prefillRecordInfo($form, $callNumber);

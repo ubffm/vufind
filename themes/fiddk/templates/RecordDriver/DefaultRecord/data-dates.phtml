@@ -1,0 +1,6 @@
+<?php $normdates = [];
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+foreach ($data as $date):
+    $normdates[] = $this->driver->translateDate($date, $lang);
+endforeach; ?>
+<div><i class="fa fa-regular fa-calendar"></i>&nbsp;<span property="date"><?=$this->escapeHtml(implode(" | ", $normdates))?></span></div>

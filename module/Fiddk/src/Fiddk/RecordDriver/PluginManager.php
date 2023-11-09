@@ -51,6 +51,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
         'solrcorporation' => SolrCorporation::class,
         'solrevent' => SolrEvent::class,
         'solrwork' => SolrWork::class,
+        \VuFind\RecordDriver\SolrDefault::class => \Fiddk\RecordDriver\SolrDefault::class,
         \VuFind\RecordDriver\SolrAuthDefault::class => \Fiddk\RecordDriver\SolrAuthDefault::class,
     ];
 
@@ -61,6 +62,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     protected $factories = [
         SolrEdm::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
+        \Fiddk\RecordDriver\SolrDefault::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         \Fiddk\RecordDriver\SolrAuthDefault::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrPerson::class => \VuFind\RecordDriver\SolrDefaultFactory::class,
         SolrCorporation::class => \VuFind\RecordDriver\SolrDefaultFactory::class,

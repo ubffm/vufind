@@ -1,0 +1,11 @@
+<i class="fa fa-regular fa-map-marker"></i><span property="location">
+<?php $size = sizeof($data);
+      $keys = array_keys($data);
+foreach ($data as $key => $field): ?>
+  <?php if ($key != 'undefinedPlace'): ?>
+    <?=$this->escapeHtml(implode(' | ', $field)) . ' (' . $this->transEsc($key) .')'?>
+  <?php else: ?>
+    <?=$this->escapeHtml(implode(' | ', $field))?>
+  <?php endif; ?>
+  <?php if (array_search($key, $keys) < $size - 1): ?> ; <?php endif; ?>
+<?php endforeach; ?></span>

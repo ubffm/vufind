@@ -28,6 +28,8 @@
  */
 namespace Fiddk\RecordDriver;
 
+use VuFind\I18n\Translator\TranslatorAwareTrait;
+
 /**
  * Model for EDM authority corporation records in Solr.
  *
@@ -43,6 +45,7 @@ namespace Fiddk\RecordDriver;
 class SolrCorporation extends SolrAuthDefault
 {
     protected $relatedProviderRes;
+    use TranslatorAwareTrait;
 
     /**
      * Get domain of organization.
@@ -193,5 +196,9 @@ class SolrCorporation extends SolrAuthDefault
         $collection = $this->searchService->invoke($command)->getResult();
         $this->relatedProviderRes = $collection->getRecords();
         return $collection->getTotal();
+    }
+
+    public function getProviderLabel() {
+        return $this->translate('RelatedProviderResources',["%%name%%" => $this->getTitle()]);
     }
 }

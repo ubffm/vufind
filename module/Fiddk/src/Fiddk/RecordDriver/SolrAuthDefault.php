@@ -43,10 +43,9 @@ use \Fiddk\Connection\Wikipedia;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
+class SolrAuthDefault extends SolrDefault implements
 \VuFindHttp\HttpServiceAwareInterface
 {
-    use Feature\EdmReaderTrait;
     use \VuFindHttp\HttpServiceAwareTrait;
 
         /**
@@ -75,6 +74,51 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
     protected $relatedWorks;
 
     protected $relatedEvents;
+
+    /**
+     * Get the short (pre-subtitle) title of the record.
+     *
+     * @return string
+     */
+    public function getShortTitle()
+    {
+        // No difference between short and long titles for authority records:
+        return $this->getTitle();
+    }
+
+    /**
+     * Get the full title of the record.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->fields['heading'] ?? '';
+    }
+
+    /**
+     * Get the see also references for the record.
+     *
+     * @return array
+     */
+    public function getSeeAlso()
+    {
+        return isset($this->fields['see_also'])
+            && is_array($this->fields['see_also'])
+            ? $this->fields['see_also'] : [];
+    }
+
+    /**
+     * Get the use for references for the record.
+     *
+     * @return array
+     */
+    public function getUseFor()
+    {
+        return isset($this->fields['use_for'])
+            && is_array($this->fields['use_for'])
+            ? $this->fields['use_for'] : [];
+    }
 
     /**
      * No support for citation of authority data
@@ -237,51 +281,9 @@ class SolrAuthDefault extends \VuFind\RecordDriver\SolrAuthDefault implements
         return $links;
     }
 
-    public function getIntermediates()
-    {
-        return $this->fields['intermediate'] ?? [];
-    }
-
     public function getDescription()
     {
         return $this->fields['description'] ?? [];
-    }
-
-    /**
-     * Get an array of all dataproviders, also taking in consideration if
-     * there are intermediate data providers.
-     *
-     * @return array
-     */
-    public function getInstitutionLinked()
-    {
-        $dprovConf = $this->mainConfig->DataProvider;
-        $inters = $this->getIntermediates();
-        $inst = $this->getInstitutions()[0];
-        $res = [];
-        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
-            $type = "inter";
-            foreach ($inters as $inter) {
-                $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-                $info = explode(',', $dprovConf[$instkey]);
-                $instlink = $info[0];
-                $instid = $info[1];
-                $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
-                $info = explode(',', $dprovConf[$interkey]);
-                $interlink = $info[0];
-                $res = [$type => [$inter,$interlink,$instid,$inst,$instlink]];
-            }
-        } else {
-            $type = "inst";
-            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-            $info = explode(',', $dprovConf[$instkey]);
-            if (isset($info[1])) {
-                $res = [$type => [$inst,$info[0],$info[1]]];
-            } else {
-                $res = [];
-            }
-        }
-        return $res;
     }
 
     public function queryRecordId($id, $source)

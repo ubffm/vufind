@@ -40,7 +40,7 @@ namespace Fiddk\RecordDriver;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrEdm extends \VuFind\RecordDriver\SolrDefault
+class SolrEdm extends SolrDefault
 {
     use Feature\EdmReaderTrait;
     use Feature\EdmBasicTrait;

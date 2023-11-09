@@ -1,5 +1,5 @@
-<?php $similarRecords = $this->tab->getResults(); ?>
-<?php if (!empty($similarRecords)): ?>
+<?php $similarRecords = $this->tab->getResults();?>
+<?php if (count($similarRecords) != 0): ?>
   <?php $perPage = 4;
   $recordType = $this->driver->getRecordType();?>
   <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">

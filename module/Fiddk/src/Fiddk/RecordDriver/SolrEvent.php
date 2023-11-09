@@ -55,7 +55,7 @@ class SolrEvent extends SolrAuthDefault
 
 
     /**
-     * Returns the type of the event
+     * Convenience method for event date
      */
     public function getEventDate()
     {
@@ -63,7 +63,7 @@ class SolrEvent extends SolrAuthDefault
     }
 
     /**
-     * Returns the type of the event
+     * Convenience method for event place
      */
     public function getEventPlace()
     {

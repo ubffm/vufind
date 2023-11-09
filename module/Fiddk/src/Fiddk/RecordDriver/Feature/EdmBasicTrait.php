@@ -59,12 +59,6 @@ trait EdmBasicTrait
         return 'fa-archive';
     }
 
-
-    public function getIntermediates()
-    {
-        return $this->fields['intermediate'] ?? [];
-    }
-
     public function getAlternativeTitles()
     {
         return $this->fields['title_alt'] ?? [];
@@ -78,6 +72,82 @@ trait EdmBasicTrait
     public function getGenres()
     {
         return $this->fields['genre'] ?? [];
+    }
+
+    /** Place related fields */
+
+    // convenience method for API, carousels and result lists
+    public function getGeographicsCon()
+    {
+        return $this->fields['geographic'] ?? [];
+    }
+
+    // places and their type
+    public function getGeographicsType()
+    {
+        $retVal = [];
+        $undefined = $this->getPlaces("dcterms:spatial");
+        $publication = $this->getPlaces("rdau:P60163");
+        $manufacture = $this->getPlaces("rdau:P60162");
+        $event = $this->getPlaces("edm:happenedAt");
+        $current = $this->getPlaces("edm:currentLocation");
+        if (!empty($undefined)) {
+            $retVal['undefinedPlace'] = $undefined;
+        }
+        if (!empty($publication)) {
+            $retVal['edm::rdau:P60163'] = $publication;
+        }
+        if (!empty($manufacture)) {
+            $retVal['edm::rdau:P60162'] = $manufacture;
+        }
+        if (!empty($event)) {
+            $retVal['edm::edm:happenedAt'] = $event;
+        }
+        if (!empty($current)) {
+            $retVal['edm::edm:currentLocation'] = $current;
+        }
+        return $retVal ?? [];
+    }
+
+    public function getPlaces($type)
+    {   
+        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
+    }
+
+    /** Date related fields */
+
+    // convenience method for API, carousels and result lists
+    public function getDatesCon()
+    {
+        return $this->fields['date_span'] ?? [];
+    }
+
+    // dates and their type
+    public function getDatesType()
+    {
+        $retVal = [];
+        $undefined = $this->getPlaces("dcterms:temporal");
+        $publication = $this->getPlaces("dcterms:issued");
+        $creation = $this->getPlaces("dcterms:created");
+        $event = $this->getPlaces("edm:occuredAt");
+        if (!empty($undefined)) {
+            $retVal['undefinedDate'] = $undefined;
+        }
+        if (!empty($publication)) {
+            $retVal['edm::dcterms:issued'] = $publication;
+        }
+        if (!empty($creation)) {
+            $retVal['edm::dcterms:created'] = $creation;
+        }
+        if (!empty($event)) {
+            $retVal['edm::edm:occuredAt'] = $event;
+        }
+        return $retVal ?? [];
+    }
+
+    public function getDates($type)
+    {   
+        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     public function getFormats(): array
@@ -105,58 +175,6 @@ trait EdmBasicTrait
         return $this->containerLinking
             && !empty($this->fields['hierarchy_parent_id'])
             ? $this->fields['hierarchy_parent_id'] : [];
-    }
-
-    /**
-     * Get an array of detail lines combining information from
-     * getDates() and getPlaces(). This is the version that has nothing
-     * to do with publication but contains vague dates and places.
-     *
-     * @return array
-     */
-    public function getPlaceDateDetails()
-    {
-        $places = $this->getPlaces();
-        $dates = $this->getHumanReadableDates();
-        $i = 0;
-        $retval = [];
-        while (isset($places[$i]) || isset($dates[$i])) {
-            // Build objects to represent each set of data; these will
-            // transform seamlessly into strings in the view layer.
-            $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
-                $places[$i] ?? '',
-                '',
-                $dates[$i] ?? ''
-            );
-            $i++;
-        }
-        return $retval;
-    }
-
-    /**
-     * Get an array of detail lines combining information from
-     * getDates() and getPlaces(). This is the version that has nothing
-     * to do with publication but contains vague dates and places.
-     *
-     * @return array
-     */
-    public function getCreationDetails()
-    {
-        $places = $this->getPlacesOfManufacture();
-        $dates = $this->getHumanReadableCreationDates();
-        $i = 0;
-        $retval = [];
-        while (isset($places[$i]) || isset($dates[$i])) {
-            // Build objects to represent each set of data; these will
-            // transform seamlessly into strings in the view layer.
-            $retval[] = new \VuFind\RecordDriver\Response\PublicationDetails(
-                $places[$i] ?? '',
-                '',
-                $dates[$i] ?? ''
-            );
-            $i++;
-        }
-        return $retval;
     }
 
     /* All those fields that are not in the index, but need to be displayed */
@@ -203,45 +221,11 @@ trait EdmBasicTrait
 
     public function getAccessRestrictions()
     {
-        $rights = $this->getEdmReader()->getLiteralVals("dc:rights", "ore:Aggregation");
+        $rights = [];
+        if ($this->getEntityType() == "Record") {
+            $rights = $this->getEdmReader()->getLiteralVals("dc:rights", "ore:Aggregation");
+        }
         return empty($rights) ? $this->getEdmReader()->getLiteralVals("dc:rights", "edm:ProvidedCHO") : $rights;
-    }
-
-    /* Attribute Vals */
-    public function getHumanReadablePublicationDates()
-    {
-        return $this->getEdmReader()->getAttrVals("dcterms:issued", "edm:ProvidedCHO");
-    }
-
-    /* Literal or Attribute Vals */
-    public function getHumanReadableDates()
-    {
-        return $this->getEdmReader()->getPropValues("dcterms:temporal", "edm:ProvidedCHO", "");
-    }
-
-    public function getHumanReadableCreationDates()
-    {
-        return $this->getEdmReader()->getPropValues("dcterms:created", "edm:ProvidedCHO", "");
-    }
-
-    public function getPlacesOfPublication()
-    {   
-        return $this->getEdmReader()->getPropValues("rdau:P60163", "edm:ProvidedCHO", "skos:prefLabel");
-    }
-
-    public function getPlacesOfManufacture()
-    {
-        return $this->getEdmReader()->getPropValues("rdau:P60162", "edm:ProvidedCHO", "skos:prefLabel");
-    }
-
-    public function getPlaces()
-    {
-        return $this->getEdmReader()->getPropValues("dcterms:spatial", "edm:ProvidedCHO", "");
-    }
-
-    public function getCurrentLocation()
-    {
-        return $this->getEdmReader()->getPropValues("edm:currentLocation", "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     /* Prepare attribute val with link */
@@ -266,74 +250,6 @@ trait EdmBasicTrait
             $licenseLinks = [$inst => $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
         }
     }
-    }
-
-    /**
-     * Get an array of all dataproviders, also taking in consideration if
-     * there are intermediate data providers.
-     *
-     * @return array
-     */
-    public function getInstitutionLinked()
-    {
-        $dprovConf = $this->mainConfig->DataProvider;
-        $inters = $this->getIntermediates();
-        $inst = $this->getInstitutions()[0];
-        $res = [];
-        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
-            $type = "inter";
-            foreach ($inters as $inter) {
-                if ($inter == "BASE - Bielefeld Academic Search Engine") {
-                    $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
-                    $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
-                    $instid = "BASE";
-                } else {
-                    $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-                    $info = explode(',', $dprovConf[$instkey]);
-                    $instlink = $info[0];
-                    $instid = $info[1];
-                }
-                $interkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inter);
-                $info = explode(',', $dprovConf[$interkey]);
-                $interlink = $info[0];
-                $res = [$type => [$inter,$interlink,$inst,$instlink]];
-            }
-        } else {
-            $type = "inst";
-            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-            $info = explode(',', $dprovConf[$instkey]);
-            $res = [$type => [$inst,$info[0]]];
-        }
-        return $res;
-    }
-
-    /**
-     * Get an array of all dataproviders, also taking in consideration if
-     * there are intermediate data providers.
-     *
-     * @return array
-     */
-    public function getMoreAboutProvider()
-    {
-        $dprovConf = $this->mainConfig->DataProvider;
-        $inters = $this->getIntermediates();
-        $inst = $this->getInstitutions()[0];
-        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
-            foreach ($inters as $inter) {
-                if ($inter == "BASE - Bielefeld Academic Search Engine") {
-                    $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
-                    return "BASE";
-                } else {
-                    $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-                    $info = explode(',', $dprovConf[$instkey]);
-                    return $info[1];
-                }
-            }
-        } else {
-            $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
-            $info = explode(',', $dprovConf[$instkey]);
-            return $info[1];
-        }
     }
 
     public function getDigitalCopies()

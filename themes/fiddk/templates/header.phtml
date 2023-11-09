@@ -1,7 +1,7 @@
 <?php $account = $this->auth()->getManager(); ?>
 <div class="banner container navbar">
   <div class="navbar-header">
-    <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>" aria-label="Home Button"></a>
+    <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->baseUrl?>" aria-label="Home Button"></a>
   </div>
   <?php if (!isset($this->layout()->renderingError)): ?>
     <div class="collapse navbar-collapse" id="header-collapse">
@@ -80,7 +80,7 @@
           <?php endif; ?>
           <?php if ($this->feedback()->tabEnabled()): ?>
             <li class="nav-item" id="feedbackLink">
-              <a class="nav-link btn btn-primary" data-lightbox href="<?=$this->url('feedback-home') ?>"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
+              <a class="nav-link btn btn-primary" data-lightbox href="<?=$this->url('feedback-home')?>"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
             </li>
           <?php endif; ?>
         </ul>

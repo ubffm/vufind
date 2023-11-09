@@ -108,7 +108,7 @@
       </div>
     <?php endif ?>
       <div class="provider">
-        <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
+        <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc('Institution') . ' ' . $this->transEsc('Authority File')?></h3>
         <?php if (isset($gndProvider) and $gndProvider != null): ?>
           <?=$this->render('RecordDriver/SolrAuthDefault/data-gndSource.phtml', ['data' => $gndProvider, 'gnd' => $this->driver->getGndIdentifier()]);?>
         <?php elseif (isset($provider)): ?>

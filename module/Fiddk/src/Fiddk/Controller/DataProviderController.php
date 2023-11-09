@@ -76,17 +76,4 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
         return $view;
     }
 
-    /**
-     * Action called if matched action does not exist
-     *
-     * @return array
-     */
-    public function notFoundAction()
-    {
-        $response   = $this->response;
-        if ($response instanceof \Laminas\Http\Response) {
-            return $this->createHttpNotFoundModel($response);
-        }
-        return $this->createConsoleNotFoundModel($response);
-    }
 }

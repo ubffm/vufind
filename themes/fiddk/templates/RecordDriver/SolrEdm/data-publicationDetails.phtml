@@ -1,3 +1,4 @@
+<div>
 <?php foreach ($data as $field):
   $pubPlace = $field->getPlace();
   $pubName = $field->getName();
@@ -25,5 +26,5 @@
       <i class="fa fa-regular fa-calendar"></i>&nbsp;<span property="publicationDate"><?=$this->driver->translateDate($pubDate, 'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
-  <br />
 <?php endforeach; ?>
+</div>

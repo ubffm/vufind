@@ -134,23 +134,17 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             ['helperMethod' => 'getFormatList']
         );
         $spec->setTemplateLine(
-            'Published',
-            'getPublicationDetails',
-            'data-publicationDetails.phtml'
+            'Place',
+            'getGeographicsType',
+            'data-placeDetails.phtml'
         );
         $spec->setTemplateLine(
-            'edm::dcterms:created',
-            'getCreationDetails',
-            'data-placeDateDetails.phtml'
-        );
-        $spec->setTemplateLine(
-            'DatesPlaces',
-            'getPlaceDateDetails',
-            'data-placeDateDetails.phtml'
+            'Date',
+            'getDatesType',
+            'data-dateDetails.phtml'
         );
         $spec->setLine('edm::dcterms:extent', 'getExtent');
         $spec->setLine('edm::bf:shelfMark', 'getCallNumber');
-        $spec->setLine('edm::edm:currentLocation', 'getCurrentLocation');
         $spec->setLine('edm::dcterms:provenance', 'getProvenance');
         $spec->setLine('edm::dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-2::']);
         $spec->setTemplateLine('edm::dc:description', 'getSummary', 'data-collapsible.phtml');
@@ -303,7 +297,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
      */
     public function getDefaultCorporateRelatedSpecs()
     {
-        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();        
         $spec->setMultiLine(
             'dc:contributor',
             'getDeduplicatedAuthors',
@@ -311,7 +305,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         );
         $spec->setTemplateLine('RelatedEvents', 'getCorporateRelatedEventCount', 'data-related-events.phtml',['field' => 'author_id']);
         $spec->setTemplateLine('RelatedWorks', 'getCorporateRelatedWorkCount', 'data-related-works.phtml',['field' => 'author_id']);
-        $spec->setTemplateLine('RelatedProviderResources', 'getCorporateProviderCount', 'data-related-provider-res.phtml');
+        $spec->setTemplateLine('RelatedProviderResources', 'getCorporateProviderCount', 'data-related-provider-res.phtml',
+        ['labelFunction' => function ($data,$driver) {return $driver->getProviderLabel();}]);
         $spec->setTemplateLine('RelatedResources', 'getCorporateRelatedResourceCount', 'data-related-resources.phtml',['field' => 'author_id']);
         return $spec->getArray();
     }
@@ -327,8 +322,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('Alternative', 'getUseFor');
         $spec->setLine('Type of Event', 'getEventType');
         $spec->setLine('Genre', 'getGenres');
-        $spec->setLine('DateOfEvent', 'getEventDate');
-        $spec->setLine('PlaceOfEvent', 'getEventPlace');
+        $spec->setTemplateLine('edm::edm:occuredAt', 'getEventDate','data-dates.phtml');
+        $spec->setTemplateLine('edm::edm:happenedAt', 'getEventPlace','data-places.phtml');
         $spec->setLine('edm::dc:description', 'getDescription');
         return $spec->getArray();
     }
@@ -344,8 +339,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('GndIdentifier', 'getGndIdentifier');
         $spec->setTemplateLine('Entitätstyp', 'getEntityType', 'data-collapsible_str.phtml');
         $spec->setTemplateLine('gndSubjectCategory', 'getGndSubjectCategory', 'data-label-array.phtml');
-        $spec->setTemplateLine('DateOfEvent', 'getGndDateOfEvent', 'data-collapsible_str.phtml');
-        $spec->setTemplateLine('PlaceOfEvent', 'getGndPlaceOfEvent', 'data-label-array.phtml');
+        $spec->setTemplateLine('edm::edm:occuredAt', 'getGndDateOfEvent', 'data-collapsible_str.phtml');
+        $spec->setTemplateLine('edm::edm:happenedAt', 'getGndPlaceOfEvent', 'data-label-array.phtml');
         $spec->setTemplateLine('placeOfActivity', 'getGndSpatialAreaOfActivity', 'data-label-array.phtml');
         $spec->setTemplateLine('GeographicAreaCode', 'getGndGeographicAreaCode', 'data-label-array.phtml');
         $spec->setTemplateLine('BiographicalDetails', 'getGndBio', 'data-collapsible_str.phtml');
@@ -433,8 +428,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setTemplateLine('edm::edm:isShownAt', 'getCatalogueLink', 'data-externalLink.phtml');
         $spec->setTemplateLine('edm::edm:isShownAt', 'getLicenseLink', 'data-licenseLink.phtml');
-        $spec->setTemplateLine('edm::edm:hasView', 'getDigitalCopies', 'data-collapsible_.phtml');        
+        $spec->setTemplateLine('edm::edm:hasView', 'getDigitalCopies', 'data-collapsible_.phtml');
         $spec->setTemplateLine('edm::edm:isRelatedTo', 'getAllRecordLinks', 'data-internalLink.phtml');
+        $spec->setTemplateLine('Availability', 'getKVKLink', 'data-externalLinkKVK.phtml');
+        $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
         return $spec->getArray();
     }
 
@@ -447,8 +444,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setTemplateLine('Homepage', 'getInstitutionLinked', 'data-provHome.phtml');
-        $spec->setTemplateLine('More Info', 'getMoreAboutProvider', 'data-provLink.phtml');
-        $spec->setTemplateLine('Ask Archive', 'askArchive', 'data-askArchive.phtml');
+        $spec->setTemplateLine('About', 'getInfoAboutProvider', 'data-provInfo.phtml');
+        $spec->setTemplateLine('Search Results', 'getMoreAboutProvider', 'data-provLink.phtml');
         return $spec->getArray();
     }
 

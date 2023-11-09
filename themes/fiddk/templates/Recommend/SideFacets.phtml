@@ -18,7 +18,7 @@
       }
     }
   }
-  $ftype = ""; //$this->results->getEntityType($filterList);
+  $ftype = $this->results->getEntityType($filterList);
     
   $hierarchicalFacets = $this->recommend->getHierarchicalFacets();
   if ($hierarchicalFacets) {

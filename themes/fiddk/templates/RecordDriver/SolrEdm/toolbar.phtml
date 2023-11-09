@@ -14,14 +14,6 @@
         </a>
       </li>
   <?php endif; ?>
-  <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
-    <li role="none">
-      <a class="library-record toolbar-btn" href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-        <?=$this->transEsc('Availability') . ' KVK'?>
-      </a>
-    </li>
-  <?php endif; ?>
   <?php $exportFormats = $this->export()->getFormatsForRecord($this->driver); ?>
     <?php if (count($exportFormats) > 0): ?>
       <li role="none" class="dropdown">

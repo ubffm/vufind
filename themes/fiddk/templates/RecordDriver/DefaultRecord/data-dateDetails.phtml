@@ -1,0 +1,15 @@
+<i class="fa fa-regular fa-calendar"></i><span property="date">
+<?php $size = sizeof($data);
+      $keys = array_keys($data);
+      $lang = $this->plugin('translate')->getTranslator()->getLocale();
+foreach ($data as $key => $field):
+  $normdates = [];
+  foreach ($field as $date):
+      $normdates[] = $this->driver->translateDate($date, $lang);
+  endforeach;?>
+  <?=$this->escapeHtml(implode(" | ", $normdates))?>
+  <?php if ($key != 'undefinedDate'):?>
+    <?=' (' . $this->transEsc($key) .')'?>
+  <?php endif; ?>
+  <?php if (array_search($key, $keys) < $size - 1): ?> ; <?php endif; ?>
+<?php endforeach; ?></span>

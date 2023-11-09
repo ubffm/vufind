@@ -97,7 +97,7 @@ trait EdmReaderTrait
     {
         // Special case for EDM:
         if ($format == 'edm') {
-            $xml = $this->edmRecord !== null ?? $this->getEdmRecord()->toXML();
+            $xml = $this->edmRecord ?? $this->getEdmRecord()->toXML();
             if (!$xml) {
                 return false;
             }

@@ -65,4 +65,23 @@ class SearchController extends \VuFind\Controller\SearchController
 
         return $view;
     }
+
+    /**
+     * More Hits action.
+     *
+     * @return mixed
+     */
+    public function moreAction()
+    {
+        $view = parent::homeAction();
+        $view->options = $this->serviceLocator
+            ->get('VuFind\SearchOptionsPluginManager')->get($this->searchClassId);
+
+        $runner = $this->serviceLocator->get('VuFind\SearchRunner');
+        $date = date('Y-m-d');
+        $request = ['lookfor' => $date,'type'=> 'playbills'];
+        $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
+
+        return $view;
+    }
 }

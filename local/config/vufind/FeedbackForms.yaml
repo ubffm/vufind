@@ -169,135 +169,6 @@
 
 forms:
 
-  # Main Feedback form
-
-  FeedbackSite:
-    title: feedback_title
-    enabled: true
-    useCaptcha: true
-    reportReferrer: false
-    reportUserAgent: true
-    #emailFrom:
-    #  name: Your Library - Site Feedback
-    #recipient:
-    #  name: Your Library
-    #  email: feedback@myuniversity.edu
-    primaryHandler: email
-    onlyForLoggedUsers: false
-    emailSubject: FID Feedback
-    response: feedback_response
-    senderEmailRequired: true
-    senderNameRequired: true
-
-    #help:
-    #  pre: feedback_help_pre
-    #  post: feedback_help_post
-
-    fields:
-      - name: message
-        type: textarea
-        label: Comments
-        required: true
-        settings:
-        # help: message_help
-
-  # Example for an acquisition request form
-
-  AcquisitionRequest:
-    enabled: true
-    title: Acquisition Request
-    onlyForLoggedUsers: false
-    emailSubject: FID Kaufvorschlag
-    senderEmailRequired: true
-    senderNameRequired: true
-    response: feedback_response
-    primaryHandler: email
-
-    #recipient:
-    #  name: Your Library
-    #  email: feedback@myuniversity.edu
-
-    help:
-      pre: acquisition_request_info_pre
-      post: acquisition_request_info_post
-
-    fields:
-      - name: receiver
-        type: select
-        label: acquisition_request_receiver
-        required: true,
-        options:
-          - Feedback
-          - bar
-
-      - name: receiver2
-        type: select
-        label: acquisition_request_receiver
-        required: true,
-        optionGroups:
-          - label: Library 1
-            options:
-              - Branch 1
-              - Branch 2
-              - Branch 3
-
-          - label: Library 2
-            options:
-              - Branch 1
-              - Branch 2
-
-      - name: title
-        type: text
-        label: Title
-        required: true
-
-      - name: author
-        type: text
-        label: Author
-        required: true
-
-      - name: publisher
-        type: text
-        label: Publisher
-        required: true
-
-      - name: isbn/issn
-        type: text
-        label: ISBN/ISSN
-        required: false
-        min: now
-        max: 'now + 1 year'
-        
-      - name: last_interest_date
-        type: date
-        label: Last interest date
-        required: false
-        min: now
-        max: 'now + 1 year'
-
-      - name: boolean
-        type: radio
-        label: feedback_help_label
-        required: true
-        options:
-          - Yes
-          - No
-
-      - name: Publication_Place
-        type: text
-        label: Place of Publication
-        required: false
-
-      - name: yearOfPublication
-        type: text
-        label: Year of Publication
-        required: false
-
-      - name: note
-        type: textarea
-        label: Add a Note
-        required: false
-
   AskArchiveDTK:
     enabled: true
     title: AskAboutResource
@@ -352,7 +223,7 @@ forms:
         label: edm::bf:shelfMark
         required: true
 
-  AskArchiveMCB:
+  AskArchiveMTT:
     enabled: true
     title: AskAboutResource
     onlyForLoggedUsers: false
@@ -366,7 +237,7 @@ forms:
       email: c.henniger@iti-germany.de
 
     help:
-      pre: askArchiveMCB_info_pre
+      pre: askArchiveMTT_info_pre
 
     fields:
       - name: Request

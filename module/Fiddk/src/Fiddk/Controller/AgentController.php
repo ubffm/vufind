@@ -74,6 +74,23 @@ class AgentController extends \VuFind\Controller\AbstractRecord
     }
 
 
+    /**
+     * AJAX tab action -- render a tab without surrounding context.
+     *
+     * @return mixed
+     */
+    public function ajaxtabAction()
+    {
+        try {
+            $this->driver = $this->loadRecord();
+        } catch (\Exception $e) {
+            // it's a corporation agent
+            $this->sourceId = 'SolrCorporation';
+        }
+        return parent::ajaxtabAction();
+    }
+
+
     /* public function homeAction()
     {
         $this->searchClassId = 'SolrAuthor';

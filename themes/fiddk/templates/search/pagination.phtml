@@ -40,9 +40,10 @@
           </li>
         <?php endif; ?>
       <?php endif; ?>
-      <?php if($this->results->getResultTotal() > 400): ?>
+      <?php if($this->results->getResultTotal() > 400):
+        $this->lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $results->getParams()->getDisplayQuery(); ?>
         <li role="none">
-          <a class="btn btn-primary" data-lightbox href="<?=$this->url('content-page', ['page' => 'moreHits'])?>" aria-label="<?=$this->transEscAttr('Find More')?>">
+          <a class="btn btn-primary" data-lightbox href="<?=$this->url('search-more')?>?lookfor=%22<?=urlencode($this->lookfor)?>%22" aria-label="<?=$this->transEscAttr('Find More')?>">
             <?=$this->transEsc('Find More');?>
           </a>
         </li>

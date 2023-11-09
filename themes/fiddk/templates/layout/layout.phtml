@@ -11,6 +11,7 @@
     <?php
       // Format the page title using the translation system:
       $siteConfig = $this->config()->get('config')->Site;
+      $this->baseUrl = $siteConfig->baseUrl;
       // Disabled escaping of title temporarily so that we get it unescaped first:
       $this->headTitle()->setAutoEscape(false);
       $fullTitle = $this->translate(
