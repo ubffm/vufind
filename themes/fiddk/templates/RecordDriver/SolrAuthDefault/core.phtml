@@ -68,7 +68,7 @@
           <?php foreach ($relatedFields as $i => $current): ?>
             <?php switch ($current['label']) {
         case 'dc:contributor':
-          $icon = '<img class="iconR" src="' . $this->imageLink("icons/person.svg") . '" alt="Icon" width="32" height="32"></img>/<img class="iconR" src="' . $this->imageLink("icons/buildings.svg") . '" alt="Icon" width="32" height="32"></img>';
+          $icon = '<img class="iconR" src="' . $this->imageLink("icons/person.svg") . '" alt="Icon" width="32" height="32"></img><img class="iconR" src="' . $this->imageLink("icons/buildings.svg") . '" alt="Icon" width="32" height="32"></img>';
           break;
         case 'RelatedEvents':
           $icon = '<img class="iconR" src="' . $this->imageLink("icons/calendar4-event.svg") . '" alt="Icon" width="32" height="32"></img>';
