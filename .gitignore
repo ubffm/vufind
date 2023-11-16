@@ -23,6 +23,7 @@ node_modules
 public/swagger-ui
 *.conf
 local/http*
-local/config/vufind/*.ini
+local/config/vufind/config.ini
+local/config/vufind/permissions.ini
+local/config/vufind/FeedbackForms.yaml
 local/config/vufind/*.json
-local/config/vufind/*.yaml

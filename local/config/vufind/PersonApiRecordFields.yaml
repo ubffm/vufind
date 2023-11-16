@@ -1,0 +1,37 @@
+# Key is the field name that can be requested. It has the following subkeys:
+# - vufind.method: name to call (either in the SearchApiController class or the record driver)
+# - vufind.default: true if the field is displayed by default when the request does not specify fields
+# - OpenAPI 3 specification fields describing the returned data.
+#
+# See https://spec.openapis.org/oas/v3.0.3 for information on the format.
+#
+id:
+  vufind.method: getUniqueID
+  vufind.default: true
+  description: Record unique ID (can be used in the record endpoint)
+  type: string
+preflabel:
+  vufind.method: getTitle
+  vufind.default: true
+  description: Preferred label of person
+  type: string
+altLabel:
+  vufind.method: getUseFor
+  vufind.default: true
+  description: Alternative labels of person
+  type: array
+occupation:  
+  vufind.method: getOccupation
+  vufind.default: true
+  description: Profession or occupation of person
+  type: array
+birth_date:  
+  vufind.method: getBirthDate
+  vufind.default: true
+  description: Date of birth of person
+  type: string
+death_date:  
+  vufind.method: getDeathDate
+  vufind.default: true
+  description: Date of death of person
+  type: string
