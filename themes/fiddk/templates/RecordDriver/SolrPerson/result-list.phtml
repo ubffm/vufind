@@ -22,7 +22,9 @@
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
         <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
-        <div><i class="fa fa-regular fa-user fa-lg recordIcon"></i></div>
+        <div class="iconT">
+          <img src="<?=$this->imageLink('icons/person.svg')?>" alt="Person Icon" width="48" height="48">
+        </div>
       </div>
 
     <div class="media-body">

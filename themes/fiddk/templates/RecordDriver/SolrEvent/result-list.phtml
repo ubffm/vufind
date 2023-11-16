@@ -28,7 +28,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
       <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
-        <div><i class="fa fa-regular fa-calendar fa-lg recordIcon"></i></div>
+        <div class="iconT">
+          <img src="<?=$this->imageLink('icons/calendar4-event.svg')?>" alt="Event Icon" width="48" height="48">
+        </div>
       </div>
 
   <div class="media-body">

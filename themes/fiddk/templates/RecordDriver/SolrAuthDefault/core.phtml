@@ -1,7 +1,8 @@
 <?php $recordType = $this->driver->getRecordType();
       $recordIcon = $this->driver->getRecordIcon();
       $isGnd = $this->driver->isGndRecord();?>
-<h2><i class="fa fa-regular <?=$recordIcon?> fa-lg recordIcon"></i><?=$this->escapeHtml($this->driver->getTitle())?></h2>
+<h2><img src="<?=$this->imageLink($recordIcon)?>" alt="Icon" width="48" height="48"></img>
+<?=$this->escapeHtml($this->driver->getTitle())?></h2>
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
   <?php
     $QRCode = $this->record($this->driver)->getQRCode("core");
@@ -67,16 +68,16 @@
           <?php foreach ($relatedFields as $i => $current): ?>
             <?php switch ($current['label']) {
         case 'dc:contributor':
-          $icon = '<i class="fa fa-regular fa-user fa-lg recordIcon"></i><i class="fa fa-regular fa-building fa-lg recordIcon"></i>';
+          $icon = '<img class="iconR" src="' . $this->imageLink("icons/person.svg") . '" alt="Icon" width="32" height="32"></img>/<img class="iconR" src="' . $this->imageLink("icons/buildings.svg") . '" alt="Icon" width="32" height="32"></img>';
           break;
         case 'RelatedEvents':
-          $icon = '<i class="fa fa-regular fa-calendar fa-lg recordIcon"></i>';
+          $icon = '<img class="iconR" src="' . $this->imageLink("icons/calendar4-event.svg") . '" alt="Icon" width="32" height="32"></img>';
           break;
         case 'RelatedWorks':
-          $icon = '<i class="fa fa-regular fa-star fa-lg recordIcon"></i>';
+          $icon = '<img class="iconR" src="' . $this->imageLink("icons/lightbulb.svg") . '" alt="Icon" width="32" height="32"></img>';
           break;
         default:
-          $icon = '<i class="fa fa-regular fa-archive fa-lg recordIcon"></i>';
+          $icon = '<img class="iconR" src="' . $this->imageLink("icons/boxes.svg") . '" alt="Icon" width="32" height="32"></img>';
           break; 
         }
         ?>

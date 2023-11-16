@@ -291,6 +291,7 @@
  <copyField source="author_corporate" dest="author_facet"/>
  <copyField source="publisher" dest="publisherStr"/>
  <copyField source="topic" dest="topic_unstemmed"/>
+ <copyField source="geographic" dest="geographic_facet"/>
  <copyField source="allfields" dest="allfields_unstemmed"/>
  <copyField source="fulltext" dest="fulltext_unstemmed"/>
  <!-- CopyFields for Alphabetic Browse -->

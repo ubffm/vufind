@@ -20,10 +20,10 @@
   <?php if ($thumbnail && $thumbnailAlignment == 'left'): ?>
     <?=$thumbnail ?>
   <?php endif ?>
-  <div><?php if ($recordType == "Record"): ?>
-    <i class="fa fa-solid fa-archive fa-lg recordIcon"></i>
+  <div class="iconT"><?php if ($recordType == "Record"): ?>
+    <img src="<?=$this->imageLink('icons/boxes.svg')?>" alt="Record" width="48" height="48">
     <?php else: ?>
-    <i class="fa fa-solid fa-star fa-lg recordIcon"></i>
+      <img src="<?=$this->imageLink('icons/lightbulb.svg')?>" alt="Work" width="48" height="48">
     <?php endif ?>
   </div>
  </div>

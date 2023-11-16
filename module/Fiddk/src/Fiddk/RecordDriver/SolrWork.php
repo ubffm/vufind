@@ -71,7 +71,7 @@ class SolrWork extends SolrEdm implements
      */
     public function getRecordIcon()
     {
-        return 'fa-star';
+        return 'icons/lightbulb.svg';
     }
 
     /**

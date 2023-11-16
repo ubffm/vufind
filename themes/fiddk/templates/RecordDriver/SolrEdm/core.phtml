@@ -1,9 +1,10 @@
 <?php
   $this->metadata()->generateMetatags($this->driver);
   $recordType = $this->driver->getRecordType();
-  $authIcon = $this->driver->getRecordIcon();
+  $recordIcon = $this->driver->getRecordIcon();
 ?>
-<h2><i class="fa fa-regular <?=$authIcon?> fa-lg recordIcon"></i>&nbsp;&nbsp;<?=$this->escapeHtml($this->driver->getTitle())?></h2>
+<h2><img src="<?=$this->imageLink($recordIcon)?>" alt="Icon" width="48" height="48"></img>
+    <?=$this->escapeHtml($this->driver->getTitle())?></h2>
 <div class="media" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
   <?php
     $QRCode = $this->record($this->driver)->getQRCode("core");

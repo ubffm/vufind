@@ -72,6 +72,7 @@
     <field name="date" type="range" indexed="true" stored="true" multiValued="true"/>
     <field name="date_sort" type="date" indexed="true" stored="true"/>
     <field name="geographic" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="event_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="genre" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="genre_facet" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -106,4 +107,5 @@
   <copyField source="use_for" dest="use_for_keywords" />
   <copyField source="see_also" dest="see_also_keywords" />
   <copyField source="author" dest="author_facet"/>
+  <copyField source="geographic" dest="geographic_facet"/>
 </schema>

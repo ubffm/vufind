@@ -56,7 +56,7 @@ trait EdmBasicTrait
      */
     public function getRecordIcon()
     {
-        return 'fa-archive';
+        return 'icons/boxes.svg';
     }
 
     public function getAlternativeTitles()
