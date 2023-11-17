@@ -60,20 +60,20 @@
             <?php switch ($current['label']) {
         case 'dc:contributor':
           $entity = 'Person';
-          $icon = 'fa-user';
+          $icon = 'icons/person.svg';
           break;
         case 'RelatedEvents':
             $entity = 'Event';
-            $icon = 'fa-calendar';
+            $icon = 'icons/calendar4-event.svg';
             break;
         case 'RelatedWorks':
             $entity = 'Work';
-            $icon = 'fa-star';
+            $icon = 'icons/lightbulb.svg';
             break;
         case '':
           break; 
         } ?>
-            <tr><th><?=$this->transEsc("edm::".$current['label'])?><div><i class="fa fa-regular <?=$icon?> fa-lg recordIcon"></i></div></th><td><?=$current['value']?></td></tr>
+            <tr><th><?=$this->transEsc("edm::".$current['label'])?><div><img src="<?=$this->imageLink($icon)?>" alt="Icon" width="32" height="32"></div></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
       </div>

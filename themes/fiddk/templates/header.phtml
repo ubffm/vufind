@@ -56,16 +56,16 @@
 
           <!-- FID Menu in Wagtail. TODO: Real links -->
           <li class="nav-item">
-            <a class="nav-link" href="search-home"><?=$this->transEsc("Search")?></a>
+            <a class="nav-link" href="/search"><?=$this->transEsc("Search")?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="news-home"><?=$this->transEsc("News")?></a>
+            <a class="nav-link" href="/news"><?=$this->transEsc("News")?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="service-home"><?=$this->transEsc("Service")?></a>
+            <a class="nav-link" href="/services"><?=$this->transEsc("Service")?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about-home"><?=$this->transEsc("About us")?></a>
+            <a class="nav-link" href="/about"><?=$this->transEsc("About us")?></a>
           </li>
 
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
@@ -80,7 +80,9 @@
           <?php endif; ?>
           <?php if ($this->feedback()->tabEnabled()): ?>
             <li class="nav-item" id="feedbackLink">
-              <a class="nav-link btn btn-primary" data-lightbox href="<?=$this->url('feedback-home')?>"><i class="fa fa-question-circle" aria-hidden="true"></i> <?=$this->transEsc("Feedback")?></a>
+              <a class="nav-link btn btn-primary" data-lightbox href="/contact"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+</svg>&nbsp;<?=$this->transEsc("Feedback")?></a>
             </li>
           <?php endif; ?>
         </ul>
