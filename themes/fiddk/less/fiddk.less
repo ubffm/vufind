@@ -10,7 +10,7 @@
 }
 
 h1, h2, h3, h4, h5, h6, .title {
-   font-family: "Big Shoulders Text";
+   font-family: "Big Shoulders Text", Helvetica, Arial, sans-serif;
 }
 
 h2 {
@@ -324,15 +324,8 @@ div#accordion .panel-collapse {
   }
 }
 
-/* Homepage Layout */
-.searchHomeContent {
-  overflow: hidden;
-  margin-top: 5em;
-
-  #coop {
-    margin-top: 2rem;
-    margin-left: 2rem;
-  }
+.sidebar.left {
+  padding-right: 3rem;
 }
 
 /* Lightbox Layout */
@@ -424,6 +417,10 @@ div.flex-content {
   padding: 0 0 2rem 0;
 }
 
+.modal-body {
+  padding: 2rem;
+}
+
 /* Toggle MORE/LESS without js */
 span.toggleContainer {
   .toggle {
@@ -492,27 +489,6 @@ div.edm-attr {
 
 div.breaking {
   word-break:break-all;
-}
-
-/* TRAILER */
-video {
-  width: 75% !important;
-  height: auto !important;
-}
-
-div#trailer-container {
-  display: block;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* License Frame */
-iframe#fid-license-frame {
-  width: 100%;
-  height: 100%;
-  min-height: 700px;
 }
 
 /* Maps */
