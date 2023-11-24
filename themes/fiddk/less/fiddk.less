@@ -132,7 +132,7 @@ a.facet {
 /* General Layout */
 
 body {
-    background: @background-color;
+    background: @bg-color;
     background-attachment: fixed;
     background-position: right top;
     background-repeat: no-repeat;
@@ -307,15 +307,6 @@ hr.wmar {
   border-color: lightgray;
 }
 
-div#accordion .panel-collapse {
-  padding: 15px 20px 10px 20px;
-  img {
-    float: left;
-    margin-right: 20px;
-    margin-bottom: 15px;
-  }
-}
-
 .info {
   overflow: hidden;
   img {
@@ -329,17 +320,22 @@ div#accordion .panel-collapse {
 }
 
 /* Lightbox Layout */
-/*h2.providerbox {
-  color: @brand-primary;
-}*/
 
 div.card {
-  border: 1px solid @btn-default-border;
-  padding: 15px 20px 20px 20px;
-  margin-bottom: 20px;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 3px #14267A7A;
+  margin-bottom: 4rem;
   h2, h3 {
     margin-top: 0px;
   }
+}
+
+aside.card {
+  background-color: @bg-color;
+}
+
+.card-body {
+  padding: 3rem;
 }
 
 a[target="_blank"].no-symbol::after {
@@ -419,6 +415,14 @@ div.flex-content {
 
 .modal-body {
   padding: 2rem;
+}
+
+.col-lg-7 {
+  padding-right: 4rem;
+}
+
+.paragraph {
+  padding: 1rem 0;
 }
 
 /* Toggle MORE/LESS without js */

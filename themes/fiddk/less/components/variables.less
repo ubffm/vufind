@@ -23,7 +23,7 @@
 @lightgrey: #dfdfdf;
 @lightgreyCarousel: darken(@lightgrey,20%);
 @grey: #666;
-@background-color: #ededed;
+@bg-color: #ededed;
 @logo: url("../images/fid-dk_claim_s.png");
 @highlighter-color: lighten(@brand-primary,25%);
 @darkprimary-color: darken(@brand-primary,15%);
@@ -61,5 +61,71 @@
 @event-color: #970747;
 @work-color: #1989AC;
 
-@font-family-sans-serif: Barlow, Helvetica, Arial, sans-serif;
+/// fonts
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Light"),
+         url("../../css/fonts/ttf/NotoSans-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Light Italic"),
+         url("../../css/fonts/ttf/NotoSans-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Regular"),
+         url("../../css/fonts/ttf/NotoSans-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Medium"),
+         url("../../css/fonts/ttf/NotoSans-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Medium Italic"),
+         url("../../css/fonts/ttf/NotoSans-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Bold"),
+         url("../../css/fonts/ttf/NotoSans-Bold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Bold Italic"),
+         url("../../css/fonts/ttf/NotoSans-BoldItalic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Big Shoulders';
+    src: local("Big Shoulders"),
+         url("../../css/fonts/ttf/BigShoulders.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-family-sans-serif: "Noto Sans", Helvetica, Arial, sans-serif;
 @font-family-base: @font-family-sans-serif;

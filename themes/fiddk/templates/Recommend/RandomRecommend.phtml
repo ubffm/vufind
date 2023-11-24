@@ -9,7 +9,7 @@
         $cover = $coverDetails['html'];?>
     <div class="flexing">
       <div class="item">
-        <h4><?=$this->translate('PlaybillOTD')?></h4>
+        <h3><?=$this->translate('PlaybillOTD')?></h3>
         <p><?=$this->translate('OTD', ['%%years%%' => $yearsAgo, '%%date%%' => $date])?> <a href="<?=$link?>"><b><?=$this->record($driver)->getTitleHtml()?></b></a></p>
       </div>
     <?php if ($cover): ?>
