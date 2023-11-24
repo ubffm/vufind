@@ -67,7 +67,6 @@
 ?>
 
 <?=$this->flashmessages()?>
-<div id="content" class="container" role="search">
   <form name="searchForm" id="advSearchForm" method="get" action="<?=$this->url($this->options->getSearchAction())?>">
     <?php foreach ($hiddenFilters as $key => $filter): ?>
       <?php foreach ($filter as $value): ?>
@@ -207,7 +206,6 @@
       </div>
     </div>
   </form>
-</div>
 <?php
 $script = <<<JS
     $('#groupPlaceHolder').click(function(e) {

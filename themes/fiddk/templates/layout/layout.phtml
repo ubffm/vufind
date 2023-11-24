@@ -131,7 +131,13 @@
       </div>
     </nav>
     <div role="main" class="main">
-        <?=$this->layout()->content ?>
+        <?php if ($this->layout()->templateName == "view" or $this->layout()->templateName == "SolrAuthDefault"): ?>
+          <?=$this->layout()->content ?>
+        <?php else: ?>
+          <div id="content" class="container">
+          <?=$this->layout()->content ?>
+        </div>
+        <?php endif; ?>
     </div>
     <?=$this->render('footer.phtml')?>
     <!-- MODAL IN CASE WE NEED ONE -->
