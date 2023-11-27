@@ -55,7 +55,7 @@
          <?php elseif ($key == 'Ask Archive' && $type == 'CallNumber') : ?>
        <?php elseif ($key == 'Ask Archive' && $type == 'Mail' && isset($fields['CallNumber'][0])) : ?>
              <?php $trans = $this->transEsc(substr($seeAlso, 0, 7)) . substr($seeAlso, 7);?>
-             <a class="mail-record" data-lightbox href="<?=$this->recordLinker()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$trans?></a>
+             <a class="mail-record" data-lightbox href="<?=$this->recordLinker()->getActionUrl($this->driver, 'EMail') . '?callNumber=' . $fields['CallNumber'][0]?>" rel="nofollow"><img src="<?=$this->imageLink("icons/envelope.svg")?>" alt="Icon" width="16" height="16"></img> <?=$trans?></a>
          <?php elseif ($key == 'child_records') : ?>
              <a href="<?=$this->recordLinker()->getChildRecordSearchUrl($this->driver)?>"><?=$this->transEsc('child_record_count', ['%%count%%' => $seeAlso])?></a>
         <?php else: ?>

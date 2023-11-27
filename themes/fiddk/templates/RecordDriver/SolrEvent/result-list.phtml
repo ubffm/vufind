@@ -29,7 +29,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
       <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
         <div class="iconT">
-          <img src="<?=$this->imageLink('icons/calendar4-event.svg')?>" alt="Event Icon" width="48" height="48">
+          <img src="<?=$this->imageLink('icons/calendar4-event_color.svg')?>" alt="Event Icon" width="48" height="48">
         </div>
       </div>
 
@@ -58,12 +58,12 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
             <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
           <?php endforeach; ?>
           <div class="resultItemLine">
-            <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
+          <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
           </div>
           <?php endif; ?>
         <?php if ($places): ?>
           <div class="resultItemLine">
-            <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
+          <img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
           </div>
         <?php endif; ?>
     <?php endif; ?>

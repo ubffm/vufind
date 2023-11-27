@@ -21,9 +21,9 @@
     <?=$thumbnail ?>
   <?php endif ?>
   <div class="iconT"><?php if ($recordType == "Record"): ?>
-    <img src="<?=$this->imageLink('icons/boxes.svg')?>" alt="Record" width="48" height="48">
+    <img src="<?=$this->imageLink('icons/boxes_color.svg')?>" alt="Record" width="48" height="48">
     <?php else: ?>
-      <img src="<?=$this->imageLink('icons/lightbulb.svg')?>" alt="Work" width="48" height="48">
+      <img src="<?=$this->imageLink('icons/lightbulb_color.svg')?>" alt="Work" width="48" height="48">
     <?php endif ?>
   </div>
  </div>
@@ -66,7 +66,7 @@
                 $roles = $this->driver->getPrimaryAuthorsRoles();
                 $ids = $this->driver->getPrimaryAuthorsIds();?>
             <div class="authors">
-            <i class="fa fa-regular fa-user"></i>&nbsp;<span property="authors">
+            <img src="<?=$this->imageLink("icons/person.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="authors">
            <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
              <?php if ($i != 2) : ?>
                <?php if (isset($ids[$i]) && $ids[$i] != ''): ?>

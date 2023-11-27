@@ -259,8 +259,9 @@ a.badge-secondary {
 
 .provider {
   order: 3;
-  border: 1px solid @brand-primary;
-  padding: 0 1rem;
+  border: 1px solid #eee;
+  background-color: @light-bg;
+  padding: 0 1.5rem;
   margin-bottom: 3rem;
 }
 
@@ -315,8 +316,16 @@ hr.wmar {
   }
 }
 
-.sidebar.left {
-  padding-right: 3rem;
+@media (min-width: 768px) {
+  .mainbody {
+    width: 73%;
+  }  
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 27%;
+  }  
 }
 
 /* Lightbox Layout */

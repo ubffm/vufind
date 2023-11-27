@@ -52,7 +52,7 @@ class SolrPerson extends SolrAuthDefault
      */
     public function getRecordIcon()
     {
-        return 'icons/person.svg';
+        return 'icons/person_color.svg';
     }
 
 

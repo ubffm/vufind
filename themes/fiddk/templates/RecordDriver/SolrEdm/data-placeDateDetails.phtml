@@ -3,13 +3,13 @@
   $date = $field->getDate(); ?>
   <span property="publisher" typeof="Organization">
   <?php if (!empty($place)): ?>
-    <i class="fa fa-regular fa-map-marker"></i>&nbsp;<span property="location"><?=$this->escapeHtml($place)?></span>
+    <img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="location"><?=$this->escapeHtml($place)?></span>
   <?php endif; ?>
   <?php if (!empty($date)):
     if (!empty($place)): ?>
       : <span property="date"><?=$this->driver->translateDate($date, 'de')?></span>
     <?php else: ?>
-      <i class="fa fa-regular fa-calendar"></i>&nbsp;<span property="date"><?=$this->driver->translateDate($date, 'de')?></span>
+      <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="date"><?=$this->driver->translateDate($date, 'de')?></span>
     <?php endif; ?>
   <?php endif; ?>
 </span><?php if ($key + 1 != count($data)):?>; <?php endif; ?>

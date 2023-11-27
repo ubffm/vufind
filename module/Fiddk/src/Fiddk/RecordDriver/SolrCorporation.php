@@ -64,7 +64,7 @@ class SolrCorporation extends SolrAuthDefault
      */
     public function getRecordIcon()
     {
-        return 'icons/buildings.svg';
+        return 'icons/buildings_color.svg';
     }
 
     /**

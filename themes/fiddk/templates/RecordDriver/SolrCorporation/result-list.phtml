@@ -23,7 +23,7 @@
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
         <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
         <div class="iconT">
-          <img src="<?=$this->imageLink('icons/buildings.svg')?>" alt="Corporation Icon" width="48" height="48">
+          <img src="<?=$this->imageLink('icons/buildings_color.svg')?>" alt="Corporation Icon" width="48" height="48">
         </div>
       </div>
 
@@ -37,7 +37,7 @@
     if (!empty($domain) || !empty($establishment) || !empty($death)): ?>
       <div class="resultItemLine2">
       <?php if ($establishment || $termination) : ?>
-        <i class="fa fa-regular fa-calendar"></i>&nbsp;
+        <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;
           <?php if (!$termination) : ?>
               <?=$this->driver->translateDate($establishment, 'de') . '-'?><br/>
           <?php elseif(!$establishment) : ?>

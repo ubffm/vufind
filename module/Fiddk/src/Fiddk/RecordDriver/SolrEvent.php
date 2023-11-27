@@ -50,7 +50,7 @@ class SolrEvent extends SolrAuthDefault
      */
     public function getRecordIcon()
     {
-        return 'icons/calendar4-event.svg';
+        return 'icons/calendar4-event_color.svg';
     }
 
 

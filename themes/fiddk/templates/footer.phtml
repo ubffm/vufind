@@ -2,23 +2,23 @@
 <footer>
   <ul class="nav" role="menu">
     <li class="nav-item">
-			<div class="nav-text">© 2015 - <?=date("Y");?></div>
+			<div class="nav-text title">© 2015 - <?=date("Y");?></div>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link" target="_blank" href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a>
+      <a class="nav-link title" target="_blank" href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a>
+    </li>
+    <hr class="vr">
+    <li class="nav-item title" role="menuitem">
+      <a class="nav-link title" href="/sitemap.xml">Sitemap</a>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link" href="/sitemap.xml">Sitemap</a>
+      <a class="nav-link title" target="_blank" href="https://www.uni-frankfurt.de/impressum"><?=$this->transEsc('Imprint')?></a>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link" target="_blank" href="https://www.uni-frankfurt.de/impressum"><?=$this->transEsc('Imprint')?></a>
-    </li>
-    <hr class="vr">
-    <li class="nav-item" role="menuitem">
-      <a class="nav-link" id="klaro-privacy-popup" onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a>
+      <a class="nav-link title" id="klaro-privacy-popup" onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a>
     </li>
   </ul>
   <hr>

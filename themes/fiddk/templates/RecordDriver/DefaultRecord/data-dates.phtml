@@ -3,4 +3,4 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 foreach ($data as $date):
     $normdates[] = $this->driver->translateDate($date, $lang);
 endforeach; ?>
-<div><i class="fa fa-regular fa-calendar"></i>&nbsp;<span property="date"><?=$this->escapeHtml(implode(" | ", $normdates))?></span></div>
+<div><img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="date"><?=$this->escapeHtml(implode(" | ", $normdates))?></span></div>

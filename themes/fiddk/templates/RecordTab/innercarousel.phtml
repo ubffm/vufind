@@ -2,7 +2,7 @@
 $icon = $this->driver->getRecordIcon();  
 $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 <div class="entity">
-  <i class="fa fa-solid <?=$icon?> fa-lg recordIcon"></i>
+<img src="<?=$this->imageLink($icon)?>" alt="Icon" width="16" height="16"></img>
   <span class="small"><?=mb_strtoupper($this->transEsc($this->type))?></span>
 </div>
 <h4><?=$this->escapeHtml($data->getTitle())?></h4>
@@ -19,7 +19,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
   $birth = $data->getBirthDate();
   $death = $data->getDeathDate();
   if ($birth || $death) : ?>
-    <i class="fa fa-regular fa-calendar"></i>&nbsp;
+    <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;
       <?php if (!$death) : ?>
           <?='* ' . $this->driver->translateDate($birth, 'de')?>
       <?php elseif(!$birth) : ?>
@@ -46,12 +46,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
         <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
       <?php endforeach; ?>
       <div class="resultItemLine">
-        <i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
+      <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
       </div>
     <?php endif; ?>
     <?php if ($places): ?>
       <div class="resultItemLine">
-        <i class="fa fa-regular fa-map-marker"></i>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
+      <img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
       </div>
     <?php endif; ?>
   <?php endif; ?>

@@ -8,7 +8,7 @@
     <?php foreach ($events as $record): ?>
       <?php $eventDate = $record->getEventDate();?>
       <li class="list-group-item"><a href="<?=$this->recordLinker()->getUrl($record)?>"><?=$record->getTitle()?></a>
-      <?php if (isset($eventDate[0])):?><?="("?><i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->driver->translateDate($eventDate[0], $lang) . ")"?><?php endif;?></li>
+      <?php if (isset($eventDate[0])):?><?="("?><img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->driver->translateDate($eventDate[0], $lang) . ")"?><?php endif;?></li>
     <?php endforeach; ?>
   </ul>
   <a href="<?=$this->url('eventsearch-results') . '?lookfor=' . $this->driver->getUniqueID() . '&type=' . $type?>"><?=$this->translate("RelatedEntityHits", ['%%count%%' => $this->localizedNumber($data)]);?></a>
@@ -17,6 +17,6 @@
           $eventDate = $record->getEventDate();
           $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
     <a href="<?=$this->recordLinker()->getUrl($record)?>"><?=$record->getTitle()?></a>
-    <?php if (isset($eventDate[0])):?><?="("?><i class="fa fa-regular fa-calendar"></i>&nbsp;<?=$this->driver->translateDate($eventDate[0], $lang) . ")"?><?php endif;?></li>
+    <?php if (isset($eventDate[0])):?><?="("?><img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->driver->translateDate($eventDate[0], $lang) . ")"?><?php endif;?></li>
   <?php endif; ?>
 <?php endif; ?>

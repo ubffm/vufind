@@ -23,7 +23,7 @@
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
         <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($authType))?></span>
         <div class="iconT">
-          <img src="<?=$this->imageLink('icons/person.svg')?>" alt="Person Icon" width="48" height="48">
+          <img src="<?=$this->imageLink('icons/person_color.svg')?>" alt="Person Icon" width="48" height="48">
         </div>
       </div>
 
@@ -37,7 +37,7 @@
     if (!empty($prof) || !empty($birth) || !empty($death)): ?>
       <div class="resultItemLine2">
       <?php if ($birth || $death) : ?>
-        <i class="fa fa-regular fa-calendar"></i>&nbsp;
+        <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;
           <?php if (!$death) : ?>
               <?='* ' . $this->driver->translateDate($birth, 'de')?><br/>
           <?php elseif(!$birth) : ?>

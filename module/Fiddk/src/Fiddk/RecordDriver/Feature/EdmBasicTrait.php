@@ -56,7 +56,7 @@ trait EdmBasicTrait
      */
     public function getRecordIcon()
     {
-        return 'icons/boxes.svg';
+        return 'icons/boxes_color.svg';
     }
 
     public function getAlternativeTitles()
