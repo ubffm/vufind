@@ -1,5 +1,5 @@
 <div class="links">
-  <h3 property="context"><i class="fa fa-regular fa-link recordIcon"></i><?=$this->transEsc("More Links")?></h3>
+  <h3 property="context"><i class="fa fa-regular fa-link recordIcon"></i>&nbsp;<?=$this->transEsc("More Links")?></h3>
   <?php foreach ($data as $i => $current):
     if (isset($current['id']) && isset($current['collection'])) :
     $abbr = $current['collection']['abbr'] ?? '';

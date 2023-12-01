@@ -215,7 +215,7 @@
         <?php $institution = $this->driver->getInstitutions()[0]; ?>
 
       <div class="result-institutions">
-      <i class="fa fa-solid fa-arrow-right"></i>&nbsp;<?=$this->transEsc("dprov::" . $institution);?></i>
+      <img src="<?=$this->imageLink("icons/arrow-repeat.svg")?>" alt="Icon" width="20" height="20">&nbsp;<?=$this->transEsc("dprov::" . $institution);?></i>
         <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
           <br/>
           <i class="fa fa-solid fa-arrow-right"></i>&nbsp;<a href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>

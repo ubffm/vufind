@@ -81,7 +81,7 @@
     <?php if (!empty($seeAlso)): ?>
       <hr class="wmar">
       <div class="seeAlso data-table">
-      <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Zugänge")?></h3>
+      <h3><i class="fa fa-regular fa-link"></i>&nbsp;<?=$this->transEsc("Zugänge")?></h3>
         <table class="table">
           <?php foreach ($seeAlso as $current): ?>
             <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
@@ -99,7 +99,7 @@
     <?php endif ?>
     <?php if (!empty($provider)): ?>
       <div class="provider">
-      <h3><i class="fa fa-regular fa-arrow-right"></i>&nbsp;<?=$this->transEsc("Institution")?></h3>
+      <h3><img src="<?=$this->imageLink("icons/arrow-repeat.svg")?>" alt="Icon" width="32" height="32">&nbsp;<?=$this->transEsc("Institution")?></h3>
         <table class="table">
           <?php foreach ($provider as $current): ?>
             <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
