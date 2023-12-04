@@ -26,7 +26,7 @@
     '<li class="active" aria-current="page">' . $this->recordLinker()->getBreadcrumbHtml($this->driver) . '</li> ';
   $this->layout()->title = $this->driver->getShortTitle();
   // Set up section:
-  $this->layout()->section = '<div class="section container title ' . $this->driver->getRecordType() . '"><h1 class="sectionHeader">' . $this->transEsc("SearchResults") . '</h1></div>';
+  $this->layout()->section = '<div class="section container title ' . $this->driver->getRecordType() . '"><h1 class="sectionHeader">' . $this->transEsc("DetailView") . ': '. $this->truncate($this->driver->getTitle(), 50) . '</h1></div>';
 ?>
 
 <div id="content" class="container <?=$this->driver->getRecordType() . 'R'?>">
