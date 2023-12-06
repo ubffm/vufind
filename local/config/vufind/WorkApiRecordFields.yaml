@@ -10,13 +10,3 @@ id:
   vufind.default: true
   description: Record unique ID (can be used in the record endpoint)
   type: string
-preflabel:
-  vufind.method: getTitle
-  vufind.default: true
-  description: Preferred label of event
-  type: string
-altLabel:
-  vufind.method: getUseFor
-  vufind.default: true
-  description: Alternative labels of event
-  type: array

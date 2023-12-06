@@ -2,23 +2,23 @@
 <footer>
   <ul class="nav" role="menu">
     <li class="nav-item">
-			<div class="nav-text title">© 2015 - <?=date("Y");?></div>
+			<div class="nav-text">© 2015 - <?=date("Y");?></div>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link title" target="_blank" href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a>
-    </li>
-    <hr class="vr">
-    <li class="nav-item title" role="menuitem">
-      <a class="nav-link title" href="/sitemap.xml">Sitemap</a>
+      <a class="nav-link" target="_blank" href="https://www.ub.uni-frankfurt.de/benutzung/datenschutz.html"><?=$this->transEsc('Data Privacy')?></a>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link title" target="_blank" href="https://www.uni-frankfurt.de/impressum"><?=$this->transEsc('Imprint')?></a>
+      <a class="nav-link" href="/sitemap.xml">Sitemap</a>
     </li>
     <hr class="vr">
     <li class="nav-item" role="menuitem">
-      <a class="nav-link title" id="klaro-privacy-popup" onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a>
+      <a class="nav-link" target="_blank" href="https://www.uni-frankfurt.de/impressum"><?=$this->transEsc('Imprint')?></a>
+    </li>
+    <hr class="vr">
+    <li class="nav-item" role="menuitem">
+      <a class="nav-link" id="klaro-privacy-popup" onclick="return klaro.show();"><?=$this->transEsc('Change Data Privacy')?></a>
     </li>
   </ul>
   <hr>
@@ -26,18 +26,21 @@
     <ul class="nav justify-content-center" role="menu">
       <li class="nav-item" role="menuitem">
         <a class="nav-link" href="https://www.ub.uni-frankfurt.de/">
-          <img alt="Logo: UB Frankfurt am Main" src="<?=$this->imageLink('bottom_logos/ublogo.png')?>">
+          <img alt="Logo: UB Frankfurt am Main" src="<?=$this->imageLink('bottom_logos/ub-logo-w.png')?>">
         </a>
       </li>
       <li class="nav-item" role="menuitem">
         <a class="nav-link" href="https://www.dfg.de/">
-          <img alt="Logo: Deutsche Forschungsgemeinschaft (DFG)" src="<?=$this->imageLink('bottom_logos/dfg_logo_schriftzug_weiss_foerderung_en.png')?>">
+          <img class="dfg" alt="Logo: Deutsche Forschungsgemeinschaft (DFG)" src="<?=$this->imageLink('bottom_logos/dfg_weiss_transparent.png')?>">
         </a>
       </li>
       <li class="nav-item" role="menuitem">
+        <div class="flexing">
         <a class="nav-link" href="https://nfdi4culture.de">
+          <p class="tiny">Partner von</p>
           <img alt="NFDI4Culture Logo" src="<?=$this->imageLink('bottom_logos/NFDI4C_Logo_DyptichText_w.png')?>">
         </a>
+        </div>
       </li>
     </ul>
   </div>

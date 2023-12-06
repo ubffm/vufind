@@ -13,10 +13,10 @@ id:
 preflabel:
   vufind.method: getTitle
   vufind.default: true
-  description: Preferred label of event
+  description: Preferred label of corporation
   type: string
 altLabel:
   vufind.method: getUseFor
   vufind.default: true
-  description: Alternative labels of event
+  description: Alternative labels of corporation
   type: array

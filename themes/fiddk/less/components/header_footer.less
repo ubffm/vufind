@@ -33,12 +33,6 @@ header {
 
     }
 
-    #header-collapse .nav {
-      font-family: "Big Shoulders Text";
-      font-size: 1.8rem;
-      color: rgba(0,0,0,.55);
-    }
-
     .language {
       color: @white;
     }
@@ -61,11 +55,21 @@ header {
     transform-origin: top;
     top: 40%;
     right: 0;
-    a:hover {     
+    a:hover {
       background-color: @white;
+      color: @brand-primary;
     }
   }
 
+}
+
+.nav-item {
+  font-family: "Big Shoulders Text";
+  font-size: 26px;
+  .nav-link:hover {
+    color: @bsgrey;
+    background-color: inherit;
+  }
 }
 
 nav.breadcrumbs div.container {
@@ -88,14 +92,6 @@ nav.breadcrumbs div.container {
     transform: scaleX(0);
     transition: transform 300ms ease-in-out;
     transform-origin:  0% 50%;
-  }
-  li > a.nav-link:hover {
-    color: @brand-primary;
-    background-color: @white;
-    outline: none;
-    &::after {
-    transform: scaleX(1);
-    }
   }
 }
 
@@ -137,11 +133,20 @@ footer {
   }
   div#logos {
     img {
-      max-height: 90px;
+      &.dfg {
+        max-height: 40px;
+        margin-top: 0.5rem;
+      }
+      max-height: 50px;
+    }
+    a {
+      text-decoration: none;
+      .tiny {
+        font-size: 75%;
+      }
     }
     .nav-link:hover {
-      background-color: @brand-primary;
-      border: 1px solid @white;
+      border: 1px solid @bsgrey;
     }
   }
 }
