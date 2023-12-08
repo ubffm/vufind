@@ -54,19 +54,22 @@
             </li>
           <?php endif; ?>
 
-          <!-- FID Menu in Wagtail. TODO: Real links -->
-          <li class="nav-item">
-            <a class="nav-link" href="/search"><?=$this->transEsc("Research")?></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/news"><?=$this->transEsc("News")?></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services"><?=$this->transEsc("Service")?></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about"><?=$this->transEsc("About us")?></a>
-          </li>
+          <?php $navigation = $this->layout()->navigation;
+          if (isset($navigation[$this->layout()->userLang])):
+            foreach ($navigation[$this->layout()->userLang] as $nav): ?>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?=$nav['url']?>" aria-expanded="false"><?=$nav['title']?></a>
+              <ul class="dropdown-menu">
+                <?php foreach ($nav["children"] as $child): ?>
+                  <li class="nav-item">
+                     <a class="nav-link" href="<?=$child['url']?>"><?=$child['title']?></a>
+                  </li>
+                <?php endforeach;?>
+              </ul>
+            </li>
+        <?php endforeach;
+          endif;
+            ?>
 
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
             <li class="language nav-item">

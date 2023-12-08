@@ -73,7 +73,7 @@
           $icon = '';
           break;
       }
-      $mappingParams = $this->results->getParams()->getBackendParameters()->get('params_' . $searchType)[0]->get('facet.field');
+      //$mappingParams = $this->results->getParams()->getBackendParameters()->get('params_' . $searchType)[0]->get('facet.field');
       ?>
       <?=$this->render('Recommend/SideFacets/single-facet.phtml', [
         'exclude' => $this->allowExclude,
@@ -85,7 +85,6 @@
         'icon' => $icon,
       ])?>
     <?php else: ?>
-      <?php //var_dump($this->results->getParams()->getBackendParameters()->get('params_SolrEvent')[0]->get('facet.field')) ?>
       <?=$this->render('Recommend/SideFacets/single-facet.phtml', [
         'exclude' => $this->allowExclude,
         'facet' => $thisFacet,

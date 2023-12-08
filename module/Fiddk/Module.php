@@ -75,7 +75,7 @@ class Module
      */
     public function onBootstrap(MvcEvent $e)
     {
-        $bootstrapper = new \VuFind\Bootstrapper($e);
+        $bootstrapper = new Bootstrapper($e);
         $bootstrapper->bootstrap();
     }
 }

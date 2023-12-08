@@ -1,9 +1,9 @@
-<?php $this->headTitle($this->translate('Find more hits')); ?>
+<?php $this->headTitle($this->translate('AllResults')); ?>
 
-<h1><?=$this->transEsc('Find more hits') ?></h1>
+<h1><?=$this->transEsc('AllResults') ?></h1>
 
 <p>
-  There are more results in total. If you decide for a search type from below, you can see more results.
+  <?=$this->transEsc('MoreExplanation') ?>
   <div class="flexing">
   <div><img class="iconR" src="<?=$this->imageLink('icons/boxes_color.svg')?>" alt="Icon" width="32" height="32"><a href="<?=$this->url('search-results')?>?lookfor=<?=$this->escapeHtml($lookfor)?>" data-lightbox-ignore><?=$this->transEsc("Record")?></a></div>
   <div><img class="iconR" src="<?=$this->imageLink('icons/person_color.svg')?>" alt="Icon" width="32" height="32"><a href="<?=$this->url('personsearch-results')?>?lookfor=<?=$this->escapeHtml($lookfor)?>" data-lightbox-ignore><?=$this->transEsc("Person")?></a></div>

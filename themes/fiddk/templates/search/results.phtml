@@ -145,8 +145,12 @@
 <?php /* Refine Search Options */ ?>
 <div class="<?=$this->layoutClass('sidebar')?>" id="search-sidebar">
     <?php if($this->results->getBackendId() == "Blender" && $this->results->getResultTotal() > 400): ?>
-          <a class="btn btn-primary" data-lightbox href="<?=$this->url('search-more')?>?lookfor=%22<?=urlencode($lookfor)?>%22" aria-label="<?=$this->transEscAttr('Find More')?>">
-            <?=$this->transEsc('Find More');?>
+          <a class="btn btn-primary" data-lightbox href="<?=$this->url('search-more')?>?lookfor=<?=urlencode($lookfor)?>" aria-label="<?=$this->transEscAttr('Find More')?>">
+            <?=$this->transEsc('AllResults');?>
+          </a>
+    <?php elseif($this->results->getBackendId() != "Blender"): ?>
+          <a class="btn btn-primary" href="<?=$this->url('search-blended')?>?lookfor=<?=urlencode($lookfor)?>" aria-label="<?=$this->transEscAttr('Find More')?>">
+            <?=$this->transEsc('Back to AllRecords');?>
           </a>
     <?php endif; ?>
   <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>

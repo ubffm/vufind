@@ -284,6 +284,7 @@
  <copyField source="series"   dest="spellingShingle"/>
  <copyField source="topic"    dest="spellingShingle"/>
  <!-- CopyFields for Faceting on Text -->
+ <copyField source="title" dest="title_sort"/>
  <copyField source="title_full" dest="title_fullStr"/>
  <copyField source="title_full" dest="title_full_unstemmed"/>
  <copyField source="author" dest="author_facet"/>

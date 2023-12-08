@@ -27,6 +27,7 @@
  * @link https://vufind.org Main Site
  */
 namespace Fiddk\Controller;
+use \Fiddk\Connection\Wagtail;
 
 /**
  * Redirects the user to the appropriate default VuFind action.
@@ -58,11 +59,6 @@ class SearchController extends \VuFind\Controller\SearchController
             $view->saved
         );
 
-        $runner = $this->serviceLocator->get('VuFind\SearchRunner');
-        $date = date('Y-m-d');
-        $request = ['lookfor' => $date,'type'=> 'playbills'];
-        $view->results = $runner->run($request, $this->searchClassId, $this->getSearchSetupCallback());
-
         return $view;
     }
 
@@ -74,6 +70,7 @@ class SearchController extends \VuFind\Controller\SearchController
     public function moreAction()
     {
         $lookfor = $this->params()->fromQuery('lookfor');
+        $filter = $this->params()->fromQuery('filter');
         $view = $this->createViewModel(['lookfor' => $lookfor]);
         return $view;
     }
