@@ -44,7 +44,7 @@
         $this->lookfor = $this->results->getUrlQuery()->isQuerySuppressed() ? '' : $results->getParams()->getDisplayQuery(); ?>
         <li role="none">
           <a class="btn btn-primary" data-lightbox href="<?=$this->url('search-more')?>?lookfor=%22<?=urlencode($this->lookfor)?>%22" aria-label="<?=$this->transEscAttr('Find More')?>">
-            <?=$this->transEsc('Find More');?>
+            <?=$this->transEsc('All Results');?>
           </a>
         </li>
         <?php endif; ?>
