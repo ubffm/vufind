@@ -67,8 +67,21 @@
                 <?php endforeach;?>
               </ul>
             </li>
-        <?php endforeach;
-          endif;
+          <?php endforeach; ?>
+          <?php else: ?>
+          <li class="nav-item">
+            <a class="nav-link" href="/search/"><?=$this->transEsc("Recherche");?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/news/"><?=$this->transEsc("News");?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/services/"><?=$this->transEsc("Services");?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about/"><?=$this->transEsc("About us");?></a>
+          </li>
+         <?php endif;
             ?>
 
           <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
