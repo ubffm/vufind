@@ -29,12 +29,16 @@ header {
         max-width: 65%;
         @media(max-width: 992px) {
           width: 100%;
-          max-width: 100%;
+          min-width: 100%;
           margin-bottom: 0.5rem;
         }
       }
       select {
         max-width: 175px;
+        @media(max-width: 576px) {
+          min-width: 100%;
+          margin-bottom: 0.5rem;
+        }
       }
 
     }
