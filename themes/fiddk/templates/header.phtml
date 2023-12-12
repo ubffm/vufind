@@ -1,6 +1,9 @@
 <?php $account = $this->auth()->getManager(); ?>
 <div class="banner container navbar">
   <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
+      <?=$this->icon('ui-menu') ?>
+    </button>
     <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->baseUrl?>" aria-label="Home Button"></a>
   </div>
   <?php if (!isset($this->layout()->renderingError)): ?>
