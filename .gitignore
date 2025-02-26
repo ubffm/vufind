@@ -20,10 +20,16 @@ import/solrmarc.log*
 lessphp_*.list
 module/VuFind/tests/.phpunit.result.cache
 node_modules
-public/swagger-ui
-*.conf
-local/http*
+
+local/httpd-vufind.conf
 local/config/vufind/config.ini
 local/config/vufind/permissions.ini
 local/config/vufind/FeedbackForms.yaml
-local/config/vufind/*.json
+local/harvest/oai.ini
+local/import/import.properties
+local/import/import_auth.properties
+
+vufind_local_backups/
+
+# Beacon-Files
+public/docs/
