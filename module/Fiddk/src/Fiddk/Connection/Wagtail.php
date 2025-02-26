@@ -76,13 +76,13 @@ class Wagtail
             return [];
         }
         
-        $api = 'http://127.0.0.1:8000/de/api/v2/pages/';
-        $uri = $api . '?type=regular.RegularIndexPage&fields=depth';
+        //$api = 'http://127.0.0.1:8000/de/api/v2/pages/';
+        //$uri = $api . '?type=regular.RegularIndexPage&fields=depth';
         // Get information from API
-        $response = $this->client->setUri($uri)->setMethod('GET')->send();
-        if ($response->isSuccess()) {
-            return $this->parseJson($response->getBody(),$api);
-        }
+        //$response = $this->client->setUri($uri)->setMethod('GET')->send();
+        //if ($response->isSuccess()) {
+        //    return $this->parseJson($response->getBody(),$api);
+        //}
         return null;
     }
 
