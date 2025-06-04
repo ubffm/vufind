@@ -232,24 +232,30 @@ trait EdmBasicTrait
     public function getLicenseLink()
     {
         $licenseLinks = [];
-        if (isset($this->getInstitutions()[0])) {
-            $inst = $this->getInstitutions()[0]; 
-        } else {
-            $inst = "";
-        }
-        if (isset($this->getInstitutions()[0])) {
-            $inst = $this->getInstitutions()[0];
-            if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-                $licenseLinks = [$inst => $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
-            }
-            return $licenseLinks;
-        } else {
+
+        $institutions = $this->getInstitutions();
+        if (!isset($institutions[0])) {
             return [];
-            $inst = $this->getInstitutions()[0]; 
-        if ($inst == 'transcript Verlag' or $inst == 'Alexander Street Press' or $inst == 'Adam Matthew Digital') {
-            $licenseLinks = [$inst => $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description")];
         }
-    }
+
+        $inst = $institutions[0];
+
+        $relevant = [
+            'transcript Verlag',
+            'Alexander Street Press',
+            'Adam Matthew Digital',
+            'Medici.tv'
+        ];
+
+        if (in_array($inst, $relevant)) {
+            $licenseLinks[$inst] = $this->getEdmReader()->getLinkedPropValues(
+                "edm:isShownAt",
+                "ore:Aggregation",
+                "dc:description"
+            );
+        }
+
+        return $licenseLinks;
     }
 
     public function getDigitalCopies()
