@@ -262,8 +262,14 @@ trait EdmBasicTrait
     {
         $links = [];
         $inst = $this->getInstitutions()[0];
+        $relevant = [
+            'transcript Verlag',
+            'Alexander Street Press',
+            'Adam Matthew Digital',
+            'Medici.tv'
+        ];
         // prevent duplicates
-        if ($inst != 'transcript Verlag' and $inst != 'Alexander Street Press' and $inst != 'Adam Matthew Digital') {
+        if (!in_array($inst, $relevant)) {
             $links = $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
         }
         return $links + $this->getEdmReader()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
