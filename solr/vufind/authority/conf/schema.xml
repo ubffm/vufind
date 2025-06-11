@@ -98,6 +98,9 @@
     <dynamicField name="*_str_mv" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*_txt" type="text" indexed="true" stored="true"/>
     <dynamicField name="*_txt_mv" type="text" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- correction for error 400 -->
+    <field name="date_span_sort" type="string" indexed="true" stored="true"/>
   </fields>
 
   <uniqueKey>id</uniqueKey>
