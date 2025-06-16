@@ -16,20 +16,16 @@
 ChangeLog
 TAGS
 composer.phar
+env.bat
+env.sh
 import/solrmarc.log*
 lessphp_*.list
-module/VuFind/tests/.phpunit.result.cache
+module/VuFind/tests/.phpunit*
 node_modules
-
-local/httpd-vufind.conf
-local/config/vufind/config.ini
-local/config/vufind/permissions.ini
-local/config/vufind/FeedbackForms.yaml
-local/harvest/oai.ini
-local/import/import.properties
-local/import/import_auth.properties
-
+local/
 vufind_local_backups/
 
 # Beacon-Files
 public/docs/
+package-lock.json
+public/swagger-ui

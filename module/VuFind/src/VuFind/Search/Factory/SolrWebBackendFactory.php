@@ -3,7 +3,7 @@
 /**
  * Factory for the website SOLR backend.
  *
- * PHP version 7
+ * PHP version 8
  *
  * Copyright (C) Villanova University 2013.
  *
@@ -64,8 +64,14 @@ class SolrWebBackendFactory extends AbstractSolrBackendFactory
         $manager = $this->serviceLocator
             ->get(\VuFind\RecordDriver\PluginManager::class);
         return function ($data) use ($manager) {
+            // Extract highlighting details injected earlier by
+            // \VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory
+            $hl = $data['__highlight_details'] ?? [];
+            unset($data['__highlight_details']);
+
             $driver = $manager->get('SolrWeb');
             $driver->setRawData($data);
+            $driver->setHighlightDetails($hl);
             return $driver;
         };
     }
