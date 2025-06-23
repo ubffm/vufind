@@ -55,7 +55,7 @@ class SearchController extends \VuFind\Controller\SearchController
             $view->options->getSpecialAdvancedFacets()
         );
         $view->checkboxFacets = $this->processAdvancedCheckboxes(
-            $specialFacets['checkboxes'],
+            $specialFacets['checkboxes'] ?? [],
             $view->saved
         );
 

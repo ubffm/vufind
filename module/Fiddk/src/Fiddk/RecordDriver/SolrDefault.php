@@ -117,12 +117,25 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
      *
      * @return array
      */
-    protected function getDProvFromConfig($inst,$i)
+    protected function getDProvFromConfig($inst, $i)
     {
-        $dprovConf = $this->mainConfig->DataProvider;
+        $dprovConf = $this->mainConfig->DataProvider ?? [];
         $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+
+        // Prüfe, ob der Konfigurationswert existiert
+        if (!isset($dprovConf[$instkey])) {
+            return "[Keine Konfiguration für '$instkey']";
+        }
+
         $info = explode(',', $dprovConf[$instkey]);
+
+        // Prüfe, ob der Index im Array existiert
+        if (!isset($info[$i])) {
+            return "[Ungültiger Index $i für '$instkey']";
+        }
+
         return $info[$i];
     }
+
 
 }
