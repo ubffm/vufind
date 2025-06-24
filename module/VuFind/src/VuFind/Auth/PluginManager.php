@@ -58,6 +58,7 @@ class PluginManager extends \VuFind\ServiceManager\AbstractPluginManager
         'ldap' => LDAP::class,
         'multiauth' => MultiAuth::class,
         'multiils' => MultiILS::class,
+        'openidconnect' => OpenIDConnect::class,
         'shibboleth' => Shibboleth::class,
         'simulatedsso' => SimulatedSSO::class,
         'sip2' => SIP2::class,
@@ -73,18 +74,19 @@ class PluginManager extends \VuFind\ServiceManager\AbstractPluginManager
      */
     protected $factories = [
         AlmaDatabase::class => ILSFactory::class,
-        CAS::class => InvokableFactory::class,
+        CAS::class => CASFactory::class,
         ChoiceAuth::class => ChoiceAuthFactory::class,
         Database::class => InvokableFactory::class,
         Email::class => EmailFactory::class,
         Facebook::class => FacebookFactory::class,
         ILS::class => ILSFactory::class,
-        LDAP::class => InvokableFactory::class,
+        LDAP::class => LDAPFactory::class,
         MultiAuth::class => MultiAuthFactory::class,
         MultiILS::class => ILSFactory::class,
+        OpenIDConnect::class => OpenIDConnectFactory::class,
         Shibboleth::class => ShibbolethFactory::class,
         SimulatedSSO::class => SimulatedSSOFactory::class,
-        SIP2::class => InvokableFactory::class,
+        SIP2::class => SIP2Factory::class,
     ];
 
     /**

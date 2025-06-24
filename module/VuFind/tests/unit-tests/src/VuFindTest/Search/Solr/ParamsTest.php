@@ -164,7 +164,7 @@ class ParamsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function sortValueProvider(): array
+    public static function sortValueProvider(): array
     {
         return ['Test1' => ['year', 'id', 'publishDateSort desc,id asc'],
                 'Test2' => ['year', 'id desc', 'publishDateSort desc,id desc'],
@@ -201,6 +201,116 @@ class ParamsTest extends \PHPUnit\Framework\TestCase
             $expectedResult,
             $this->callMethod($params, 'normalizeSort', [$sort])
         );
+    }
+
+    /**
+     * Data provider for testSortList
+     *
+     * @return array
+     */
+    public static function sortListDataProvider(): array
+    {
+        $searchConfig = [
+            'Sorting' => [
+                'relevance' => 'Relevance',
+                'title' => 'Title',
+            ],
+            'HiddenSorting' => [
+                'pattern' => [
+                    '[Tt]est',
+                ],
+            ],
+        ];
+
+        return [
+            'relevance' => [
+                $searchConfig,
+                'relevance',
+                [
+                    'relevance' => [
+                        'desc' => 'Relevance',
+                        'selected' => true,
+                        'default' => true,
+                    ],
+                    'title' => [
+                        'desc' => 'Title',
+                        'selected' => false,
+                        'default' => false,
+                    ],
+                ],
+            ],
+            'title' => [
+                $searchConfig,
+                'title',
+                [
+                    'relevance' => [
+                        'desc' => 'Relevance',
+                        'selected' => false,
+                        'default' => true,
+                    ],
+                    'title' => [
+                        'desc' => 'Title',
+                        'selected' => true,
+                        'default' => false,
+                    ],
+                ],
+            ],
+            'hidden' => [
+                $searchConfig,
+                'footestbar',
+                [
+                    'relevance' => [
+                        'desc' => 'Relevance',
+                        'selected' => false,
+                        'default' => true,
+                    ],
+                    'title' => [
+                        'desc' => 'Title',
+                        'selected' => false,
+                        'default' => false,
+                    ],
+                    'footestbar' => [
+                        'desc' => 'unrecognized_sort_option',
+                        'selected' => true,
+                        'default' => false,
+                    ],
+                ],
+            ],
+            'invalid' => [
+                $searchConfig,
+                'foobar',
+                [
+                    'relevance' => [
+                        'desc' => 'Relevance',
+                        'selected' => true,
+                        'default' => true,
+                    ],
+                    'title' => [
+                        'desc' => 'Title',
+                        'selected' => false,
+                        'default' => false,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test sort option list handling
+     *
+     * @param array  $searchConfig     Search configuration
+     * @param string $sort             Selected sort option
+     * @param string $expectedSortList Expected sort list
+     *
+     * @return void
+     *
+     * @dataProvider sortListDataProvider
+     */
+    public function testSortList(array $searchConfig, string $sort, array $expectedSortList): void
+    {
+        $params = $this->getParams(mockConfig: $this->getMockConfigPluginManager(['searches' => $searchConfig]));
+        $params->setSort($sort);
+        $this->assertEquals($expectedSortList, $params->getSortList());
     }
 
     /**

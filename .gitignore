@@ -5,6 +5,7 @@
 # Vim temporary files
 .*.sw[po]
 
+*.log
 .php_cs_cache
 .phpstan_cache
 .vagrant
@@ -12,9 +13,11 @@
 /downloads
 /Gruntfile.local.js
 /solr/vendor
+/themes/minktest
 /vendor
 ChangeLog
-TAGS
+/TAGS
+data/
 composer.phar
 env.bat
 env.sh
@@ -29,3 +32,10 @@ vufind_local_backups/
 public/docs/
 package-lock.json
 public/swagger-ui
+tests/phpcs.cache.json
+themes/bootstrap5/scss/vendor/bootstrap
+local/DirLocations.ini
+local/config/vufind/*.ini
+local/config/vufind/*.json
+local/config/vufind/*.key
+local/config/vufind/*.yaml

@@ -32,6 +32,7 @@ namespace VuFind\ILS\Driver;
 
 use PDO;
 use PDOException;
+use VuFind\Date\DateException;
 use VuFind\Exception\ILS as ILSException;
 
 use function count;
@@ -121,6 +122,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 . $this->config['Catalog']['port']
             );
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             throw $e;
         }
     }
@@ -160,6 +162,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
             $sqlStmt->bindParam(1, $id, PDO::PARAM_INT);
             $sqlStmt->execute();
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
 
@@ -223,7 +226,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
      * @param array  $patron  Patron data
      * @param array  $options Extra options (not currently used)
      *
-     * @throws VuFind\Date\DateException
+     * @throws DateException
      * @throws ILSException
      * @return array         On success, an associative array with the following
      * keys: id, availability (boolean), status, location, reserve, callnumber,
@@ -260,6 +263,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
             $sqlStmt->bindParam(1, $id, PDO::PARAM_INT);
             $sqlStmt->execute();
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
 
@@ -378,6 +382,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 return null;
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
     }
@@ -390,7 +395,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
      *
      * @param array $patron The patron array from patronLogin
      *
-     * @throws VuFind\Date\DateException
+     * @throws DateException
      * @throws ILSException
      * @return array        Array of the patron's transactions on success.
      */
@@ -466,6 +471,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                                ];
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
         return ['count' => count($transList), 'records' => $transList];
@@ -478,7 +484,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
      *
      * @param array $patron The patron array from patronLogin
      *
-     * @throws VuFind\Date\DateException
+     * @throws DateException
      * @throws ILSException
      * @return mixed        Array of the patron's fines on success.
      */
@@ -523,6 +529,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
             }
             return $fineList;
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
     }
@@ -534,7 +541,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
      *
      * @param array $patron The patron array from patronLogin
      *
-     * @throws VuFind\Date\DateException
+     * @throws DateException
      * @throws ILSException
      * @return array        Array of the patron's holds on success.
      */
@@ -579,6 +586,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 ];
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
         return $holdList;
@@ -638,6 +646,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 return $patron;
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
         return null;
@@ -679,6 +688,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
         $sqlStmt = $this->db->prepare($sql);
         $sqlStmt->execute();
     } catch (PDOException $e) {
+        $this->logError((string)$e);
         $this->throwAsIlsException($e);
     }
     */
@@ -739,6 +749,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
             $row = $sqlStmt->fetch(PDO::FETCH_ASSOC);
             $items['count'] = $row['count'];
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
 
@@ -761,6 +772,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 $items['results'][]['id'] = $row['record'];
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
         return $items;
@@ -788,6 +800,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 $list[] = $row['name'];
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
         */
@@ -816,6 +829,7 @@ class Evergreen extends AbstractBase implements \Laminas\Log\LoggerAwareInterfac
                 $list[] = $row['id'];
             }
         } catch (PDOException $e) {
+            $this->logError((string)$e);
             $this->throwAsIlsException($e);
         }
 

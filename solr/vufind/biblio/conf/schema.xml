@@ -162,7 +162,7 @@
    <field name="edition" type="string" indexed="true" stored="true"/>
    <field name="description" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="url" type="string" indexed="false" stored="true" multiValued="true"/>
+   <field name="url" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="thumbnail" type="string" indexed="false" stored="true"/>
    <!-- fid specific fields -->
    <field name="institution_id" type="string" indexed="true" stored="false" multiValued="true"/>
