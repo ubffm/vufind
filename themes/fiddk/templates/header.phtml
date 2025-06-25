@@ -73,16 +73,10 @@
           <?php endforeach; ?>
           <?php else: ?>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="/search/"><?=$this->transEsc("Recherche");?></a>
+            <a class="nav-link" href="/"><?=$this->transEsc("Back_to_Homepage");?></a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="/news/"><?=$this->transEsc("News");?></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="/services/"><?=$this->transEsc("Services");?></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="/about/"><?=$this->transEsc("About us");?></a>
+            <a class="nav-link" href="/Search/Advanced"><?=$this->transEsc("Advanced Search");?></a>
           </li>
          <?php endif;
             ?>
