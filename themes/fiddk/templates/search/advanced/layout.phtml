@@ -64,6 +64,12 @@
       }
     }
   }
+
+  // Set up help topics
+  $helpTopics = $this->helpTopics ?? [
+    'advsearch' => 'Help with Advanced Search',
+    'search' => 'Help with Search Operators',
+  ];
 ?>
 
 <?=$this->flashmessages()?>
@@ -198,12 +204,17 @@
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
-      <h2><?=$this->transEsc("Search Tips")?></h2>
-      <?php // Data-title attribute is for analytics use.  Do not remove. ?>
-      <div class="facet-group" data-title="<?=$this->escapeHtmlAttr("Search Tips") ?>">
-        <a class="facet help-link" data-lightbox href="<?=$this->url('help-home')?>?topic=advsearch&amp;_=<?=time() ?>"><?=$this->transEsc("Help with Advanced Search")?></a>
-        <a class="facet help-link" data-lightbox href="<?=$this->url('help-home')?>?topic=search&amp;_=<?=time() ?>"><?=$this->transEsc("Help with Search Operators")?></a>
-      </div>
+      <?php if ($helpTopics): ?>
+        <h2><?=$this->transEsc('Search Tips')?></h2>
+        <?php // Data-title attribute is for analytics use.  Do not remove. ?>
+        <ul class="facet-group" data-title="<?=$this->escapeHtmlAttr('Search Tips') ?>">
+          <?php foreach ($helpTopics as $topic => $title): ?>
+            <li class="facet">
+              <a class="help-link" data-lightbox href="<?=$this->url('help', ['topic' => $topic])?>"><?=$this->transEsc($title)?></a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
     </div>
   </form>
 <?php

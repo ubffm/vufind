@@ -77,7 +77,7 @@ $config = [
   'service_manager' => [
     'allow_override' => true,
     'factories' => [
-      'Fiddk\ContentBlock\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+      //'Fiddk\ContentBlock\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
       'Fiddk\RecordDriver\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
       'Fiddk\Search\Options\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
       'Fiddk\Search\Params\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
@@ -85,7 +85,7 @@ $config = [
     ],
     // Overrides
     'aliases' => [
-      'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager',
+      //'VuFind\ContentBlock\PluginManager' => 'Fiddk\ContentBlock\PluginManager',
       'VuFind\RecordDriver\PluginManager' => 'Fiddk\RecordDriver\PluginManager',
       'VuFind\Search\Options\PluginManager' => 'Fiddk\Search\Options\PluginManager',
       'VuFind\Search\Params\PluginManager' => 'Fiddk\Search\Params\PluginManager',
@@ -131,6 +131,14 @@ $config = [
         'aliases' => [
           'staffviewedm' => 'Fiddk\RecordTab\StaffViewEdm',
         ],
+      ],
+      'contentblock' => [
+          'factories' => [
+              'statistics' => \Fiddk\ContentBlock\StatisticsFactory::class,
+          ],
+          'aliases' => [
+              'Statistics' => 'statistics',
+          ],
       ],
     ],
   ],
