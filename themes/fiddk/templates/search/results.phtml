@@ -9,7 +9,10 @@
   $this->searchType = $this->params->getSearchType();
   $this->searchClassId = $this->params->getsearchClassId();
   $filterList = $this->params->getFilterList(true);
-  $ftype = empty($this->results->getResultTotal()) ? "AllRecord" : $this->results->getEntityType($this->searchClassId);
+  // $ftype = empty($this->results->getResultTotal()) ? "AllRecord" : $this->results->getEntityType($this->searchClassId);
+  $ftype = method_exists($this->results, 'getEntityType')
+    ? $this->results->getEntityType($this->searchClassId)
+    : 'AllRecord';
   $ftype_ = empty($ftype) ? "AllRecord" : $ftype;
 
   // Set up search box:
