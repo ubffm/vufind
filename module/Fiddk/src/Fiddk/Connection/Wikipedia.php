@@ -50,18 +50,37 @@ class Wikipedia extends \VuFind\Connection\Wikipedia
      */
     public function getJSON($request)
     {
-        // Don't retrieve the same request answer multiple times;
+        // Don't retrieve the same request answer multiple times
         if ($this->alreadyRetrieved($request)) {
             return [];
         }
 
-        // Get information from Wikimedia API
+        // Build Wikimedia API URL
         $uri = 'https://' . $this->lang . '.wikipedia.org/w/api.php?action=query' . $request . '&format=json';
-        $response = $this->client->setUri($uri)->setMethod('GET')->send();
-        if ($response->isSuccess() && $body = $response->getBody()) {
-            $json = json_decode($body, true);
-            return $json["query"]["pages"];
+
+        try {
+            $this->client
+                ->setUri($uri)
+                ->setMethod('GET')
+                ->setOptions([
+                    'timeout' => 20, // ⏱ Timeout von 10s auf 20s erhöhen
+                    'maxredirects' => 5,
+                ]);
+            
+            $response = $this->client->send();
+
+            if ($response->isSuccess() && $body = $response->getBody()) {
+                $json = json_decode($body, true);
+                return $json["query"]["pages"] ?? [];
+            }
+        } catch (\Laminas\Http\Client\Adapter\Exception\TimeoutException $e) {
+            error_log("Wikipedia API Timeout: " . $e->getMessage());
+            // Optional: fallback logik oder leeres Ergebnis
+        } catch (\Exception $e) {
+            error_log("Wikipedia API Error: " . $e->getMessage());
         }
+
         return null;
     }
+
 }
