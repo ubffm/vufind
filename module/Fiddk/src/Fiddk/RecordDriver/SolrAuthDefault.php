@@ -423,23 +423,28 @@ class SolrAuthDefault extends SolrDefault implements
      */
     public function getPicSource($thumbnail)
     {
-        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)) :
+        if (preg_match('/.+\/Special:FilePath\/(.+)\?.+/', $thumbnail, $fname)) {
             $picSource = $this->wikipedia->getJSON("&prop=imageinfo&iiprop=extmetadata&titles=File:" . $fname[1]);
-            // $imageInfo = current($picSource)["imageinfo"]["0"]["extmetadata"];
-            $firstPic = current($picSource);
-            if (is_array($firstPic) 
-                && isset($firstPic["imageinfo"][0]["extmetadata"])) {
-                $imageInfo = $firstPic["imageinfo"][0]["extmetadata"];
-            } else {
-                $imageInfo = null; // oder Standardwert, oder Fehlerbehandlung
+
+            if (is_array($picSource)) {
+                $firstPic = current($picSource);
+
+                if (is_array($firstPic) && isset($firstPic["imageinfo"][0]["extmetadata"])) {
+                    $imageInfo = $firstPic["imageinfo"][0]["extmetadata"];
+
+                    if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])) {
+                        return [
+                            $imageInfo["Artist"]["value"],
+                            "https://commons.wikimedia.org/wiki/File:" . $fname[1],
+                            $imageInfo["LicenseShortName"]["value"]
+                        ];
+                    }
+                }
             }
-            if (isset($imageInfo["Artist"]["value"]) && isset($imageInfo["LicenseShortName"]["value"])) :
-                return [$imageInfo["Artist"]["value"],
-                  "https://commons.wikimedia.org/wiki/File:" . $fname[1],
-                  $imageInfo["LicenseShortName"]["value"]]; else:
-                      return null;
-                  endif; else:
-                      return null;
-                  endif;
+
+            return null; // Wenn $picSource kein Array ist oder Felder fehlen
+        }
+
+        return null; // Wenn Regex nicht matched
     }
 }
