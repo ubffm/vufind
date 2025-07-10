@@ -72,17 +72,37 @@ class Lobid
      */
     public function get($gnd)
     {
-        // Don't retrieve the same gnd multiple times;
+        // Don't retrieve the same gnd multiple times
         if ($this->alreadyRetrieved($gnd)) {
             return [];
         }
 
-        // Get information from Wikipedia API
         $uri = 'http://lobid.org/gnd/' . $gnd . '.json';
-        $response = $this->client->setUri($uri)->setMethod('GET')->send();
-        if ($response->isSuccess()) {
-            return $this->parseJson($response->getBody());
+
+        try {
+            // Set Timeout explizit
+            $this->client->setOptions([
+                'timeout' => 5,        // Verbindung aufbauen (in Sekunden)
+                'read_timeout' => 20,  // Zeit bis Antwort (hier erhöht)
+            ]);
+
+            $response = $this->client
+                ->setUri($uri)
+                ->setMethod('GET')
+                ->send();
+
+            if ($response->isSuccess()) {
+                return $this->parseJson($response->getBody());
+            } else {
+                error_log("Lobid-Request fehlgeschlagen: HTTP " . $response->getStatusCode());
+            }
+
+        } catch (\Laminas\Http\Client\Adapter\Exception\TimeoutException $e) {
+            error_log("Lobid-Timeout bei GND $gnd: " . $e->getMessage());
+        } catch (\Exception $e) {
+            error_log("Lobid-Fehler bei GND $gnd: " . $e->getMessage());
         }
+
         return null;
     }
 
