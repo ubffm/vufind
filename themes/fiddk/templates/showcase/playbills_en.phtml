@@ -1,0 +1,102 @@
+<?php // Set page title.
+$this->headTitle($this->translate('Playbills') . ' - ' . $this->translate('FID Darstellende Kunst'));
+$this->layout()->section = '<div class="section container title Record"><h1 class="sectionHeader">' . $this->translate('PlaybillPortal') . '</h1></div> ';
+//$this->layout()->searchbox = $this->context($this)->renderInContext(
+//      'search/searchbox.phtml',
+//      [ 'filterList' => ['format' => 'Theaterzettel']]
+//  ); ?>
+
+<h2 class="title">Playbills in the FID Performing Arts' search portal</h2>
+<!-- &filter[]=~format%3A"Theaterzettel" -->
+<div class="row">
+<div class="col col-sm-12 col-lg-7">
+  <div class="paragraph">
+  <p>The Specialised Information Service Performing Arts provides a selection of information sources on the genre of playbills.
+  You can currently search the following resources:
+  <ul>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FBadische+Landesbibliothek%2F%22&type=AllFields">Karlsruher Theaterzettel</a></li>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FProjekt+%E2%80%9ETheater+und+Musik+in+Weimar+1754-1990%E2%80%9C%2F%22&type=AllFields">Projekt „Theater und Musik in Weimar 1754-1990“</a></li>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FUniversitäts-+und+Landesbibliothek+Düsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
+    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FGottfried+Wilhelm+Leibniz+Bibliothek%2F%22&type=AllFields">Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</a></li>
+  </ul>
+  As well, we have put together a selection of specialist literature and links to projects and digital collections of playbills in German-speaking countries.</p>
+  <p>Do you have any hints or additions to the selection or need help with your research? Please contact <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
+  </div>
+  <div class="paragraph">
+  <h3>Playbills</h3>
+  <p><a target="_blank" href="https://de.wikipedia.org/wiki/Theaterzettel">Playbills</a> are information carriers - such as leaflets or flyers - that announced a theatrical event. 
+	Usually produced at very short notice, the playbill was posted in the theatre and throughout the city on the day of the performance or the day before. 
+	As well, the playbills were delivered to individual households
+    (e.g. <a target="_blank" href="https://de.wikipedia.org/wiki/Theaterabonnement">subscribers</a>). A playbill announces the following information: 
+	name of the theatre or performance venue, date of the performance, often also the beginning and end of the performance, title of the play or several plays as well as the names of the performers and the authors of a theatre evening. 
+	In addition, the ticket prices and other information, such as whether it is a performance for subscribers, can also be noted.</p>
+  <p>The playbill reached its peak in the 18th and 19th centuries. In the 20th century, its function was taken over by the programme booklet. 
+	The publicly displayed flyers were gradually replaced by large-format posters, and the distribution of playbills to individual households was also gradually discontinued.</p>
+  <h3>Research and Archiving</h3>
+  <p>Playbills are central sources for repertoire research. They provide information about daily theatre and performance operations and convey aspects of performance practice. 
+	In addition to theatre studies and theatre historiography, other cultural-historical research examines the medium of playbills.</p>
+  <p>Even if single playbills can be relevant for research, it is first of all the (complete) collection of playbills from one or more venues that is used as an object of research.</p>
+  <p>In memory institutions - archives, libraries and museums - collections of playbills are usually found with a regional and/or thematic focus. Due to the sheer volume, collections of playbills are usually not recorded individually, but as bundles by season. 
+	In several digitisation projects over the last few decades, collections of playbills have been systematically indexed and in some cases enriched with further information. 
+	An overview - a kind of topography - of the collections in German-speaking countries is a desirable desideratum.</p>
+  <p><a target="_blank" href="http://d-nb.info/gnd/4185060-9">GND term 'Theaterzettel'</a></p>
+  </div>
+  <div class="paragraph">
+  <h3>Further reading</h3>
+  <ul>
+    <li>Cepl-Kaufmann, Gertrude: „Zum kulturellen Stellenwert von Theaterzetteln“, in: Flugblätter von der frühen Neuzeit bis zur Gegenwart als kulturhistorische
+      Quellen und bibliothekarische Sondermaterialien, hg. von Christiane Caemmerer, Jörg Jungmayr und Eef Overgaauw. Frankfurt a. M. u. a.: Peter Lang 2010, S. 127–157.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?lookfor=Eder%2C+Ruth&type=AllFields">Eder, Ruth (Hg.): Theaterzettel. Dortmund: Harenberg 1980.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Die+Geschichte+des+Theaterzettels+&type0%5B%5D=AllFields&lookfor0%5B%5D=H%C3%A4nsel%2C+Johann-Richard&type0%5B%5D=Author">Hänsel, Johann-Richard: Die Geschichte des Theaterzettels und seine Wirkung in der Öffent-lichkeit. Berlin, Freie Universität, Hochschulschrift 1959.</a></li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Medien+der+Theatergeschichte+des+18.+und+19.+Jahrhunderts&type0%5B%5D=AllFields&lookfor0%5B%5D=Korte%2C+Hermann&type0%5B%5D=Author">Korte, Hermann, Hans-Joachim Jakob und Bastian Dewenter (Hgg.): Medien der Theatergeschichte des 18. und 19. Jahrhunderts. 
+      Heidelberg: Universitätsverlag Winter 2015 (= Proszenium. Beiträge zur historischen Theaterpublikumsforschung 3).</a></li>
+    <li><a href="<?=$this->url('search-results')?>?join=AND&lookfor0%5B%5D=Theater+-+Zettel+-+Sammlungen+&type0%5B%5D=AllFields&lookfor0%5B%5D=Pernerstorfer%2C+Matthias+Johannes+&type0%5B%5D=Author">Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen. Erschließung, Digitalisierung, Forschung. Wien: Hollitzer Verlag 2012 (= Bibliographica 1).</a></li>
+    <li>Pernerstorfer, Matthias J. (Hg.): Theater – Zettel – Sammlungen 2. Bestände, Erschließung, Forschung. Vienna: Hollitzer 2015 (= Bibliographica 2).</li>
+    <li>Pernerstorfer, Matthias: „Mit gnädigster Bewilligung wird heute…“ Aktuelle Entwicklungen in der Erschließung und Digitalisierung von Theaterzetteln. Erschienen in: Neuböck, Gregor (Hg.): Digitalisierung in Bibliotheken : viel mehr als nur Bücher scannen. Berlin; Boston : De Gruyter Saur 2018, S. 173-204.</li>
+    <li><a href="<?=$this->url('search-results')?>?lookfor0%5B%5D=Einem+hocherfreuten+Publikum+wird+heute+pr%C3%A4sentiret+eine+kleine+Chronik+des+Theaterzettels&type0%5B%5D=Title">Pies, Eike: Einem hocherfreuten Publikum wird heute präsentiret eine kleine Chronik des Theaterzettels. Mit 29 Beispielen versetzt und vorgestellt von Eike Pies.
+      Solingen: E.&U. Brockhaus 2000.</a></li>
+  </ul>
+  </div>
+</div>
+<div class="col col-sm-12 col-lg-5">
+  <div class="card playbill">
+  <div class="card-body">
+    <?php foreach ($this->results->getRecommendations('side') as $current):?>
+      <?=$this->recommend($current);?>
+    <?php endforeach;?>
+    </div>
+  </div>
+  <aside class="card">
+    <div class="card-body">
+  <h3>Digital collections of playbills (German-speaking countries)</h3>
+    <ul>
+      <li><a target="_blank" href="http://anno.onb.ac.at/">ANNO - AustriaN Newspapers Online</a>. Extensive digital collection of playbills from the Vienna Burgtheater (between 1800-1949).</li>
+      <ul>
+        <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=wtz">Playbills of the Vienna Opera and Burgtheater</a></li>
+        <li><a target="_blank" href="http://anno.onb.ac.at/cgi-content/anno?apm=0&aid=taw">Playbills of the 'Theater an der Wien'</a></li>
+      </ul>
+      <li><a target="_blank" href="http://berlinerklassik.bbaw.de/BK/theater/Suche.html">Berliner Theaterzettel</a> via <a target="_blank" href="http://berlinerklassik.bbaw.de/BK/">databases 'Berliner Klassik'</a></li>
+      <li><a target="_blank" href="http://brema.suub.uni-bremen.de/suubtheater">Bremer Theaterzettel</a></li>
+      <li><a target="_blank" href="http://www.llb-detmold.de/sammlungen/musiksammlung/theatersammlung.html">Detmolder Theaterzettel</a> Digital copies can be found via the <a target="_blank" href="https://katalog.llb-detmold.de/webOPACClient_lippe/start.do">Lippische Bibliographie</a></li>
+      <li><a target="_blank" href="http://digital.ub.uni-duesseldorf.de/theaterzettel">Düsseldorfer Theaterzettel</a></li>
+      <li><a target="_blank" href="http://digitale-sammlungen.gwlb.de/sammlungen/sammlungsliste">Theaterzettel-Sammlung Königlichen Hoftheater Hannover</a> der Gottfried Wilhelm Leibniz Bibliothek – Niedersächsische Landesbibliothek</li>
+      <li><a target="_blank" href="https://digital.blb-karlsruhe.de/2949538">Karlsruher Theaterzettel</a></li>
+      <li><a target="_blank" href="https://digital.lb-oldenburg.de/nav/classification/602702">Oldenburger Theaterzettel</a></li>
+      <li><a target="_blank" href="http://www.landesarchiv-bw.de/plink/?f=2-362879">Stuttgarter Theaterzettel</a></li>
+      <li><a target="_blank" href="https://theaterzettel-weimar.de/theater-und-musik-in-weimar-1754-1990">Theater und Musik in Weimar 1754-1990</a></li>
+      <li><a target="_blank" href="https://www.theatermuseum.at/onlinesammlung/">Theatermuseum Wien</a></li>
+      <li><a target="_blank" href="http://www.archivinformationssystem.at/detail.aspx?ID=1451">Theaterzettelsammlung Emmerich Wagner</a></li>
+      <li><a target="_blank" href="http://theaterzettel.franconica.uni-wuerzburg.de/">Würzburger Theaterzettel</a></li>
+    </ul>
+    <div class="paragraph">
+  <h3>Further links</h3>
+    <ul>
+      <li><a target="_blank" href="https://www.theaterzettel.at/">THEO Theaterzettel Online. Ein Digitalisierungskonzept am Beispiel von Wiener Theaterzetteln des 19. Jahrhunderts</a></li>
+      <li><a target="_blank" href="https://archiv.adk.de/bigobjekt/17289">Theaterzettel-Sammlung (gebunden)</a> im Archiv der <a target="_blank" href="https://de.wikipedia.org/wiki/Akademie_der_K%C3%BCnste_(Berlin)">Akademie der Künste, Berlin</a></li>
+      <li><a target="_blank" href="https://staatsbibliothek-berlin.de/die-staatsbibliothek/abteilungen/handschriften-und-historische-drucke/sammlungen/historische-drucke-ab-1501/bestaende/theaterzettel">Sammlung der Theaterzettel der Staatsbibliothek Berlin</a></li>
+      <li><a target="_blank" href="https://blplaybills.org/">Theaterzettel der British Library</a></li>
+      <li><a target="_blank" href="https://www.stadtarchiv-ulm.findbuch.net/php/main.php#4720332031363730202d2031383939">Theaterzettel im Findbuch des Stadtarchivs Ulm</a></li>
+    </ul>
+    </div>
+  </aside>
+</div>
