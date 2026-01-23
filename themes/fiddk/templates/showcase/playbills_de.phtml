@@ -14,10 +14,10 @@ $this->layout()->section = '<div class="section container title Record"><h1 clas
   <p>Der Fachinformationsdienst Darstellende Kunst stellt Ihnen eine Auswahl an Informationsquellen zur Gattung Theaterzettel zur Verfügung.
   Aktuell können Sie in den folgenden Datenbeständen recherchieren:
   <ul>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FBadische+Landesbibliothek%2F%22&type=AllFields">Karlsruher Theaterzettel</a></li>
+    <li><a href="<?=$this->url('search-results')?>?type=AllFields&filter[]=~institution_facet%3A0%2FBadische+Landesbibliothek%2F">Karlsruher Theaterzettel</a></li>
     <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FProjekt+%E2%80%9ETheater+und+Musik+in+Weimar+1754-1990%E2%80%9C%2F%22&type=AllFields">Projekt „Theater und Musik in Weimar 1754-1990“</a></li>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FUniversitäts-+und+Landesbibliothek+Düsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FGottfried+Wilhelm+Leibniz+Bibliothek%2F%22&type=AllFields">Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</a></li>
+    <li><a href="<?=$this->url('search-results')?>?filter%5B%5D=%7Einstitution_facet%3A%220%2FUniversit%C3%A4ts-+und+Landesbibliothek+D%C3%BCsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
+    <li><a href="<?=$this->url('search-results')?>?type=AllFields&filter[]=~institution_facet%3A0%2FGottfried+Wilhelm+Leibniz+Bibliothek%2F">Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</a></li>
   </ul>
   Darüber hinaus haben wir Ihnen eine Auswahl an Fachliteratur sowie weiterführende Links zu Projekten und Digitalen Sammlungen von Theaterzetteln im deutschsprachigen Raum zusammengestellt.</p>
   <p>Sie haben Ergänzungen zur Auswahl oder benötigen Hilfe bei Ihrer Recherche? Wenden Sie sich an <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>

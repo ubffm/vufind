@@ -13,11 +13,11 @@ $this->layout()->section = '<div class="section container title Record"><h1 clas
   <div class="paragraph">
   <p>The Specialised Information Service Performing Arts provides a selection of information sources on the genre of playbills.
   You can currently search the following resources:
-  <ul>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FBadische+Landesbibliothek%2F%22&type=AllFields">Karlsruher Theaterzettel</a></li>
+    <ul>
+    <li><a href="<?=$this->url('search-results')?>?type=AllFields&filter[]=~institution_facet%3A0%2FBadische+Landesbibliothek%2F">Karlsruher Theaterzettel</a></li>
     <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FProjekt+%E2%80%9ETheater+und+Musik+in+Weimar+1754-1990%E2%80%9C%2F%22&type=AllFields">Projekt „Theater und Musik in Weimar 1754-1990“</a></li>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FUniversitäts-+und+Landesbibliothek+Düsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
-    <li><a href="<?=$this->url('search-results')?>?filter[]=~format%3A%22Theaterzettel%22&filter[]=~institution_facet%3A%220%2FGottfried+Wilhelm+Leibniz+Bibliothek%2F%22&type=AllFields">Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</a></li>
+    <li><a href="<?=$this->url('search-results')?>?filter%5B%5D=%7Einstitution_facet%3A%220%2FUniversit%C3%A4ts-+und+Landesbibliothek+D%C3%BCsseldorf%2F%22&type=AllFields">Digitalisierungsprojekt Düsseldorfer Theaterzettel der Universitäts- und Landesbibliothek Düsseldorf</a></li>
+    <li><a href="<?=$this->url('search-results')?>?type=AllFields&filter[]=~institution_facet%3A0%2FGottfried+Wilhelm+Leibniz+Bibliothek%2F">Theaterzettel der Gottfried Wilhelm Leibniz Bibliothek Hannover</a></li>
   </ul>
   As well, we have put together a selection of specialist literature and links to projects and digital collections of playbills in German-speaking countries.</p>
   <p>Do you have any hints or additions to the selection or need help with your research? Please contact <a href="mailto:redaktion@performing-arts.eu">redaktion@performing-arts.eu</a>.</p>
