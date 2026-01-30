@@ -1,0 +1,14 @@
+<?php
+ $this->headTitle('DraCor');
+?>
+<h2>DraCor</h2>
+<img src="<?=$this->imageLink('logos_svg/dracor-blue.svg')?>" alt="DraCor" width="200" height="auto"/><br/><br/>
+<p><a href="http://www.dracor.org" target="_blank" data-lightbox-ignore>Website</a></p>
+<?php
+ if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+?>
+<p>DraCor (kurz für „drama corpora“) ist eine offene digitale Infrastruktur, die für die computergestützte Untersuchung (vorwiegend) europäischer Dramen von der griechisch-römischen Antike bis zum 20. Jahrhundert entwickelt wurde.</p>
+<?php } else {
+?>
+<p>DraCor (short for »drama corpora«) is an open digital infrastructure developed for the computational study of (mostly) European drama from Greco-Roman antiquity to the 20th century.
+<?php } ?>
