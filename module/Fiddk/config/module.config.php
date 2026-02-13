@@ -1,7 +1,16 @@
 <?php
-namespace Fiddk\Module\Config;
+// namespace Fiddk\Module\Config;
 
 $config = [
+    'view_helpers' => [
+      'factories' => [
+        \Fiddk\View\Helper\RecordExists::class => \Fiddk\View\Helper\RecordExistsFactory::class,
+      ],
+      'aliases' => [
+        'recordExists' => \Fiddk\View\Helper\RecordExists::class,
+      ],
+    ],
+
   'router' => [
       'routes' => [
           'dataprovider-page' => [

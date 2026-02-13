@@ -1,1 +1,16 @@
-<a href="<?=$this->url('agentrecord')?><?=$data?>"><?=$this->transEsc("More_of_this_provider")?></a>
+<?php if ($this->recordExists($data, ['SolrPerson','SolrCorporation'])): ?>
+  <a href="<?=$this->url('agentrecord', ['id' => $data])?>">
+    <?=$this->transEsc("More_of_this_provider")?>
+  </a>
+<?php else: ?>
+  <?php
+    $query = http_build_query([
+      'type'   => 'AllFields',
+      'filter' => ['~institution_facet:"' . $data . '"'],
+    ]);
+    $href = $this->url('search-results') . '?' . $query;
+  ?>
+  <a href="<?=$href?>">
+    <?=$this->transEsc("More_of_this_provider")?>
+  </a>
+<?php endif; ?>
