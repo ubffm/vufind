@@ -34,6 +34,29 @@ class EdmRecord
     {
         if ($this->edmRecord === null) {
             $this->edmRecord = new \SimpleXMLElement($edm);
+            $known = [
+                'rdf'    => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                'rdfs'   => 'http://www.w3.org/2000/01/rdf-schema#',
+                'edm'    => 'https://www.europeana.eu/schemas/edm/',
+                'dc'     => 'http://purl.org/dc/elements/1.1/',
+                'dcterms'=> 'http://purl.org/dc/terms/',
+                'ore'    => 'http://www.openarchives.org/ore/terms/',
+            ];
+            // erst Dokument-Namespaces sammeln …
+            $this->ns = [];
+            foreach ($this->edmRecord->getDocNamespaces(true) as $p => $uri) {
+                if ($p === '') { continue; } // leeres Prefix überspringen (falls Default-NS)
+                $this->ns[$p] = $uri;
+                $this->edmRecord->registerXPathNamespace($p, $uri);
+            }
+
+            // … dann bekannte ergänzen (ohne bestehende zu überschreiben)
+            foreach ($known as $p => $uri) {
+                if (!isset($this->ns[$p])) {
+                    $this->ns[$p] = $uri;
+                    $this->edmRecord->registerXPathNamespace($p, $uri);
+                }
+            }
             if ($this->edmRecord->getNamespaces(true)) {
                 foreach ($this->edmRecord->getDocNamespaces(true) as $names => $namesLink) {
                     $this->ns[$names] = $namesLink;
