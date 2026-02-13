@@ -131,7 +131,7 @@ class EdmRecord
                     if ($label) {
                       $vals[] = $label; 
                     } else {
-                      $vals[] = $resLink;
+                      $vals[] = $prop->__toString();
                     }
                 } else {
                     $vals[] = $prop->__toString();
