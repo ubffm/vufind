@@ -1,0 +1,16 @@
+<?php
+ $this->headTitle('Richard Wagner Museum');
+?>
+<h2>'Richard Wagner Museum'</h2>
+<img src="<?=$this->imageLink('logos_svg/rwm.svg')?>" alt="Logo RWM" width="200" height="auto"/><br/><br/>
+<p><a href="https://digital.wagnermuseum.de/" target="_blank" data-lightbox-ignore>Website</a></p>
+<?php
+ if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+?>
+<p>
+    Das Richard Wagner Museum Bayreuth ist ein bedeutsamer Ort deutscher Kulturgeschichte, an dem Leben, Werk und Wirken Richard Wagners erforscht, auf einzigartige Weise erzählt und für alle Sinne erlebbar gemacht werden.
+</p>
+<?php } else {
+?>
+<p>The Richard Wagner Museum Bayreuth is an important place in German cultural history, where the life, work, and influence of Richard Wagner are researched, recounted in a unique way, and brought to life for all the senses.
+<?php } ?>
