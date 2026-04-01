@@ -11,7 +11,7 @@
     <span class="toggleContainer">
       <input type="checkbox" class="toggle" id="toggle_<?=$n?>">
       <span><?=implode(' ', $rest);?></span>
-      <?php if ($lang == 'de') : ?>
+      <?php if (substr($lang, 0, 2) === 'de') : ?>
         <label for="toggle_<?=$n?>" class="label_de"></label>
       <?php else : ?>
         <label for="toggle_<?=$n?>" class="label_en"></label>
