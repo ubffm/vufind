@@ -1,1 +1,13 @@
-<?=implode(' | ', array_column($data, 'label'))?>
+<?php
+$labels = [];
+if (is_array($data)) {
+    foreach ($data as $row) {
+        if (is_array($row) && isset($row['label'])) {
+            $labels[] = $this->escapeHtml($row['label']);
+        } else {
+            $labels[] = $this->escapeHtml((string)$row);
+        }
+    }
+}
+echo implode(' | ', $labels);
+?>
