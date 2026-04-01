@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Factory for record driver data formatting view helper
  *
@@ -27,6 +28,7 @@
  * @link     https://vufind.org/wiki/development:architecture:record_data_formatter
  * Wiki
  */
+
 namespace Fiddk\View\Helper\Fiddk;
 
 use Interop\Container\ContainerInterface;
@@ -146,7 +148,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('edm::dcterms:extent', 'getExtent');
         $spec->setLine('edm::bf:shelfMark', 'getCallNumber');
         $spec->setLine('edm::dcterms:provenance', 'getProvenance');
-        $spec->setLine('edm::dc:language', 'getLanguages', null, ['translate'=> true, 'translationTextDomain' => 'iso639-2::']);
+        $spec->setLine('edm::dc:language', 'getLanguages', null, ['translate' => true, 'translationTextDomain' => 'iso639-2::']);
         $spec->setTemplateLine('edm::dc:description', 'getSummary', 'data-collapsible.phtml');
         $spec->setLine('ISBN', 'getISBNs');
         $spec->setLine('ISSN', 'getISSNs');
@@ -207,10 +209,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
         /**
-     * Get default specifications for displaying event data in core metadata.
-     *
-     * @return array
-     */
+         * Get default specifications for displaying event data in core metadata.
+         *
+         * @return array
+         */
     public function getDefaultPersonGndSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
@@ -245,17 +247,17 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function getDefaultPersonRelatedSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
-        $spec->setTemplateLine('RelatedEvents', 'getPersonRelatedEventCount', 'data-related-events.phtml',['field' => 'author_id']);
-        $spec->setTemplateLine('RelatedWorks', 'getPersonRelatedWorkCount', 'data-related-works.phtml',['field' => 'author_id']);
-        $spec->setTemplateLine('RelatedResources', 'getPersonRelatedResourceCount', 'data-related-resources.phtml',['field' => 'author_id']);
+        $spec->setTemplateLine('RelatedEvents', 'getPersonRelatedEventCount', 'data-related-events.phtml', ['field' => 'author_id']);
+        $spec->setTemplateLine('RelatedWorks', 'getPersonRelatedWorkCount', 'data-related-works.phtml', ['field' => 'author_id']);
+        $spec->setTemplateLine('RelatedResources', 'getPersonRelatedResourceCount', 'data-related-resources.phtml', ['field' => 'author_id']);
         return $spec->getArray();
     }
 
         /**
-     * Get default specifications for displaying data in core metadata.
-     *
-     * @return array
-     */
+         * Get default specifications for displaying data in core metadata.
+         *
+         * @return array
+         */
     public function getDefaultCorporateSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
@@ -264,10 +266,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
        /**
-     * Get default specifications for displaying event data in core metadata.
-     *
-     * @return array
-     */
+        * Get default specifications for displaying event data in core metadata.
+        *
+        * @return array
+        */
     public function getDefaultCorporateGndSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
@@ -291,23 +293,29 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
         /**
-     * Get default specifications for displaying data in core metadata.
-     *
-     * @return array
-     */
+         * Get default specifications for displaying data in core metadata.
+         *
+         * @return array
+         */
     public function getDefaultCorporateRelatedSpecs()
     {
-        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();        
+        $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setMultiLine(
             'dc:contributor',
             'getDeduplicatedAuthors',
             $this->getAuthorFunction()
         );
-        $spec->setTemplateLine('RelatedEvents', 'getCorporateRelatedEventCount', 'data-related-events.phtml',['field' => 'author_id']);
-        $spec->setTemplateLine('RelatedWorks', 'getCorporateRelatedWorkCount', 'data-related-works.phtml',['field' => 'author_id']);
-        $spec->setTemplateLine('RelatedProviderResources', 'getCorporateProviderCount', 'data-related-provider-res.phtml',
-        ['labelFunction' => function ($data,$driver) {return $driver->getProviderLabel();}]);
-        $spec->setTemplateLine('RelatedResources', 'getCorporateRelatedResourceCount', 'data-related-resources.phtml',['field' => 'author_id']);
+        $spec->setTemplateLine('RelatedEvents', 'getCorporateRelatedEventCount', 'data-related-events.phtml', ['field' => 'author_id']);
+        $spec->setTemplateLine('RelatedWorks', 'getCorporateRelatedWorkCount', 'data-related-works.phtml', ['field' => 'author_id']);
+        $spec->setTemplateLine(
+            'RelatedProviderResources',
+            'getCorporateProviderCount',
+            'data-related-provider-res.phtml',
+            ['labelFunction' => function ($data, $driver) {
+                return $driver->getProviderLabel();
+            }]
+        );
+        $spec->setTemplateLine('RelatedResources', 'getCorporateRelatedResourceCount', 'data-related-resources.phtml', ['field' => 'author_id']);
         return $spec->getArray();
     }
 
@@ -322,8 +330,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('Alternative', 'getUseFor');
         $spec->setLine('Type of Event', 'getEventType');
         $spec->setLine('Genre', 'getGenres');
-        $spec->setTemplateLine('edm::edm:occuredAt', 'getEventDate','data-dates.phtml');
-        $spec->setTemplateLine('edm::edm:happenedAt', 'getEventPlace','data-places.phtml');
+        $spec->setTemplateLine('edm::edm:occuredAt', 'getEventDate', 'data-dates.phtml');
+        $spec->setTemplateLine('edm::edm:happenedAt', 'getEventPlace', 'data-places.phtml');
         $spec->setLine('edm::dc:description', 'getDescription');
         return $spec->getArray();
     }
@@ -368,15 +376,15 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'getWorks',
             'data-related-works.phtml'
         );
-        $spec->setTemplateLine('RelatedResources', 'getEventRelatedResourceCount', 'data-related-resources.phtml',['field' => 'event_id']);
+        $spec->setTemplateLine('RelatedResources', 'getEventRelatedResourceCount', 'data-related-resources.phtml', ['field' => 'event_id']);
         return $spec->getArray();
     }
 
      /**
-     * Get default specifications for displaying event data in core metadata.
-     *
-     * @return array
-     */
+      * Get default specifications for displaying event data in core metadata.
+      *
+      * @return array
+      */
     public function getDefaultWorkGndSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
@@ -413,8 +421,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'getDeduplicatedAuthors',
             $this->getAuthorFunction()
         );
-        $spec->setTemplateLine('RelatedEvents', 'getWorkRelatedEventCount', 'data-related-events.phtml',['field' => 'work_id']);
-        $spec->setTemplateLine('RelatedResources', 'getWorkRelatedResourceCount', 'data-related-resources.phtml',['field' => 'work_id']);
+        $spec->setTemplateLine('RelatedEvents', 'getWorkRelatedEventCount', 'data-related-events.phtml', ['field' => 'work_id']);
+        $spec->setTemplateLine('RelatedResources', 'getWorkRelatedResourceCount', 'data-related-resources.phtml', ['field' => 'work_id']);
         return $spec->getArray();
     }
 
@@ -436,10 +444,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     }
 
         /**
-     * Get default specifications for displaying see also metadata.
-     *
-     * @return array
-     */
+         * Get default specifications for displaying see also metadata.
+         *
+         * @return array
+         */
     public function getDefaultProviderSpecs()
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();

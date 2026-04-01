@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Authority aspect of the Search Multi-class (Options)
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace Fiddk\Search\SolrAuthority;
 
 /**
@@ -56,8 +58,10 @@ class Options extends \VuFind\Search\Solr\Options
         // Load the Agent- or the EventModuleRecommendations configuration if available,
         // depending on the type
         $recommend = [];
-        if (($handler == 'Person' or $handler == 'Corporation' or $handler == 'Event' or $handler == 'Work') 
-            and isset($ss->AuthModuleRecommendations)) {
+        if (
+            ($handler == 'Person' or $handler == 'Corporation' or $handler == 'Event' or $handler == 'Work')
+            and isset($ss->AuthModuleRecommendations)
+        ) {
             foreach ($ss->AuthModuleRecommendations as $section => $content) {
                 $recommend[$section] = [];
                 foreach ($content as $current) {

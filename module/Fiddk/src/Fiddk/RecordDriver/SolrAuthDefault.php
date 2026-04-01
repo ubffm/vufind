@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM authority records in Solr.
  *
@@ -26,10 +27,11 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
-use \Fiddk\Connection\Lobid;
-use \Fiddk\Connection\Wikipedia;
+use Fiddk\Connection\Lobid;
+use Fiddk\Connection\Wikipedia;
 
 /**
  * Model for EDM authority records in Solr.
@@ -44,15 +46,15 @@ use \Fiddk\Connection\Wikipedia;
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 class SolrAuthDefault extends SolrDefault implements
-\VuFindHttp\HttpServiceAwareInterface
+    \VuFindHttp\HttpServiceAwareInterface
 {
     use \VuFindHttp\HttpServiceAwareTrait;
 
         /**
-     * HTTP client
-     *
-     * @var \Laminas\Http\Client
-     */
+         * HTTP client
+         *
+         * @var \Laminas\Http\Client
+         */
     protected $client;
 
     /**
@@ -141,7 +143,7 @@ class SolrAuthDefault extends SolrDefault implements
                 return 'Corporation';
                 break;
             default:
-              return $this->fields['record_type'] ?? '';
+                return $this->fields['record_type'] ?? '';
         }
     }
 
@@ -166,7 +168,7 @@ class SolrAuthDefault extends SolrDefault implements
      */
     public function isGndRecord()
     {
-        return str_starts_with($this->fields['id'],'gnd_') ?? false;
+        return str_starts_with($this->fields['id'], 'gnd_') ?? false;
     }
 
     /**
@@ -307,8 +309,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get the number of work records related to this entity
-     *
-     *
      */
     public function getRelatedWorkCount($field)
     {
@@ -326,8 +326,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get related work records
-     *
-     *
      */
     public function getRelatedWorks()
     {
@@ -336,8 +334,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get the number of resource records related to this entity
-     *
-     *
      */
     /* public function getRelatedResourceCount($field)
     {
@@ -355,8 +351,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get the number of resource records related to this entity
-     *
-     *
      */
     public function getRelatedResourceCount($fields)
     {
@@ -365,8 +359,7 @@ class SolrAuthDefault extends SolrDefault implements
         foreach ($fields as $field) {
             if (empty($queryStr)) {
                 $queryStr .= $field . ':"' . $id . '"';
-            }
-            else {
+            } else {
                 $queryStr .= " OR " . $field . ':"' . $id . '"';
             }
         }
@@ -381,8 +374,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get related resource records
-     *
-     *
      */
     public function getRelatedResources()
     {
@@ -390,10 +381,8 @@ class SolrAuthDefault extends SolrDefault implements
     }
 
         /**
-     * Get the number of event records related to this entity
-     *
-     *
-     */
+         * Get the number of event records related to this entity
+         */
     public function getRelatedEventCount($field)
     {
         $id = $this->getUniqueId();
@@ -410,8 +399,6 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Get related event records
-     *
-     *
      */
     public function getRelatedEvents()
     {

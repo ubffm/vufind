@@ -1,4 +1,5 @@
 <?php
+
 namespace Fiddk\View\Helper;
 
 use Interop\Container\ContainerInterface;
@@ -12,4 +13,3 @@ class RecordExistsFactory implements FactoryInterface
         return new RecordExists($c->get(RecordLoader::class));
     }
 }
-

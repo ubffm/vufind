@@ -59,9 +59,9 @@ class LayoutClass extends \VuFind\View\Helper\Bootstrap3\LayoutClass
                 return $this->sidebarOnLeft
                     ? 'mainbody right'
                     : 'mainbody left';
-           case 'mainbodyRecord':
+            case 'mainbodyRecord':
                 return 'mainbody left';
-           case 'sidebar':
+            case 'sidebar':
                 return $this->sidebarOnLeft
                     ? 'sidebar left hidden-print'
                     : 'sidebar right hidden-print';

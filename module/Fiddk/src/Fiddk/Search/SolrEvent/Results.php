@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Author aspect of the Search Multi-class (Results)
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace Fiddk\Search\SolrEvent;
 
 use VuFind\Record\Loader;
@@ -60,10 +62,10 @@ class Results extends SolrResults
     }
 
      /**
-     * 
-     *
-     * @return String
-     */
+      *
+      *
+      * @return String
+      */
     public function getEntityType()
     {
         return "Event";

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fiddk\Controller;
 
 use Laminas\Mail\Address;
@@ -25,11 +26,10 @@ class ContentController extends \VuFind\Controller\ContentController
         return $licenseView;
     }
 
-    public function licenceLink($licenceLink=null)
+    public function licenceLink($licenceLink = null)
     {
         $config = $this->getConfig();
         $link = $config->Site->url . '/Content/licensed?link=' . $licenceLink;
         return $link;
     }
-
 }

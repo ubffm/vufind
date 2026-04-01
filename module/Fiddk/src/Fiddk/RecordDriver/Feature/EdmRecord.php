@@ -39,13 +39,15 @@ class EdmRecord
                 'rdfs'   => 'http://www.w3.org/2000/01/rdf-schema#',
                 'edm'    => 'https://www.europeana.eu/schemas/edm/',
                 'dc'     => 'http://purl.org/dc/elements/1.1/',
-                'dcterms'=> 'http://purl.org/dc/terms/',
+                'dcterms' => 'http://purl.org/dc/terms/',
                 'ore'    => 'http://www.openarchives.org/ore/terms/',
             ];
             // erst Dokument-Namespaces sammeln …
             $this->ns = [];
             foreach ($this->edmRecord->getDocNamespaces(true) as $p => $uri) {
-                if ($p === '') { continue; } // leeres Prefix überspringen (falls Default-NS)
+                if ($p === '') {
+                    continue;
+                } // leeres Prefix überspringen (falls Default-NS)
                 $this->ns[$p] = $uri;
                 $this->edmRecord->registerXPathNamespace($p, $uri);
             }
@@ -123,15 +125,15 @@ class EdmRecord
             foreach ($props as $prop) {
                 $resLink = $this->getResourceVal($prop);
                 if ($resLink) {
-                    if ($class == "ore:Aggregation" or str_starts_with($resLink,$this->baseUrl)) {
+                    if ($class == "ore:Aggregation" or str_starts_with($resLink, $this->baseUrl)) {
                         $vals[] = $this->findMatchingPropVal($resLink, $fieldName);
                     }
-                } else if (in_array($name[1], ["temporal","issued", "created"])) {
+                } elseif (in_array($name[1], ["temporal","issued", "created"])) {
                     $label = $this->getLabel($prop);
                     if ($label) {
-                      $vals[] = $label; 
+                        $vals[] = $label;
                     } else {
-                      $vals[] = $prop->__toString();
+                        $vals[] = $prop->__toString();
                     }
                 } else {
                     $vals[] = $prop->__toString();

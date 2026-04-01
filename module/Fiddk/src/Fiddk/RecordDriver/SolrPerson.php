@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM authority person records in Solr.
  *
@@ -26,6 +27,7 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
@@ -44,7 +46,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
  */
 class SolrPerson extends SolrAuthDefault
 {
-
     /**
      * Get icon for this entity type.
      *
@@ -74,7 +75,7 @@ class SolrPerson extends SolrAuthDefault
     public function getGndOccuptaions()
     {
         // special case... for reasons...
-        if($this->fields['id'] == "gnd_1043940596") {
+        if ($this->fields['id'] == "gnd_1043940596") {
             return [0 => ['label' => 'Autor'], 1 => ['label' => 'Dramatiker'],
             2 => ['label' => 'Schauspieler'], 3 => ['label' => 'Regisseur'],
             4 => ['label' => 'Drehbuchautor']];
@@ -83,7 +84,7 @@ class SolrPerson extends SolrAuthDefault
         }
     }
 
-    
+
     /**
      * Get birth date of person or date of establishment of organization.
      *

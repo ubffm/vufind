@@ -41,7 +41,7 @@ namespace Fiddk\Search\Blender;
 class Results extends \VuFind\Search\Blender\Results
 {
     /**
-     * 
+     *
      *
      * @return String
      */
@@ -49,23 +49,23 @@ class Results extends \VuFind\Search\Blender\Results
     {
         $entityType = $searchClass ?? '';
         switch ($entityType) {
-        case "SolrEdm":
-            return "Record";
+            case "SolrEdm":
+                return "Record";
             break;
-        case "SolrPerson":
-            return "Person";
+            case "SolrPerson":
+                return "Person";
             break;
-        case "SolrCorporation":
-            return "Corporation";
+            case "SolrCorporation":
+                return "Corporation";
             break;
-        case "SolrEvent":
-            return "Event";
+            case "SolrEvent":
+                return "Event";
             break;
-        case "SolrWork":
-            return "Work";
+            case "SolrWork":
+                return "Work";
             break;
-        default:
-            return "AllRecord";
+            default:
+                return "AllRecord";
         }
     }
 }

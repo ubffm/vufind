@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AuthorityInfo Recommendations Module
  *
@@ -26,6 +27,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:recommendation_modules Wiki
  */
+
 namespace Fiddk\Recommend;
 
 use Fiddk\Connection\Lobid;
@@ -134,7 +136,8 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
     public function setConfig($settings)
     {
         $parts = explode(':', $settings);
-        if (isset($parts[0]) && !empty($parts[0])
+        if (
+            isset($parts[0]) && !empty($parts[0])
             && strtolower(trim($parts[0])) !== 'false'
         ) {
             $this->useViaf = true;
@@ -193,7 +196,8 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
     public function formatDisplayDate($date, $lang)
     {
         preg_match('/(\d{4})-(\d{2})-(\d{2})/', $date, $matches, PREG_OFFSET_CAPTURE);
-        if (!empty($matches) && isset($matches[1][0]) && isset($matches[2][0])
+        if (
+            !empty($matches) && isset($matches[1][0]) && isset($matches[2][0])
             && isset($matches[3][0])
         ) {
             $str = '';
@@ -252,7 +256,7 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
         if ($type == "Personal Name") {
             $gender = $driver->getGender();
             $occupation = $driver->getOccupation();
-            $pbirth= $driver->getPlaceOfBirth();
+            $pbirth = $driver->getPlaceOfBirth();
             $pdeath = $driver->getPlaceOfDeath();
             foreach ($occupation as $val) {
                 $res["professionOrOccupation"][] = ["label" => $val];
@@ -283,5 +287,4 @@ class AuthorityInfo implements \VuFind\Recommend\RecommendInterface
         }
         return $res;
     }
-
 }

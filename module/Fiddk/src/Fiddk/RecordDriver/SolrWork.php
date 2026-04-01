@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM work authority records in Solr.
  *
@@ -26,9 +27,10 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
-use \Fiddk\Connection\Lobid;
+use Fiddk\Connection\Lobid;
 
 /**
  * Model for EDM work authority records in Solr.
@@ -43,7 +45,7 @@ use \Fiddk\Connection\Lobid;
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 class SolrWork extends SolrEdm implements
-\VuFindHttp\HttpServiceAwareInterface
+    \VuFindHttp\HttpServiceAwareInterface
 {
     use \VuFindHttp\HttpServiceAwareTrait;
 
@@ -97,7 +99,7 @@ class SolrWork extends SolrEdm implements
      */
     public function isGndRecord()
     {
-        return str_starts_with($this->fields['id'],'gnd_') ?? false;
+        return str_starts_with($this->fields['id'], 'gnd_') ?? false;
     }
 
     /**
@@ -237,16 +239,16 @@ class SolrWork extends SolrEdm implements
     }
 
         /**
-     * Get GND number of ensembles of entity.
-     */
+         * Get GND number of ensembles of entity.
+         */
     public function getGndTotalNumberOfEnsembles()
     {
         return $this->extraDetails['totalNumberOfEnsembles'] ?? "";
     }
 
         /**
-     * Get GND number of performers of entity.
-     */
+         * Get GND number of performers of entity.
+         */
     public function getGndTotalNumberOfPerformers()
     {
         return $this->extraDetails['totalNumberOfPerformers'] ?? "";
@@ -283,10 +285,8 @@ class SolrWork extends SolrEdm implements
     }
 
      /**
-     * Get the number of event records related to this entity
-     *
-     *
-     */
+      * Get the number of event records related to this entity
+      */
     public function getRelatedEventCount($field)
     {
         $id = $this->getUniqueId();
@@ -303,12 +303,9 @@ class SolrWork extends SolrEdm implements
 
     /**
      * Get related event records
-     *
-     *
      */
     public function getRelatedEvents()
     {
         return $this->relatedEvents;
     }
-
 }

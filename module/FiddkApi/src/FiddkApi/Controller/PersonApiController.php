@@ -38,6 +38,4 @@ class PersonApiController extends \FiddkApi\Controller\SearchApiController
      * @var string
      */
     protected $modelPrefix = 'person';
-
 }
-

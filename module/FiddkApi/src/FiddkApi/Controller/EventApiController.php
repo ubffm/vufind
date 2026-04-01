@@ -38,6 +38,4 @@ class EventApiController extends \FiddkApi\Controller\SearchApiController
      * @var string
      */
     protected $modelPrefix = 'event';
-
 }
-

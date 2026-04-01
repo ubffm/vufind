@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions for reading EDM records.
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver\Feature;
 
 /**
@@ -40,12 +42,13 @@ namespace Fiddk\RecordDriver\Feature;
  */
 trait EdmBasicTrait
 {
-
-    public function getRecordType() {
+    public function getRecordType()
+    {
         return 'Record';
     }
 
-    public function getEntityType() {
+    public function getEntityType()
+    {
         return 'Record';
     }
 
@@ -74,7 +77,9 @@ trait EdmBasicTrait
         return $this->fields['genre'] ?? [];
     }
 
-    /** Place related fields */
+    /**
+     * Place related fields
+     */
 
     // convenience method for API, carousels and result lists
     public function getGeographicsCon()
@@ -110,11 +115,13 @@ trait EdmBasicTrait
     }
 
     public function getPlaces($type)
-    {   
+    {
         return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
     }
 
-    /** Date related fields */
+    /**
+     * Date related fields
+     */
 
     // convenience method for API, carousels and result lists
     public function getDatesCon()
@@ -146,7 +153,7 @@ trait EdmBasicTrait
     }
 
     public function getDates($type)
-    {   
+    {
         return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
     }
 
@@ -363,7 +370,8 @@ trait EdmBasicTrait
         if (isset($this->fields['related_to'])) {
             $ids = $this->fields['related_to'];
             array_walk(
-                $ids, function (&$id) use (&$retVal) {
+                $ids,
+                function (&$id) use (&$retVal) {
                     $title = $this->getTitleIfExists($id, $this->sourceIdentifier);
                     if ($title) {
                         $retVal[$id] = $title;

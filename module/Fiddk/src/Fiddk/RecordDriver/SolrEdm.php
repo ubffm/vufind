@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM records in Solr.
  *
@@ -26,6 +27,7 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
 /**

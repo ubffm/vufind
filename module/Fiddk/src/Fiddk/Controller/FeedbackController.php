@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller for configurable forms (feedback etc).
  *
@@ -12,7 +13,9 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace Fiddk\Controller;
+
 use VuFind\Form\Form;
 
 /**
@@ -68,8 +71,10 @@ class FeedbackController extends \VuFind\Controller\FeedbackController
         $params = $this->params();
         $form->setData($params->fromPost());
 
-        if (($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMTT' || $formId == 'AskArchiveDTM') 
-             && !$this->formWasSubmitted('submit', $view->useCaptcha)) {
+        if (
+            ($formId == 'AskArchiveDTK' || $formId == 'AskArchiveMTT' || $formId == 'AskArchiveDTM')
+             && !$this->formWasSubmitted('submit', $view->useCaptcha)
+        ) {
             $callNumber = $this->params()->fromRoute('callNumber', $this->params()->fromQuery('callNumber'));
             $form = $this->prefillRecordInfo($form, $callNumber);
             return $view;

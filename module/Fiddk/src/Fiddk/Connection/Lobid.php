@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lobid connection class
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace Fiddk\Connection;
 
 /**
@@ -96,7 +98,6 @@ class Lobid
             } else {
                 error_log("Lobid-Request fehlgeschlagen: HTTP " . $response->getStatusCode());
             }
-
         } catch (\Laminas\Http\Client\Adapter\Exception\TimeoutException $e) {
             error_log("Lobid-Timeout bei GND $gnd: " . $e->getMessage());
         } catch (\Exception $e) {

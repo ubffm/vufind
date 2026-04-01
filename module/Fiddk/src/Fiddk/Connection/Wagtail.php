@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Wagtail connection class
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace Fiddk\Connection;
 
 /**
@@ -66,7 +68,8 @@ class Wagtail
      * This method is responsible for connecting to Lobid via the REST API
      * and pulling the JSON content for the relevant gnd.
      *
-     *TODO: cache this
+     * TODO: cache this
+     *
      * @return array
      */
     public function getNav()
@@ -75,7 +78,7 @@ class Wagtail
         if ($this->alreadyRetrieved()) {
             return [];
         }
-        
+
         //$api = 'http://127.0.0.1:8000/de/api/v2/pages/';
         //$uri = $api . '?type=regular.RegularIndexPage&fields=depth';
         // Get information from API
@@ -110,21 +113,22 @@ class Wagtail
      *
      * @return array
      */
-    public function parseJson($body,$api)    
-    { // make json with key lang and tree struct
+    public function parseJson($body, $api)
+    {
+ // make json with key lang and tree struct
         if ($body) {
-            $res = ['de'=>[], 'en'=>[]];
+            $res = ['de' => [], 'en' => []];
             $json = json_decode($body, true);
-            foreach($json["items"] as $item) {
+            foreach ($json["items"] as $item) {
                 if ($item["depth"] == 3) {
                     $id = $item["id"];
                     $lang = $item["meta"]["locale"];
                     $children_uri = $api . '?child_of=' . $id . '&show_in_menus=true';
-                    $children=[];
+                    $children = [];
                     $response = $this->client->setUri($children_uri)->setMethod('GET')->send();
                     if ($response->isSuccess()) {
                         $json_children = json_decode($response->getBody(), true);
-                        foreach($json_children["items"] as $child_item) {
+                        foreach ($json_children["items"] as $child_item) {
                             // no need for language check here
                             $children[] = ['title' => $child_item["title"], 'url' => $child_item["meta"]["html_url"]];
                         }

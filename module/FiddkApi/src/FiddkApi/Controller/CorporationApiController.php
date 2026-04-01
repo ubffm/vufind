@@ -38,6 +38,4 @@ class CorporationApiController extends \FiddkApi\Controller\SearchApiController
      * @var string
      */
     protected $modelPrefix = 'corporation';
-
 }
-

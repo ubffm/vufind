@@ -65,5 +65,4 @@ class PluginManager extends \VuFind\Search\Options\PluginManager
         \Fiddk\Search\SolrEvent\Options::class => \VuFind\Search\Options\OptionsFactory::class,
         \Fiddk\Search\SolrWork\Options::class => \VuFind\Search\Options\OptionsFactory::class,
     ];
-
 }

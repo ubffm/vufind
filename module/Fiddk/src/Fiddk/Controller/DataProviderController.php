@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Data provider Controller
  *
@@ -26,6 +27,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Page
  */
+
 namespace Fiddk\Controller;
 
 /**
@@ -65,7 +67,8 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
         } elseif (null !== $themeInfo->findContainingTheme($defaultTpl)) {
             $page = "{$page}_$defaultLanguage";
         }
-        if (empty($page) || 'dataprovider' === $page
+        if (
+            empty($page) || 'dataprovider' === $page
             || null === $themeInfo->findContainingTheme(
                 "templates/dataprovider/$page.phtml"
             )
@@ -75,5 +78,4 @@ class DataProviderController extends \VuFind\Controller\AbstractBase
         $view = $this->createViewModel(['page' => $page]);
         return $view;
     }
-
 }

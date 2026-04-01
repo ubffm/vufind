@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM authority corporation records in Solr.
  *
@@ -26,6 +27,7 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
 use VuFind\I18n\Translator\TranslatorAwareTrait;
@@ -96,8 +98,8 @@ class SolrCorporation extends SolrAuthDefault
     }
 
         /**
-     * Get GND termination date of corporate body
-     */
+         * Get GND termination date of corporate body
+         */
     public function getGndTermination()
     {
         return $this->extraDetails['dateOfTermination'] ?? [];
@@ -176,8 +178,6 @@ class SolrCorporation extends SolrAuthDefault
 
     /**
      * Get related provider resource records
-     *
-     *
      */
     public function getRelatedProviderResources()
     {
@@ -198,7 +198,8 @@ class SolrCorporation extends SolrAuthDefault
         return $collection->getTotal();
     }
 
-    public function getProviderLabel() {
-        return $this->translate('RelatedProviderResources',["%%name%%" => $this->getTitle()]);
+    public function getProviderLabel()
+    {
+        return $this->translate('RelatedProviderResources', ["%%name%%" => $this->getTitle()]);
     }
 }

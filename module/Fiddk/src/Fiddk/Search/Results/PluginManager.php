@@ -78,5 +78,4 @@ class PluginManager extends \VuFind\Search\Results\PluginManager
         \Fiddk\Search\Blender\Results::class =>
             \VuFind\Search\Solr\ResultsFactory::class,
     ];
-
 }

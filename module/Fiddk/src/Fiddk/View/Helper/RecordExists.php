@@ -1,4 +1,5 @@
 <?php
+
 namespace Fiddk\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -6,7 +7,9 @@ use VuFind\Record\Loader as RecordLoader;
 
 class RecordExists extends AbstractHelper
 {
-    public function __construct(private RecordLoader $loader) {}
+    public function __construct(private RecordLoader $loader)
+    {
+    }
 
     public function __invoke(?string $id, array|string $sources = 'Solr'): bool
     {
@@ -25,6 +28,4 @@ class RecordExists extends AbstractHelper
         }
         return false;
     }
-
 }
-

@@ -38,6 +38,4 @@ class WorkApiController extends \FiddkApi\Controller\SearchApiController
      * @var string
      */
     protected $modelPrefix = 'work';
-
 }
-

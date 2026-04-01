@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Agent Record Controller
  *
@@ -27,6 +28,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace Fiddk\Controller;
 
 use Laminas\Config\Config;
@@ -44,12 +46,11 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class AgentController extends \VuFind\Controller\AbstractRecord
 {
-
      /**
-     * Constructor
-     *
-     * @param ServiceLocatorInterface $sm Service locator
-     */
+      * Constructor
+      *
+      * @param ServiceLocatorInterface $sm Service locator
+      */
     public function __construct(ServiceLocatorInterface $sm)
     {
         // assume it's a person if we call an agent
@@ -58,7 +59,8 @@ class AgentController extends \VuFind\Controller\AbstractRecord
         parent::__construct($sm);
     }
 
-    public function homeAction() {
+    public function homeAction()
+    {
         try {
             $this->driver = $this->loadRecord();
         } catch (\Exception $e) {
@@ -68,7 +70,7 @@ class AgentController extends \VuFind\Controller\AbstractRecord
         // Apply template for simplified authority record display:
         $result = parent::homeAction();
         if (is_callable([$result, 'setTemplate'])) {
-           $result->setTemplate('RecordDriver/SolrAuthDefault/view');
+            $result->setTemplate('RecordDriver/SolrAuthDefault/view');
         }
         return $result;
     }

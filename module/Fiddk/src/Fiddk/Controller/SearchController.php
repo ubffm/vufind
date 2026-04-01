@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default Controller.
  *
@@ -26,8 +27,10 @@
  *
  * @link https://vufind.org Main Site
  */
+
 namespace Fiddk\Controller;
-use \Fiddk\Connection\Wagtail;
+
+use Fiddk\Connection\Wagtail;
 
 /**
  * Redirects the user to the appropriate default VuFind action.

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM records in Solr.
  *
@@ -26,6 +27,7 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
 /**
@@ -40,7 +42,8 @@ namespace Fiddk\RecordDriver;
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
-class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
+class SolrDefault extends \VuFind\RecordDriver\SolrDefault
+{
     use Feature\EdmReaderTrait;
 
     public function getIntermediates()
@@ -65,13 +68,14 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
                     $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
                     $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
                 } else {
-                    $instlink = $this->getDProvFromConfig($inst,1);
+                    $instlink = $this->getDProvFromConfig($inst, 1);
                 }
-                $interlink = $this->getDProvFromConfig($inter,1);;
+                $interlink = $this->getDProvFromConfig($inter, 1);
+                ;
                 $res = ["inter" => [$inter,$interlink,$inst,$instlink]];
             }
         } else {
-            $res = ["inst" => [$inst,$this->getDProvFromConfig($inst,1)]];
+            $res = ["inst" => [$inst,$this->getDProvFromConfig($inst, 1)]];
         }
         return $res;
     }
@@ -91,11 +95,11 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
                 if ($inter == "BASE - Bielefeld Academic Search Engine") {
                     return "BASE";
                 } else {
-                    return $this->getDProvFromConfig($inst,2);
+                    return $this->getDProvFromConfig($inst, 2);
                 }
             }
         } else {
-            return $this->getDProvFromConfig($inst,2);
+            return $this->getDProvFromConfig($inst, 2);
         }
     }
 
@@ -108,7 +112,7 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
     public function getInfoAboutProvider()
     {
         $inst = $this->getInstitutions()[0];
-        return $this->getDProvFromConfig($inst,0);
+        return $this->getDProvFromConfig($inst, 0);
     }
 
     /**
@@ -136,6 +140,4 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault {
 
         return $info[$i];
     }
-
-
 }

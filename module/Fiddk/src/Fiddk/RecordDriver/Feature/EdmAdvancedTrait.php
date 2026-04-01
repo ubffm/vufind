@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions for reading EDM records.
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver\Feature;
 
 /**
@@ -59,7 +61,7 @@ trait EdmAdvancedTrait
             if ($this->getCallNumber()) {
                 $callNumber = $this->getCallNumber()[0];
             } else {
-                $callNumber = substr($this->getUniqueId(),strpos($this->getUniqueId(), "_") + 1);
+                $callNumber = substr($this->getUniqueId(), strpos($this->getUniqueId(), "_") + 1);
             }
         }
         return $callNumber;
@@ -70,7 +72,7 @@ trait EdmAdvancedTrait
         $url = "";
         $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
         if (isset($this->getInstitutions()[0])) {
-            $inst = $this->getInstitutions()[0]; 
+            $inst = $this->getInstitutions()[0];
         } else {
             $inst = "";
         }
@@ -97,7 +99,7 @@ trait EdmAdvancedTrait
             return null;
         }
     }
-    
+
     public function queryRecordId($id, $source)
     {
         $query = new \VuFindSearch\Query\Query(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model for EDM authority records in Solr.
  *
@@ -26,6 +27,7 @@
  *
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
+
 namespace Fiddk\RecordDriver;
 
 /**
@@ -42,7 +44,6 @@ namespace Fiddk\RecordDriver;
  */
 class SolrEvent extends SolrAuthDefault
 {
-
     /**
      * Get icon for this entity type.
      *

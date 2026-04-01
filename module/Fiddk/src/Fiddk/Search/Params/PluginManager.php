@@ -54,5 +54,4 @@ class PluginManager extends \VuFind\Search\Params\PluginManager
         'solrwork' => \Fiddk\Search\SolrWork\Params::class,
         \VuFind\Search\SolrAuth\Params::class => \Fiddk\Search\SolrAuthority\Params::class,
     ];
-
 }

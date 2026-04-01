@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Wikipedia connection class
  *
@@ -26,6 +27,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace Fiddk\Connection;
 
 /**
@@ -66,7 +68,7 @@ class Wikipedia extends \VuFind\Connection\Wikipedia
                     'timeout' => 20, // ⏱ Timeout von 10s auf 20s erhöhen
                     'maxredirects' => 5,
                 ]);
-            
+
             $response = $this->client->send();
 
             if ($response->isSuccess() && $body = $response->getBody()) {
@@ -82,5 +84,4 @@ class Wikipedia extends \VuFind\Connection\Wikipedia
 
         return null;
     }
-
 }

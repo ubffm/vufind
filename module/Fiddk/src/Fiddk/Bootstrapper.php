@@ -29,7 +29,7 @@
 
 namespace Fiddk;
 
-use \Fiddk\Connection\Wagtail;
+use Fiddk\Connection\Wagtail;
 
 /**
  * VuFind Bootstrapper
@@ -40,8 +40,8 @@ use \Fiddk\Connection\Wagtail;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class Bootstrapper extends \VuFind\Bootstrapper implements 
-\VuFindHttp\HttpServiceAwareInterface
+class Bootstrapper extends \VuFind\Bootstrapper implements
+    \VuFindHttp\HttpServiceAwareInterface
 {
     use \VuFindHttp\HttpServiceAwareTrait;
 
@@ -61,7 +61,6 @@ class Bootstrapper extends \VuFind\Bootstrapper implements
 
     /**
      * HTTP Service
-     *
      */
     protected $httpService;
 
@@ -102,6 +101,5 @@ class Bootstrapper extends \VuFind\Bootstrapper implements
         $this->client = $this->httpService->createClient();
         $this->wagtail = new Wagtail($this->client);
         $viewModel->setVariable('navigation', $this->wagtail->getNav());
-        
     }
 }
