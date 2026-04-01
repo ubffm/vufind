@@ -5,9 +5,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
   $recordLinker = $this->recordLinker();
   //$recordLinker = $this->recordLinker($this->results);
   $heading = $this->driver->getTitle();
-  if (empty($heading)) {
+if (empty($heading)) {
     $heading = $this->translate('Heading unavailable.');
-  }
+}
   $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
   $authType = $this->driver->getRecordType();
@@ -16,14 +16,14 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
-  if ($coverDetails['cover'] && $cover):
+if ($coverDetails['cover'] && $cover) :
     ob_start(); ?>
       <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
        <?=$cover ?>
       </div>
     <?php $thumbnail = ob_get_contents();
     ob_end_clean();?>
-    <?php endif; ?>
+<?php endif; ?>
     <div class="media <?=$authType?>L">
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
@@ -39,36 +39,36 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
     </div>
     <?php $eventTypes = $this->driver->getEntityType();
           $eventGenres = $this->driver->getGenres();
-    if ($eventTypes): ?>
+    if ($eventTypes) : ?>
       <div class="resultItemLine">
         <?=$this->escapeHtml(implode('; ', $eventTypes))?>
        </div>    
     <?php endif;
-    if ($eventGenres): ?>
+    if ($eventGenres) : ?>
     <div class="resultItemLine">
         <?=$this->escapeHtml(implode('; ', $eventGenres))?>
     </div>
     <?php endif;
-     $places = $this->driver->getEventPlace(); 
+     $places = $this->driver->getEventPlace();
      $dates = $this->driver->getEventDate();?>
-    <?php if ($places || $dates): ?>
-        <?php if ($dates): 
+    <?php if ($places || $dates) : ?>
+        <?php if ($dates) :
               $normDates = []; ?>
-          <?php foreach ($dates as $date): ?>
-            <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
-          <?php endforeach; ?>
+            <?php foreach ($dates as $date) : ?>
+                <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
+            <?php endforeach; ?>
           <div class="resultItemLine">
           <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
           </div>
-          <?php endif; ?>
-        <?php if ($places): ?>
+        <?php endif; ?>
+        <?php if ($places) : ?>
           <div class="resultItemLine">
           <img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
           </div>
         <?php endif; ?>
     <?php endif; ?>
   </div>
-  <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>
-    <?=$thumbnail ?>
+  <?php if ($thumbnail && $thumbnailAlignment == 'right') : ?>
+        <?=$thumbnail ?>
   <?php endif ?>
 </div>

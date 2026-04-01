@@ -1,22 +1,23 @@
 <div class="links">
   <h3 property="context"><i class="fa fa-regular fa-link recordIcon"></i>&nbsp;<?=$this->transEsc("More Links")?></h3>
-  <?php foreach ($data as $i => $current):
-    if (isset($current['id']) && isset($current['collection'])) :
-    $abbr = $current['collection']['abbr'] ?? '';
-    $name = $current['collection']['name'] ?? '';
-    $icon = $current['collection']['icon'] ?? '';?>
-      <?php if ($icon): ?>
+  <?php foreach ($data as $i => $current) :
+      if (isset($current['id']) && isset($current['collection'])) :
+          $abbr = $current['collection']['abbr'] ?? '';
+          $name = $current['collection']['name'] ?? '';
+          $icon = $current['collection']['icon'] ?? '';?>
+          <?php if ($icon) : ?>
         <img class="external-icon" src="<?=$icon?>" alt="<?=$abbr?>"/>
-      <?php endif;?>
+          <?php endif;?>
       <a href="<?=$current['id']?>" target="_blank">
-        <?php if ($name): ?>
-          <?=$name?>
-        <?php else: ?>
-          <?=$current['id']?>
-        <?php endif;?>
+          <?php if ($name) : ?>
+                <?=$name?>
+          <?php else : ?>
+              <?=$current['id']?>
+          <?php endif;?>
       </a>
-      <?php if ($i < sizeof($data) - 1): ?><?="&nbsp;|&nbsp;"?>
-      <?php endif; ?>
-  <?php endif;
-endforeach; ?>
+          <?php if ($i < sizeof($data) - 1) :
+                ?><?="&nbsp;|&nbsp;"?>
+          <?php endif; ?>
+      <?php endif;
+  endforeach; ?>
 </div>

@@ -1,8 +1,8 @@
 <?php
-    if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
-      // Set page title
-      $this->headTitle('Theatersammlung Komplex Mauerbach des Don Juan Archivs Wien');
-?>
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+  // Set page title
+    $this->headTitle('Theatersammlung Komplex Mauerbach des Don Juan Archivs Wien');
+    ?>
 <h2>Theatersammlung Komplex Mauerbach des Don Juan Archivs Wien</h2>
 <img src="<?=$this->imageLink('logos_s/kom.png')?>" alt="Don Juan Archiv Wien"/><br/><br/>
 <p><a href="http://www.donjuanarchiv.at/historischer-bestand/komplex-mauerbach.html"
@@ -12,8 +12,8 @@
   deutschsprachigen Raum (etwa in Wien, Berlin, Leipzig), zumeist in deutscher Sprache.</p>
 <?php } else {
   // Set page title
-  $this->headTitle('Komplex Mauerbach Theatre Collection owned by the Don Juan Archive in Vienna');
-?>
+    $this->headTitle('Komplex Mauerbach Theatre Collection owned by the Don Juan Archive in Vienna');
+    ?>
 <h2>Komplex Mauerbach Theatre Collection owned by the Don Juan Archive in Vienna</h2>
 <img src="<?=$this->imageLink('logos_s/kom.png')?>" alt="Don Juan Archiv Wien"/><br/><br/>
 <p><a href="http://www.donjuanarchiv.at/historischer-bestand/komplex-mauerbach.html"

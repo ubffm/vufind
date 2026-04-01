@@ -1,4 +1,5 @@
 <?php
+
 $labels = [];
 if (is_array($data)) {
     foreach ($data as $row) {
@@ -10,4 +11,3 @@ if (is_array($data)) {
     }
 }
 echo implode(' | ', $labels);
-?>

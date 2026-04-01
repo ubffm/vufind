@@ -6,11 +6,11 @@
     </button>
     <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->baseUrl?>" aria-label="Home Button"></a>
   </div>
-  <?php if (!isset($this->layout()->renderingError)): ?>
+  <?php if (!isset($this->layout()->renderingError)) : ?>
     <div class="collapse navbar-collapse" id="header-collapse">
       <nav>
         <ul class="nav navbar-nav navbar-right flip">
-          <?php $cart = $this->cart(); if ($cart->isActive()): ?>
+          <?php $cart = $this->cart(); if ($cart->isActive()) : ?>
             <li id="cartSummary">
               <a id="cartItems" data-lightbox title="<?=$this->transEscAttr('View Book Bag')?>" href="<?=$this->url('cart-home')?>">
                 <i class="fa fa-suitcase" aria-hidden="true"></i> <span role="status"><span class="sr-only"><?=$this->transEsc('Book Bag')?>:</span> <strong><?=count($cart->getItems())?></strong> <?=$this->transEsc('items')?></span>
@@ -18,35 +18,45 @@
               </a>
             </li>
           <?php endif; ?>
-          <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
-            <li class="logoutOptions<?php if($account->dropdownEnabled()): ?> with-dropdown<?php endif ?><?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
+          <?php if (is_object($account) && $account->loginEnabled()) : // hide login/logout if unavailable ?>
+            <li class="logoutOptions<?php if ($account->dropdownEnabled()) :
+                ?> with-dropdown<?php
+                                    endif ?><?php if (!$account->isLoggedIn()) :
+    ?> hidden<?php
+                                    endif ?>">
               <a href="<?=$this->url('myresearch-home', [], ['query' => ['redirect' => 0]])?>"><i id="account-icon" class="fa fa-user-circle" aria-hidden="true"></i> <?=$this->transEsc("Your Account")?></a>
             </li>
-            <?php if($account->dropdownEnabled()): ?>
-              <li id="login-dropdown" class="dropdown<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
+                <?php if ($account->dropdownEnabled()) : ?>
+              <li id="login-dropdown" class="dropdown<?php if (!$account->isLoggedIn()) :
+                    ?> hidden<?php
+                                                     endif ?>">
                 <a href="#" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-menu">
-                  <?=$this->render('myresearch/menu'); ?>
+                    <?=$this->render('myresearch/menu'); ?>
                 </div>
               </li>
-            <?php endif; ?>
-            <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
+                <?php endif; ?>
+            <li class="logoutOptions<?php if (!$account->isLoggedIn()) :
+                ?> hidden<?php
+                                    endif ?>">
               <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>
             </li>
-            <li id="loginOptions"<?php if($account->isLoggedIn()): ?> class="hidden"<?php endif ?>>
-              <?php if ($account->getSessionInitiator($this->serverUrl($this->url('myresearch-home')))): ?>
+            <li id="loginOptions"<?php if ($account->isLoggedIn()) :
+                ?> class="hidden"<?php
+                                 endif ?>>
+                <?php if ($account->getSessionInitiator($this->serverUrl($this->url('myresearch-home')))) : ?>
                 <a href="<?=$this->url('myresearch-userlogin')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> <?=$this->transEsc("Institutional Login")?></a>
-              <?php else: ?>
+                <?php else : ?>
                 <a href="<?=$this->url('myresearch-userlogin')?>" data-lightbox><i class="fa fa-sign-in" aria-hidden="true"></i> <?=$this->transEsc("Login")?></a>
-              <?php endif; ?>
+                <?php endif; ?>
             </li>
           <?php endif; ?>
 
-          <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1): ?>
+          <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1) : ?>
             <li class="theme dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->transEsc("Theme")?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <?php foreach ($this->layout()->themeOptions as $current): ?>
+                <?php foreach ($this->layout()->themeOptions as $current) : ?>
                   <li<?=$current['selected'] ? ' class="active"' : ''?>>
                     <a href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['ui' => $current['name']])) ?>" rel="nofollow">
                       <?=$this->transEsc($current['desc']) ?>
@@ -58,44 +68,44 @@
           <?php endif; ?>
 
           <?php $navigation = []; //$this->layout()->navigation;
-          if (isset($navigation[$this->layout()->userLang])):
-            foreach ($navigation[$this->layout()->userLang] as $nav): ?>
+            if (isset($navigation[$this->layout()->userLang])) :
+                foreach ($navigation[$this->layout()->userLang] as $nav) : ?>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?=$nav['url']?>" aria-expanded="false"><?=$nav['title']?></a>
               <ul class="dropdown-menu">
-                <?php foreach ($nav["children"] as $child): ?>
+                    <?php foreach ($nav["children"] as $child) : ?>
                   <li class="nav-item">
                      <a class="nav-link" href="<?=$child['url']?>"><?=$child['title']?></a>
                   </li>
-                <?php endforeach;?>
+                    <?php endforeach;?>
               </ul>
             </li>
-          <?php endforeach; ?>
-          <?php else: ?>
+                <?php endforeach; ?>
+            <?php else : ?>
           <li class="nav-item dropdown">
             <a class="nav-link" href="/"><?=$this->transEsc("Back_to_Homepage");?></a>
           </li>
           <li class="nav-item dropdown">
-            <?php if (isset($templateName) && ($templateName == 'advanced')): ?>
+                <?php if (isset($templateName) && ($templateName == 'advanced')) : ?>
               <a class="nav-link" href="/discovery/Blender/Results"><?=$this->transEsc("simple_search");?></a>
-            <?php else: ?>
+                <?php else : ?>
               <a class="nav-link" href="/discovery/Search/Advanced"><?=$this->transEsc("Advanced Search");?></a>
-            <?php endif; ?>
+                <?php endif; ?>
           </li>
-         <?php endif;
+            <?php endif;
             ?>
 
-          <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
+          <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1) : ?>
             <li class="language nav-item">
               <div class="btn-group">
-                <?php foreach ($this->layout()->allLangs as $langCode => $langName): ?>
+                <?php foreach ($this->layout()->allLangs as $langCode => $langName) : ?>
                     <a class="btn btn-primary<?=$this->layout()->userLang == $langCode ? ' active' : ''?>" href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['lng' => $langCode])) ?>" rel="nofollow">
-                      <?=strToUpper(substr($this->displayLanguageOption($langName),0,2))?>
+                      <?=strToUpper(substr($this->displayLanguageOption($langName), 0, 2))?>
                     </a>
                 <?php endforeach; ?>
             </li>
           <?php endif; ?>
-          <?php if ($this->feedback()->tabEnabled()): ?>
+          <?php if ($this->feedback()->tabEnabled()) : ?>
             <li class="nav-item" id="feedbackLink">
               <a class="nav-link btn btn-primary" href="/about/contact/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
@@ -107,7 +117,7 @@
     </div>
   <?php endif; ?>
 </div>
-<?php if ($this->layout()->searchbox !== false): ?>
+<?php if ($this->layout()->searchbox !== false) : ?>
   <div class="search container navbar">
     <div class="nav searchbox hidden-print" role="search">
       <?=$this->layout()->searchbox ?>

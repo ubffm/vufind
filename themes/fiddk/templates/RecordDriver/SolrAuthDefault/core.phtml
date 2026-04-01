@@ -10,30 +10,30 @@
     $cover = $coverDetails['html'];
     $alignment = $this->record($this->driver)->getThumbnailAlignment('result');
     $preview = $this->record($this->driver)->getPreviews();
-  ?>
-  <?php if (($QRCode || $cover || $preview) && $alignment == 'left'): ?>
+    ?>
+  <?php if (($QRCode || $cover || $preview) && $alignment == 'left') : ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
-      <?php /* Display thumbnail if appropriate: */ ?>
-      <?php if($coverDetails['cover']): ?>
-        <?=$cover?>
-      <?php endif; ?>
+        <?php /* Display thumbnail if appropriate: */ ?>
+        <?php if ($coverDetails['cover']) : ?>
+            <?=$cover?>
+        <?php endif; ?>
 
-      <?php /* Display qrcode if appropriate: */ ?>
-      <?php if($QRCode): ?>
+        <?php /* Display qrcode if appropriate: */ ?>
+        <?php if ($QRCode) : ?>
         <span class="hidden-xs">
           <br/><img alt="<?=$this->transEsc('QR Code')?>" class="qrcode" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
         </span>
-      <?php endif; ?>
+        <?php endif; ?>
 
-      <?php // if you have a preview tab but want to move or remove the preview link
+        <?php // if you have a preview tab but want to move or remove the preview link
          // from this area of the record view, this can be split into
          // getPreviewData() (should stay here) and
          // getPreviewLink() (can go in your desired tab) ?>
-      <?php if ($preview): ?>
+        <?php if ($preview) : ?>
         <div class="record-previews">
-          <?=$preview?>
+            <?=$preview?>
         </div>
-      <?php endif; ?>
+        <?php endif; ?>
     </div>
   <?php endif; ?>
   <div class="media-body">
@@ -41,55 +41,57 @@
     <?php /* Display Main Details */ ?>
     <?php
       $formatter = $this->recordDataFormatter();
-      if ($isGnd) {
+    if ($isGnd) {
         $driver->getGndRecord();
         //var_dump($driver->getGndRecord());
         $coreFields = $formatter->getData($driver, $formatter->getDefaults($recordType . 'Gnd'));
         $gndProvider = $this->driver->getGndDescribedBy();
         $sameAs = $this->driver->getGndSameAs();
-      } else {
+    } else {
         $coreFields = $formatter->getData($driver, $formatter->getDefaults($recordType));
         $provider = $formatter->getData($driver, $formatter->getDefaults('Provider'));
         $sameAs = [];
-      }
+    }
       $relatedFields = $formatter->getData($driver, $formatter->getDefaults($recordType . 'Related'));
     ?>
-    <?php if (!empty($coreFields)): ?>
+    <?php if (!empty($coreFields)) : ?>
       <div class="data-table">
         <table class="table">
           <caption class="sr-only"><?=$this->transEsc('Details')?></caption>
-          <?php foreach ($coreFields as $current): ?>
+          <?php foreach ($coreFields as $current) : ?>
             <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
           <?php endforeach; ?>
         </table>
-        <?php if (!empty($relatedFields)): ?>
+        <?php if (!empty($relatedFields)) : ?>
           <hr class="wmar">
           <div class="relations">
-          <?php foreach ($relatedFields as $i => $current): ?>
-            <?php switch ($current['label']) {
-        case 'dc:contributor':
-          $icon = '<img class="iconR" src="' . $this->imageLink("icons/person_color.svg") . '" alt="Icon" width="32" height="32"></img><img class="iconR" src="' . $this->imageLink("icons/buildings_color.svg") . '" alt="Icon" width="32" height="32"></img>';
-          break;
-        case 'RelatedEvents':
-          $icon = '<img class="iconR" src="' . $this->imageLink("icons/calendar4-event_color.svg") . '" alt="Icon" width="32" height="32"></img>';
-          break;
-        case 'RelatedWorks':
-          $icon = '<img class="iconR" src="' . $this->imageLink("icons/lightbulb_color.svg") . '" alt="Icon" width="32" height="32"></img>';
-          break;
-        default:
-          $icon = '<img class="iconR" src="' . $this->imageLink("icons/boxes_color.svg") . '" alt="Icon" width="32" height="32"></img>';
-          break; 
-        }
-        ?>
+            <?php foreach ($relatedFields as $i => $current) : ?>
+                <?php switch ($current['label']) {
+                    case 'dc:contributor':
+                        $icon = '<img class="iconR" src="' . $this->imageLink("icons/person_color.svg") . '" alt="Icon" width="32" height="32"></img><img class="iconR" src="' . $this->imageLink("icons/buildings_color.svg") . '" alt="Icon" width="32" height="32"></img>';
+                        break;
+                    case 'RelatedEvents':
+                        $icon = '<img class="iconR" src="' . $this->imageLink("icons/calendar4-event_color.svg") . '" alt="Icon" width="32" height="32"></img>';
+                        break;
+                    case 'RelatedWorks':
+                        $icon = '<img class="iconR" src="' . $this->imageLink("icons/lightbulb_color.svg") . '" alt="Icon" width="32" height="32"></img>';
+                        break;
+                    default:
+                        $icon = '<img class="iconR" src="' . $this->imageLink("icons/boxes_color.svg") . '" alt="Icon" width="32" height="32"></img>';
+                        break;
+                }
+                ?>
          <h3><?=$icon?><?=$this->transEsc('edm::' . $current['label'])?></h3>
-         <?=$current['value']?>
-         <?php if ($i < sizeof($relatedFields) - 1): ?><hr class="wmar"><?php endif; ?>
-        <?php endforeach; ?>
+                <?=$current['value']?>
+                <?php if ($i < sizeof($relatedFields) - 1) :
+                    ?><hr class="wmar"><?php
+                endif; ?>
+            <?php endforeach; ?>
           </div>
-          <?php endif; ?>
-        <?php if (!empty($sameAs)): ?>
+        <?php endif; ?>
+        <?php if (!empty($sameAs)) : ?>
           <hr class="wmar">
-          <?=$this->render('RecordDriver/DefaultRecord/data-sameAs.phtml', ['data' => $sameAs]);?>
+            <?=$this->render('RecordDriver/DefaultRecord/data-sameAs.phtml', ['data' => $sameAs]);?>
         <?php endif; ?>
       </div>
     <?php endif; ?>
@@ -97,25 +99,25 @@
     <?php /* End Main Details */ ?>
   </div>
   <div class="media-body-right">
-    <?php if ($coverDetails['cover'] && $alignment == 'right'): ?>
+    <?php if ($coverDetails['cover'] && $alignment == 'right') : ?>
       <div class="media-right <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
         <?=$cover?>
         <?php $picSource = $this->driver->getPicSource($coverDetails['cover']);?>
-        <?php if (!empty($picSource)): ?>
+        <?php if (!empty($picSource)) : ?>
           <figcaption><?=$this->transEsc("PicSource") . ": " . $picSource[0] . " | "?>
           <a href="<?=$picSource[1]?>">Wikimedia Commons</a>
-          <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
+            <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
         <?php endif; ?>
       </div>
     <?php endif ?>
       <div class="provider">
         <h3><img src="<?=$this->imageLink("icons/arrow-repeat.svg")?>" alt="Icon" width="32" height="32">&nbsp;<?=$this->transEsc('Institution') . ' ' . $this->transEsc('Authority File')?></h3>
-        <?php if (!empty($gndProvider)): ?>
-          <?=$this->render('RecordDriver/SolrAuthDefault/data-gndSource.phtml', ['data' => $gndProvider, 'gnd' => $this->driver->getGndIdentifier()]);?>
-        <?php elseif (isset($provider)): ?>
+        <?php if (!empty($gndProvider)) : ?>
+            <?=$this->render('RecordDriver/SolrAuthDefault/data-gndSource.phtml', ['data' => $gndProvider, 'gnd' => $this->driver->getGndIdentifier()]);?>
+        <?php elseif (isset($provider)) : ?>
           <table class="table">
-            <?php foreach ($provider as $current): ?>
-              <?php //$this->driver->getInstitutionLinked(); ?>
+            <?php foreach ($provider as $current) : ?>
+                <?php //$this->driver->getInstitutionLinked(); ?>
               <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
             <?php endforeach; ?>
           </table>

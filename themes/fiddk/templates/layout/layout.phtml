@@ -1,6 +1,8 @@
 <?=$this->doctype()?>
 
-<html lang="<?=$this->layout()->userLang?>"<?php if ($this->layout()->rtl): ?> dir="rtl"<?php endif; ?>>
+<html lang="<?=$this->layout()->userLang?>"<?php if ($this->layout()->rtl) :
+    ?> dir="rtl"<?php
+            endif; ?>>
   <head>
     <?php $this->setupThemeResources(); ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,10 +41,10 @@
       // if we render them after the headLink / headStyle calls, some dependencies
       // may not load correctly. Thus, we render early, but use this later.
       $icons = !isset($this->renderingError) ? $this->render('js-icons.phtml') : '{}';
-    ?>
+        ?>
     <?php if ($this->layout()->rtl) {
       // RTL styling
-      $this->headLink()->appendStylesheet('vendor/bootstrap-rtl.min.css');
+        $this->headLink()->appendStylesheet('vendor/bootstrap-rtl.min.css');
     } ?>
     <?=$this->headLink()?>
     <?=$this->headStyle()?>
@@ -50,38 +52,38 @@
       // Collect small scripts together and append as one block:
       $appendScripts = [];
 
-      if (!isset($this->renderingError)) {
+    if (!isset($this->renderingError)) {
         // Deal with cart stuff:
         $cart = $this->cart();
         if ($cart->isActive()) {
-          $this->headScript()->appendFile("vendor/js.cookie.js");
-          $this->headScript()->appendFile("cart.js");
-          if ($domain = $cart->getCookieDomain()) {
-            $appendScripts[] = 'VuFind.cart.setDomain("' . $domain . '");';
-          }
-          if ($cookiePath = $cart->getCookiePath()) {
-            $appendScripts[] = 'VuFind.cart.setCookiePath("' . $cookiePath . '");';
-          }
-          if ($cookieSameSite = $cart->getCookieSameSite()) {
-            $appendScripts[] = 'VuFind.cart.setCookieSameSite("' . $cookieSameSite . '");';
-          }
+            $this->headScript()->appendFile("vendor/js.cookie.js");
+            $this->headScript()->appendFile("cart.js");
+            if ($domain = $cart->getCookieDomain()) {
+                $appendScripts[] = 'VuFind.cart.setDomain("' . $domain . '");';
+            }
+            if ($cookiePath = $cart->getCookiePath()) {
+                $appendScripts[] = 'VuFind.cart.setCookiePath("' . $cookiePath . '");';
+            }
+            if ($cookieSameSite = $cart->getCookieSameSite()) {
+                $appendScripts[] = 'VuFind.cart.setCookieSameSite("' . $cookieSameSite . '");';
+            }
         }
         $this->headScript()->prependScript(
             'var userIsLoggedIn = ' . ($this->auth()->isLoggedIn() ? 'true' : 'false') . ';'
         );
-      }
+    }
 
       // Session keep-alive
-      if ($this->keepAlive()) {
-          $appendScripts[] = 'var keepAliveInterval = ' . $this->keepAlive() . ';';
-          $this->headScript()->appendFile("keep_alive.js");
-      }
+    if ($this->keepAlive()) {
+        $appendScripts[] = 'var keepAliveInterval = ' . $this->keepAlive() . ';';
+        $this->headScript()->appendFile("keep_alive.js");
+    }
 
       // If account ajax is active, load script and add language strings
       $account = $this->auth()->getManager();
-      if ($account->ajaxEnabled()) {
+    if ($account->ajaxEnabled()) {
         $this->headScript()->appendFile("account_ajax.js");
-      }
+    }
 
       $root = rtrim($this->url('home'), '/');
       $translations = !isset($this->renderingError) ? $this->render('js-translations.phtml') : '{}';
@@ -98,26 +100,28 @@
           JS;
       $this->headScript()->appendScript(implode("\n", $appendScripts));
 
-      if ($this->config()->ajaxCoversEnabled()) {
-          $this->headScript()->appendFile("covers.js");
-      }
+    if ($this->config()->ajaxCoversEnabled()) {
+        $this->headScript()->appendFile("covers.js");
+    }
     ?>
     <?=$this->cookieConsent()->render()?>
     <?=$this->headScript() ?>
   </head>
-  <body class="template-dir-<?=$this->templateDir?> template-name-<?=$this->templateName?> <?=$this->layoutClass('offcanvas-row')?><?php if ($this->layout()->rtl): ?> rtl<?php endif; ?>">
+  <body class="template-dir-<?=$this->templateDir?> template-name-<?=$this->templateName?> <?=$this->layoutClass('offcanvas-row')?><?php if ($this->layout()->rtl) :
+        ?> rtl<?php
+                            endif; ?>">
     <?php // Set up the search box -- there are three possible cases:
       // 1. No search box was set; we should default to the normal box
       // 2. It was set to false; we should display nothing
       // 3. It is set to a custom string; we should display the provided version
       // Set up default search box if no data was provided from the template;
       // this covers case 1.  Cases 2 and 3 are then covered by logic below.
-      if (!isset($this->layout()->searchbox)) {
+    if (!isset($this->layout()->searchbox)) {
         $this->layout()->searchbox = $this->render('search/searchbox.phtml');
-      }
+    }
     ?>
     <header class="hidden-print">
-      <?php if (isset($this->layout()->srmessage)): // message for benefit of screen-reader users ?>
+      <?php if (isset($this->layout()->srmessage)) : // message for benefit of screen-reader users ?>
         <span class="sr-only" role="heading" aria-level="1"><?=$this->layout()->srmessage ?></span>
       <?php endif; ?>
       <a class="sr-only" href="#content"><?=$this->transEsc('Skip to content') ?></a>
@@ -125,17 +129,17 @@
     </header>
     <nav class="breadcrumbs" aria-label="<?=$this->transEscAttr('Breadcrumbs') ?>">
       <div class="container">
-        <?php if (!empty($this->layout()->showBreadcrumbs ?? true) && !empty($this->layout()->breadcrumbs)): ?>
+        <?php if (!empty($this->layout()->showBreadcrumbs ?? true) && !empty($this->layout()->breadcrumbs)) : ?>
           <ul class="breadcrumb hidden-print"><?=$this->layout()->breadcrumbs ?></ul>
         <?php endif; ?>
       </div>
     </nav>
     <div role="main" class="main">
-        <?php if ($this->layout()->templateName == "view" or $this->layout()->templateName == "SolrAuthDefault"): ?>
-          <?=$this->layout()->content ?>
-        <?php else: ?>
+        <?php if ($this->layout()->templateName == "view" or $this->layout()->templateName == "SolrAuthDefault") : ?>
+            <?=$this->layout()->content ?>
+        <?php else : ?>
           <div id="content" class="container">
-          <?=$this->layout()->content ?>
+            <?=$this->layout()->content ?>
         </div>
         <?php endif; ?>
     </div>
@@ -156,8 +160,8 @@
     <?=$this->googleanalytics()?>
     <?=$this->piwik()?>
     <?=$this->matomo()?>
-    <?php foreach ($this->captcha()->js() as $jsInclude):?>
-      <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::FILE, $jsInclude, 'SET')?>
+    <?php foreach ($this->captcha()->js() as $jsInclude) :?>
+        <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::FILE, $jsInclude, 'SET')?>
     <?php endforeach; ?>
 
     <?=$this->footScript() ?>

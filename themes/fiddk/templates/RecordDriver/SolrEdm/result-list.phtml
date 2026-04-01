@@ -5,26 +5,26 @@
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
   $recordType = $this->driver->getRecordType();
-  if ($coverDetails['cover'] && $cover):
+if ($coverDetails['cover'] && $cover) :
     ob_start(); ?>
     <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
       <?=$cover ?>
     </div>
     <?php $thumbnail = ob_get_contents(); ?>
-  <?php ob_end_clean(); ?>
+    <?php ob_end_clean(); ?>
 <?php endif; ?>
 <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId">
 <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource">
 <div class="media <?=$recordType?>L">
 <div class="entity"><span class="small"><?=mb_strtoupper($this->transEsc($recordType))?></span>
-  <?php if ($thumbnail && $thumbnailAlignment == 'left'): ?>
-    <?=$thumbnail ?>
+  <?php if ($thumbnail && $thumbnailAlignment == 'left') : ?>
+        <?=$thumbnail ?>
   <?php endif ?>
-  <div class="iconT"><?php if ($recordType == "Record"): ?>
+  <div class="iconT"><?php if ($recordType == "Record") : ?>
     <img src="<?=$this->imageLink('icons/boxes_color.svg')?>" alt="Record" width="48" height="48">
-    <?php else: ?>
+                     <?php else : ?>
       <img src="<?=$this->imageLink('icons/lightbulb_color.svg')?>" alt="Work" width="48" height="48">
-    <?php endif ?>
+                     <?php endif ?>
   </div>
  </div>
   <div class="media-body">
@@ -35,13 +35,13 @@
       <div>
         <a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($this->driver))?>" class="title getFull" data-view="<?=isset($this->params) ? $this->params->getOptions()->getListViewOption() : 'list' ?>">
           <?php $subtitles = $this->driver->getSubtitle(); ?>
-          <?php if(!empty($subtitles)): ?>
-            <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode('; ', $subtitles), 180));?>
-          <?php else: ?>
-            <?=$this->record($this->driver)->getTitleHtml()?>
+          <?php if (!empty($subtitles)) : ?>
+                <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode('; ', $subtitles), 180));?>
+          <?php else : ?>
+              <?=$this->record($this->driver)->getTitleHtml()?>
           <?php endif; ?>
         </a>
-        <?php foreach ($this->driver->tryMethod('getTitlesAltScript', [], []) as $altTitle): ?>
+        <?php foreach ($this->driver->tryMethod('getTitlesAltScript', [], []) as $altTitle) : ?>
           <div class="title-alt">
             <?=$this->escapeHtml($altTitle)?>
           </div>
@@ -49,107 +49,108 @@
       </div>
 
       <div>
-        <?php if ($this->driver->isCollection()): ?>
-          <?=implode('<br>', array_map([$this, 'escapeHtml'], $this->driver->getSummary())); ?>
-        <?php else: ?>
-          <?php $summAuthors = $this->driver->getPrimaryAuthorsWithHighlighting(); ?>
-          <?php $journalTitles = $this->driver->getContainerTitle(); $summDate = isset($this->driver->getPublicationDates()[0]) ? $this->driver->getPublicationDates()[0] : ""; ?>
-          <?php if (!empty($journalTitles)): ?>
-            <?=$this->transEsc('In')?>
-            <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml', ['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
-            <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate) . ')' : ''?>
-          <?php elseif (!empty($summDate)): ?>
-            <?=!empty($summAuthor) ? '<br>' : ''?>
-            <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
-          <?php endif; ?>
-          <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()), 0, 3); if (!empty($summAuthors)):
+        <?php if ($this->driver->isCollection()) : ?>
+            <?=implode('<br>', array_map([$this, 'escapeHtml'], $this->driver->getSummary())); ?>
+        <?php else : ?>
+            <?php $summAuthors = $this->driver->getPrimaryAuthorsWithHighlighting(); ?>
+            <?php $journalTitles = $this->driver->getContainerTitle();
+            $summDate = isset($this->driver->getPublicationDates()[0]) ? $this->driver->getPublicationDates()[0] : ""; ?>
+            <?php if (!empty($journalTitles)) : ?>
+                <?=$this->transEsc('In')?>
+                <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml', ['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
+                <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate) . ')' : ''?>
+            <?php elseif (!empty($summDate)) : ?>
+                <?=!empty($summAuthor) ? '<br>' : ''?>
+                <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+            <?php endif; ?>
+            <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()), 0, 3); if (!empty($summAuthors)) :
                 $roles = $this->driver->getPrimaryAuthorsRoles();
                 $ids = $this->driver->getPrimaryAuthorsIds();?>
             <div class="authors">
             <img src="<?=$this->imageLink("icons/person.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="authors">
-           <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
-             <?php if ($i != 2) : ?>
-               <?php if (isset($ids[$i]) && $ids[$i] != ''): ?>
+                <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor) : ?>
+                    <?php if ($i != 2) : ?>
+                        <?php if (isset($ids[$i]) && $ids[$i] != '') : ?>
                  <a href="<?=$this->record($this->driver)->getLink('author', $ids[$i])?>"><?=$this->highlight($summAuthor)?></a>
-               <?php else : ?>
+                        <?php else : ?>
                  <a href="<?=$this->record($this->driver)->getLink('personsearch', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
-               <?php endif; ?>
-               <?='(' . $this->transEsc('edm::' . $roles[$i]) . ')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
-             <?php endif; ?>
-          <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?='(' . $this->transEsc('edm::' . $roles[$i]) . ')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
                </span></div>
-        <?php endif; ?>
-          <?php $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
-            <?php foreach ($summInCollection as $collId => $collText): ?>
+            <?php endif; ?>
+            <?php $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)) : ?>
+                <?php foreach ($summInCollection as $collId => $collText) : ?>
               <div>
                 <b><?=$this->transEsc("in_collection_label")?></b>
                 <a class="collectionLinkText" href="<?=$this->record($this->driver)->getLink('collection', $collId)?>">
-                  <?=$this->escapeHtml($collText)?>
+                    <?=$this->escapeHtml($collText)?>
                 </a>
               </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
-          <?php if (empty($this->driver->getTitle())): ?>
-            <?php if (!empty($this->driver->getSummary())): ?>
-              <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml', ['data' => $this->driver->getSummary()[0]]);?>
+                <?php endforeach; ?>
             <?php endif; ?>
-          <?php endif; ?>
-          <?php $dates= $this->driver->getDatesCon();?>
-          <?php if (!empty($dates)): ?>
-            <?=$this->render('RecordDriver/DefaultRecord/data-dates.phtml', ['data' => $dates,'driver' => $this->driver, 'highlight' => true]);?>
-          <?php endif; ?>
-          <?php $places= $this->driver->getGeographicsCon();?>
-          <?php if (!empty($places)): ?>
-            <?=$this->render('RecordDriver/DefaultRecord/data-places.phtml', ['data' => $places,'driver' => $this->driver, 'highlight' => true]);?>
-          <?php endif; ?>
-          <?php $extent = $this->driver->getExtent();?>
-            <?php if (!empty($extent) && ($this->driver->getSummary() && $this->record($this->driver)->getFormatList())): ?>
+            <?php if (empty($this->driver->getTitle())) : ?>
+                <?php if (!empty($this->driver->getSummary())) : ?>
+                    <?=$this->render('RecordDriver/SolrEdm/data-shortened.phtml', ['data' => $this->driver->getSummary()[0]]);?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php $dates = $this->driver->getDatesCon();?>
+            <?php if (!empty($dates)) : ?>
+                <?=$this->render('RecordDriver/DefaultRecord/data-dates.phtml', ['data' => $dates,'driver' => $this->driver, 'highlight' => true]);?>
+            <?php endif; ?>
+            <?php $places = $this->driver->getGeographicsCon();?>
+            <?php if (!empty($places)) : ?>
+                <?=$this->render('RecordDriver/DefaultRecord/data-places.phtml', ['data' => $places,'driver' => $this->driver, 'highlight' => true]);?>
+            <?php endif; ?>
+            <?php $extent = $this->driver->getExtent();?>
+            <?php if (!empty($extent) && ($this->driver->getSummary() && $this->record($this->driver)->getFormatList())) : ?>
                 <?=implode('; ', $extent);?>
-          <?php endif; ?>
+            <?php endif; ?>
         <?php endif; ?>
       </div>
 
-      <?php if (!$this->driver->isCollection()): ?>
-        <?php if ($snippet = $this->driver->getHighlightedSnippet()): ?>
-          <?php if (!empty($snippet['caption'])): ?>
+      <?php if (!$this->driver->isCollection()) : ?>
+            <?php if ($snippet = $this->driver->getHighlightedSnippet()) : ?>
+                <?php if (!empty($snippet['caption'])) : ?>
             <strong><?=$this->transEsc($snippet['caption']) ?>:</strong>
-          <?php endif; ?>
-          <?php if (!empty($snippet['snippet'])): ?>
-            <?=$this->translate('highlight_snippet_html', ['%%snippet%%' => $this->highlight($snippet['snippet'])]) ?><br>
-          <?php endif; ?>
-        <?php endif; ?>
+                <?php endif; ?>
+                <?php if (!empty($snippet['snippet'])) : ?>
+                    <?=$this->translate('highlight_snippet_html', ['%%snippet%%' => $this->highlight($snippet['snippet'])]) ?><br>
+                <?php endif; ?>
+            <?php endif; ?>
       <?php endif; ?>
 
       <?php
       /* Display information on duplicate records if available */
-      if ($dedupData = $this->driver->getDedupData()): ?>
+        if ($dedupData = $this->driver->getDedupData()) : ?>
         <div class="dedupInformation">
-        <?php
-          $i = 0;
-          foreach ($dedupData as $source => $current) {
-            if (++$i == 1) {
-              ?><span class="currentSource"><a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($this->driver))?>"><?=$this->transEsc("source_$source", [], $source)?></a></span><?php
-            } else {
-              if ($i == 2) {
-                ?> <span class="otherSources">(<?=$this->transEsc('Other Sources')?>: <?php
-              } else {
-                ?>, <?php
-              }
-              ?><a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($current['id']))?>"><?=$this->transEsc("source_$source", [], $source)?></a><?php
+            <?php
+            $i = 0;
+            foreach ($dedupData as $source => $current) {
+                if (++$i == 1) {
+                    ?><span class="currentSource"><a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($this->driver))?>"><?=$this->transEsc("source_$source", [], $source)?></a></span><?php
+                } else {
+                    if ($i == 2) {
+                        ?> <span class="otherSources">(<?=$this->transEsc('Other Sources')?>: <?php
+                    } else {
+                        ?>, <?php
+                    }
+                    ?><a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($current['id']))?>"><?=$this->transEsc("source_$source", [], $source)?></a><?php
+                }
             }
-          }
-          if ($i > 1) {
-            ?>)</span><?php
-          }?>
+            if ($i > 1) {
+                ?>)</span><?php
+            }?>
         </div>
-      <?php endif; ?>
+        <?php endif; ?>
 
-      <?php if ($this->driver->tryMethod('getWorkKeys') && $this->searchOptions($this->driver->getSourceIdentifier())->getVersionsAction()): ?>
+      <?php if ($this->driver->tryMethod('getWorkKeys') && $this->searchOptions($this->driver->getSourceIdentifier())->getVersionsAction()) : ?>
         <div class="record-versions ajax"></div>
       <?php endif; ?>
 
       <div class="callnumAndLocation ajax-availability hidden">
-        <?php if ($this->driver->supportsAjaxStatus()): ?>
+        <?php if ($this->driver->supportsAjaxStatus()) : ?>
           <strong class="hideIfDetailed"><?=$this->transEsc('Call Number')?>:</strong>
           <span class="callnumber ajax-availability hidden">
             <?=$this->transEsc('loading_ellipsis')?><br>
@@ -159,10 +160,10 @@
             <?=$this->transEsc('loading_ellipsis')?>
           </span>
           <div class="locationDetails"></div>
-        <?php else: ?>
-          <?php $summCallNo = $this->driver->getCallNumber(); if (!empty($summCallNo)): ?>
+        <?php else : ?>
+            <?php $summCallNo = $this->driver->getCallNumber(); if (!empty($summCallNo)) : ?>
             <strong><?//=$this->transEsc('Call Number')?>:</strong> <?//=$this->escapeHtml($summCallNo)?>
-          <?php endif; ?>
+            <?php endif; ?>
         <?php endif; ?>
       </div>
 
@@ -175,54 +176,56 @@
         // Account for replace_other_urls setting
         $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
 
-        if ($openUrlActive || $doiActive || !empty($urls)): ?>
-        <?php if ($openUrlActive): ?>
+        if ($openUrlActive || $doiActive || !empty($urls)) : ?>
+            <?php if ($openUrlActive) : ?>
           <br>
-          <?=$openUrl->renderTemplate()?>
-        <?php endif; ?>
-        <?php if ($doiActive): ?>
+                <?=$openUrl->renderTemplate()?>
+            <?php endif; ?>
+            <?php if ($doiActive) : ?>
           <br>
-          <?=$doi->renderTemplate()?>
-        <?php endif; ?>
-        <?php if (!is_array($urls)) $urls = [];
-          if (!$this->driver->isCollection()):
-            foreach ($urls as $current): ?>
+                <?=$doi->renderTemplate()?>
+            <?php endif; ?>
+            <?php if (!is_array($urls)) {
+                $urls = [];
+            }
+            if (!$this->driver->isCollection()) :
+                foreach ($urls as $current) : ?>
               <a class="fulltext icon-link" href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" target="new">
-                <?=$this->icon('external-link', 'icon-link__icon') ?>
+                    <?=$this->icon('external-link', 'icon-link__icon') ?>
                 <span class="icon-link__label"><?=($current['url'] == $current['desc']) ? $this->transEsc('Get full text') : $this->escapeHtml($current['desc'])?></span>
               </a><br>
-          <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         <?php endif; ?>
-      <?php endif; ?>
 
       <div>
         <?php $licenseLinks = $this->driver->getLicenseLink(); ?>
-        <?php if(isset($licenseLinks) && count($licenseLinks) == 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitutions()[0]]);?>
-        <?php elseif(isset($licenseLinks) && count($licenseLinks) >= 1): ?>
-          <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitutions()[0]]);?>
+        <?php if (isset($licenseLinks) && count($licenseLinks) == 1) : ?>
+            <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => $licenseLinks, 'inst' => $this->driver->getInstitutions()[0]]);?>
+        <?php elseif (isset($licenseLinks) && count($licenseLinks) >= 1) : ?>
+            <?=$this->render('RecordDriver/SolrEdm/data-licenseLink.phtml', ['data' => array_slice($licenseLinks, 0, 1), 'inst' => $this->driver->getInstitutions()[0]]);?>
         <?php endif; ?>
       </div>
 
-      <?php if (!$openUrlActive && empty($urls) && $this->driver->supportsAjaxStatus()): ?>
+      <?php if (!$openUrlActive && empty($urls) && $this->driver->supportsAjaxStatus()) : ?>
           <span class="status ajax-availability hidden">
             <span class="label label-default"><?=$this->transEsc('loading_ellipsis')?></span>
           </span>
-        <?php endif; ?>
+      <?php endif; ?>
 
-      <?php foreach ($this->driver->getInstitutions() as $institution):?>
-      <?php if (isset($this->driver->getInstitutions()[0])): ?>
-        <?php $institution = $this->driver->getInstitutions()[0]; ?>
+      <?php foreach ($this->driver->getInstitutions() as $institution) :?>
+            <?php if (isset($this->driver->getInstitutions()[0])) : ?>
+                <?php $institution = $this->driver->getInstitutions()[0]; ?>
 
       <div class="result-institutions">
       <img src="<?=$this->imageLink("icons/arrow-repeat.svg")?>" alt="Icon" width="20" height="20">&nbsp;<?=$this->transEsc("dprov::" . $institution);?></i>
-        <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()): ?>
+                <?php if (!$this->driver->isArchiveRecord() && $this->driver->getKVKLink()) : ?>
           <br/>
           <i class="fa fa-solid fa-arrow-right"></i>&nbsp;<a href="<?=$this->driver->getKVKLink()?>" rel="nofollow" target="_blank"><?=$this->transEsc('Availability') . ' KVK'?></a>
-        <?php endif; ?>
+                <?php endif; ?>
       </div>
-      <?php endif; ?>
-    <?php endforeach; ?>
+            <?php endif; ?>
+      <?php endforeach; ?>
 
       <div class="result-previews">
         <?=$this->record($this->driver)->getPreviews()?>
@@ -231,43 +234,45 @@
     <div class="result-links hidden-print">
       <?=$this->record($this->driver)->renderTemplate('controls/qrcode.phtml', ['driver' => $this->driver, 'context' => 'results'])?>
 
-      <?php if ($this->cart()->isActiveInSearch() && isset($this->params) && $this->params->getOptions()->supportsCart() && $this->cart()->isActive()): ?>
-        <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br>
+      <?php if ($this->cart()->isActiveInSearch() && isset($this->params) && $this->params->getOptions()->supportsCart() && $this->cart()->isActive()) : ?>
+            <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br>
       <?php endif; ?>
 
-      <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
-        <?php if ($this->permission()->allowDisplay('feature.Favorites')): ?>
-          <?php /* Add to favorites */ ?>
+      <?php if ($this->userlist()->getMode() !== 'disabled') : ?>
+            <?php if ($this->permission()->allowDisplay('feature.Favorites')) : ?>
+                <?php /* Add to favorites */ ?>
           <a href="<?=$this->escapeHtmlAttr($recordLinker->getActionUrl($this->driver, 'Save'))?>" data-lightbox class="save-record result-link icon-link" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>">
-            <?=$this->icon('user-favorites', 'icon-link__icon') ?>
+                <?=$this->icon('user-favorites', 'icon-link__icon') ?>
             <span class="result-link-label icon-link__label"><?=$this->transEsc('Add to favorites')?></span>
           </a><br>
-        <?php elseif ($block = $this->permission()->getAlternateContent('feature.Favorites')): ?>
-          <?=$block?>
-        <?php endif; ?>
-        <?php /* Saved lists */ ?>
+            <?php elseif ($block = $this->permission()->getAlternateContent('feature.Favorites')) : ?>
+                <?=$block?>
+            <?php endif; ?>
+            <?php /* Saved lists */ ?>
         <div class="savedLists">
           <strong><?=$this->transEsc("Saved in")?>:</strong>
         </div>
       <?php endif; ?>
 
       <?php /* Hierarchy tree link */ ?>
-      <?php $trees = $this->driver->tryMethod('getHierarchyTrees'); if (!empty($trees)): ?>
-        <?php foreach ($trees as $hierarchyID => $hierarchyTitle): ?>
+      <?php $trees = $this->driver->tryMethod('getHierarchyTrees'); if (!empty($trees)) : ?>
+            <?php foreach ($trees as $hierarchyID => $hierarchyTitle) : ?>
           <div class="hierarchyTreeLink">
             <input type="hidden" value="<?=$this->escapeHtmlAttr($hierarchyID)?>" class="hiddenHierarchyId">
             <a class="hierarchyTreeLinkText result-link-label icon-link" data-lightbox href="<?=$this->escapeHtmlAttr($recordLinker->getTabUrl($this->driver, 'HierarchyTree', ['hierarchy' => $hierarchyID]))?>#tabnav" title="<?=$this->transEscAttr('hierarchy_tree')?>" data-lightbox-href="<?=$this->escapeHtmlAttr($recordLinker->getTabUrl($this->driver, 'AjaxTab', ['hierarchy' => $hierarchyID]))?>" data-lightbox-post="tab=hierarchytree">
-              <?=$this->icon('tree-context', 'icon-link__icon') ?>
-              <span class="icon-link__label"><?=$this->transEsc('hierarchy_view_context')?><?php if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><?php endif; ?></span>
+                <?=$this->icon('tree-context', 'icon-link__icon') ?>
+              <span class="icon-link__label"><?=$this->transEsc('hierarchy_view_context')?><?php if (count($trees) > 1) :
+                    ?>: <?=$this->escapeHtml($hierarchyTitle)?><?php
+                                             endif; ?></span>
             </a>
           </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
       <?php endif; ?>
 
       <?=$this->driver->supportsCoinsOpenUrl() ? '<span class="Z3988" title="' . $this->escapeHtmlAttr($this->driver->getCoinsOpenUrl()) . '"></span>' : ''?>
     </div>
   </div>
-  <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>
-    <?=$thumbnail ?>
+  <?php if ($thumbnail && $thumbnailAlignment == 'right') : ?>
+        <?=$thumbnail ?>
   <?php endif ?>
 </div>

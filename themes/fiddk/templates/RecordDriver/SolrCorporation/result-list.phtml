@@ -1,8 +1,8 @@
 <?php
   $heading = $this->driver->getTitle();
-  if (empty($heading)) {
+if (empty($heading)) {
     $heading = $this->translate('Heading unavailable.');
-  }
+}
 
   $authType = $this->driver->getRecordType();
 
@@ -10,14 +10,14 @@
   $cover = $coverDetails['html'];
   $thumbnail = false;
   $thumbnailAlignment = $this->record($this->driver)->getThumbnailAlignment('result');
-  if ($coverDetails['cover'] && $cover):
+if ($coverDetails['cover'] && $cover) :
     ob_start(); ?>
       <div class="media-<?=$thumbnailAlignment ?> <?=$this->escapeHtmlAttr($coverDetails['size'])?>">
        <?=$cover ?>
       </div>
     <?php $thumbnail = ob_get_contents();
     ob_end_clean();?>
-  <?php endif; ?>
+<?php endif; ?>
       <div class="media <?=$authType?>L">      
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
         <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
@@ -34,26 +34,28 @@
   <?php $domain = $this->driver->getOrgaDomain();
     $establishment = $this->driver->getBirthDate();
     $termination = $this->driver->getDeathDate();
-    if (!empty($domain) || !empty($establishment) || !empty($death)): ?>
+    if (!empty($domain) || !empty($establishment) || !empty($death)) : ?>
       <div class="resultItemLine2">
-      <?php if ($establishment || $termination) : ?>
+        <?php if ($establishment || $termination) : ?>
         <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;
-          <?php if (!$termination) : ?>
-              <?=$this->driver->translateDate($establishment, 'de') . '-'?><br/>
-          <?php elseif(!$establishment) : ?>
-              <?='- ' . $this->driver->translateDate($termination, 'de')?><br/>
-          <?php else : ?>
-              <?=$this->driver->translateDate($establishment, 'de') . ' - ' . $this->driver->translateDate($termination, 'de')?><br/>
-          <?php endif; ?>
-      <?php endif; ?>
-      <?php foreach ($domain as $i => $current): ?>
+            <?php if (!$termination) : ?>
+                <?=$this->driver->translateDate($establishment, 'de') . '-'?><br/>
+            <?php elseif (!$establishment) : ?>
+                <?='- ' . $this->driver->translateDate($termination, 'de')?><br/>
+            <?php else : ?>
+                <?=$this->driver->translateDate($establishment, 'de') . ' - ' . $this->driver->translateDate($termination, 'de')?><br/>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php foreach ($domain as $i => $current) : ?>
         <a href="<?=$this->url('corporationsearch-results')?>?filter[]=orga_domain%3A<?=urlencode($current)?>"><?=$this->escapeHtml($current)?></a>
-        <?php if ($i < sizeof($domain) - 1): ?> | <?php endif; ?>
-      <?php endforeach; ?>
+            <?php if ($i < sizeof($domain) - 1) :
+                ?> | <?php
+            endif; ?>
+        <?php endforeach; ?>
       </div>
     <?php endif; ?>
   </div>
-  <?php if ($thumbnail && $thumbnailAlignment == 'right'): ?>
-    <?=$thumbnail ?>
+  <?php if ($thumbnail && $thumbnailAlignment == 'right') : ?>
+        <?=$thumbnail ?>
   <?php endif ?>
 </div>

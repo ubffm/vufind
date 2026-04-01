@@ -5,19 +5,19 @@
     $edm = $this->driver->getXML('edm');
 ?>
 <!-- pre><?php //=$edm?></pre -->
-<?php if ($edm): ?>
+<?php if ($edm) : ?>
 <h3><?=$this->translate('Extended EDM View')?></h3>
-<?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm->toXML());?>
+    <?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm->toXML());?>
 <?php endif; ?>
 
 <h3><?=$this->translate('Solr Index View')?></h3>
 <div class="solrTab"><table class="citation table table-striped">
-  <?php foreach ($this->driver->getRawData() as $field => $values): ?>
+  <?php foreach ($this->driver->getRawData() as $field => $values) : ?>
     <tr>
       <th><?=$this->escapeHtml($field)?></th>
       <td>
-        <?php foreach ((array)$values as $value): ?>
-          <?=$this->escapeHtml(is_array($value) ? print_r($value, true) : $value)?><br />
+        <?php foreach ((array)$values as $value) : ?>
+            <?=$this->escapeHtml(is_array($value) ? print_r($value, true) : $value)?><br />
         <?php endforeach; ?>
       </td>
     </tr>
@@ -28,7 +28,9 @@
            <pre><?php //=formatXML($values);?></pre>  -->
 
 <!-- Formats the full record field to a structured, highlighted, indented xml string to make debugging easier -->
-<?php /**function formatXML($value) {
+<?php
+
+/**function formatXML($value) {
 
      $xml = new SimpleXMLElement($value);
      $dom = new DOMDocument("1.0","UTF-8");
@@ -50,4 +52,5 @@
      return preg_replace($find, $replace, $str);
 }
 */
+
 ?>

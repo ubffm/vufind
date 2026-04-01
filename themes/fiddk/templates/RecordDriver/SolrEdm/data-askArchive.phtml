@@ -1,11 +1,12 @@
 <?php
+
   $institution = $this->driver->getInstitutions()[0];
-  if ($institution == "Deutsches Tanzarchiv Köln") {
+if ($institution == "Deutsches Tanzarchiv Köln") {
     $archive = "AskArchiveDTK";
-  } elseif ($institution == "Deutsches Theatermuseum München") {
+} elseif ($institution == "Deutsches Theatermuseum München") {
     $archive = "AskArchiveDTM";
-  } else {
+} else {
     $archive = "AskArchiveMCB";
-  }
-  ?>
+}
+?>
 <a class="mail-record" data-lightbox href="<?=$this->url('feedback-form', ['id' => $archive]) . '?callNumber=' . $data ?>" rel="nofollow"><?=$this->transEsc('mail_to') . ' ' . $institution?> <img src="<?=$this->imageLink("icons/envelope.svg")?>" alt="Icon" width="16" height="16"></img></a>

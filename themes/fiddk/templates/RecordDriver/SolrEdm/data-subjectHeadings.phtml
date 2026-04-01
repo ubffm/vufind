@@ -1,15 +1,15 @@
-<?php foreach ($data as $field): ?>
+<?php foreach ($data as $field) : ?>
   <div class="subject-line" property="keywords">
     <?php $subject = ''; ?>
-    <?php if($field['source'] != '' and $field['type'] == 'agent'): ?>
+    <?php if ($field['source'] != '' and $field['type'] == 'agent') : ?>
       <a href="<?=$this->record($this->driver)->getLink('author', $field['source']);?>"><?=$field['heading']?></a>
-      <?php else: ?>
-      <?php $field['heading'] = explode('--', $field['heading']); ?>
-      <?php $i = 0; foreach ($field['heading'] as $subfield): ?>
-        <?=($i++ == 0) ? '' : ' &gt; '?>
-      <?php $subject = trim($subject . ' ' . $subfield); ?>
+    <?php else : ?>
+          <?php $field['heading'] = explode('--', $field['heading']); ?>
+          <?php $i = 0; foreach ($field['heading'] as $subfield) : ?>
+                <?=($i++ == 0) ? '' : ' &gt; '?>
+                <?php $subject = trim($subject . ' ' . $subfield); ?>
       <a title="<?=$this->escapeHtmlAttr($subject)?>" href="<?=$this->record($this->driver)->getLink('subject', $subject)?>" rel="nofollow"><?=trim($this->escapeHtml($subfield))?></a>
-    <?php endforeach; ?>
-  <?php endif; ?>
+          <?php endforeach; ?>
+    <?php endif; ?>
   </div>
 <?php endforeach; ?>

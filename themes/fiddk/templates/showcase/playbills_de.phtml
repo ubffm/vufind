@@ -67,8 +67,8 @@ $this->layout()->section = '<div class="section container title Record"><h1 clas
 <div class="col col-sm-12 col-lg-5">
   <div class="card playbill">
   <div class="card-body">
-    <?php foreach ($this->results->getRecommendations('side') as $current):?>
-      <?=$this->recommend($current);?>
+    <?php foreach ($this->results->getRecommendations('side') as $current) :?>
+        <?=$this->recommend($current);?>
     <?php endforeach;?>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <?php
-  if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
     $this->headTitle('Akademie der Künste Berlin, Bibliothek');
-?>
+    ?>
 <h2>Akademie der Künste Berlin, Bibliothek</h2>
 <img src="<?=$this->imageLink('logos_s/adk.jpg')?>" alt="Akademie der Künste"/><br/><br/>
 <p><a href="https://opac.adk.de/"
@@ -18,8 +18,8 @@
     Herbert Ihering und Christoph Schlingensief. </p>
 <?php } else {
   // Set page title
-  $this->headTitle('Academy of the Arts Berlin, Library');
-?>
+    $this->headTitle('Academy of the Arts Berlin, Library');
+    ?>
 <h2>Academy of the Arts Berlin, Library</h2>
 <img src="<?=$this->imageLink('logos_s/adk.jpg')?>" alt="Akademie der Künste"/><br/><br/>
 <p><a href="https://www.adk.de/en/archive/the-academy-of-arts-library/"

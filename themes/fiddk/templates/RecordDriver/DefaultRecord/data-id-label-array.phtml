@@ -1,4 +1,6 @@
-<?php foreach ($data as $i => $link): ?>
+<?php foreach ($data as $i => $link) : ?>
    <a href="<?=$link['id']?>" target="_blank"><?=$link['label']?></a>
-   <?php if ($i < sizeof($data) - 1): ?> | <?php endif; ?>
+    <?php if ($i < sizeof($data) - 1) :
+        ?> | <?php
+    endif; ?>
 <?php endforeach; ?>

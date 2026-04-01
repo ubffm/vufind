@@ -1,5 +1,5 @@
 <?php $formats = $data->getFormats();
-$icon = $this->driver->getRecordIcon();  
+$icon = $this->driver->getRecordIcon();
 $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 <div class="entity">
 <img src="<?=$this->imageLink($icon)?>" alt="Icon" width="16" height="16"></img>
@@ -7,54 +7,54 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();?>
 </div>
 <h4><?=$this->escapeHtml($data->getTitle())?></h4>
 <?php if ($formats) :?>
-  <?=implode(', ', $formats);?><br>
+    <?=implode(', ', $formats);?><br>
 <?php endif; ?>
-<?php if ($this->type == "Record"):
-  $places = $data->getGeographicsCon();
-  if (!empty($places)): ?>
-  <?=$this->render('RecordDriver/DefaultRecord/data-places.phtml', ['data' => $places,'driver' => $this->driver]);?>
-  <?php endif; ?>
+<?php if ($this->type == "Record") :
+    $places = $data->getGeographicsCon();
+    if (!empty($places)) : ?>
+        <?=$this->render('RecordDriver/DefaultRecord/data-places.phtml', ['data' => $places,'driver' => $this->driver]);?>
+    <?php endif; ?>
 <?php elseif ($this->type == "Person") :
-  $prof = $data->getOccupation();
-  $birth = $data->getBirthDate();
-  $death = $data->getDeathDate();
-  if ($birth || $death) : ?>
+    $prof = $data->getOccupation();
+    $birth = $data->getBirthDate();
+    $death = $data->getDeathDate();
+    if ($birth || $death) : ?>
     <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;
-      <?php if (!$death) : ?>
-          <?='* ' . $this->driver->translateDate($birth, 'de')?>
-      <?php elseif(!$birth) : ?>
-          <?='† ' . $this->driver->translateDate($death, 'de')?>
-      <?php else : ?>
-          <?='* ' . $this->driver->translateDate($birth, 'de') . ' - † ' . $this->driver->translateDate($death, 'de')?>
-      <?php endif; ?>
-  <?php endif; ?>
-  <?php if ($prof) : ?>
+        <?php if (!$death) : ?>
+            <?='* ' . $this->driver->translateDate($birth, 'de')?>
+        <?php elseif (!$birth) : ?>
+            <?='† ' . $this->driver->translateDate($death, 'de')?>
+        <?php else : ?>
+            <?='* ' . $this->driver->translateDate($birth, 'de') . ' - † ' . $this->driver->translateDate($death, 'de')?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($prof) : ?>
     <p><?=implode(' | ', $prof)?></p>
-  <?php endif; ?>
-  <?php elseif ($this->type == "Corporation") :
-  $orga = $data->getOrgaDomain();?>
-  <?php if ($orga) : ?>
+    <?php endif; ?>
+<?php elseif ($this->type == "Corporation") :
+      $orga = $data->getOrgaDomain();?>
+      <?php if ($orga) : ?>
     <p><?=implode(' | ', $orga)?></p>
-  <?php endif; ?>
-  <?php elseif ($this->type == "Event") :
-  $places = $data->getEventPlace(); 
-  $dates = $data->getEventDate();?>
-  <?php if ($places || $dates): ?>
-    <?php if ($dates): 
-      $normDates = []; ?>
-      <?php foreach ($dates as $date): ?>
-        <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
-      <?php endforeach; ?>
+      <?php endif; ?>
+<?php elseif ($this->type == "Event") :
+      $places = $data->getEventPlace();
+      $dates = $data->getEventDate();?>
+      <?php if ($places || $dates) : ?>
+            <?php if ($dates) :
+                $normDates = []; ?>
+                <?php foreach ($dates as $date) : ?>
+                    <?php $normDates[] = $this->driver->translateDate($date, $lang)?>
+                <?php endforeach; ?>
       <div class="resultItemLine">
       <img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $normDates))?>
       </div>
-    <?php endif; ?>
-    <?php if ($places): ?>
+            <?php endif; ?>
+            <?php if ($places) : ?>
       <div class="resultItemLine">
       <img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<?=$this->escapeHtml(implode(', ', $places))?>
       </div>
-    <?php endif; ?>
-  <?php endif; ?>
+            <?php endif; ?>
+      <?php endif; ?>
 <?php endif; ?>
 <?php if (isset($data->getInstitutions()[0])) :?>
 <p><?="[" . $this->transEsc("dprov::" . $data->getInstitutions()[0]) . "]";?></p>

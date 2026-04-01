@@ -1,7 +1,7 @@
 <?php
-  if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
     $this->headTitle('Akademie der Künste Berlin, Archiv Darstellende Kunst');
-?>
+    ?>
 <h2>Akademie der Künste Berlin, Archiv Darstellende Kunst</h2>
 <img src="<?=$this->imageLink('logos_s/adk.jpg')?>" alt="Akademie der Künste"/><br/><br/>
 <p><a href="https://archiv.adk.de/"
@@ -15,7 +15,7 @@
 <?php } else {
       // Set page title
       $this->headTitle('Academy of the Arts, Berlin, Performing Arts Archive');
-  ?>
+    ?>
 <h2>Academy of the Arts, Berlin, Performing Arts Archive</h2>
 <img src="<?=$this->imageLink('logos_s/adk.jpg')?>" alt="Akademie der Künste"/><br/><br/>
 <p><a href="https://archiv.adk.de/"

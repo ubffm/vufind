@@ -1,12 +1,12 @@
 <?php $similarRecords = $this->tab->getResults();?>
-<?php if (count($similarRecords) != 0): ?>
-  <?php $perPage = 4;
-  $recordType = $this->driver->getRecordType();?>
+<?php if (count($similarRecords) != 0) : ?>
+    <?php $perPage = 4;
+    $recordType = $this->driver->getRecordType();?>
   <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
-      <?php for($i = 1;$i < count($similarRecords) / $perPage;$i++): ?>
+      <?php for ($i = 1; $i < count($similarRecords) / $perPage; $i++) : ?>
         <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
       <?php endfor; ?>
     </ol>
@@ -14,28 +14,28 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <?php foreach ($similarRecords as $index => $data): ?>
+        <?php foreach ($similarRecords as $index => $data) : ?>
           <div class="carousel-item <?=$recordType?>Ls">
             <a class="hover-overlay record-cover-link" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getUrl($data))?>">
               <?php $thumb = $this->record($data)->getCoverDetails('similar-items', 'small')['html'];?>
-              <?php if (strpos($thumb,"Cover/Unavailable") === false) :?>
-              <?=$thumb?>
+              <?php if (strpos($thumb, "Cover/Unavailable") === false) :?>
+                    <?=$thumb?>
               <div class="content">
                 <div class="contentDarker">
-                  <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType] );?>
+                    <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType]);?>
                 </div>
               </div>
-            <?php else: ?>
+              <?php else : ?>
             <div class="contentDarker">
-              <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType] );?>
+                  <?=$this->render("RecordTab/innercarousel.phtml", ['data' => $data,'driver' => $this->driver, 'type' => $recordType]);?>
             </div>
-          <?php endif; ?>
+              <?php endif; ?>
             </a>
           </div>
-          <?php if(($index + 1) % $perPage == 0 && $index < count($similarRecords) - 1): ?>
+            <?php if (($index + 1) % $perPage == 0 && $index < count($similarRecords) - 1) : ?>
       </div>
       <div class="item">
-          <?php endif; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEscAttr('Next') ?>"></span>
     </a>
   </div>
-<?php else: ?>
+<?php else : ?>
   <p><?=$this->transEsc('Cannot find similar records')?></p>
 <?php endif; ?>
 <?php

@@ -2,18 +2,18 @@
     $lang = $this->plugin('translate')->getTranslator()->getLocale();
     $rest = array_slice($data, 5);
     $data = array_slice($data, 0, 5);
-  endif; ?>
+endif; ?>
 <?=$this->render('RecordDriver/SolrEdm/data-subjectHeadings.phtml', ['data' => $data, 'driver' => $this->driver]); ?>
 <?php if (!(empty($rest))) : ?>
 <span class="toggleContainer">
   <input type="checkbox" class="toggle" id="toggle_subject">
   <span>
-  <?=$this->render('RecordDriver/SolrEdm/data-subjectHeadings.phtml', ['data' => $rest, 'driver' => $this->driver]); ?>
+    <?=$this->render('RecordDriver/SolrEdm/data-subjectHeadings.phtml', ['data' => $rest, 'driver' => $this->driver]); ?>
   </span>
-  <?php if ($lang == 'de') : ?>
+    <?php if ($lang == 'de') : ?>
      <label for="toggle_subject" class="label_de"></label>
-  <?php else : ?>
+    <?php else : ?>
      <label for="toggle_subject" class="label_en"></label>
-  <?php endif; ?>
+    <?php endif; ?>
 </span><br/>
 <?php endif; ?>

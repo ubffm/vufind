@@ -1,15 +1,15 @@
 <?php $this->info = $this->recommend->getAuthorityInfo($this->driver);
       $type = $this->driver->getAuthType();
-if (!empty($this->info) || isset($driver)):
+if (!empty($this->info) || isset($driver)) :
     $types = $this->info['type'];
-    if (!empty($this->info['gndIdentifier'])):
-      $dprov = '';
-      $describedBy = $this->info['describedBy'];
-      $sameAs = '';
-    else:
-      $dprov = $this->driver->getInstitutionLinked();
-      $describedBy = '';
-      $sameAs = $this->driver->getSameAs();
+    if (!empty($this->info['gndIdentifier'])) :
+        $dprov = '';
+        $describedBy = $this->info['describedBy'];
+        $sameAs = '';
+    else :
+        $dprov = $this->driver->getInstitutionLinked();
+        $describedBy = '';
+        $sameAs = $this->driver->getSameAs();
     endif;
     $title = $this->info['preferredName'];
     $variant = $this->info['variantName'] ?? '';
@@ -18,72 +18,72 @@ if (!empty($this->info) || isset($driver)):
     //TODO: There can be more than one thumbnail??
     $thumbnail = $this->info['depiction'][0]['thumbnail'] ?? '';
       //$sameAs = $this->driver->getSameAs();
-?>
+    ?>
 <div class="card clearfix">
   <div class="flex-content flex-start">
-  <?php if (!empty($thumbnail)):
-    $picSource = $this->recommend->getPicSource($thumbnail);?>
+    <?php if (!empty($thumbnail)) :
+        $picSource = $this->recommend->getPicSource($thumbnail);?>
     <div class="authority-meta thumb">
       <figure>
           <img class="pull-left flip" src="<?=$thumbnail?>" alt="<?=$title?>"/>
-        <?php if (!empty($picSource)): ?>
+        <?php if (!empty($picSource)) : ?>
           <figcaption><?=$this->transEsc("PicSource") . ": " . $picSource[0] . " | "?>
           <a href="<?=$picSource[1]?>">Wikimedia Commons</a>
-          <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
+            <?=" | "?><a href="<?=$picSource[1] . '#Licensing'?>"><?=$picSource[2]?></a></figcaption>
         <?php endif; ?>
       </figure>
     </div>
-  <?php endif; ?>
+    <?php endif; ?>
     <div class="authority-meta">
       <h2><?=$this->escapeHtml($title)?></h2>
-      <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
-        <?php if ($type == "Personal Name"): ?>
-          <?=$this->render('Recommend/data-personFacts.phtml');?><br/>
-        <?php elseif ($type == "Corporate Name"): ?>
-          <?=$this->render('Recommend/data-corporateFacts.phtml');?><br/>
-        <?php endif; ?>
-        <?=$this->render('Recommend/data-relatedWorks.phtml', ['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
-      <?php elseif ($type == "Event" and (!empty($this->info['gndIdentifier']))): ?>
-        <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
-      <?php elseif ($type == "Event"): ?>
-        <?=$this->render('Recommend/data-eventFields.phtml');?>
-      <?php elseif ($type == "Work"): ?>
-        <?=$this->render('Recommend/data-workFields.phtml');?>
+      <?php if ($type == "Personal Name" || $type == "Corporate Name") : ?>
+            <?php if ($type == "Personal Name") : ?>
+                <?=$this->render('Recommend/data-personFacts.phtml');?><br/>
+            <?php elseif ($type == "Corporate Name") : ?>
+                <?=$this->render('Recommend/data-corporateFacts.phtml');?><br/>
+            <?php endif; ?>
+            <?=$this->render('Recommend/data-relatedWorks.phtml', ['type' => $type, 'count' => $this->driver->getWorkCount(),'id' => $id]);?>
+            <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
+      <?php elseif ($type == "Event" and (!empty($this->info['gndIdentifier']))) : ?>
+          <?=$this->render('Recommend/data-eventFields_gnd.phtml');?>
+      <?php elseif ($type == "Event") : ?>
+          <?=$this->render('Recommend/data-eventFields.phtml');?>
+      <?php elseif ($type == "Work") : ?>
+          <?=$this->render('Recommend/data-workFields.phtml');?>
       <?php endif; ?>
-    <?php if (!empty($variant)):?>
+    <?php if (!empty($variant)) :?>
       <br/>
-      <?php if ($type == "Personal Name" || $type == "Corporate Name"): ?>
+        <?php if ($type == "Personal Name" || $type == "Corporate Name") : ?>
        <b><?=$this->transEsc('edm::skos:altLabel')?></b><br/>
-      <?php else: ?>
+        <?php else : ?>
        <b><?=$this->transEsc('edm::dcterms:alternative')?></b><br/>
-      <?php endif; ?>
-      <?php $this->data = $variant; ?>
-      <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
+        <?php endif; ?>
+        <?php $this->data = $variant; ?>
+        <?=$this->render('RecordDriver/SolrEdm/data-collapsible_str.phtml');?>
     <?php endif; ?><br/>
     </div>
     <div class="authority-meta">
-      <?php if ($type == 'Event'):
-        $works = $this->driver->getWorks();
-        if (!empty($works)) : ?>
+      <?php if ($type == 'Event') :
+            $works = $this->driver->getWorks();
+            if (!empty($works)) : ?>
           <b><?=$this->transEsc('RelatedWorksEve') . ':'?></b><br/>
-          <?php foreach($works as $work_id => $work): ?>
+                <?php foreach ($works as $work_id => $work) : ?>
             <span property="edm:isRelatedTo">
               <a href="<?=$this->url('workrecord') . urlencode($work_id);?>"><?=$this->escapeHtml($work)?></a>
             </span><br />
-          <?php endforeach; ?>
+                <?php endforeach; ?>
           <br />
-        <?php endif; ?>
+            <?php endif; ?>
       <?php endif; ?>
-      <?php if (!empty($this->info['sameAs'])): ?>
-        <?=$this->render('Recommend/data-sameAs.phtml');?>
+      <?php if (!empty($this->info['sameAs'])) : ?>
+            <?=$this->render('Recommend/data-sameAs.phtml');?>
       <?php endif; ?>
-      <?php if ($type == "Work"): ?>
-        <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
+      <?php if ($type == "Work") : ?>
+            <?=$this->render('Recommend/data-relatedEvents.phtml', ['type' => $type,'count' => $this->driver->getEventCount(),'id' => $id]);?>
         <br />
       <?php endif; ?>
-      <?php if (!empty($describedBy) || !empty($dprov)): ?>
-        <?=$this->render('Recommend/data-source.phtml', ['type' => $type,'dprov' => $dprov, 'describedBy' => $describedBy, 'sameAs' => $sameAs]);?>
+      <?php if (!empty($describedBy) || !empty($dprov)) : ?>
+            <?=$this->render('Recommend/data-source.phtml', ['type' => $type,'dprov' => $dprov, 'describedBy' => $describedBy, 'sameAs' => $sameAs]);?>
       <?php endif; ?>
    </div>
  </div>

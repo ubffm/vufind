@@ -11,40 +11,40 @@ $formatProperty = function ($datafield, $name, $label) {
 };
 $formattedAuthors = [];
 ?>
-<?php if (!empty($data[$type])): ?>
-  <?php foreach ($data[$type] as $author => $dataFields): ?>
-    <?php if (!empty($author)): ?>
-    <?php ob_start();
+<?php if (!empty($data[$type])) : ?>
+    <?php foreach ($data[$type] as $author => $dataFields) : ?>
+        <?php if (!empty($author)) : ?>
+            <?php ob_start();
       // an authority link exists and that document exists in SolrAuthor
-      if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) :
-        $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
-      else :
-        $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
-      endif; ?>
+            if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) :
+                $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
+            else :
+                $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
+            endif; ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
       <a href="<?=$authorityLookfor?>">
-        <?=$this->escapeHtml(rtrim($author, ','))?>
+            <?=$this->escapeHtml(rtrim($author, ','))?>
       </a>
-      <?php
+            <?php
         // Display additional data using the appropriate translation prefix
         // (for example, to render author roles correctly):
-        if (!empty($requiredDataFields)) {
-          foreach ($requiredDataFields as $field) {
-              $name = $field['name'];
-              $prefix = $field['prefix'] ?? '';
-              if (isset($dataFields[$name])) {
-                  echo $formatProperty($dataFields[$name], $name, $prefix);
-              }
-          }
-        }
-      ?>
+            if (!empty($requiredDataFields)) {
+                foreach ($requiredDataFields as $field) {
+                    $name = $field['name'];
+                    $prefix = $field['prefix'] ?? '';
+                    if (isset($dataFields[$name])) {
+                        echo $formatProperty($dataFields[$name], $name, $prefix);
+                    }
+                }
+            }
+            ?>
     </span>
-    <?php
+            <?php
       // Strip whitespace before close tags to avoid spaces in front of commas:
-      $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
-      ob_end_clean();
-    ?>
-  <?php endif; ?>
-  <?php endforeach; ?>
+            $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
+            ob_end_clean();
+            ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
 <?=implode(', ', $formattedAuthors)?>

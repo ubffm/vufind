@@ -1,7 +1,7 @@
 <?php
-  if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
     $this->headTitle('Tanzarchiv Leipzig e.V.');
-?>
+    ?>
 <h2>Tanzarchiv Leipzig e.V.</h2>
 <img src="<?=$this->imageLink('logos_s/tal.jpg')?>" alt="Tanzarchiv Leipzig"/><br/><br/>
 <p><a href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070"
@@ -19,10 +19,10 @@
   Fotografien, Postkarten, Mikrofilme und Archivmaterial. Die Bestände sind teilweise in
   einer Datenbank erschlossen, die in den Sondersammlungen und an den Computern in der
   UBL benutzt werden kann.</p>
-  <?php } else {
+<?php } else {
     // Set page title
     $this->headTitle('Dance Archive Leipzig');
-  ?>
+    ?>
 <h2>Dance Archive Leipzig</h2>
 <img src="<?=$this->imageLink('logos_s/tal.jpg')?>" alt="Tanzarchiv Leipzig"/><br/><br/>
 <p><a href="https://www.ub.uni-leipzig.de/forschungsbibliothek/historische-bestaende/archive/#c1070"

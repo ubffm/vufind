@@ -1,23 +1,23 @@
 <div class="flex-statistics card">
   <h4><?=$this->transEsc("Researching")?><hr id="research"/></h4>
   <div class="flexing">
-    <?php foreach ($this->statistics as $key => $amount): ?>
-      <?php if ($key == "Resources") {
-          $url = $this->url('search-results');
-          $info = $this->url('content-page', ['page' => 'resources']);
-          $pic = "Resources.jpg";
+    <?php foreach ($this->statistics as $key => $amount) : ?>
+        <?php if ($key == "Resources") {
+            $url = $this->url('search-results');
+            $info = $this->url('content-page', ['page' => 'resources']);
+            $pic = "Resources.jpg";
         } elseif ($key == "Agents") {
-          $url = $this->url('agentsearch-results');
-          $info = $this->url('content-page', ['page' => 'agents']);
-          $pic = "Agents.jpg";
+            $url = $this->url('agentsearch-results');
+            $info = $this->url('content-page', ['page' => 'agents']);
+            $pic = "Agents.jpg";
         } elseif ($key == "Events") {
-          $url = $this->url('eventsearch-results');
-          $info = $this->url('content-page', ['page' => 'events']);
-          $pic = "Events.jpg";
+            $url = $this->url('eventsearch-results');
+            $info = $this->url('content-page', ['page' => 'events']);
+            $pic = "Events.jpg";
         } else {
-          $url = $this->url('worksearch-results');
-          $info = $this->url('content-page', ['page' => 'works']);
-          $pic = "Works.jpg";
+            $url = $this->url('worksearch-results');
+            $info = $this->url('content-page', ['page' => 'works']);
+            $pic = "Works.jpg";
         } ?>
         <figure class="showcase">
           <a href="<?=$url?>">

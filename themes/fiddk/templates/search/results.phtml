@@ -36,7 +36,7 @@
   // Set up breadcrumbs:
   $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
   // Set up section:
-  $this->layout()->section = '<div class="section container title ' . $ftype_ . '"><h1 class="sectionHeader">' . $this->translate('Search Results') . ' in ' . $this->translate($ftype_ . 's'). '</h1></div> ';
+  $this->layout()->section = '<div class="section container title ' . $ftype_ . '"><h1 class="sectionHeader">' . $this->translate('Search Results') . ' in ' . $this->translate($ftype_ . 's') . '</h1></div> ';
 
   // Store search id:
   $this->layout()->searchId = $this->results->getSearchId();
@@ -51,7 +51,7 @@
   // Create a css class for results from the search class:
   $searchClass = $this->searchClassId;
   if (!ctype_upper($searchClass)) {
-    $searchClass = preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $searchClass);
+      $searchClass = preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $searchClass);
   }
   $this->resultsClass = 'search-results-' . strtolower($searchClass);
 
@@ -67,31 +67,33 @@
   $ignoreHiddenFiltersInRequest = isset($this->ignoreHiddenFiltersInRequest) && $this->ignoreHiddenFiltersInRequest;
   $hiddenFilters = $this->searchTabs()->getHiddenFilters($this->searchClassId, $ignoreHiddenFilterMemory, $ignoreHiddenFiltersInRequest);
   $tabConfig = $this->searchTabs()->getTabConfig($this->searchClassId, $this->lookfor, $this->searchHandler, $this->searchType, $hiddenFilters);
-?>
+    ?>
 
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?php $tabs = $this->context($this)->renderInContext('search/searchTabs', ['searchTabs' => $tabConfig['tabs'], 'showCounts' => true]); ?>
-  <?php if (!empty($tabs)): ?><?=$tabs ?><div class="tab-content clearfix"><?php endif; ?>
-  <?php if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
-    <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
-      <?=$this->recommend($current, 'top', $index)?>
-    <?php endforeach; ?>
+  <?php if (!empty($tabs)) :
+        ?><?=$tabs ?><div class="tab-content clearfix"><?php
+  endif; ?>
+  <?php if (($recordTotal = $this->results->getResultTotal()) > 0) : // only display these at very top if we have results ?>
+        <?php foreach ($this->results->getRecommendations('top') as $index => $current) : ?>
+            <?=$this->recommend($current, 'top', $index)?>
+        <?php endforeach; ?>
   <?php endif; ?>
   <?=$this->flashmessages()?>
   <div class="search-header hidden-print">
     <?php // Data-record-total attribute is for analytics use.  Do not remove. ?>
     <div class="search-stats" data-record-total="<?=$this->escapeHtmlAttr($recordTotal)?>">
-      <?php if ($recordTotal > 0): ?>
-        <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
+      <?php if ($recordTotal > 0) : ?>
+            <?=$this->context()->renderInContext('search/controls/showing.phtml', ['lookfor' => $lookfor, 'recordTotal' => $recordTotal]) ?>
         <a class="search-filter-toggle visible-xs" href="#search-sidebar" data-toggle="offcanvas" title="<?=$this->transEscAttr('sidebar_expand') ?>">
-          <?=$this->transEsc('Refine Results') ?>
+            <?=$this->transEsc('Refine Results') ?>
         </a>
-      <?php else: ?>
+      <?php else : ?>
         <h2><?=$this->transEsc('nohit_heading')?></h2>
       <?php endif; ?>
     </div>
 
-    <?php if ($recordTotal > 0): ?>
+    <?php if ($recordTotal > 0) : ?>
       <div class="search-controls">
         <?=$this->render('search/controls/limit.phtml')?>
         <?=$this->render('search/controls/sort.phtml')?>
@@ -101,63 +103,65 @@
   </div>
   <?php /* End Listing Options */ ?>
 
-  <?php if ($recordTotal < 1): ?>
+  <?php if ($recordTotal < 1) : ?>
     <p>
-      <?php
-        if ($this->searchClassId == "Solr"):
-          $noMessage = 'nohit_lookfor_html';
-        elseif ($this->searchClassId == "SolrPerson"):
-          $noMessage = 'nohit_lookfor_persons_html';
-        elseif ($this->searchClassId == "SolrCorporation"):
+        <?php
+        if ($this->searchClassId == "Solr") :
+            $noMessage = 'nohit_lookfor_html';
+        elseif ($this->searchClassId == "SolrPerson") :
+            $noMessage = 'nohit_lookfor_persons_html';
+        elseif ($this->searchClassId == "SolrCorporation") :
             $noMessage = 'nohit_lookfor_corporations_html';
-        elseif ($this->searchClassId == "SolrEvent"):
-          $noMessage = 'nohit_lookfor_events_html';
-        else:
-          $noMessage = 'nohit_lookfor_works_html';
+        elseif ($this->searchClassId == "SolrEvent") :
+            $noMessage = 'nohit_lookfor_events_html';
+        else :
+            $noMessage = 'nohit_lookfor_works_html';
         endif;
         $default = $this->translate($noMessage, ['%%lookfor%%' => $this->escapeHtml($lookfor)]);
         $emptyMessage = $this->slot('empty-message')->get($default);
         $this->layout()->srmessage = $emptyMessage;
         echo $emptyMessage;
-      ?>
+        ?>
     </p>
-    <?php if (isset($this->parseError)): ?>
+        <?php if (isset($this->parseError)) : ?>
       <p class="alert alert-danger"><?=$this->transEsc('nohit_parse_error')?></p>
-    <?php endif; ?>
-    <?php foreach (($top = $this->results->getRecommendations('top')) as $index => $current): ?>
-      <?=$this->recommend($current, 'top', $index)?>
-    <?php endforeach; ?>
-    <?php foreach ($this->results->getRecommendations('noresults') as $index => $current): ?>
-      <?php if (!in_array($current, $top)): ?>
-        <?=$this->recommend($current, 'noresults', $index)?>
-      <?php endif; ?>
-    <?php endforeach; ?>
-  <?php else: ?>
+        <?php endif; ?>
+        <?php foreach (($top = $this->results->getRecommendations('top')) as $index => $current) : ?>
+            <?=$this->recommend($current, 'top', $index)?>
+        <?php endforeach; ?>
+        <?php foreach ($this->results->getRecommendations('noresults') as $index => $current) : ?>
+            <?php if (!in_array($current, $top)) : ?>
+                <?=$this->recommend($current, 'noresults', $index)?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+  <?php else : ?>
     <form id="search-cart-form" method="post" name="bulkActionForm" action="<?=$this->url('cart-searchresultsbulk')?>" data-lightbox data-lightbox-onsubmit="bulkFormHandler">
       <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', ['idPrefix' => ''])?>
     </form>
-    <?=$this->render('search/list-' . $this->params->getView() . '.phtml')?>
-    <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', ['idPrefix' => 'bottom_', 'formAttr' => 'search-cart-form'])?>
-    <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', ['results' => $this->results, 'options' => $this->paginationOptions ?? []])?>
-    <?=$this->context($this)->renderInContext('search/controls/results-tools.phtml', ['results' => $this->results])?>
+      <?=$this->render('search/list-' . $this->params->getView() . '.phtml')?>
+      <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', ['idPrefix' => 'bottom_', 'formAttr' => 'search-cart-form'])?>
+      <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', ['results' => $this->results, 'options' => $this->paginationOptions ?? []])?>
+      <?=$this->context($this)->renderInContext('search/controls/results-tools.phtml', ['results' => $this->results])?>
   <?php endif; ?>
-  <?php if (!empty($tabs)): ?></div><?php endif; ?>
+  <?php if (!empty($tabs)) :
+        ?></div><?php
+  endif; ?>
 </div>
 <?php /* End Main Listing */ ?>
 
 <?php /* Refine Search Options */ ?>
 <div class="<?=$this->layoutClass('sidebar')?>" id="search-sidebar">
-    <?php if($this->results->getBackendId() == "Blender" && $this->results->getResultTotal() > 400): ?>
+    <?php if ($this->results->getBackendId() == "Blender" && $this->results->getResultTotal() > 400) : ?>
           <a class="btn btn-primary" data-lightbox href="<?=$this->url('search-more')?>?lookfor=<?=urlencode($lookfor)?>" aria-label="<?=$this->transEscAttr('Find More')?>">
             <?=$this->transEsc('AllResults');?>
           </a>
-    <?php elseif($this->results->getBackendId() != "Blender"): ?>
+    <?php elseif ($this->results->getBackendId() != "Blender") : ?>
           <a class="btn btn-primary" href="<?=$this->url('search-results')?>?lookfor=<?=urlencode($lookfor)?>" aria-label="<?=$this->transEscAttr('Find More')?>">
             <?=$this->transEsc('Back to AllRecords');?>
           </a>
     <?php endif; ?>
-  <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>
-    <?=$this->recommend($current, 'side', $index)?>
+  <?php foreach ($this->results->getRecommendations('side') as $index => $current) : ?>
+        <?=$this->recommend($current, 'side', $index)?>
   <?php endforeach; ?>
 </div>
 <?php /* End Refine Search Options */ ?>

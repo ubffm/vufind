@@ -1,24 +1,24 @@
-<?php foreach ($data as $n => $field):
-  $brfield = nl2br(str_replace("\r", "\r\n", $this->escapeHtml($field)));
-  $words = preg_split('/\s(?!\/>)/', $brfield);
-  if (sizeof($words) <= 28) : ?>
-    <?=$brfield;?><br/>
-  <?php else :
-    $lang = $this->plugin('translate')->getTranslator()->getLocale();
-    $start = array_slice($words, 0, 28);
-    $rest = array_slice($words, 28);?>
-    <?=implode(' ', $start) . ' ';?>
+<?php foreach ($data as $n => $field) :
+    $brfield = nl2br(str_replace("\r", "\r\n", $this->escapeHtml($field)));
+    $words = preg_split('/\s(?!\/>)/', $brfield);
+    if (sizeof($words) <= 28) : ?>
+        <?=$brfield;?><br/>
+    <?php else :
+        $lang = $this->plugin('translate')->getTranslator()->getLocale();
+        $start = array_slice($words, 0, 28);
+        $rest = array_slice($words, 28);?>
+        <?=implode(' ', $start) . ' ';?>
     <span class="toggleContainer">
       <input type="checkbox" class="toggle" id="toggle_<?=$n?>">
       <span><?=implode(' ', $rest);?></span>
-      <?php if (substr($lang, 0, 2) === 'de') : ?>
+        <?php if (substr($lang, 0, 2) === 'de') : ?>
         <label for="toggle_<?=$n?>" class="label_de"></label>
-      <?php else : ?>
+        <?php else : ?>
         <label for="toggle_<?=$n?>" class="label_en"></label>
-      <?php endif; ?>
+        <?php endif; ?>
       </span><br/>
-  <?php endif; ?>
-  <?php if ($n < sizeof($data) - 1): ?>
+    <?php endif; ?>
+    <?php if ($n < sizeof($data) - 1) : ?>
     <hr>
-  <?php endif; ?>
+    <?php endif; ?>
 <?php endforeach; ?>

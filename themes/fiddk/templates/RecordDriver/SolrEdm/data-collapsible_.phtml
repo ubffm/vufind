@@ -6,18 +6,18 @@ $first = array_slice($data, 0, 5);
 $rest  = array_slice($data, 5);
 ?>
 
-<?php foreach ($first as $link => $field): ?>
+<?php foreach ($first as $link => $field) : ?>
     <a href="<?= $this->escapeHtmlAttr($link) ?>" target="_blank">
         <?= $this->escapeHtml($field) ?>
     </a><br/>
 <?php endforeach; ?>
 
-<?php if (!empty($rest)): ?>
+<?php if (!empty($rest)) : ?>
     <span class="toggleContainer">
         <input type="checkbox" class="toggle" id="toggle_subject">
 
         <span class="toggleContent">
-            <?php foreach ($rest as $link => $field): ?>
+            <?php foreach ($rest as $link => $field) : ?>
                 <a href="<?= $this->escapeHtmlAttr($link) ?>" target="_blank">
                     <?= $this->escapeHtml($field) ?>
                 </a><br/>

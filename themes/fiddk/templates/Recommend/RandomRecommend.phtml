@@ -1,6 +1,6 @@
 <?php $recommend = $this->recommend->getResults(); ?>
-<?php if (count($recommend) == 1): ?>
-  <?php $driver = $recommend[0];
+<?php if (count($recommend) == 1) : ?>
+    <?php $driver = $recommend[0];
         $year = $driver->getYear();
         $yearsAgo = date('Y') - $year;
         $date = date('d.m.') . $year;
@@ -12,20 +12,20 @@
         <h3><?=$this->translate('PlaybillOTD')?></h3>
         <p><?=$this->translate('OTD', ['%%years%%' => $yearsAgo, '%%date%%' => $date])?> <a href="<?=$link?>"><b><?=$this->record($driver)->getTitleHtml()?></b></a></p>
       </div>
-    <?php if ($cover): ?>
+    <?php if ($cover) : ?>
       <div class="media-right <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col item">
         <?=$cover?>
       </div>
     <?php endif; ?>
   </div>
-<?php elseif (count($recommend) > 0): ?>
+<?php elseif (count($recommend) > 0) : ?>
 <div class="random">
       <?php $perPage = 1 ?>
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
-      <?php for($i = 1;$i < count($recommend) / $perPage;$i++): ?>
+      <?php for ($i = 1; $i < count($recommend) / $perPage; $i++) : ?>
         <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
       <?php endfor; ?>
     </ol>
@@ -33,7 +33,7 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <?php foreach ($recommend as $index => $driver): ?>
+        <?php foreach ($recommend as $index => $driver) : ?>
           <div class="carousel-item">
               <?=$this->record($driver)->getCover('RandomRecommend', 'small:medium', $this->recordLinker()->getUrl($driver));?>
               <a class="content" href="<?=$this->recordLinker()->getUrl($driver)?>">
@@ -49,10 +49,10 @@
                 </div>
               </a>
             </div>
-          <?php if(($index + 1) % $perPage == 0 && $index < count($recommend) - 1): ?>
+            <?php if (($index + 1) % $perPage == 0 && $index < count($recommend) - 1) : ?>
       </div>
       <div class="item">
-          <?php endif; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
       </div>
     </div>
