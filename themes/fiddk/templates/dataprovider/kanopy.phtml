@@ -1,0 +1,12 @@
+<?php
+// Neues Template für den Kanopy-Datenanbieter mit lokalisierter Beschreibung.
+$this->headTitle('Kanopy');
+?>
+<h2>Kanopy</h2>
+<img src="<?=$this->imageLink('logos_s/kanopy.png')?>" alt="Kanopy"/><br/><br/>
+<p><a href="https://www.kanopy.com" target="_blank" data-lightbox-ignore>Website</a></p>
+<?php if ($this->plugin('translate')->getTranslator()->getLocale() === 'de'): ?>
+<p>Kanopy ist ein Streamingdienst für Filme, Dokumentationen und Bildungsinhalte. Er bietet eine große Auswahl an hochwertigen Spielfilmen, internationalen Titeln, Klassikern, Dokumentationen und Kinderinhalten.</p>
+<?php else: ?>
+<p>Kanopy is a streaming service for films, documentaries, and educational content. It offers a wide selection of high-quality feature films, international titles, classics, documentaries, and children's programming.</p>
+<?php endif; ?>
