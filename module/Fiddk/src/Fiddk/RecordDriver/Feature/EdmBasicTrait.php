@@ -251,7 +251,8 @@ trait EdmBasicTrait
             'transcript Verlag',
             'Alexander Street Press',
             'Adam Matthew Digital',
-            'Medici.tv'
+            'Medici.tv',
+            'Kanopy'
         ];
 
         if (in_array($inst, $relevant)) {
@@ -273,7 +274,8 @@ trait EdmBasicTrait
             'transcript Verlag',
             'Alexander Street Press',
             'Adam Matthew Digital',
-            'Medici.tv'
+            'Medici.tv',
+            'Kanopy'
         ];
         // prevent duplicates
         if (!in_array($inst, $relevant)) {
