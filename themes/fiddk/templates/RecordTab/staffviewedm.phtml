@@ -4,25 +4,60 @@
 
     $edm = $this->driver->getXML('edm');
 ?>
+<style>
+  .staffview-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .staffview-table th,
+  .staffview-table td {
+    vertical-align: top;
+  }
+
+  .staffview-table th {
+    width: 25%;
+  }
+
+  .staffview-table td {
+    width: 75%;
+  }
+
+  .staffview-value {
+    margin: 0 0 .5rem 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .staffview-value:last-child {
+    margin-bottom: 0;
+  }
+</style>
+
 <!-- pre><?php //=$edm?></pre -->
 <?php if ($edm) : ?>
 <h3><?=$this->translate('Extended EDM View')?></h3>
+<div class="solrTab">
     <?=\VuFind\XSLT\Processor::process('record-edm.xsl', $edm->toXML());?>
+</div>
 <?php endif; ?>
 
 <h3><?=$this->translate('Solr Index View')?></h3>
-<div class="solrTab"><table class="citation table table-striped">
-  <?php foreach ($this->driver->getRawData() as $field => $values) : ?>
-    <tr>
-      <th><?=$this->escapeHtml($field)?></th>
-      <td>
-        <?php foreach ((array)$values as $value) : ?>
-            <?=$this->escapeHtml(is_array($value) ? print_r($value, true) : $value)?><br />
-        <?php endforeach; ?>
-      </td>
-    </tr>
-  <?php endforeach;?>
-</table></div>
+<div class="solrTab">
+  <table class="citation table table-striped staffview-table">
+    <?php foreach ($this->driver->getRawData() as $field => $values) : ?>
+      <tr>
+        <th><?=$this->escapeHtml($field)?></th>
+        <td>
+          <?php foreach ((array)$values as $value) : ?>
+            <pre class="staffview-value"><?=$this->escapeHtml(is_array($value) ? print_r($value, true) : (string)$value)?></pre>
+          <?php endforeach; ?>
+        </td>
+      </tr>
+    <?php endforeach;?>
+  </table>
+</div>
 
 <!-- do this with a view helper!
            <pre><?php //=formatXML($values);?></pre>  -->
