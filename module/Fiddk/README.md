@@ -161,6 +161,34 @@ Zentrale Namespaces/Klassen (Auswahl):
     - RecordDriver/SolrEdm/data-collapsible.phtml (Sprachsensitives „Mehr/Weniger“),
     - RecordDriver/DefaultRecord/data-related-works.phtml und data-related-events.phtml (zählbasierte Ausgabe mit count()),
     - RecordDriver/DefaultRecord/data-label-array.phtml (sichere Label-Ausgabe).
+
+- SeeAlso-/„Zugänge“-Block (Detailansicht):
+  - Die Sektion „Zugänge“ wird über die Formatter-Gruppe `SeeAlso` aufgebaut (`getDefaultSeeAlsoSpecs()` in `RecordDataFormatterFactory`).
+  - Zuordnung Feld/Label → Driver-Methode → Template:
+    - `edm::edm:isShownAt` → `getCatalogueLink()` → `data-externalLink.phtml`
+      - Datenquelle: EDM `edm:isShownAt` (Aggregation), Linktext aus `dc:description`.
+    - `edm::edm:isShownAt` → `getLicenseLink()` → `data-licenseLink.phtml`
+      - Spezialfall für ausgewählte Institutionen (u. a. transcript Verlag, Alexander Street Press, Adam Matthew Digital, Medici.tv, Kanopy).
+    - `edm::edm:hasView` → `getDigitalCopies()` → `data-collapsible_.phtml`
+      - Bündelt i. d. R. `edm:isShownAt`, `edm:isShownBy`, `edm:hasView` (mit Deduplizierung für bestimmte Providerfälle).
+    - `edm::edm:isRelatedTo` → `getAllRecordLinks()` → `data-internalLink.phtml`
+      - Nutzt `related_to`-IDs und löst per `getTitleIfExists()` Titel aus dem Index auf.
+    - `Availability` → `getKVKLink()` → `data-externalLinkKVK.phtml`
+      - Erzeugt KVK-Abfrage (ISBN oder Titel/Jahr/Verlag), mit Ausschlusslogik für bestimmte Einrichtungen bzw. Archivfälle.
+    - `Ask Archive` → `askArchive()` → `data-askArchive.phtml`
+      - Baut institutionsabhängigen Link auf das Feedback-Formular mit vorbelegter Signatur (`callNumber`).
+
+- Sicherheit bei Link-Ausgabe in Templates:
+  - Für alle URL-Werte in `href`/ähnlichen Attributen sollte `escapeHtmlAttr(...)` verwendet werden.
+  - Linktexte sollten mit `escapeHtml(...)` maskiert werden.
+  - Bereits umgesetzt in den SolrEdm-Templates:
+    - `data-externalLink.phtml`
+    - `data-externalLinkKVK.phtml`
+    - `data-licenseLink.phtml`
+    - `data-internalLink.phtml`
+    - `data-collapsible_.phtml`
+    - `data-askArchive.phtml`
+
 - View-Helper:
   - Fiddk\LayoutClass: zusätzliche Layout-Optionen (z. B. mainbodyRecord, sidebarRecord).
   - Fiddk\RecordExists (+ Factory): prüft via RecordLoader die Existenz in angegebenen Quellen.

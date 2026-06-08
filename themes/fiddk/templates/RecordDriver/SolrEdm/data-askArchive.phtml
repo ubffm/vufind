@@ -9,4 +9,4 @@ if ($institution == "Deutsches Tanzarchiv Köln") {
     $archive = "AskArchiveMCB";
 }
 ?>
-<a class="mail-record" data-lightbox href="<?=$this->url('feedback-form', ['id' => $archive]) . '?callNumber=' . $data ?>" rel="nofollow"><?=$this->transEsc('mail_to') . ' ' . $institution?> <img src="<?=$this->imageLink("icons/envelope.svg")?>" alt="Icon" width="16" height="16"></img></a>
+<a class="mail-record" data-lightbox href="<?=$this->escapeHtmlAttr($this->url('feedback-form', ['id' => $archive]) . '?callNumber=' . $data)?>" rel="nofollow"><?=$this->transEsc('mail_to') . ' ' . $institution?> <img src="<?=$this->imageLink("icons/envelope.svg")?>" alt="Icon" width="16" height="16"></img></a>
