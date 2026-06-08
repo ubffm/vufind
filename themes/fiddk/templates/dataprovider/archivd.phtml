@@ -1,0 +1,20 @@
+<?php
+ $this->headTitle('Archivportal-D');
+?>
+<h2>'Archivportal-D'</h2>
+<img src="<?=$this->imageLink('logos_svg/archivd.svg')?>" alt="Logo Archivportal-D" width="200" height="auto"/><br/><br/>
+<p><a href="https://www.archivportal-d.de/" target="_blank" data-lightbox-ignore>Website</a></p>
+<?php
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+    ?>
+<p>
+    Das Archivportal-D ist das zentrale deutsche Online-Portal zur Recherche nach Archiven, Beständen und Archivgut aus ganz Deutschland.
+    Als Subportal der Deutschen Digitalen Bibliothek macht es archivische Informationen und Digitalisate institutionsübergreifend auffindbar und zugänglich.
+</p>
+<?php } else {
+    ?>
+<p>
+    Archivportal-D is the central German online portal for researching archives, holdings, and archival materials from all over Germany.
+    As a sub-portal of the German Digital Library, it makes archival information and digitized materials discoverable and accessible across institutions.
+</p>
+<?php } ?>
