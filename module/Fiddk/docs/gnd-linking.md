@@ -425,6 +425,110 @@ foreach ($authors as $i => $author) {
 
 ---
 
+## Konkrete technische Umsetzung (Stand im Repository)
+
+### 1) Solr-Schema (biblio-core)
+
+Datei:
+
+```text
+solr/vufind/biblio/conf/schema.xml
+```
+
+Umgesetzt sind die Felder:
+
+```xml
+<field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
+```
+
+Damit ist die technische Trennung vorhanden:
+- Suchfeld: `author_gnd_id`
+- Anzeige-/Positionsfeld: `author_gnd_id_display`
+
+### 2) RecordDriver-API für Templates
+
+Datei:
+
+```text
+module/Fiddk/src/Fiddk/RecordDriver/Feature/EdmBasicTrait.php
+```
+
+Umgesetzt wurden die Getter:
+
+```php
+public function getAuthorGndIds()
+{
+    return $this->fields['author_gnd_id'] ?? [];
+}
+
+public function getAuthorGndIdsDisplay()
+{
+    return $this->fields['author_gnd_id_display'] ?? [];
+}
+```
+
+Damit können Templates die neuen Solr-Felder direkt konsumieren.
+
+### 3) Autoren-Template mit GND-Priorität + Fallback
+
+Datei:
+
+```text
+themes/fiddk/templates/RecordDriver/SolrEdm/data-authors.phtml
+```
+
+Implementierter Entscheidungsbaum je Autor:
+
+1. Wenn `author_gnd_id_display[i]` vorhanden:
+   - Link über `author_gnd_id`
+2. Sonst Best-Effort-Übergangsmodus:
+   - wenn `author_id` bereits `gnd_...` ist → nutze `author_gnd_id`
+   - wenn `author_id` eine `d-nb.info/gnd/...` URI ist → normalisiere zu `gnd_...` und nutze `author_gnd_id`
+3. Sonst lokaler Fallback:
+   - Link über `author_id`
+4. Wenn keine belastbare ID verfügbar:
+   - Fallback auf `personsearch` mit Namen
+
+Technisch relevante Details:
+- GND-Normalisierung im Template per Regex:
+  - akzeptiert `http://d-nb.info/gnd/...` und `https://d-nb.info/gnd/...`
+- korrekter lokaler Fallback verwendet `author_id` (nicht `author`).
+
+### 4) SolrAuthDefault-Template nutzt SolrEdm-Implementierung
+
+Datei:
+
+```text
+themes/fiddk/templates/RecordDriver/SolrAuthDefault/data-authors.phtml
+```
+
+Diese Datei rendert bewusst das SolrEdm-Template:
+
+```php
+echo $this->render('RecordDriver/SolrEdm/data-authors.phtml');
+```
+
+Damit gilt dieselbe GND-Linklogik konsistent auch in diesem Kontext.
+
+### 5) Formatter-Integration
+
+Datei:
+
+```text
+module/Fiddk/src/Fiddk/View/Helper/Fiddk/RecordDataFormatterFactory.php
+```
+
+`dc:contributor` wird weiterhin über `getDeduplicatedAuthors` + `data-authors.phtml` gerendert.  
+Dadurch greift die neue GND-Linklogik zentral ohne zusätzliche Spec-Anpassung.
+
+### 6) Dokumentierte Grenzen
+
+- Die Befüllung von `author_gnd_id`/`author_gnd_id_display` erfolgt **nicht** in diesem Repository.
+- Ohne Pipeline-Lieferung greifen die implementierten Fallbacks (lokale `author_id` bzw. Best-Effort-GND-Erkennung).
+
+---
+
 ## Absicherungspunkte (verbindlich)
 
 Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
