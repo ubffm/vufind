@@ -28,6 +28,18 @@ Stattdessen sollen lokale Partnerdaten erhalten bleiben und die GND nur als zus�
 
 ---
 
+## Wichtige Rahmenbedingung (dieses Repository)
+
+Die eigentliche Indexing-/ETL-Pipeline liegt in einem anderen Projekt und kann hier nicht geändert werden.
+
+Damit gilt für dieses Repository:
+
+- Umsetzungsschwerpunkt liegt auf **Schema-/Anwendungsseite** (VuFind/Fiddk).
+- Die Felder `author_gnd_id` und `author_gnd_id_display` werden hier **konsumiert**, nicht erzeugt.
+- Solange die externe Pipeline die Felder nicht liefert, muss die Anwendung robust auf Fallbacks arbeiten.
+
+---
+
 ## Zielmodell
 
 Es werden zwei Identitätsebenen unterschieden:
@@ -257,9 +269,9 @@ Wenn kein Agent eine GND hat:
 
 ---
 
-## Indexing-Logik
+## Indexing-Logik (externes Projekt)
 
-Beim Aufbau des Titeldokuments muss aus den Agentendaten eine Lookup-Tabelle erzeugt werden:
+Die eigentliche Befüllung der Felder erfolgt in der externen Pipeline. Dort soll beim Aufbau des Titeldokuments aus den Agentendaten eine Lookup-Tabelle erzeugt werden:
 
 ```python
 agent_to_gnd = {
@@ -304,7 +316,7 @@ author_gnd_id_display
 
 ---
 
-## Extraktion der GND aus `owl:sameAs`
+## Extraktion der GND aus `owl:sameAs` (externes Projekt)
 
 Aus einer URI wie:
 
@@ -352,17 +364,29 @@ def build_gnd_linking_id(uri: str) -> str | None:
 
 ---
 
-## VuFind-Linklogik
+## VuFind-Linklogik (dieses Repository)
 
 Beim Rendern von Personenlinks wird bevorzugt über die GND verlinkt.
 
-Logik:
+Primärlogik:
 
 ```text
 Wenn author_gnd_id_display[i] vorhanden:
     Link auf author_gnd_id:"gnd_..."
 sonst:
     Link auf author_id:"lokale Agent-URI"
+```
+
+Fallback-Logik (für Übergangsphase ohne Pipeline-Update):
+
+```text
+Wenn author_gnd_id_display[i] leer ist:
+    und author_id[i] bereits gnd_... ist:
+        nutze author_gnd_id:"gnd_..."
+    oder author_id[i] eine d-nb.info/gnd/... URI ist:
+        normalisiere zu gnd_... und nutze author_gnd_id:"gnd_..."
+    sonst:
+        nutze author_id:"lokale Agent-URI"
 ```
 
 Beispiel:
@@ -410,7 +434,7 @@ Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
    - Optionaler Trailing-Slash, Query-Parameter und Fragment werden bei der Extraktion ignoriert.
    - Ergebnis wird einheitlich als `gnd_<id>` gespeichert.
 
-2. **Mehrfaches `owl:sameAs` pro Agent**
+2. **Mehrfaches `owl:sameAs` pro Agent** (externes Projekt)
    - Falls mehrere `owl:sameAs`-Werte vorhanden sind, werden nur gültige GND-URIs berücksichtigt.
    - Wenn genau eine gültige GND gefunden wird, wird diese übernommen.
    - Wenn mehrere unterschiedliche GND-IDs gefunden werden, wird deterministisch entschieden (z. B. erste nach stabiler Sortierung) und ein Warn-Log geschrieben.
@@ -424,6 +448,11 @@ Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
    - Nach Einführung der Felder ist ein Reindex der betroffenen Titeldokumente verpflichtend.
    - Empfohlen: Full-Reindex des bibliografischen Kerns, wenn die Datenherkunft oder Mapping-Logik geändert wurde.
    - Delta-Reindex nur dann, wenn sichergestellt ist, dass alle betroffenen Records neu geschrieben werden.
+
+5. **Übergangsmodus ohne Pipeline-Änderung**
+   - Anwendung muss funktionsfähig bleiben, wenn `author_gnd_id*` fehlen.
+   - In diesem Fall wird auf `author_id`-Suche zurückgefallen.
+   - Optionaler Best-Effort: Erkennung von bereits in `author_id` enthaltenen GND-Hinweisen (`gnd_...` oder `d-nb.info/gnd/...`).
 
 ---
 
@@ -508,7 +537,9 @@ Ziel:
 
 ## Umsetzungsschritte
 
-1. **Solr-Schema erweitern**
+### A) In diesem Repository umsetzen
+
+1. **Solr-Schema erweitern (biblio-core)**
 
    Ergänzen:
 
@@ -517,28 +548,7 @@ Ziel:
    <field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
    ```
 
-2. **Agent-Indexing erweitern**
-
-   Aus `owl:sameAs` GND-URIs extrahieren:
-
-   ```text
-   http://d-nb.info/gnd/118522213
-   → gnd_118522213
-   ```
-
-3. **Titel-Indexing erweitern**
-
-   Für jeden `dc:contributor`:
-
-   ```text
-   lokale Agent-URI → Lookup in Agent-GND-Mapping → author_gnd_id
-   ```
-
-4. **Titeldokumente neu indexieren**
-
-   Die GND-Linking-ID muss im bibliografischen Solr-Core stehen.
-
-5. **RecordDriver erweitern**
+2. **RecordDriver erweitern**
 
    Methoden ergänzen, z. B.:
 
@@ -547,13 +557,36 @@ Ziel:
    getAuthorGndIdsDisplay()
    ```
 
-6. **Templates anpassen**
+3. **Templates anpassen**
 
-   Personenlinks bevorzugt über `author_gnd_id`, Fallback über `author_id`.
+   Personenlinks bevorzugt über `author_gnd_id`, Fallback über `author_id` (inkl. Übergangsmodus).
 
-7. **Bestehende `gnd_...`-Logik unverändert lassen**
+4. **Bestehende `gnd_...`-Logik unverändert lassen**
 
    Aber nur für primäre Record-IDs verwenden, nicht für Partner-Agenten.
+
+### B) In externem Pipeline-Projekt umsetzen
+
+5. **Agent-Indexing erweitern**
+
+   Aus `owl:sameAs` GND-URIs extrahieren:
+
+   ```text
+   http://d-nb.info/gnd/118522213
+   → gnd_118522213
+   ```
+
+6. **Titel-Indexing erweitern**
+
+   Für jeden `dc:contributor`:
+
+   ```text
+   lokale Agent-URI → Lookup in Agent-GND-Mapping → author_gnd_id
+   ```
+
+7. **Titeldokumente neu indexieren**
+
+   Die GND-Linking-ID muss im bibliografischen Solr-Core stehen.
 
 8. **Testfälle prüfen**
 
@@ -653,4 +686,4 @@ und fällt bei fehlender GND zurück auf:
 author_id:"https://performing-arts.eu/discovery/agent/rwm_10005"
 ```
 
-Damit bleiben Partnerdaten sichtbar, während die partnerübergreifende Verknüpfung über GND funktioniert.
+Wenn die Pipeline die neuen Felder noch nicht liefert, bleibt die Anwendung im Übergangsmodus funktionsfähig (Fallback), bis die externe Indexing-Umsetzung nachgezogen ist.
