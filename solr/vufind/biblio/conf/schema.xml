@@ -171,6 +171,8 @@
    <field name="intermediate_id" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publisher_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="topic_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_role" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="event" type="textProper" indexed="true" stored="true" multiValued="true"/>
