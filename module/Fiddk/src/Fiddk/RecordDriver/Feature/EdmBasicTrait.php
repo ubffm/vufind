@@ -285,8 +285,17 @@ trait EdmBasicTrait
                 "dc:description"
             );
         }
-        return $links + $this->getEdmReader()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
-        $this->getEdmReader()->getLinkedPropValues("edm:hasView", "ore:Aggregation", "dc:description");
+        return $links
+            + $this->getEdmReader()->getLinkedPropValues(
+                "edm:isShownBy",
+                "ore:Aggregation",
+                "dc:description"
+            )
+            + $this->getEdmReader()->getLinkedPropValues(
+                "edm:hasView",
+                "ore:Aggregation",
+                "dc:description"
+            );
     }
 
     public function getCatalogueLink()
