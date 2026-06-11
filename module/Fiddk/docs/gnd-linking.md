@@ -401,6 +401,32 @@ foreach ($authors as $i => $author) {
 
 ---
 
+## Absicherungspunkte (verbindlich)
+
+Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
+
+1. **Konsistente Normalisierung der GND-URI**
+   - `http://d-nb.info/gnd/...` und `https://d-nb.info/gnd/...` werden gleich behandelt.
+   - Optionaler Trailing-Slash, Query-Parameter und Fragment werden bei der Extraktion ignoriert.
+   - Ergebnis wird einheitlich als `gnd_<id>` gespeichert.
+
+2. **Mehrfaches `owl:sameAs` pro Agent**
+   - Falls mehrere `owl:sameAs`-Werte vorhanden sind, werden nur gültige GND-URIs berücksichtigt.
+   - Wenn genau eine gültige GND gefunden wird, wird diese übernommen.
+   - Wenn mehrere unterschiedliche GND-IDs gefunden werden, wird deterministisch entschieden (z. B. erste nach stabiler Sortierung) und ein Warn-Log geschrieben.
+   - Ziel: reproduzierbares Verhalten bei fehlerhaften/mehrdeutigen Daten.
+
+3. **Leere Werte in `author_gnd_id_display`**
+   - Für „keine GND vorhanden“ wird verbindlich der leere String `""` verwendet (nicht `null`).
+   - Dadurch bleibt die Positionsgleichheit zu `author`, `author_id`, `author_role` stabil.
+
+4. **Reindex-Strategie**
+   - Nach Einführung der Felder ist ein Reindex der betroffenen Titeldokumente verpflichtend.
+   - Empfohlen: Full-Reindex des bibliografischen Kerns, wenn die Datenherkunft oder Mapping-Logik geändert wurde.
+   - Delta-Reindex nur dann, wenn sichergestellt ist, dass alle betroffenen Records neu geschrieben werden.
+
+---
+
 ## Abfragebeispiele
 
 ### Partnerübergreifende Suche über GND
@@ -537,6 +563,9 @@ Ziel:
    * gleichnamige Personen mit unterschiedlicher GND
    * mehrere Autoren pro Titel
    * Autor mit fehlender GND zwischen zwei Autoren mit GND
+   * Agent mit mehreren `owl:sameAs`, davon mehrere/keine gültige GND
+   * Mischfälle `http`/`https`/Trailing-Slash in GND-URIs
+   * Konsistente Behandlung leerer Display-Werte (`""` statt `null`)
 
 ---
 
@@ -625,4 +654,3 @@ author_id:"https://performing-arts.eu/discovery/agent/rwm_10005"
 ```
 
 Damit bleiben Partnerdaten sichtbar, während die partnerübergreifende Verknüpfung über GND funktioniert.
-
