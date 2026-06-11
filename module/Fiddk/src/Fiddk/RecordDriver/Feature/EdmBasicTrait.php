@@ -279,7 +279,11 @@ trait EdmBasicTrait
         ];
         // prevent duplicates
         if (!in_array($inst, $relevant)) {
-            $links = $this->getEdmReader()->getLinkedPropValues("edm:isShownAt", "ore:Aggregation", "dc:description");
+            $links = $this->getEdmReader()->getLinkedPropValues(
+                "edm:isShownAt",
+                "ore:Aggregation",
+                "dc:description"
+            );
         }
         return $links + $this->getEdmReader()->getLinkedPropValues("edm:isShownBy", "ore:Aggregation", "dc:description") +
         $this->getEdmReader()->getLinkedPropValues("edm:hasView", "ore:Aggregation", "dc:description");
