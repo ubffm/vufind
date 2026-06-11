@@ -19,7 +19,7 @@ Beispiel:
 
 ```text
 Nicht tun:
-rwm_10005 → gnd_118522213
+<partnerprefix>_10005 → gnd_118522213
 ```
 
 Denn das würde den Partner-Agenten faktisch in einen lobid/GND-Record verwandeln.
@@ -44,12 +44,12 @@ Damit gilt für dieses Repository:
 
 Es werden zwei Identitätsebenen unterschieden:
 
-| Ebene             | Zweck                                     | Beispiel        |
-| ----------------- | ----------------------------------------- | --------------- |
-| lokale Partner-ID | stabile Identität im Datenpartner-Kontext | `rwm_10005`     |
-| GND-Linking-ID    | partnerübergreifende Verknüpfung          | `gnd_118522213` |
+| Ebene             | Zweck                                     | Beispiel                 |
+| ----------------- | ----------------------------------------- | ------------------------ |
+| lokale Partner-ID | stabile Identität im Datenpartner-Kontext | `<partnerprefix>_10005`  |
+| GND-Linking-ID    | partnerübergreifende Verknüpfung          | `gnd_118522213`          |
 
-Ein Agent bleibt lokal eindeutig:
+Ein Agent bleibt lokal eindeutig (Beispiel-URI):
 
 ```text
 https://performing-arts.eu/discovery/agent/rwm_10005
@@ -77,14 +77,14 @@ Diese GND-Linking-ID wird in den **Titeldokumenten** indexiert, nicht nur im Age
 Für den stabilen Betrieb in VuFind/Solr wird eine klare Trennung empfohlen:
 
 - **Technische Primär-ID (Record-Loading, Routing, interne Verknüpfung):**
-  - `id = rwm_...` (z. B. `rwm_14405`)
+  - `id = <partnerprefix>_...` (z. B. `rwm_14405`, `foo_777`)
 - **Semantische/Linked-Data-ID (RDF-Kontext):**
   - volle URI im RDF (`rdf:about`, z. B. `https://performing-arts.eu/discovery/agent/rwm_14405`)
 
 ### Warum diese Trennung sinnvoll ist
 
 1. VuFind lädt Records direkt über das Solr-`id`-Feld.
-2. Kürzere, stabile technische IDs (`rwm_...`) sind robuster für Routing und URL-Encoding.
+2. Kürzere, stabile technische IDs (`<partnerprefix>_...`) sind robuster für Routing und URL-Encoding.
 3. Die semantische Identität bleibt vollständig im RDF erhalten (`rdf:about`), ohne den Loader zu destabilisieren.
 4. Das verhindert ID-Mismatch-Fehler wie:
    - URL/Route nutzt URI,
@@ -93,7 +93,7 @@ Für den stabilen Betrieb in VuFind/Solr wird eine klare Trennung empfohlen:
 ### Konkrete Empfehlung
 
 - In Agent-Routen und internen Links die technische Primär-ID verwenden:
-  - `/agent/rwm_14405`
+  - `/agent/<partnerprefix>_14405` (z. B. `/agent/rwm_14405`)
 - Die URI weiterhin im Datensatz führen (z. B. in `fullrecord`/RDF), aber nicht als alleinige technische Lade-ID erzwingen.
 - Wenn zukünftig URI als Primär-ID gewünscht ist, dann nur als vollständige, konsistente Umstellung in:
   - Solr-`id`,
@@ -589,9 +589,9 @@ Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
    - Optionaler Best-Effort: Erkennung von bereits in `author_id` enthaltenen GND-Hinweisen (`gnd_...` oder `d-nb.info/gnd/...`).
 
 6. **Konsistente Agent-ID-Strategie (dieses Repository + externes Projekt)**
-   - Technische Primär-ID im Authority-Index und für VuFind-Record-Loading bleibt stabil und einheitlich (empfohlen: Kurz-ID wie `rwm_...`).
+   - Technische Primär-ID im Authority-Index und für VuFind-Record-Loading bleibt stabil und einheitlich als **partnerlokale Kurz-ID mit Partnerpräfix** (z. B. `rwm_...`, `foo_...`).
    - Linked-Data-URI bleibt als semantische Identität im RDF erhalten (`rdf:about`), ohne die technische Lade-ID zu ersetzen.
-   - Interne Agent-Links/Routen müssen zur technischen Primär-ID passen (z. B. `/agent/rwm_14405` bei `id = rwm_14405`).
+   - Interne Agent-Links/Routen müssen zur technischen Primär-ID passen (z. B. `/agent/rwm_14405` bei `id = rwm_14405` bzw. `/agent/foo_777` bei `id = foo_777`).
    - Eine Umstellung auf URI als Primär-ID ist nur als vollständige, konsistente Gesamtmigration zulässig (Index, Routing, Linkerzeugung, Loader-Fallbacks).
 
 ---
@@ -628,7 +628,7 @@ record.id startsWith "gnd_"
 Für Partner-Records mit GND gilt dagegen:
 
 ```text
-record.id = rwm_10005
+record.id = <partnerprefix>_10005
 author_gnd_id = gnd_118522213
 → Partnerdaten anzeigen
 → GND nur für Linking und optionale Anreicherung nutzen
@@ -636,11 +636,11 @@ author_gnd_id = gnd_118522213
 
 Dadurch entstehen drei saubere Fälle:
 
-| Fall                   | Primäre ID      | Anzeige      | lobid    |
-| ---------------------- | --------------- | ------------ | -------- |
-| echter Normdatenrecord | `gnd_118522213` | lobid/GND    | primär   |
-| Partner-Agent mit GND  | `rwm_10005`     | Partnerdaten | optional |
-| Partner-Agent ohne GND | `rwm_18552`     | Partnerdaten | nein     |
+| Fall                   | Primäre ID              | Anzeige      | lobid    |
+| ---------------------- | ----------------------- | ------------ | -------- |
+| echter Normdatenrecord | `gnd_118522213`         | lobid/GND    | primär   |
+| Partner-Agent mit GND  | `<partnerprefix>_10005` | Partnerdaten | optional |
+| Partner-Agent ohne GND | `<partnerprefix>_18552` | Partnerdaten | nein     |
 
 ---
 
@@ -802,11 +802,13 @@ author_gnd_id_display
 → positionsgleiche GND für Template-Anzeige
 ```
 
-Die primäre Record-ID bleibt lokal:
+Die primäre Record-ID bleibt lokal und partnerabhängig:
 
 ```text
-rwm_10005
+<partnerprefix>_10005
 ```
+
+(Beispiel: `rwm_10005`)
 
 Die GND wird nur zusätzlich indexiert:
 
