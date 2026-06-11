@@ -330,6 +330,26 @@ trait EdmBasicTrait
     }
 
     /**
+     * Get indexed GND author ids (search field).
+     *
+     * @return array
+     */
+    public function getAuthorGndIds()
+    {
+        return $this->fields['author_gnd_id'] ?? [];
+    }
+
+    /**
+     * Get positional GND author ids for display/template logic.
+     *
+     * @return array
+     */
+    public function getAuthorGndIdsDisplay()
+    {
+        return $this->fields['author_gnd_id_display'] ?? [];
+    }
+
+    /**
      * Get related events
      *
      * @return array

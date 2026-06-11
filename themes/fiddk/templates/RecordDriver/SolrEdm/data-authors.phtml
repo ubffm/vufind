@@ -9,25 +9,54 @@ $formatProperty = function ($datafield, $name, $label) {
     };
     return '<span class="author-property-' . $name . '">(' . implode(', ', array_unique(array_map($translate, $datafield))) . ')</span>';
 };
+
+$normalizeGndFromAuthorId = function ($authorId) {
+    if (!is_string($authorId) || $authorId === '') {
+        return null;
+    }
+
+    if (preg_match('/^gnd_[^"\s]+$/', $authorId)) {
+        return $authorId;
+    }
+
+    if (preg_match('#^https?://d-nb\.info/gnd/([^/#?]+)#', $authorId, $matches)) {
+        return 'gnd_' . $matches[1];
+    }
+
+    return null;
+};
+
+$authorGndIdsDisplay = $this->driver->tryMethod('getAuthorGndIdsDisplay', [], []);
 $formattedAuthors = [];
 ?>
 <?php if (!empty($data[$type])) : ?>
+    <?php $authorIndex = 0; ?>
     <?php foreach ($data[$type] as $author => $dataFields) : ?>
         <?php if (!empty($author)) : ?>
-            <?php ob_start();
-      // an authority link exists and that document exists in SolrAuthor
-            if (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) :
+            <?php
+            ob_start();
+
+            $authorId = $dataFields['id'][0] ?? null;
+            $gndIdFromDisplay = $authorGndIdsDisplay[$authorIndex] ?? null;
+            $normalizedGndFromAuthorId = $normalizeGndFromAuthorId($authorId);
+
+            if (!empty($gndIdFromDisplay)) {
+                $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $gndIdFromDisplay);
+            } elseif (!empty($normalizedGndFromAuthorId)) {
+                $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
+            } elseif (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
-            else :
+            } else {
                 $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
-            endif; ?>
+            }
+            ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
-      <a href="<?=$authorityLookfor?>">
+      <a href="<?=$this->escapeHtmlAttr($authorityLookfor)?>">
             <?=$this->escapeHtml(rtrim($author, ','))?>
       </a>
             <?php
-        // Display additional data using the appropriate translation prefix
-        // (for example, to render author roles correctly):
+            // Display additional data using the appropriate translation prefix
+            // (for example, to render author roles correctly):
             if (!empty($requiredDataFields)) {
                 foreach ($requiredDataFields as $field) {
                     $name = $field['name'];
@@ -40,9 +69,10 @@ $formattedAuthors = [];
             ?>
     </span>
             <?php
-      // Strip whitespace before close tags to avoid spaces in front of commas:
+            // Strip whitespace before close tags to avoid spaces in front of commas:
             $formattedAuthors[] = trim(preg_replace('/\s+<\//', '</', ob_get_contents()));
             ob_end_clean();
+            $authorIndex++;
             ?>
         <?php endif; ?>
     <?php endforeach; ?>
