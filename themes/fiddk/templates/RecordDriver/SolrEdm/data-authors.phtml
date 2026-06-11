@@ -26,6 +26,18 @@ $normalizeGndFromAuthorId = function ($authorId) {
     return null;
 };
 
+$normalizeLocalAgentId = function ($authorId) {
+    if (!is_string($authorId) || $authorId === '') {
+        return null;
+    }
+
+    if (preg_match('~^https?://[^/]+/.*/agent/([^/?#]+)$~', $authorId, $matches)) {
+        return $matches[1];
+    }
+
+    return $authorId;
+};
+
 $authorGndIdsDisplay = $this->driver->tryMethod('getAuthorGndIdsDisplay', [], []);
 $formattedAuthors = [];
 ?>
@@ -36,9 +48,10 @@ $formattedAuthors = [];
             <?php
             ob_start();
 
-            $authorId = $dataFields['id'][0] ?? null;
+            $authorIdRaw = $dataFields['id'][0] ?? null;
+            $authorId = $normalizeLocalAgentId($authorIdRaw);
             $gndIdFromDisplay = $authorGndIdsDisplay[$authorIndex] ?? null;
-            $normalizedGndFromAuthorId = $normalizeGndFromAuthorId($authorId);
+            $normalizedGndFromAuthorId = $normalizeGndFromAuthorId($authorIdRaw);
 
             if (!empty($gndIdFromDisplay)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $gndIdFromDisplay);
@@ -47,7 +60,7 @@ $formattedAuthors = [];
             } elseif (!empty($authorId)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_id', $authorId);
             } else {
-                $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
+                $authorityLookfor = $this->record($this->driver)->getLink('author', $author);
             }
             ?>
     <span class="author-data" property="<?=$this->escapeHtml($schemaLabel)?>">
