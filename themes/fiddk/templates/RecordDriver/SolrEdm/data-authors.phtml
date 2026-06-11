@@ -45,7 +45,7 @@ $formattedAuthors = [];
             } elseif (!empty($normalizedGndFromAuthorId)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
             } elseif (!empty($authorId)) {
-                $authorityLookfor = $this->record($this->driver)->getLink('author', $authorId);
+                $authorityLookfor = $this->record($this->driver)->getLink('author_id', $authorId);
             } else {
                 $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
             }
