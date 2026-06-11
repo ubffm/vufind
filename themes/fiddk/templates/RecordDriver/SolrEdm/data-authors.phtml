@@ -19,7 +19,7 @@ $normalizeGndFromAuthorId = function ($authorId) {
         return $authorId;
     }
 
-    if (preg_match('#^https?://d-nb\.info/gnd/([^/#?]+)#', $authorId, $matches)) {
+    if (preg_match('#^https?://d-nb\.info/gnd/([^\/#?]+)#', $authorId, $matches)) {
         return 'gnd_' . $matches[1];
     }
 
@@ -45,7 +45,7 @@ $formattedAuthors = [];
             } elseif (!empty($normalizedGndFromAuthorId)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
             } elseif (!empty($authorId)) {
-                $authorityLookfor = $this->record($this->driver)->getLink('author_id', $authorId);
+                $authorityLookfor = $this->record($this->driver)->getLink('author', $authorId);
             } else {
                 $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
             }
