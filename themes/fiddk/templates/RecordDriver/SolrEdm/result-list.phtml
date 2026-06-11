@@ -65,16 +65,51 @@ if ($coverDetails['cover'] && $cover) :
             <?php endif; ?>
             <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()), 0, 3); if (!empty($summAuthors)) :
                 $roles = $this->driver->getPrimaryAuthorsRoles();
-                $ids = $this->driver->getPrimaryAuthorsIds();?>
+                $ids = $this->driver->getPrimaryAuthorsIds();
+                $authorGndIdsDisplay = $this->driver->tryMethod('getAuthorGndIdsDisplay', [], []);
+                $normalizeGndFromAuthorId = function ($authorId) {
+                    if (!is_string($authorId) || $authorId === '') {
+                        return null;
+                    }
+                    if (preg_match('/^gnd_[^"\s]+$/', $authorId)) {
+                        return $authorId;
+                    }
+                    if (preg_match('~^https?://d-nb\.info/gnd/([^/#?]+)~', $authorId, $matches)) {
+                        return 'gnd_' . $matches[1];
+                    }
+                    return null;
+                };
+                $normalizeLocalAgentId = function ($authorId) {
+                    if (!is_string($authorId) || $authorId === '') {
+                        return null;
+                    }
+                    if (preg_match('~^https?://[^/]+/.*/agent/([^/?#]+)$~', $authorId, $matches)) {
+                        return $matches[1];
+                    }
+                    return $authorId;
+                };
+                ?>
             <div class="authors">
             <img src="<?=$this->imageLink("icons/person.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="authors">
                 <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor) : ?>
                     <?php if ($i != 2) : ?>
-                        <?php if (isset($ids[$i]) && $ids[$i] != '') : ?>
-                 <a href="<?=$this->record($this->driver)->getLink('author', $ids[$i])?>"><?=$this->highlight($summAuthor)?></a>
-                        <?php else : ?>
-                 <a href="<?=$this->record($this->driver)->getLink('personsearch', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a>
-                        <?php endif; ?>
+                        <?php
+                        $authorIdRaw = $ids[$i] ?? null;
+                        $authorId = $normalizeLocalAgentId($authorIdRaw);
+                        $gndIdFromDisplay = $authorGndIdsDisplay[$i] ?? null;
+                        $normalizedGndFromAuthorId = $normalizeGndFromAuthorId($authorIdRaw);
+
+                        if (!empty($gndIdFromDisplay)) {
+                            $authorLink = $this->record($this->driver)->getLink('author_gnd_id', $gndIdFromDisplay);
+                        } elseif (!empty($normalizedGndFromAuthorId)) {
+                            $authorLink = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
+                        } elseif (!empty($authorId)) {
+                            $authorLink = $this->record($this->driver)->getLink('author_id', $authorId);
+                        } else {
+                            $authorLink = $this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false));
+                        }
+                        ?>
+                 <a href="<?=$this->escapeHtmlAttr($authorLink)?>"><?=$this->highlight($summAuthor)?></a>
                         <?='(' . $this->transEsc('edm::' . $roles[$i]) . ')'?><?=$i + 1 < $authorCount ? ($i == 1 ? ', ...' : ',') : ''?>
                     <?php endif; ?>
                 <?php endforeach; ?>
