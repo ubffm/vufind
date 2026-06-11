@@ -45,7 +45,7 @@ $formattedAuthors = [];
             } elseif (!empty($normalizedGndFromAuthorId)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
             } elseif (isset($dataFields['id'][0]) && $this->driver->checkExistence($dataFields['id'][0], "SolrAuth")) {
-                $authorityLookfor = $this->record($this->driver)->getLink('author', $dataFields['id'][0]);
+                $authorityLookfor = $this->record($this->driver)->getLink('author_id', $dataFields['id'][0]);
             } else {
                 $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
             }
