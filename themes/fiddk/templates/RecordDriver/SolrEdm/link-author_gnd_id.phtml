@@ -1,0 +1,5 @@
+<?php
+$url = $this->url('search-results');
+$filter = 'author_gnd_id:"' . $lookfor . '"';
+$query = http_build_query(['filter' => [$filter]]);
+echo $url . '?' . $query;
