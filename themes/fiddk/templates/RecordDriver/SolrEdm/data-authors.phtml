@@ -44,8 +44,9 @@ $formattedAuthors = [];
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $gndIdFromDisplay);
             } elseif (!empty($normalizedGndFromAuthorId)) {
                 $authorityLookfor = $this->record($this->driver)->getLink('author_gnd_id', $normalizedGndFromAuthorId);
+            } elseif (!empty($authorId)) {
+                $authorityLookfor = $this->record($this->driver)->getLink('author_id', $authorId);
             } else {
-                // Kein getLink('author_id', ...), da dafür kein link-author_id.phtml existiert.
                 $authorityLookfor = $this->record($this->driver)->getLink('personsearch', $author);
             }
             ?>
