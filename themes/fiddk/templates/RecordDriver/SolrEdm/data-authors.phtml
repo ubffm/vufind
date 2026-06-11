@@ -19,7 +19,7 @@ $normalizeGndFromAuthorId = function ($authorId) {
         return $authorId;
     }
 
-    if (preg_match('#^https?://d-nb\.info/gnd/([^\/#?]+)#', $authorId, $matches)) {
+    if (preg_match('~^https?://d-nb\.info/gnd/([^/#?]+)~', $authorId, $matches)) {
         return 'gnd_' . $matches[1];
     }
 
