@@ -220,8 +220,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
                     }
                     $result = [];
                     foreach ($data as $row) {
-                        if (is_array($row) && isset($row['id'])) {
-                            $result[] = $row['id'];
+                        if (is_array($row) && !empty($row['id']) && is_scalar($row['id'])) {
+                            $result[] = (string)$row['id'];
+                        } elseif (is_scalar($row)) {
+                            $result[] = (string)$row;
                         }
                     }
                     return $result;
