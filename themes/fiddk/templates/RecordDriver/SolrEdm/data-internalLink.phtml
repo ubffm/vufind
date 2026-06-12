@@ -1,26 +1,31 @@
+<?php
+$data = is_array($data) ? $data : [];
+$toggleId = 'toggle_link_' . substr(md5(json_encode($data)), 0, 8);
+?>
+
 <?php if (sizeof($data) > 8) : ?>
     <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
-    <?php $rest = array_slice($data, 8); ?>
-    <?php $fields = array_slice($data, 0, 8);?>
+    <?php $rest = array_slice($data, 8, null, true); ?>
+    <?php $fields = array_slice($data, 0, 8, true); ?>
     <?php foreach ($fields as $link => $field) : ?>
-  <a href="<?=$this->escapeHtmlAttr($link)?>"><?=$this->escapeHtml($field)?></a><br/>
+  <a href="<?= $this->escapeHtmlAttr($link) ?>"><?= $this->escapeHtml($field) ?></a><br/>
     <?php endforeach; ?>
-    <?php if (!(empty($rest))) : ?>
+    <?php if (!empty($rest)) : ?>
 <span class="toggleContainer">
-  <input type="checkbox" class="toggle" id="toggle_link">
+  <input type="checkbox" class="toggle" id="<?= $this->escapeHtmlAttr($toggleId) ?>">
   <span> <?php foreach ($rest as $link => $field) : ?>
-    <a href="<?=$this->escapeHtmlAttr($link)?>"><?=$this->escapeHtml($field)?></a><br/>
+    <a href="<?= $this->escapeHtmlAttr($link) ?>"><?= $this->escapeHtml($field) ?></a><br/>
          <?php endforeach; ?>
 </span>
         <?php if ($lang == 'de') : ?>
- <label for="toggle_link" class="label_de"></label>
+ <label for="<?= $this->escapeHtmlAttr($toggleId) ?>" class="label_de"></label>
         <?php else : ?>
- <label for="toggle_link" class="label_en"></label>
+ <label for="<?= $this->escapeHtmlAttr($toggleId) ?>" class="label_en"></label>
         <?php endif; ?>
 </span>
     <?php endif; ?>
 <?php else : ?>
     <?php foreach ($data as $link => $field) : ?>
-    <a href="<?=$this->escapeHtmlAttr($link)?>"><?=$this->escapeHtml($field)?></a><br/>
+    <a href="<?= $this->escapeHtmlAttr($link) ?>"><?= $this->escapeHtml($field) ?></a><br/>
     <?php endforeach; ?>
 <?php endif; ?>

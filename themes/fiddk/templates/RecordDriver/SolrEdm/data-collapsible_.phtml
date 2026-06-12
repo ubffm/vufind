@@ -2,8 +2,9 @@
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $data  = is_array($data) ? $data : [];
-$first = array_slice($data, 0, 5);
-$rest  = array_slice($data, 5);
+$first = array_slice($data, 0, 5, true);
+$rest  = array_slice($data, 5, null, true);
+$toggleId = 'toggle_subject_' . substr(md5(json_encode($data)), 0, 8);
 ?>
 
 <?php foreach ($first as $link => $field) : ?>
@@ -14,7 +15,7 @@ $rest  = array_slice($data, 5);
 
 <?php if (!empty($rest)) : ?>
     <span class="toggleContainer">
-        <input type="checkbox" class="toggle" id="toggle_subject">
+        <input type="checkbox" class="toggle" id="<?= $this->escapeHtmlAttr($toggleId) ?>">
 
         <span class="toggleContent">
             <?php foreach ($rest as $link => $field) : ?>
@@ -24,10 +25,9 @@ $rest  = array_slice($data, 5);
             <?php endforeach; ?>
         </span>
 
-        <label for="toggle_subject"
+        <label for="<?= $this->escapeHtmlAttr($toggleId) ?>"
                class="<?= $lang === 'de' ? 'label_de' : 'label_en' ?>">
         </label>
     </span>
     <br/>
 <?php endif; ?>
-

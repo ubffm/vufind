@@ -1,8 +1,12 @@
-<?php $inst = key($data);
-foreach (current($data) as $link => $field) : ?>
-<a target="_blank" href="<?=$this->escapeHtmlAttr($link)?>"><?=$this->transEsc("FullTextByFID");?></a>
-    <?php if ($inst == "Adam Matthew Digital") : ?>
-        <?="("?><a data-lightbox href="<?=$this->escapeHtmlAttr($this->url('dataprovider-page', ['page' => 'amd']));?>"><?=$this->transEsc("Nationallicense");?></a><?=")"?>
+<?php
+$inst = is_array($data) ? key($data) : null;
+$entries = is_array($data) ? current($data) : [];
+$entries = is_array($entries) ? $entries : [];
+
+foreach ($entries as $link => $field) : ?>
+<a target="_blank" href="<?= $this->escapeHtmlAttr($link) ?>"><?= $this->transEsc("FullTextByFID"); ?></a>
+    <?php if ($inst === "Adam Matthew Digital") : ?>
+        <?= "(" ?><a data-lightbox href="<?= $this->escapeHtmlAttr($this->url('dataprovider-page', ['page' => 'amd'])) ?>"><?= $this->transEsc("Nationallicense"); ?></a><?= ")" ?>
     <?php endif; ?>
-  <img src="<?=$this->imageLink('fid-dk_logo_nur-Taenzer.png')?>" style="width:7%"/><br />
+  <img src="<?= $this->escapeHtmlAttr($this->imageLink('fid-dk_logo_nur-Taenzer.png')) ?>" style="width:7%"/><br />
 <?php endforeach; ?>
