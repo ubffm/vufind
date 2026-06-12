@@ -1,1 +1,5 @@
-<div><img src="<?=$this->imageLink("icons/geo-alt.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="location"><?=$this->escapeHtml(implode(" | ", $data))?></span></div>
+<?php $data = is_array($data) ? $data : []; ?>
+<div>
+  <img src="<?=$this->escapeHtmlAttr($this->imageLink('icons/geo-alt.svg'))?>" alt="Icon" width="16" height="16"></img>&nbsp;
+  <span property="location"><?=$this->escapeHtml(implode(' | ', $data))?></span>
+</div>

@@ -2,7 +2,12 @@
 
 $normdates = [];
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
+$data = is_array($data) ? $data : [];
 foreach ($data as $date) :
     $normdates[] = $this->driver->translateDate($date, $lang);
-endforeach; ?>
-<div><img src="<?=$this->imageLink("icons/calendar4-event.svg")?>" alt="Icon" width="16" height="16"></img>&nbsp;<span property="date"><?=$this->escapeHtml(implode(" | ", $normdates))?></span></div>
+endforeach;
+?>
+<div>
+  <img src="<?=$this->escapeHtmlAttr($this->imageLink('icons/calendar4-event.svg'))?>" alt="Icon" width="16" height="16"></img>&nbsp;
+  <span property="date"><?=$this->escapeHtml(implode(' | ', $normdates))?></span>
+</div>

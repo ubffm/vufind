@@ -1,10 +1,20 @@
-<?php foreach ($data as $inter => $info) : ?>
-    <?php if ($inter == "inst") : ?>
-    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+<?php foreach ((array)$data as $inter => $info) : ?>
+    <?php
+    $info = is_array($info) ? $info : [];
+    if ($inter == 'inst') :
+        $label = $info[0] ?? '';
+        $url = $info[1] ?? '';
+        ?>
+    <a href="<?=$this->escapeHtmlAttr($url)?>" target="_blank" rel="noopener noreferrer"><?=$this->escapeHtml($label)?></a>
     <!--a class="providerInfo" data-lightbox href="/vufind/DataProvider/dtk"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/-->
-    <?php else : ?>
-    <a href="<?=$info[3]?>" target="_blank"><?=$this->escapeHtml($info[2])?></a><?=" via "?>
-    <a href="<?=$info[1]?>" target="_blank"><?=$this->escapeHtml($info[0])?></a>
+    <?php else :
+        $viaLabel = $info[0] ?? '';
+        $viaUrl = $info[1] ?? '';
+        $label = $info[2] ?? '';
+        $url = $info[3] ?? '';
+        ?>
+    <a href="<?=$this->escapeHtmlAttr($url)?>" target="_blank" rel="noopener noreferrer"><?=$this->escapeHtml($label)?></a><?=' via '?>
+    <a href="<?=$this->escapeHtmlAttr($viaUrl)?>" target="_blank" rel="noopener noreferrer"><?=$this->escapeHtml($viaLabel)?></a>
     <!--a class="providerInfo" data-lightbox href="/vufind/DataProvider/dtk"><i class="fa fa-info-circle" aria-hidden="true"></i></a><br/-->
     <?php endif; ?>
 <?php endforeach; ?>

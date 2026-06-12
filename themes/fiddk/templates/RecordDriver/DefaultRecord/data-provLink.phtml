@@ -1,6 +1,6 @@
 <?php if ($this->recordExists($data, ['SolrPerson','SolrCorporation'])) : ?>
-  <a href="<?=$this->url('agentrecord', ['id' => $data])?>">
-    <?=$this->transEsc("More_of_this_provider")?>
+  <a href="<?=$this->escapeHtmlAttr($this->url('agentrecord', ['id' => $data]))?>">
+    <?=$this->transEsc('More_of_this_provider')?>
   </a>
 <?php else : ?>
     <?php
@@ -10,7 +10,7 @@
     ]);
     $href = $this->url('search-results') . '?' . $query;
     ?>
-  <a href="<?=$href?>">
-    <?=$this->transEsc("More_of_this_provider")?>
+  <a href="<?=$this->escapeHtmlAttr($href)?>">
+    <?=$this->transEsc('More_of_this_provider')?>
   </a>
 <?php endif; ?>
