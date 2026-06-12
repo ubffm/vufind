@@ -205,6 +205,11 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setLine('Alternative', 'getUseFor');
         $spec->setLine('Occupation', 'getOccupation');
+        $spec->setLine('Gender', 'getGender');
+        $spec->setLine('Birth Date', 'getBirthDate');
+        $spec->setLine('Death Date', 'getDeathDate');
+        $spec->setLine('Description', 'getDescription');
+        $spec->setTemplateLine('Links', 'getSource', 'data-externalLink.phtml');
         return $spec->getArray();
     }
 
