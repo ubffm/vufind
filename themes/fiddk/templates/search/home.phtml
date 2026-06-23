@@ -1,0 +1,20 @@
+<?php
+  // Set up page title:
+  $this->headTitle($this->translate('Search Home'));
+
+  // Build default search box for home context:
+  $this->layout()->searchbox = $this->context($this)->renderInContext(
+      'search/searchbox.phtml',
+      [
+        'lookfor' => $this->lookfor ?? '',
+        'searchClassId' => $this->searchClassId ?? null,
+        'searchType' => 'basic',
+        'ignoreHiddenFiltersInRequest' => $this->ignoreHiddenFiltersInRequest ?? false,
+        'ignoreHiddenFilterMemory' => $this->ignoreHiddenFilterMemory ?? false,
+      ]
+  );
+?>
+
+<div class="<?=$this->layoutClass('mainbody')?>">
+  <?=$this->layout()->searchbox?>
+</div>
