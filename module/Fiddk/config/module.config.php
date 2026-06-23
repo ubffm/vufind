@@ -186,7 +186,7 @@ $config['router']['routes']['home'] = [
     'options' => [
         'route'    => '/',
         'defaults' => [
-            'controller' => 'index',
+            'controller' => 'Search',
             'action'     => 'Home',
         ]
     ]
