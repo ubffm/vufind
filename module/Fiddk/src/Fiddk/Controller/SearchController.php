@@ -77,4 +77,18 @@ class SearchController extends \VuFind\Controller\SearchController
         $view = $this->createViewModel(['lookfor' => $lookfor]);
         return $view;
     }
+
+    /**
+     * Record action with graceful handling of missing records.
+     *
+     * @return mixed
+     */
+    public function recordAction()
+    {
+        try {
+            return parent::recordAction();
+        } catch (\VuFind\Exception\RecordMissing $e) {
+            return $this->notFoundAction();
+        }
+    }
 }
