@@ -29,6 +29,8 @@
 
 namespace Fiddk\Controller;
 
+use Laminas\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Record Controller
  *
@@ -42,6 +44,16 @@ namespace Fiddk\Controller;
  */
 class RecordController extends \VuFind\Controller\RecordController
 {
+    /**
+     * Constructor
+     *
+     * @param ServiceLocatorInterface $sm Service locator
+     */
+    public function __construct(ServiceLocatorInterface $sm)
+    {
+        parent::__construct($sm, null);
+    }
+
     /**
      * Home (default) action -- forward to requested (or default) tab.
      *
