@@ -29,6 +29,7 @@
 
 namespace Fiddk\Controller;
 
+use Laminas\Config\Config;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -47,11 +48,15 @@ class RecordController extends \VuFind\Controller\RecordController
     /**
      * Constructor
      *
-     * @param ServiceLocatorInterface $sm Service locator
+     * @param ServiceLocatorInterface $sm     Service locator
+     * @param Config                  $config Record controller config
      */
-    public function __construct(ServiceLocatorInterface $sm)
+    public function __construct(ServiceLocatorInterface $sm, ?Config $config = null)
     {
-        parent::__construct($sm, null);
+        if (null === $config) {
+            $config = new Config([]);
+        }
+        parent::__construct($sm, $config);
     }
 
     /**
