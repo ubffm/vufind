@@ -63,9 +63,14 @@ class AgentController extends \VuFind\Controller\AbstractRecord
     {
         try {
             $this->driver = $this->loadRecord();
-        } catch (\Exception $e) {
+        } catch (\VuFind\Exception\RecordMissing $e) {
             // it's a corporation agent
             $this->sourceId = 'SolrCorporation';
+            try {
+                $this->driver = $this->loadRecord(null, true);
+            } catch (\VuFind\Exception\RecordMissing $e) {
+                return $this->notFoundAction();
+            }
         }
         // Apply template for simplified authority record display:
         $result = parent::homeAction();
@@ -85,9 +90,14 @@ class AgentController extends \VuFind\Controller\AbstractRecord
     {
         try {
             $this->driver = $this->loadRecord();
-        } catch (\Exception $e) {
+        } catch (\VuFind\Exception\RecordMissing $e) {
             // it's a corporation agent
             $this->sourceId = 'SolrCorporation';
+            try {
+                $this->driver = $this->loadRecord(null, true);
+            } catch (\VuFind\Exception\RecordMissing $e) {
+                return $this->notFoundAction();
+            }
         }
         return parent::ajaxtabAction();
     }

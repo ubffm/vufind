@@ -66,8 +66,12 @@ class WorkController extends \VuFind\Controller\AbstractRecord
      */
     public function homeAction()
     {
-        // Apply template for simplified authority record display:
-        $result = parent::homeAction();
+        try {
+            // Apply template for simplified authority record display:
+            $result = parent::homeAction();
+        } catch (\VuFind\Exception\RecordMissing $e) {
+            return $this->notFoundAction();
+        }
         if (is_callable([$result, 'setTemplate'])) {
             $result->setTemplate('RecordDriver/SolrAuthDefault/view');
         }
