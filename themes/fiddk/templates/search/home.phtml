@@ -2,7 +2,7 @@
   // Set up page title:
   $this->headTitle($this->translate('Search Home'));
 
-  // Build default search box for home context:
+  // Build default search box for home context (rendered in layout/header):
   $this->layout()->searchbox = $this->context($this)->renderInContext(
       'search/searchbox.phtml',
       [
@@ -14,7 +14,3 @@
       ]
   );
 ?>
-
-<div class="<?=$this->layoutClass('mainbody')?>">
-  <?=$this->layout()->searchbox?>
-</div>
