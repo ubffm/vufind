@@ -43,6 +43,7 @@ $config = [
         'factories' => [
             'Fiddk\Controller\ContentController' => 'VuFind\Controller\AbstractBaseFactory',
             'Fiddk\Controller\DataProviderController' => 'VuFind\Controller\AbstractBaseFactory',
+            'Fiddk\Controller\RecordController' => 'VuFind\Controller\AbstractBaseFactory',
             'Fiddk\Controller\AgentController' => 'VuFind\Controller\AbstractBaseFactory',
             'Fiddk\Controller\CorporationSearchController' => 'VuFind\Controller\AbstractBaseFactory',
             'Fiddk\Controller\PersonSearchController' => 'VuFind\Controller\AbstractBaseFactory',
@@ -59,6 +60,8 @@ $config = [
             'dataprovider' => 'Fiddk\Controller\DataProviderController',
             'Showcase' => 'Fiddk\Controller\ShowcaseController',
             'showcase' => 'Fiddk\Controller\ShowcaseController',
+            'Record' => 'Fiddk\Controller\RecordController',
+            'record' => 'Fiddk\Controller\RecordController',
             'Agent' => 'Fiddk\Controller\AgentController',
             'agent' => 'Fiddk\Controller\AgentController',
             'CorporationSearch' => 'Fiddk\Controller\CorporationSearchController',
@@ -80,6 +83,7 @@ $config = [
 
             // Overrides
             'VuFind\Controller\ContentController' => 'Fiddk\Controller\ContentController',
+            'VuFind\Controller\RecordController' => 'Fiddk\Controller\RecordController',
             'VuFind\Controller\SearchController' => 'Fiddk\Controller\SearchController',
             'VuFind\Controller\FeedbackController' => 'Fiddk\Controller\FeedbackController',
         ],
