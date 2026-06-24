@@ -226,6 +226,7 @@
    <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="genre_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="geographic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="geographic_id" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="geographic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="era" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="era_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
