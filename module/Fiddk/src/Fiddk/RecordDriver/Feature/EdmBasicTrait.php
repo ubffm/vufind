@@ -91,11 +91,20 @@ trait EdmBasicTrait
     public function getGeographicsType()
     {
         $retVal = [];
+
+        // Solr first (stabiler Anzeige-Fallback), EDM second (typisierte Orte)
+        $solrGeographics = $this->getGeographicsCon();
+        if (!empty($solrGeographics)) {
+            $retVal['undefinedPlace'] = array_values(array_unique($solrGeographics));
+        }
+
         $undefined = $this->getPlaces("dcterms:spatial");
         $publication = $this->getPlaces("rdau:P60163");
         $manufacture = $this->getPlaces("rdau:P60162");
         $event = $this->getPlaces("edm:happenedAt");
         $current = $this->getPlaces("edm:currentLocation");
+
+        // Wenn EDM-undefined vorhanden ist, dieses bevorzugen.
         if (!empty($undefined)) {
             $retVal['undefinedPlace'] = $undefined;
         }
