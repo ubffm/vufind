@@ -142,11 +142,12 @@ trait EdmBasicTrait
     public function getDatesType()
     {
         $retVal = [];
-        $undefined = $this->getPlaces("dcterms:temporal");
-        $publication = $this->getPlaces("dcterms:issued");
-        $creation = $this->getPlaces("dcterms:created");
-        $event = $this->getPlaces("edm:occuredAt");
-        if (!empty($undefined)) {
+        $undefined = $this->getDates("dcterms:temporal");
+        $publication = $this->getDates("dcterms:issued");
+        $creation = $this->getDates("dcterms:created");
+        $event = $this->getDates("edm:occuredAt");
+
+        if (empty($creation) && !empty($undefined)) {
             $retVal['undefinedDate'] = $undefined;
         }
         if (!empty($publication)) {
@@ -163,7 +164,7 @@ trait EdmBasicTrait
 
     public function getDates($type)
     {
-        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
+        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO");
     }
 
     public function getFormats(): array
