@@ -270,6 +270,8 @@ class SolrAuthDefault extends SolrDefault implements
 
     /**
      * Returns further links (Personal Name, Corporate Name or Event)
+     *
+     * @return array
      */
     public function getSource()
     {
@@ -277,10 +279,20 @@ class SolrAuthDefault extends SolrDefault implements
         if (isset($this->fields['links'])) {
             foreach ($this->fields['links'] as $link) {
                 // TODO: Map for which kind of link
-                $links[] = ["id" => $link, "name" => "Theaterlexikon der Schweiz"];
+                $links[] = ['id' => $link, 'name' => 'Theaterlexikon der Schweiz'];
             }
         }
         return $links;
+    }
+
+    /**
+     * Returns link data for display in record data formatter.
+     *
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->getSource();
     }
 
     public function getDescription()
