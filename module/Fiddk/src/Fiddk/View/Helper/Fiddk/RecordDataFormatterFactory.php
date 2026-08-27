@@ -239,7 +239,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('Birth Date', 'getBirthDate');
         $spec->setLine('Death Date', 'getDeathDate');
         $spec->setLine('Description', 'getDescription');
-        $spec->setLine('Links', 'getLinks');
+        $spec->setTemplateLine('Links', 'getLinks', 'data-links.phtml');
         return $spec->getArray();
     }
 

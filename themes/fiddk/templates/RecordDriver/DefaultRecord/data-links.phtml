@@ -1,0 +1,21 @@
+<?php
+$items = is_array($data) ? $data : [$data];
+
+foreach ($items as $item) {
+    $url = null;
+    $label = null;
+
+    if (is_string($item) && $item !== '') {
+        $url = $item;
+        $label = $item;
+    } elseif (is_array($item)) {
+        $url = $item['url'] ?? $item['id'] ?? $item['link'] ?? null;
+        $label = $item['label'] ?? $item['text'] ?? $url;
+    }
+
+    if (!$url) {
+        continue;
+    }
+    ?>
+  <a href="<?=$this->escapeHtmlAttr($url)?>" target="_blank" rel="noopener noreferrer"><?=$this->escapeHtml($label)?></a><br>
+<?php } ?>
