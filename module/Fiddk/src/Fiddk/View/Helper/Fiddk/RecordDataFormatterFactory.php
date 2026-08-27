@@ -239,27 +239,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         $spec->setLine('Birth Date', 'getBirthDate');
         $spec->setLine('Death Date', 'getDeathDate');
         $spec->setLine('Description', 'getDescription');
-        $spec->setLine(
-            'Links',
-            'getSource',
-            null,
-            [
-                'dataMethod' => function ($data) {
-                    if (!is_array($data)) {
-                        return [];
-                    }
-                    $result = [];
-                    foreach ($data as $row) {
-                        if (is_array($row) && !empty($row['id']) && is_scalar($row['id'])) {
-                            $result[] = (string)$row['id'];
-                        } elseif (is_scalar($row)) {
-                            $result[] = (string)$row;
-                        }
-                    }
-                    return $result;
-                }
-            ]
-        );
+        $spec->setLine('Links', 'getLinks');
         return $spec->getArray();
     }
 
