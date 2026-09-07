@@ -68,7 +68,9 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
         ) {
             foreach ($inters as $inter) {
                 if ($inter == "BASE - Bielefeld Academic Search Engine") {
-                    $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
+                    $providerValues = $this->getEdmReader()
+                        ->getAttrVals("edm:dataProvider", "ore:Aggregation");
+                    $instkey = explode("_", $providerValues[0])[1];
                     $instlink = "https://www.base-search.net/Search/Results?q=dccoll:" . $instkey;
                 } else {
                     $instlink = $this->getDProvFromConfig($inst, 1);
