@@ -165,11 +165,22 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
      */
     protected function findProviderCodeByMatch($inst, $dprovConf)
     {
+        $inst = (string)$inst;
+
         foreach ($dprovConf as $key => $value) {
             if (!preg_match('/^(.+)\.match$/', (string)$key, $matches)) {
                 continue;
             }
-            if ((string)$value === (string)$inst) {
+            if ((string)$value === $inst) {
+                return $matches[1];
+            }
+        }
+
+        foreach ($dprovConf as $key => $value) {
+            if (!preg_match('/^(.+)\.label$/', (string)$key, $matches)) {
+                continue;
+            }
+            if ((string)$value === $inst) {
                 return $matches[1];
             }
         }
