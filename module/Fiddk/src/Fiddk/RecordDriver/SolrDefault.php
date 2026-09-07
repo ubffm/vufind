@@ -124,20 +124,51 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
     protected function getDProvFromConfig($inst, $i)
     {
         $dprovConf = $this->mainConfig->DataProvider ?? [];
-        $instkey = preg_replace("/\r|\n|\s|,|\/|\(|\)/", "", $inst);
+        $providerCode = $this->findProviderCodeByMatch($inst, $dprovConf);
 
-        // Prüfe, ob der Konfigurationswert existiert
-        if (!isset($dprovConf[$instkey])) {
-            return "[Keine Konfiguration für '$instkey']";
+        if (null === $providerCode) {
+            return "[Keine Konfiguration für '$inst']";
         }
 
-        $info = explode(',', $dprovConf[$instkey]);
+        $fieldMap = [
+            0 => 'label',
+            1 => 'homepage',
+            2 => 'match',
+        ];
 
-        // Prüfe, ob der Index im Array existiert
-        if (!isset($info[$i])) {
-            return "[Ungültiger Index $i für '$instkey']";
+        if (!isset($fieldMap[$i])) {
+            return "[Ungültiger Index $i für '$providerCode']";
         }
 
-        return $info[$i];
+        $field = $fieldMap[$i];
+        $configKey = $providerCode . '.' . $field;
+
+        if (!isset($dprovConf[$configKey])) {
+            return "[Fehlender Konfigurationswert '$configKey']";
+        }
+
+        return $dprovConf[$configKey];
+    }
+
+    /**
+     * Find provider code from DataProvider config by matching <code>.match value.
+     *
+     * @param string $inst     Institution/provider value to match
+     * @param mixed  $dprovConf DataProvider configuration section
+     *
+     * @return ?string
+     */
+    protected function findProviderCodeByMatch($inst, $dprovConf)
+    {
+        foreach ($dprovConf as $key => $value) {
+            if (!preg_match('/^(.+)\.match$/', (string)$key, $matches)) {
+                continue;
+            }
+            if ((string)$value === (string)$inst) {
+                return $matches[1];
+            }
+        }
+
+        return null;
     }
 }
