@@ -62,7 +62,10 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
         $inters = $this->getIntermediates();
         $inst = $this->getInstitutions()[0];
         $res = [];
-        if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
+        if (
+            !empty($inters)
+            and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“"
+        ) {
             foreach ($inters as $inter) {
                 if ($inter == "BASE - Bielefeld Academic Search Engine") {
                     $instkey = explode("_", $this->getEdmReader()->getAttrVals("edm:dataProvider", "ore:Aggregation")[0])[1];
