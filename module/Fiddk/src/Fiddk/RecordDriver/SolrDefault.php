@@ -117,7 +117,8 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
     public function getInfoAboutProvider()
     {
         $inst = $this->getInstitutions()[0];
-        return $this->getDProvFromConfig($inst, 0);
+        $dprovConf = $this->mainConfig->DataProvider ?? [];
+        return $this->findProviderCodeByMatch($inst, $dprovConf) ?? '';
     }
 
     /**
