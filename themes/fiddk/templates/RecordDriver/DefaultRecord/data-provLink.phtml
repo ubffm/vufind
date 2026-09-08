@@ -1,12 +1,17 @@
-<?php if ($this->recordExists($data, ['SolrPerson','SolrCorporation'])) : ?>
-  <a href="<?=$this->escapeHtmlAttr($this->url('agentrecord', ['id' => $data]))?>">
+<?php
+$providerMatch = is_array($data) ? ($data['match'] ?? '') : $data;
+$providerFacet = is_array($data) ? ($data['facet'] ?? $providerMatch) : $data;
+?>
+
+<?php if (!empty($providerMatch) && $this->recordExists($providerMatch, ['SolrPerson','SolrCorporation'])) : ?>
+  <a href="<?=$this->escapeHtmlAttr($this->url('agentrecord', ['id' => $providerMatch]))?>">
     <?=$this->transEsc('More_of_this_provider')?>
   </a>
 <?php else : ?>
     <?php
     $query = http_build_query([
       'type'   => 'AllFields',
-      'filter' => ['~institution_facet:"' . $data . '"'],
+      'filter' => ['~institution_facet:"' . $providerFacet . '"'],
     ]);
     $href = $this->url('search-results') . '?' . $query;
     ?>
