@@ -95,17 +95,39 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
     {
         $inters = $this->getIntermediates();
         $inst = $this->getInstitutions()[0];
+        $dprovConf = $this->mainConfig->DataProvider ?? [];
+        $providerCode = $this->findProviderCodeByMatch($inst, $dprovConf);
+
         if (!empty($inters) and $inst != "Projekt „Theater und Musik in Weimar 1754-1990“") {
             foreach ($inters as $inter) {
                 if ($inter == "BASE - Bielefeld Academic Search Engine") {
-                    return "BASE";
+                    $baseCode = $this->findProviderCodeByMatch("BASE", $dprovConf);
+                    $baseMatch = $baseCode ? $this->getDProvFromConfig("BASE", 2) : "BASE";
+                    $baseFacet = $baseCode ? $this->getDProvFromConfig("BASE", 3) : "";
+                    return [
+                        'code' => $baseCode ?? '',
+                        'match' => $baseMatch,
+                        'facet' => !empty($baseFacet) ? $baseFacet : $baseMatch,
+                    ];
                 } else {
-                    return $this->getDProvFromConfig($inst, 2);
+                    $match = $this->getDProvFromConfig($inst, 2);
+                    $facet = $this->getDProvFromConfig($inst, 3);
+                    return [
+                        'code' => $providerCode ?? '',
+                        'match' => $match,
+                        'facet' => !empty($facet) ? $facet : $match,
+                    ];
                 }
             }
-        } else {
-            return $this->getDProvFromConfig($inst, 2);
         }
+
+        $match = $this->getDProvFromConfig($inst, 2);
+        $facet = $this->getDProvFromConfig($inst, 3);
+        return [
+            'code' => $providerCode ?? '',
+            'match' => $match,
+            'facet' => !empty($facet) ? $facet : $match,
+        ];
     }
 
     /**
@@ -140,6 +162,7 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
             0 => 'label',
             1 => 'homepage',
             2 => 'match',
+            3 => 'facet',
         ];
 
         if (!isset($fieldMap[$i])) {
@@ -150,7 +173,7 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
         $configKey = $providerCode . '.' . $field;
 
         if (!isset($dprovConf[$configKey])) {
-            return "[Fehlender Konfigurationswert '$configKey']";
+            return $field === 'facet' ? '' : "[Fehlender Konfigurationswert '$configKey']";
         }
 
         return $dprovConf[$configKey];
