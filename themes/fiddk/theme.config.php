@@ -2,6 +2,9 @@
 
 return [
     'extends' => 'bootstrap3',
+    'mixins' => [
+        'beacon_finder_mixin',
+    ],
     'js' => [
         'klaro-config.js',
         'klaro-no-css.js',
