@@ -40,3 +40,5 @@ local/config/vufind/*.json
 local/config/vufind/*.key
 local/config/vufind/*.yaml
 .aider*
+
+vufind-beacon-finder/
