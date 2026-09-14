@@ -40,6 +40,7 @@ if ($this->export()->recordSupportsFormat($this->driver, 'RDF')) {
     <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getRecordType())?>" class="hiddenSource">
     <?=$this->flashmessages()?>
     <?=$this->render('core.phtml'); ?>
+    <?=$this->render('authority/record/BEACONfinder-ajax.phtml'); ?>
 
     <?php if (count($this->tabs) > 0) : ?>
       <a id="tabnav"></a>
