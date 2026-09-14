@@ -46,7 +46,8 @@ use Fiddk\Connection\Wikipedia;
  * @link https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 class SolrAuthDefault extends SolrDefault implements
-    \VuFindHttp\HttpServiceAwareInterface
+    \VuFindHttp\HttpServiceAwareInterface,
+    \VuFindBEACONFinder\RecordDriver\Feature\BEACONFinderInterface
 {
     use \VuFindHttp\HttpServiceAwareTrait;
 
@@ -169,6 +170,39 @@ class SolrAuthDefault extends SolrDefault implements
     public function isGndRecord()
     {
         return str_starts_with($this->fields['id'], 'gnd_') ?? false;
+    }
+
+    /**
+     * Get authority ID for BEACON finder integration.
+     *
+     * Supports two variants:
+     * 1) Primary record id starts with gnd_...
+     * 2) GND reference exists in links field (gnd_... or d-nb.info/gnd/... URI)
+     *
+     * @return string
+     */
+    public function getAuthorityId()
+    {
+        $id = $this->fields['id'] ?? '';
+        if (is_string($id) && str_starts_with($id, 'gnd_')) {
+            return substr($id, 4);
+        }
+
+        foreach (($this->fields['links'] ?? []) as $link) {
+            if (!is_string($link)) {
+                continue;
+            }
+
+            if (str_starts_with($link, 'gnd_')) {
+                return substr($link, 4);
+            }
+
+            if (preg_match('~https?://d-nb\.info/gnd/([^/#?]+)~i', $link, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return '';
     }
 
     /**
