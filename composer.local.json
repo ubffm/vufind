@@ -1,4 +1,13 @@
 {                                                                                                                                                               
+  "repositories": [
+        {
+            "type": "path",
+            "url": "../vufind-beacon-finder",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
   "require": {                                                                                                                                                  
     "ubtue/vufind-beacon-finder": "dev-main"                                                                                                                           
   }                                                                                                                                                             
