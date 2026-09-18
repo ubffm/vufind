@@ -1,14 +1,11 @@
 {                                                                                                                                                               
-  "repositories": [
-        {
-            "type": "path",
-            "url": "../vufind-beacon-finder",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
+  "repositories": [                                                                                                                                             
+    {                                                                                                                                                           
+      "type": "vcs",                                                                                                                                            
+      "url": "https://github.com/ubffm/vufind-beacon-finder.git"                                                                                                
+    }                                                                                                                                                           
+  ],                                                                                                                                                            
   "require": {                                                                                                                                                  
-    "ubtue/vufind-beacon-finder": "dev-main"                                                                                                                           
+    "ubtue/vufind-beacon-finder": "dev-mydev"                                                                                                                   
   }                                                                                                                                                             
 }        

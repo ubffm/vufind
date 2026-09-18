@@ -9763,11 +9763,17 @@
         },
         {
             "name": "ubtue/vufind-beacon-finder",
-            "version": "dev-main",
+            "version": "dev-mydev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ubffm/vufind-beacon-finder.git",
+                "reference": "5468b448a32cc28efdeddda28a28c57f0549ec35"
+            },
             "dist": {
-                "type": "path",
-                "url": "../vufind-beacon-finder",
-                "reference": "ada5398216a63947579e58de9db753cdcf164d44"
+                "type": "zip",
+                "url": "https://api.github.com/repos/ubffm/vufind-beacon-finder/zipball/5468b448a32cc28efdeddda28a28c57f0549ec35",
+                "reference": "5468b448a32cc28efdeddda28a28c57f0549ec35",
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.2"
@@ -9796,10 +9802,10 @@
                 }
             ],
             "description": "BEACONfinder integration into VuFind.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/ubffm/vufind-beacon-finder/tree/mydev"
+            },
+            "time": "2026-09-17T12:44:27+00:00"
         },
         {
             "name": "vstelmakh/url-highlight",
