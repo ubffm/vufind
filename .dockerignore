@@ -1,0 +1,22 @@
+.git                                                                                                                                                            
+.gitignore                                                                                                                                                      
+                                                                                                                                                                
+# Laufzeit-/Cache-Daten ausschließen                                                                                                                            
+cache                                                                                                                                                           
+local/cache                                                                                                                                                     
+                                                                                                                                                                
+# Lokale Abhängigkeiten nicht in den Build-Kontext                                                                                                              
+vendor                                                                                                                                                          
+node_modules
+
+# Solr
+solr                                                                                                                                                  
+                                                                                                                                                                
+# Tests nicht ins Produktions-Image                                                                                                                             
+tests                                                                                                                                                           
+                                                                                                                                                                
+# Sensitive Dateien                                                                                                                                             
+*.pem                                                                                                                                                           
+*.key                                                                                                                                                           
+.env                                                                                                                                                            
+.aider*  
