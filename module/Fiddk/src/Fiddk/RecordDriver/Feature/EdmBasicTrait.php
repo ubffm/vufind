@@ -164,7 +164,7 @@ trait EdmBasicTrait
 
     public function getDates($type)
     {
-        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO");
+        return $this->getEdmReader()->getPropValues($type, "edm:ProvidedCHO", "skos:prefLabel");
     }
 
     public function getFormats(): array

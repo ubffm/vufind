@@ -125,8 +125,14 @@ class EdmRecord
             foreach ($props as $prop) {
                 $resLink = $this->getResourceVal($prop);
                 if ($resLink) {
-                    if ($class == "ore:Aggregation" or str_starts_with($resLink, $this->baseUrl)) {
-                        $vals[] = $this->findMatchingPropVal($resLink, $fieldName);
+                    if (
+                        $class == "ore:Aggregation"
+                        || preg_match('#^https?://(www\.)?performing-arts\.eu/#', $resLink)
+                    ) {
+                        $match = $this->findMatchingPropVal($resLink, $fieldName);
+                        if ($match !== '') {
+                            $vals[] = $match;
+                        }
                     }
                 } elseif (in_array($name[1], ["temporal","issued", "created"])) {
                     $label = $this->getLabel($prop);
