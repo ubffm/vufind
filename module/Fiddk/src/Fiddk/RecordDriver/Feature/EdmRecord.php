@@ -153,7 +153,10 @@ class EdmRecord
 
     public function findMatchingPropVal($attr = "", $fieldName = "")
     {
-        return implode(", ", array_unique($this->edmRecord->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName)));
+        return implode(
+            ", ",
+            array_unique($this->edmRecord->xpath('/rdf:RDF/*[@rdf:about="' . $attr . '"]/' . $fieldName))
+        );
     }
 
     public function getResourceVal($prop = null)
