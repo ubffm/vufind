@@ -2,15 +2,9 @@
 return [
     'extends' => 'bootstrap5',
 
-    /**
-     * The following is all custom attributes for this theme
-     * in order to demonstrate the themeConfig view helper.
-     */
-    'home-content' => [
-        'links' => [
-            'Setup' => 'install-home',
-            'Dev Tools' => 'devtools-home',
-        ],
+    'js' => [
+        'klaro-config.js',
+        'klaro-no-css.js',
     ],
-    'header-nav' => parse_ini_file('header-nav.ini', true),
+    'favicon' => 'fid-dk_favicon.png',
 ];

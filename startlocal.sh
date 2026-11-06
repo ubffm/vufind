@@ -9,7 +9,7 @@ else
 fi
 php -d display_errors=1 \
     -d display_startup_errors=1 \
-    -d error_reporting=-1 \
+    -d error_reporting=24575 \
     -S localhost:8000 -t public
 
 
