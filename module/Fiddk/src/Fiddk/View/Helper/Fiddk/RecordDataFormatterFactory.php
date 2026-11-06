@@ -31,10 +31,11 @@
 
 namespace Fiddk\View\Helper\Fiddk;
 
-use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Psr\Container\ContainerExceptionInterface as ContainerException;
+use Psr\Container\ContainerInterface;
+use VuFind\RecordDataFormatter\Specs\DefaultRecord as DefaultRecordSpec;
 
 /**
  * Factory for record driver data formatting view helper
@@ -68,55 +69,58 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        ?array $options = null
     ) {
         if (!empty($options)) {
             throw new \Exception('Unexpected options sent to factory.');
         }
-        $helper = new $requestedName();
-        $helper->setDefaults(
+        $specPluginManager = $container->get(\VuFind\RecordDataFormatter\Specs\PluginManager::class);
+        $this->schemaOrgHelper = $container->get('ViewHelperManager')->get('schemaOrg');
+        $this->defaultRecordSpec = $specPluginManager->get(DefaultRecordSpec::class);
+        $helper = new $requestedName($specPluginManager);
+        $this->defaultRecordSpec->setDefaults(
             'collection-info',
             [$this, 'getDefaultCollectionInfoSpecs']
         );
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults(
             'collection-record',
             [$this, 'getDefaultCollectionRecordSpecs']
         );
-        $helper->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults('core', [$this, 'getDefaultCoreSpecs']);
+        $this->defaultRecordSpec->setDefaults(
             'ResourceRelated',
             [$this, 'getDefaultResourceRelatedSpecs']
         );
-        $helper->setDefaults('Person', [$this, 'getDefaultPersonSpecs']);
-        $helper->setDefaults('PersonGnd', [$this, 'getDefaultPersonGndSpecs']);
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults('Person', [$this, 'getDefaultPersonSpecs']);
+        $this->defaultRecordSpec->setDefaults('PersonGnd', [$this, 'getDefaultPersonGndSpecs']);
+        $this->defaultRecordSpec->setDefaults(
             'PersonRelated',
             [$this, 'getDefaultPersonRelatedSpecs']
         );
-        $helper->setDefaults('Corporation', [$this, 'getDefaultCorporateSpecs']);
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults('Corporation', [$this, 'getDefaultCorporateSpecs']);
+        $this->defaultRecordSpec->setDefaults(
             'CorporationGnd',
             [$this, 'getDefaultCorporateGndSpecs']
         );
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults(
             'CorporationRelated',
             [$this, 'getDefaultCorporateRelatedSpecs']
         );
-        $helper->setDefaults('Event', [$this, 'getDefaultEventSpecs']);
-        $helper->setDefaults('EventGnd', [$this, 'getDefaultEventGndSpecs']);
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults('Event', [$this, 'getDefaultEventSpecs']);
+        $this->defaultRecordSpec->setDefaults('EventGnd', [$this, 'getDefaultEventGndSpecs']);
+        $this->defaultRecordSpec->setDefaults(
             'EventRelated',
             [$this, 'getDefaultEventRelatedSpecs']
         );
-        $helper->setDefaults('Work', [$this, 'getDefaultCoreSpecs']);
-        $helper->setDefaults('WorkGnd', [$this, 'getDefaultWorkGndSpecs']);
-        $helper->setDefaults(
+        $this->defaultRecordSpec->setDefaults('Work', [$this, 'getDefaultCoreSpecs']);
+        $this->defaultRecordSpec->setDefaults('WorkGnd', [$this, 'getDefaultWorkGndSpecs']);
+        $this->defaultRecordSpec->setDefaults(
             'WorkRelated',
             [$this, 'getDefaultWorkRelatedSpecs']
         );
-        $helper->setDefaults('related', [$this, 'getDefaultRelatedSpecs']);
-        $helper->setDefaults('Provider', [$this, 'getDefaultProviderSpecs']);
-        $helper->setDefaults('SeeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
+        $this->defaultRecordSpec->setDefaults('related', [$this, 'getDefaultRelatedSpecs']);
+        $this->defaultRecordSpec->setDefaults('Provider', [$this, 'getDefaultProviderSpecs']);
+        $this->defaultRecordSpec->setDefaults('SeeAlso', [$this, 'getDefaultSeeAlsoSpecs']);
         return $helper;
     }
 
@@ -125,7 +129,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
      *
      * @return array
      */
-    public function getDefaultCoreSpecs()
+    public function getDefaultCoreSpecs(): array
     {
         $spec = new \VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder();
         $spec->setLine('Subtitle', 'getSubtitle');
@@ -812,7 +816,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
      *
      * @return Callable
      */
-    protected function getAuthorFunction()
+    protected function getAuthorFunction(): callable
     {
         return function ($data, $options) {
             // Lookup array of singular/plural labels (note that Other is always
