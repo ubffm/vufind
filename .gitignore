@@ -31,4 +31,11 @@ local/DirLocations.ini
 !local/config/vufind/README.txt
 .aider*
 *.log
+
+/cache
 local/config/vufind/config.ini
+local/config/vufind/BEACONfinder.ini
+local/config/vufind/permissions.ini
+local/config/vufind/FeedbackForms.yaml
+*.key
+*.pem

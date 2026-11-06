@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 source vufind-env.sh
 rm -rf "${VUFIND_CACHE_DIR:?}"/*
-if nc -z localhost 8983; then
+if nc -z localhost 15884; then
     echo "Solr läuft bereits."
 else
     echo "Solr läuft nicht – starte Solr..."
