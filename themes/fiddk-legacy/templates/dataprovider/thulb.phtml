@@ -1,0 +1,42 @@
+<?php
+if ($this->plugin('translate')->getTranslator()->getLocale() == 'de') {
+    // Set page title
+    $this->headTitle('Projekt „Theater und Musik in Weimar 1754-1990“');
+    ?>
+
+<h2>Projekt „Theater und Musik in Weimar 1754-1990“</h2>
+<img src="<?=$this->imageLink('logos_s/thulb.png')?>" alt="Projekt „Theater und Musik in Weimar 1754-1990“"/><br/><br/>
+<p><a href="http://www.theaterzettel-weimar.de/home.html" target="_blank" data-lightbox-ignore>Direkt zur Webseite</a></p>
+
+<p>Das von der Deutschen Forschungsgemeinschaft geförderte Projekt umfasst die Digitalisierung, wissenschaftliche Aufbereitung
+und Online-Präsentation der Theaterzettel des Weimarer Theaters als einer der bedeutendsten Bühnen Deutschlands.<br/>
+In der ersten Arbeitsphase <b>Musik und Theater von der Ära Hummel bis zum Ende des Hoftheaters (1819-1918)</b> wurde auf
+Vorarbeiten des Teilprojektes C8 <i>Musik und Theater</i> des Sonderforschungsbereiches (SFB) 482 der FSU Jena <i>Ereignis Weimar-Jena. Kultur um 1800</i>
+aufgebaut. In der zweiten Arbeitsphase wurde der Zeitraum <b>Von der Gründung des Deutschen
+Nationaltheaters bis zur Umsetzung des <a href="http://www.bildatlas-ddr-kunst.de/education.php?pn=glossary&id=98" target="_blank" data-lightbox-ignore>Bitterfelder Programms</a> (1919-1969)</b> erschlossen. In der dritten Arbeitsphase wurde
+diese Erschließung <b>Von der Spielzeit 1969/70 bis zur politischen Wende 1989/90</b> weitergeführt. Das Projekt ist ein Gemeinschaftsprojekt
+des an der Hochschule für Musik FRANZ LISZT Weimar und der Friedrich-Schiller-Universität Jena beheimateten Instituts für
+Musikwissenschaft, der Thüringer Universitäts- und Landesbibliothek Jena, des Landesarchiv Thüringen - Hauptstaatsarchiv Weimar,
+des Deutschen Nationaltheaters Weimar und der Herzogin Anna Amalia Bibliothek Weimar.</p>
+<?php } else {
+      // Set page title
+      $this->headTitle('Projekt „Theater und Musik in Weimar 1754-1990“');
+    ?>
+
+<h2>Projekt „Theater und Musik in Weimar 1754-1990“</h2>
+<img src="<?=$this->imageLink('logos_s/thulb.png')?>" alt="Projekt „Theater und Musik in Weimar 1754-1990“"/><br/><br/>
+<p><a href="http://www.theaterzettel-weimar.de/english-instruction.html" target="_blank" data-lightbox-ignore>Website</a></p>
+
+<p>The theatre- and music-ephemera meta-database Theater und Musik in Weimar 1754–1990 (supported by the German Research
+  Foundation, DFG) is aimed at providing the unique complete and meanwhile in a great measure digitized Weimar theatre
+  material of playbills, program booklets, posters and later on even private ducal material, scenery and costume sketches
+  as well as protocols about each performance during the latter half GDR period online – as far as covered by juridical
+  conditions. Step by step, the Weimar playbills and other theatre- and music-ephemera material (program booklets, posters)
+  have been digitized, enriched through scientifically sustained metadata and provided to the public in a meta-database
+  for the periods of the (already pre- and) Goethe era (impresario 1791–1817), the post-Goethe Grand Ducal Court
+  Theatre until 1918 (with even private ducal material) and the 20th century German National Theatre (DNT, Weimar Republic,
+  National Socialism) up to the end of the German Democratic Republic (GDR) in summer 1990. The project is a joint project
+  of the Institute for Musicology at the University of Music FRANZ LISZT Weimar and the Friedrich Schiller University Jena,
+  the Thuringian University and State Library Jena, the State Archive Thuringia - Main State Archive Weimar, the German National
+  Theater Weimar and the Duchess Anna Amalia Library Weimar.
+<?php } ?>

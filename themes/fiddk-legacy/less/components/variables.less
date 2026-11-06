@@ -1,0 +1,134 @@
+// Make sure Font Awesome icons are loaded properly
+/* #LESS> */
+@fa-font-path: "../../../../../../themes/bootstrap3/css/fonts";
+/* <#LESS */
+
+/**
+ * The following are useful Bootstrap variables that are used throughout the code,
+ * with comments and their defaults. See /themes/bootstrap3/less/vendor/bootstrap/variables.less for more.
+ */
+
+// @padding-base-vertical:   6px;  // Buttons, tabs, and other padding
+// @padding-base-horizontal: 12px;
+
+// @navbar-height:                    50px;
+
+@border-radius-base: 0px;
+
+/* ------ COLORS ------ */
+
+@brand-primary: #14267A;
+@white: #ffffff;
+@black: #000;
+@lightgrey: #dfdfdf;
+@lightgreyCarousel: darken(@lightgrey,20%);
+@grey: #666;
+@bsgrey: #6c757d;
+@bg-color: #f0f3f7;
+@light-bg: lighten(@bg-color,2%);
+@logo: url("../images/fid-dk_claim_s.png");
+@highlighter-color: #0a58ca;
+@highlighter-color-bright: lighten(@highlighter-color,30%);
+@darkprimary-color: darken(@brand-primary,15%);
+// @brand-success: #5cb85c;
+// @brand-info:    #5bc0de;
+// @brand-warning: #f0ad4e;
+// @brand-danger:  #d9534f;
+
+// @list-group-border:  #ddd; // Borders on menus and sidebars
+
+// @text-color:            @gray-dark;
+@link-color: @brand-primary;
+@hr-border: @lightgrey;
+// @link-hover-color:      darken(@link-color, 15%);
+
+// Define colors for form feedback states and, by default, alerts.
+// @state-success-text:             #3c763d;
+// @state-success-bg:               #dff0d8;
+// @state-success-border:           darken(spin(@state-success-bg, -10), 5%);
+//
+// @state-info-text:                #31708f;
+// @state-info-bg:                  #d9edf7;
+// @state-info-border:              darken(spin(@state-info-bg, -10), 7%);
+//
+// @state-warning-text:             #8a6d3b;
+// @state-warning-bg:               #fcf8e3;
+// @state-warning-border:           darken(spin(@state-warning-bg, -10), 5%);
+//
+// @state-danger-text:              #a94442;
+// @state-danger-bg:                #f2dede;
+// @state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
+
+@person-color: #FF8E0C;
+@corporation-color: #791C93;
+@event-color: #970747;
+@work-color: #1989AC;
+
+/// fonts
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Light"),
+         url("../css/fonts/ttf/NotoSans-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Light Italic"),
+         url("../css/fonts/ttf/NotoSans-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Regular"),
+         url("../css/fonts/ttf/NotoSans-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Medium"),
+         url("../css/fonts/ttf/NotoSans-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Medium Italic"),
+         url("../css/fonts/ttf/NotoSans-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Bold"),
+         url("../css/fonts/ttf/NotoSans-Bold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Noto Sans';
+    src: local("Noto Sans Bold Italic"),
+         url("../css/fonts/ttf/NotoSans-BoldItalic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Big Shoulders';
+    src: local("Big Shoulders"),
+         url("../css/fonts/ttf/BigShoulders.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-family-sans-serif: "Noto Sans", Helvetica, Arial, sans-serif;
+@font-family-base: @font-family-sans-serif;
