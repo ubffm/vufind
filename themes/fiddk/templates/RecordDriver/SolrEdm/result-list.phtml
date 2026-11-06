@@ -206,19 +206,18 @@ if ($coverDetails['cover'] && $cover) :
         // Display an OpenURL link if configured to do so:
         $openUrl = $this->openUrl($this->driver, 'results');
         $openUrlActive = $openUrl->isActive();
-        $doi = $this->doi($this->driver, 'results');
-        $doiActive = $doi->isActive();
+        $identifierLinksHtml = $this->identifierLinker($this->driver, 'results');
         // Account for replace_other_urls setting
         $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
 
-        if ($openUrlActive || $doiActive || !empty($urls)) : ?>
+        if ($openUrlActive || $identifierLinksHtml || !empty($urls)) : ?>
             <?php if ($openUrlActive) : ?>
           <br>
                 <?=$openUrl->renderTemplate()?>
             <?php endif; ?>
-            <?php if ($doiActive) : ?>
+            <?php if ($identifierLinksHtml) : ?>
           <br>
-                <?=$doi->renderTemplate()?>
+                <?=$identifierLinksHtml?>
             <?php endif; ?>
             <?php if (!is_array($urls)) {
                 $urls = [];
