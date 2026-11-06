@@ -1,0 +1,831 @@
+# Technische Zusammenfassung: GND-basiertes Linking in VuFind ohne Überschreiben der Partnerdaten
+
+## Ausgangslage
+
+Im Portal existiert bereits eine Sonderlogik für IDs mit dem Präfix `gnd_`.
+
+Aktuelles Verhalten:
+
+```text
+Record-ID beginnt mit gnd_
+→ lobid wird geladen
+→ lobid/GND-Daten werden als primäre Anzeige verwendet
+→ ursprüngliche Partnerdaten werden nicht mehr angezeigt
+```
+
+Deshalb dürfen lokale Partner-Agenten **nicht** einfach auf `gnd_...` als primäre ID umgestellt werden.
+
+Beispiel:
+
+```text
+Nicht tun:
+<partnerprefix>_10005 → gnd_118522213
+```
+
+Denn das würde den Partner-Agenten faktisch in einen lobid/GND-Record verwandeln.
+
+Stattdessen sollen lokale Partnerdaten erhalten bleiben und die GND nur als zusätzliche Linking-ID verwendet werden.
+
+---
+
+## Wichtige Rahmenbedingung (dieses Repository)
+
+Die eigentliche Indexing-/ETL-Pipeline liegt in einem anderen Projekt und kann hier nicht geändert werden.
+
+Damit gilt für dieses Repository:
+
+- Umsetzungsschwerpunkt liegt auf **Schema-/Anwendungsseite** (VuFind/Fiddk).
+- Die Felder `author_gnd_id` und `author_gnd_id_display` werden hier **konsumiert**, nicht erzeugt.
+- Solange die externe Pipeline die Felder nicht liefert, muss die Anwendung robust auf Fallbacks arbeiten.
+
+---
+
+## Zielmodell
+
+Es werden zwei Identitätsebenen unterschieden:
+
+| Ebene             | Zweck                                     | Beispiel                 |
+| ----------------- | ----------------------------------------- | ------------------------ |
+| lokale Partner-ID | stabile Identität im Datenpartner-Kontext | `<partnerprefix>_10005`  |
+| GND-Linking-ID    | partnerübergreifende Verknüpfung          | `gnd_118522213`          |
+
+Ein Agent bleibt lokal eindeutig (Beispiel-URI):
+
+```text
+https://performing-arts.eu/discovery/agent/rwm_10005
+```
+
+Wenn eine GND vorhanden ist, wird sie zusätzlich aus `owl:sameAs` extrahiert:
+
+```turtle
+<https://performing-arts.eu/discovery/agent/rwm_10005>
+    owl:sameAs <http://d-nb.info/gnd/118522213> .
+```
+
+Daraus wird:
+
+```text
+gnd_118522213
+```
+
+Diese GND-Linking-ID wird in den **Titeldokumenten** indexiert, nicht nur im Agent-Datensatz.
+
+---
+
+## Best Practice: Primär-ID für Agenten (technisch) vs. URI (semantisch)
+
+Für den stabilen Betrieb in VuFind/Solr wird eine klare Trennung empfohlen:
+
+- **Technische Primär-ID (Record-Loading, Routing, interne Verknüpfung):**
+  - `id = <partnerprefix>_...` (z. B. `rwm_14405`, `foo_777`)
+- **Semantische/Linked-Data-ID (RDF-Kontext):**
+  - volle URI im RDF (`rdf:about`, z. B. `https://performing-arts.eu/discovery/agent/rwm_14405`)
+
+### Warum diese Trennung sinnvoll ist
+
+1. VuFind lädt Records direkt über das Solr-`id`-Feld.
+2. Kürzere, stabile technische IDs (`<partnerprefix>_...`) sind robuster für Routing und URL-Encoding.
+3. Die semantische Identität bleibt vollständig im RDF erhalten (`rdf:about`), ohne den Loader zu destabilisieren.
+4. Das verhindert ID-Mismatch-Fehler wie:
+   - URL/Route nutzt URI,
+   - Solr-`id` enthält aber Kurz-ID.
+
+### Konkrete Empfehlung
+
+- In Agent-Routen und internen Links die technische Primär-ID verwenden:
+  - `/agent/<partnerprefix>_14405` (z. B. `/agent/rwm_14405`)
+- Die URI weiterhin im Datensatz führen (z. B. in `fullrecord`/RDF), aber nicht als alleinige technische Lade-ID erzwingen.
+- Wenn zukünftig URI als Primär-ID gewünscht ist, dann nur als vollständige, konsistente Umstellung in:
+  - Solr-`id`,
+  - allen Routen/Links,
+  - Loader- und Fallback-Logik.
+
+---
+
+## Warum die GND in den Titeldaten stehen muss
+
+VuFind/Solr findet Titel über den bibliografischen Index. Wenn die GND nur im Agent-Datensatz steht, müsste die Anwendung zur Laufzeit erst auflösen:
+
+```text
+Titel → lokaler Agent → Agent-Datensatz → GND → weitere Titel
+```
+
+Das ist unnötig kompliziert.
+
+Stattdessen soll jedes Titeldokument direkt enthalten:
+
+```json
+{
+  "author_id": [
+    "https://performing-arts.eu/discovery/agent/rwm_10005"
+  ],
+  "author_gnd_id": [
+    "gnd_118522213"
+  ]
+}
+```
+
+Dann kann VuFind direkt suchen:
+
+```text
+author_gnd_id:"gnd_118522213"
+```
+
+und bekommt alle Titel aller Datenpartner, die auf dieselbe GND verweisen.
+
+---
+
+## Aktueller Zustand im Titeldokument
+
+Beispiel aus dem aktuellen Index:
+
+```json
+{
+  "id": "rwm_153286",
+  "record_format": "edm",
+  "author": [
+    "Leopold Demuth",
+    "None Verwaltung der Bühnenfestspiele Bayreuth"
+  ],
+  "author_id": [
+    "https://performing-arts.eu/discovery/agent/rwm_10005",
+    "https://performing-arts.eu/discovery/agent/rwm_18552"
+  ],
+  "author_role": [
+    "contributor",
+    "contributor"
+  ]
+}
+```
+
+Die Felder `author`, `author_id` und `author_role` sind positionsbasiert zu lesen:
+
+```text
+author[0]      = Leopold Demuth
+author_id[0]   = https://performing-arts.eu/discovery/agent/rwm_10005
+author_role[0] = contributor
+
+author[1]      = None Verwaltung der Bühnenfestspiele Bayreuth
+author_id[1]   = https://performing-arts.eu/discovery/agent/rwm_18552
+author_role[1] = contributor
+```
+
+Für die Anzeige und Linkerzeugung sollte diese positionsbasierte Zuordnung erhalten bleiben.
+
+---
+
+## Schema-Erweiterung
+
+Im aktuellen Solr-Schema existiert bereits:
+
+```xml
+<field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
+```
+
+Dieses Feld ist technisch geeignet für exakte ID-Suchen. Es sollte aber nicht mit lokaler ID und GND-Linking-ID vermischt werden.
+
+Empfohlene Ergänzung direkt nach `author_id`:
+
+```xml
+<field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
+```
+
+Kontext im Schema:
+
+```xml
+<field name="publisher_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
+<field name="topic_id" type="string" indexed="true" stored="true" multiValued="true"/>
+```
+
+### Feldbedeutung
+
+| Feld                    | Zweck                                     | indexed | stored | multiValued |
+| ----------------------- | ----------------------------------------- | ------: | -----: | ----------: |
+| `author_id`             | lokale Agent-URI                          |      ja |     ja |          ja |
+| `author_gnd_id`         | GND-Linking für Suche/Filter              |      ja |     ja |          ja |
+| `author_gnd_id_display` | positionsgleiche GND für Template/Anzeige |    nein |     ja |          ja |
+
+---
+
+## Warum zwei GND-Felder?
+
+`author_gnd_id` enthält nur tatsächlich vorhandene GNDs:
+
+```json
+"author_gnd_id": [
+  "gnd_118522213"
+]
+```
+
+Dieses Feld dient der Suche:
+
+```text
+author_gnd_id:"gnd_118522213"
+```
+
+`author_gnd_id_display` bleibt positionsgleich zu `author`, `author_id` und `author_role`:
+
+```json
+"author_gnd_id_display": [
+  "gnd_118522213",
+  ""
+]
+```
+
+Damit kann das Template beim Rendern der zweiten Person erkennen: Diese Person hat keine GND, also Fallback auf lokale ID.
+
+---
+
+## Zielzustand im Titeldokument
+
+Beispiel, wenn `rwm_10005` eine GND hat und `rwm_18552` keine:
+
+```json
+{
+  "id": "rwm_153286",
+  "record_format": "edm",
+  "author": [
+    "Leopold Demuth",
+    "Verwaltung der Bühnenfestspiele Bayreuth"
+  ],
+  "author_id": [
+    "https://performing-arts.eu/discovery/agent/rwm_10005",
+    "https://performing-arts.eu/discovery/agent/rwm_18552"
+  ],
+  "author_role": [
+    "contributor",
+    "contributor"
+  ],
+  "author_gnd_id": [
+    "gnd_118522213"
+  ],
+  "author_gnd_id_display": [
+    "gnd_118522213",
+    ""
+  ]
+}
+```
+
+Wenn beide Agenten eine GND haben:
+
+```json
+{
+  "author_gnd_id": [
+    "gnd_118522213",
+    "gnd_123456789"
+  ],
+  "author_gnd_id_display": [
+    "gnd_118522213",
+    "gnd_123456789"
+  ]
+}
+```
+
+Wenn kein Agent eine GND hat:
+
+```json
+{
+  "author_gnd_id": [],
+  "author_gnd_id_display": [
+    "",
+    ""
+  ]
+}
+```
+
+---
+
+## Indexing-Logik (externes Projekt)
+
+Die eigentliche Befüllung der Felder erfolgt in der externen Pipeline. Dort soll beim Aufbau des Titeldokuments aus den Agentendaten eine Lookup-Tabelle erzeugt werden:
+
+```python
+agent_to_gnd = {
+    "https://performing-arts.eu/discovery/agent/rwm_10005": "gnd_118522213",
+    "https://performing-arts.eu/discovery/agent/rwm_18552": None,
+}
+```
+
+Dann werden die Titeldaten angereichert:
+
+```python
+authors: list[str] = []
+author_ids: list[str] = []
+author_roles: list[str] = []
+author_gnd_ids: list[str] = []
+author_gnd_ids_display: list[str] = []
+
+for contributor in contributors:
+    author_uri = contributor.uri
+    gnd_id = agent_to_gnd.get(author_uri)
+
+    authors.append(contributor.label)
+    author_ids.append(author_uri)
+    author_roles.append(contributor.role)
+
+    if gnd_id:
+        author_gnd_ids.append(gnd_id)
+        author_gnd_ids_display.append(gnd_id)
+    else:
+        author_gnd_ids_display.append("")
+```
+
+Wichtig:
+
+```text
+author_gnd_id
+→ nur echte GND-Werte
+
+author_gnd_id_display
+→ positionsgleich zu author/author_id/author_role
+```
+
+---
+
+## Extraktion der GND aus `owl:sameAs` (externes Projekt)
+
+Aus einer URI wie:
+
+```text
+http://d-nb.info/gnd/118522213
+```
+
+oder:
+
+```text
+https://d-nb.info/gnd/118522213
+```
+
+wird:
+
+```text
+gnd_118522213
+```
+
+Beispielcode:
+
+```python
+from __future__ import annotations
+
+import re
+
+GND_URI_RE = re.compile(r"https?://d-nb\.info/gnd/([^/#?]+)")
+
+
+def extract_gnd_id(uri: str) -> str | None:
+    match = GND_URI_RE.match(uri)
+    if match is None:
+        return None
+
+    return match.group(1)
+
+
+def build_gnd_linking_id(uri: str) -> str | None:
+    gnd_id = extract_gnd_id(uri)
+    if gnd_id is None:
+        return None
+
+    return f"gnd_{gnd_id}"
+```
+
+---
+
+## VuFind-Linklogik (dieses Repository)
+
+Beim Rendern von Personenlinks wird bevorzugt über die GND verlinkt.
+
+Primärlogik:
+
+```text
+Wenn author_gnd_id_display[i] vorhanden:
+    Link auf author_gnd_id:"gnd_..."
+sonst:
+    Link auf author_id:"lokale Agent-URI"
+```
+
+Fallback-Logik (für Übergangsphase ohne Pipeline-Update):
+
+```text
+Wenn author_gnd_id_display[i] leer ist:
+    und author_id[i] bereits gnd_... ist:
+        nutze author_gnd_id:"gnd_..."
+    oder author_id[i] eine d-nb.info/gnd/... URI ist:
+        normalisiere zu gnd_... und nutze author_gnd_id:"gnd_..."
+    sonst:
+        nutze author_id:"lokale Agent-URI"
+```
+
+Beispiel:
+
+```text
+Leopold Demuth
+→ /Search/Results?filter[]=author_gnd_id:"gnd_118522213"
+
+Verwaltung der Bühnenfestspiele Bayreuth
+→ /Search/Results?filter[]=author_id:"https://performing-arts.eu/discovery/agent/rwm_18552"
+```
+
+PHP-Skizze:
+
+```php
+$authors = $this->driver->tryMethod('getAuthors');
+$authorIds = $this->driver->tryMethod('getAuthorIds');
+$authorRoles = $this->driver->tryMethod('getAuthorRoles');
+$authorGndIds = $this->driver->tryMethod('getAuthorGndIdsDisplay');
+
+foreach ($authors as $i => $author) {
+    $localId = $authorIds[$i] ?? null;
+    $gndId = $authorGndIds[$i] ?? null;
+
+    if (!empty($gndId)) {
+        $field = 'author_gnd_id';
+        $value = $gndId;
+    } else {
+        $field = 'author_id';
+        $value = $localId;
+    }
+
+    // Link auf Search/Results mit filter[]=$field:"$value"
+}
+```
+
+---
+
+## Konkrete technische Umsetzung (Stand im Repository)
+
+### 1) Solr-Schema (biblio-core)
+
+Datei:
+
+```text
+solr/vufind/biblio/conf/schema.xml
+```
+
+Umgesetzt sind die Felder:
+
+```xml
+<field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+<field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
+```
+
+Damit ist die technische Trennung vorhanden:
+- Suchfeld: `author_gnd_id`
+- Anzeige-/Positionsfeld: `author_gnd_id_display`
+
+### 2) RecordDriver-API für Templates
+
+Datei:
+
+```text
+module/Fiddk/src/Fiddk/RecordDriver/Feature/EdmBasicTrait.php
+```
+
+Umgesetzt wurden die Getter:
+
+```php
+public function getAuthorGndIds()
+{
+    return $this->fields['author_gnd_id'] ?? [];
+}
+
+public function getAuthorGndIdsDisplay()
+{
+    return $this->fields['author_gnd_id_display'] ?? [];
+}
+```
+
+Damit können Templates die neuen Solr-Felder direkt konsumieren.
+
+### 3) Autoren-Template mit GND-Priorität + Fallback
+
+Datei:
+
+```text
+themes/fiddk/templates/RecordDriver/SolrEdm/data-authors.phtml
+```
+
+Implementierter Entscheidungsbaum je Autor:
+
+1. Wenn `author_gnd_id_display[i]` vorhanden:
+   - Link über `author_gnd_id`
+2. Sonst Best-Effort-Übergangsmodus:
+   - wenn `author_id` bereits `gnd_...` ist → nutze `author_gnd_id`
+   - wenn `author_id` eine `d-nb.info/gnd/...` URI ist → normalisiere zu `gnd_...` und nutze `author_gnd_id`
+3. Sonst lokaler Fallback:
+   - Link über `author_id`
+4. Wenn keine belastbare ID verfügbar:
+   - Fallback auf `personsearch` mit Namen
+
+Technisch relevante Details:
+- GND-Normalisierung im Template per Regex:
+  - akzeptiert `http://d-nb.info/gnd/...` und `https://d-nb.info/gnd/...`
+- korrekter lokaler Fallback verwendet `author_id` (nicht `author`).
+
+### 4) SolrAuthDefault-Template nutzt SolrEdm-Implementierung
+
+Datei:
+
+```text
+themes/fiddk/templates/RecordDriver/SolrAuthDefault/data-authors.phtml
+```
+
+Diese Datei rendert bewusst das SolrEdm-Template:
+
+```php
+echo $this->render('RecordDriver/SolrEdm/data-authors.phtml');
+```
+
+Damit gilt dieselbe GND-Linklogik konsistent auch in diesem Kontext.
+
+### 5) Formatter-Integration
+
+Datei:
+
+```text
+module/Fiddk/src/Fiddk/View/Helper/Fiddk/RecordDataFormatterFactory.php
+```
+
+`dc:contributor` wird weiterhin über `getDeduplicatedAuthors` + `data-authors.phtml` gerendert.  
+Dadurch greift die neue GND-Linklogik zentral ohne zusätzliche Spec-Anpassung.
+
+### 6) Dokumentierte Grenzen
+
+- Die Befüllung von `author_gnd_id`/`author_gnd_id_display` erfolgt **nicht** in diesem Repository.
+- Ohne Pipeline-Lieferung greifen die implementierten Fallbacks (lokale `author_id` bzw. Best-Effort-GND-Erkennung).
+
+---
+
+## Absicherungspunkte (verbindlich)
+
+Zur robusten Umsetzung werden folgende Punkte verbindlich festgelegt:
+
+1. **Konsistente Normalisierung der GND-URI**
+   - `http://d-nb.info/gnd/...` und `https://d-nb.info/gnd/...` werden gleich behandelt.
+   - Optionaler Trailing-Slash, Query-Parameter und Fragment werden bei der Extraktion ignoriert.
+   - Ergebnis wird einheitlich als `gnd_<id>` gespeichert.
+
+2. **Mehrfaches `owl:sameAs` pro Agent** (externes Projekt)
+   - Falls mehrere `owl:sameAs`-Werte vorhanden sind, werden nur gültige GND-URIs berücksichtigt.
+   - Wenn genau eine gültige GND gefunden wird, wird diese übernommen.
+   - Wenn mehrere unterschiedliche GND-IDs gefunden werden, wird deterministisch entschieden (z. B. erste nach stabiler Sortierung) und ein Warn-Log geschrieben.
+   - Ziel: reproduzierbares Verhalten bei fehlerhaften/mehrdeutigen Daten.
+
+3. **Leere Werte in `author_gnd_id_display`**
+   - Für „keine GND vorhanden“ wird verbindlich der leere String `""` verwendet (nicht `null`).
+   - Dadurch bleibt die Positionsgleichheit zu `author`, `author_id`, `author_role` stabil.
+
+4. **Reindex-Strategie**
+   - Nach Einführung der Felder ist ein Reindex der betroffenen Titeldokumente verpflichtend.
+   - Empfohlen: Full-Reindex des bibliografischen Kerns, wenn die Datenherkunft oder Mapping-Logik geändert wurde.
+   - Delta-Reindex nur dann, wenn sichergestellt ist, dass alle betroffenen Records neu geschrieben werden.
+
+5. **Übergangsmodus ohne Pipeline-Änderung**
+   - Anwendung muss funktionsfähig bleiben, wenn `author_gnd_id*` fehlen.
+   - In diesem Fall wird auf `author_id`-Suche zurückgefallen.
+   - Optionaler Best-Effort: Erkennung von bereits in `author_id` enthaltenen GND-Hinweisen (`gnd_...` oder `d-nb.info/gnd/...`).
+
+6. **Konsistente Agent-ID-Strategie (dieses Repository + externes Projekt)**
+   - Technische Primär-ID im Authority-Index und für VuFind-Record-Loading bleibt stabil und einheitlich als **partnerlokale Kurz-ID mit Partnerpräfix** (z. B. `rwm_...`, `foo_...`).
+   - Linked-Data-URI bleibt als semantische Identität im RDF erhalten (`rdf:about`), ohne die technische Lade-ID zu ersetzen.
+   - Interne Agent-Links/Routen müssen zur technischen Primär-ID passen (z. B. `/agent/rwm_14405` bei `id = rwm_14405` bzw. `/agent/foo_777` bei `id = foo_777`).
+   - Eine Umstellung auf URI als Primär-ID ist nur als vollständige, konsistente Gesamtmigration zulässig (Index, Routing, Linkerzeugung, Loader-Fallbacks).
+
+---
+
+## Abfragebeispiele
+
+### Partnerübergreifende Suche über GND
+
+```text
+author_gnd_id:"gnd_118522213"
+```
+
+Findet Titel von beliebigen Datenpartnern, sofern sie dieselbe GND im Feld `author_gnd_id` haben.
+
+### Lokale Suche ohne GND
+
+```text
+author_id:"https://performing-arts.eu/discovery/agent/rwm_18552"
+```
+
+Findet Titel, die auf diesen konkreten lokalen Partner-Agenten verweisen.
+
+---
+
+## Bestehende `gnd_...`-Sonderlogik bleibt erhalten
+
+Die bisherige Logik sollte weiter nur für echte primäre GND-Records gelten:
+
+```text
+record.id startsWith "gnd_"
+→ lobid als Primärquelle laden
+```
+
+Für Partner-Records mit GND gilt dagegen:
+
+```text
+record.id = <partnerprefix>_10005
+author_gnd_id = gnd_118522213
+→ Partnerdaten anzeigen
+→ GND nur für Linking und optionale Anreicherung nutzen
+```
+
+Dadurch entstehen drei saubere Fälle:
+
+| Fall                   | Primäre ID              | Anzeige      | lobid    |
+| ---------------------- | ----------------------- | ------------ | -------- |
+| echter Normdatenrecord | `gnd_118522213`         | lobid/GND    | primär   |
+| Partner-Agent mit GND  | `<partnerprefix>_10005` | Partnerdaten | optional |
+| Partner-Agent ohne GND | `<partnerprefix>_18552` | Partnerdaten | nein     |
+
+---
+
+## Korrekturhinweis: `None Verwaltung...`
+
+Im aktuellen Beispiel steht:
+
+```json
+"None Verwaltung der Bühnenfestspiele Bayreuth"
+```
+
+Das sieht nach einem Mapping-Bug aus. Vermutlich wird ein optionaler Namensbestandteil ungeprüft konkateniert.
+
+Statt:
+
+```python
+label = f"{prefix} {name}"
+```
+
+sollte defensiv gebaut werden:
+
+```python
+parts = [prefix, name]
+label = " ".join(part for part in parts if part)
+```
+
+Ziel:
+
+```json
+"Verwaltung der Bühnenfestspiele Bayreuth"
+```
+
+---
+
+## Umsetzungsschritte
+
+### A) In diesem Repository umsetzen
+
+1. **Solr-Schema erweitern (biblio-core)**
+
+   Ergänzen:
+
+   ```xml
+   <field name="author_gnd_id" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="author_gnd_id_display" type="string" indexed="false" stored="true" multiValued="true"/>
+   ```
+
+2. **RecordDriver erweitern**
+
+   Methoden ergänzen, z. B.:
+
+   ```php
+   getAuthorGndIds()
+   getAuthorGndIdsDisplay()
+   ```
+
+3. **Templates anpassen**
+
+   Personenlinks bevorzugt über `author_gnd_id`, Fallback über `author_id` (inkl. Übergangsmodus).
+
+4. **Bestehende `gnd_...`-Logik unverändert lassen**
+
+   Aber nur für primäre Record-IDs verwenden, nicht für Partner-Agenten.
+
+### B) In externem Pipeline-Projekt umsetzen
+
+5. **Agent-Indexing erweitern**
+
+   Aus `owl:sameAs` GND-URIs extrahieren:
+
+   ```text
+   http://d-nb.info/gnd/118522213
+   → gnd_118522213
+   ```
+
+6. **Titel-Indexing erweitern**
+
+   Für jeden `dc:contributor`:
+
+   ```text
+   lokale Agent-URI → Lookup in Agent-GND-Mapping → author_gnd_id
+   ```
+
+7. **Titeldokumente neu indexieren**
+
+   Die GND-Linking-ID muss im bibliografischen Solr-Core stehen.
+
+8. **Testfälle prüfen**
+
+   * Agent mit GND
+   * Agent ohne GND
+   * zwei Partner mit derselben GND
+   * gleichnamige Personen mit unterschiedlicher GND
+   * mehrere Autoren pro Titel
+   * Autor mit fehlender GND zwischen zwei Autoren mit GND
+   * Agent mit mehreren `owl:sameAs`, davon mehrere/keine gültige GND
+   * Mischfälle `http`/`https`/Trailing-Slash in GND-URIs
+   * Konsistente Behandlung leerer Display-Werte (`""` statt `null`)
+
+---
+
+## Testfall
+
+### Titel Partner A
+
+```json
+{
+  "id": "rwm_153286",
+  "author": ["Leopold Demuth"],
+  "author_id": ["https://performing-arts.eu/discovery/agent/rwm_10005"],
+  "author_gnd_id": ["gnd_118522213"],
+  "author_gnd_id_display": ["gnd_118522213"]
+}
+```
+
+### Titel Partner B
+
+```json
+{
+  "id": "foo_98765",
+  "author": ["Leopold Demuth"],
+  "author_id": ["https://performing-arts.eu/discovery/agent/foo_777"],
+  "author_gnd_id": ["gnd_118522213"],
+  "author_gnd_id_display": ["gnd_118522213"]
+}
+```
+
+### Erwartung
+
+Diese Suche:
+
+```text
+author_gnd_id:"gnd_118522213"
+```
+
+liefert beide Titel:
+
+```text
+rwm_153286
+foo_98765
+```
+
+Die Anzeige der einzelnen Partnerdatensätze bleibt unverändert partnerbasiert.
+
+---
+
+## Kurzfassung
+
+Die Umsetzung besteht aus einer klaren Trennung:
+
+```text
+author_id
+→ lokale Partner-Agent-ID
+
+author_gnd_id
+→ partnerübergreifende GND-Linking-ID
+
+author_gnd_id_display
+→ positionsgleiche GND für Template-Anzeige
+```
+
+Die primäre Record-ID bleibt lokal und partnerabhängig:
+
+```text
+<partnerprefix>_10005
+```
+
+(Beispiel: `rwm_10005`)
+
+Die GND wird nur zusätzlich indexiert:
+
+```text
+gnd_118522213
+```
+
+VuFind verlinkt Personen dann bevorzugt über:
+
+```text
+author_gnd_id:"gnd_118522213"
+```
+
+und fällt bei fehlender GND zurück auf:
+
+```text
+author_id:"https://performing-arts.eu/discovery/agent/rwm_10005"
+```
+
+Wenn die Pipeline die neuen Felder noch nicht liefert, bleibt die Anwendung im Übergangsmodus funktionsfähig (Fallback), bis die externe Indexing-Umsetzung nachgezogen ist.
