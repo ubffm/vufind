@@ -7,10 +7,6 @@
   // Set up standard record scripts:
   $this->headScript()->appendFile("record.js");
   $this->headScript()->appendFile("check_save_statuses.js");
-  // Activate Syndetics Plus if necessary:
-if ($this->syndeticsPlus()->isActive()) {
-    $this->headScript()->appendFile($this->syndeticsPlus()->getScript());
-}
   // Add any extra scripts the tabs require:
 foreach ($this->tabsExtraScripts as $script) {
     $this->headScript()->appendFile($script);
