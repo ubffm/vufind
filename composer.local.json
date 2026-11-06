@@ -1,0 +1,14 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Fiddk\\": [
+                "module/Fiddk/src/Fiddk",
+                "module/Fiddk"
+            ],
+            "FiddkApi\\": [
+                "module/FiddkApi/src/FiddkApi",
+                "module/FiddkApi"
+            ]
+        }
+    }
+}
