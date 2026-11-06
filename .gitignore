@@ -28,6 +28,7 @@ node_modules
 public/swagger-ui
 tests/phpcs.cache.json
 local/DirLocations.ini
-local/config/vufind.bak
-local/config/vufind/*
 !local/config/vufind/README.txt
+.aider*
+*.log
+local/config/vufind/config.ini
