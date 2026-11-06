@@ -31,7 +31,6 @@
 
 namespace Fiddk\Controller;
 
-use Laminas\Config\Config;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
