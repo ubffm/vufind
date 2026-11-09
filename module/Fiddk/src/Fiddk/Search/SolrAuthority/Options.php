@@ -54,7 +54,7 @@ class Options extends \VuFind\Search\Solr\Options
     {
         // Load the necessary settings to determine the appropriate recommendations
         // module:
-        $ss = $this->configLoader->get($this->getSearchIni());
+        $ss = $this->configLoader->getConfigObject($this->getSearchIni());
         // Load the Agent- or the EventModuleRecommendations configuration if available,
         // depending on the type
         $recommend = [];

@@ -43,9 +43,9 @@ class Options extends \VuFind\Search\Solr\Options
     /**
      * Constructor
      *
-     * @param \VuFind\Config\PluginManager $configLoader Config loader
+     * @param \VuFind\Config\ConfigManagerInterface $configLoader Config loader
      */
-    public function __construct(\VuFind\Config\PluginManager $configLoader)
+    public function __construct(\VuFind\Config\ConfigManagerInterface $configLoader)
     {
         $this->facetsIni = $this->searchIni = 'event';
         parent::__construct($configLoader);
