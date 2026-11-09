@@ -39,3 +39,4 @@ local/config/vufind/permissions.ini
 local/config/vufind/FeedbackForms.yaml
 *.key
 *.pem
+.cecli*
