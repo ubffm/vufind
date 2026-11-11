@@ -1,20 +1,20 @@
 <?php $account = $this->auth()->getManager(); ?>
-<div class="banner container navbar">
+<div class="banner container navbar navbar-expand-md">
   <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
       <?=$this->icon('ui-menu') ?>
     </button>
     <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('search-home')?>" aria-label="Home Button"></a>
   </div>
   <?php if (!isset($this->layout()->renderingError)) : ?>
-    <div class="collapse navbar-collapse" id="header-collapse">
+    <div class="collapse navbar-collapse justify-content-end" id="header-collapse">
       <nav>
-        <ul class="nav navbar-nav navbar-right flip">
+        <ul class="nav navbar-nav ms-auto">
           <?php $cart = $this->cart(); if ($cart->isActive()) : ?>
             <li id="cartSummary">
               <a id="cartItems" data-lightbox title="<?=$this->transEscAttr('View Book Bag')?>" href="<?=$this->url('cart-home')?>">
-                <i class="fa fa-suitcase" aria-hidden="true"></i> <span role="status"><span class="sr-only"><?=$this->transEsc('Book Bag')?>:</span> <strong><?=count($cart->getItems())?></strong> <?=$this->transEsc('items')?></span>
-                <span class="full<?=!$cart->isFull() ? ' hidden' : '' ?>">(<?=$this->transEsc('bookbag_full') ?>)</span>
+                <i class="fa fa-suitcase" aria-hidden="true"></i> <span role="status"><span class="visually-hidden"><?=$this->transEsc('Book Bag')?>:</span> <strong><?=count($cart->getItems())?></strong> <?=$this->transEsc('items')?></span>
+                <span class="full<?=!$cart->isFull() ? ' d-none' : '' ?>">(<?=$this->transEsc('bookbag_full') ?>)</span>
               </a>
             </li>
           <?php endif; ?>
@@ -22,27 +22,27 @@
             <li class="logoutOptions<?php if ($account->dropdownEnabled()) :
                 ?> with-dropdown<?php
                                     endif ?><?php if (!$account->getIdentity()) :
-    ?> hidden<?php
+    ?> d-none<?php
                                     endif ?>">
               <a href="<?=$this->url('myresearch-home', [], ['query' => ['redirect' => 0]])?>"><i id="account-icon" class="fa fa-user-circle" aria-hidden="true"></i> <?=$this->transEsc("Your Account")?></a>
             </li>
                 <?php if ($account->dropdownEnabled()) : ?>
               <li id="login-dropdown" class="dropdown<?php if (!$account->getIdentity()) :
-                    ?> hidden<?php
+                    ?> d-none<?php
                                                      endif ?>">
-                <a href="#" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a>
+                <a href="#" data-bs-toggle="dropdown"><i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-menu">
                     <?=$this->render('myresearch/menu'); ?>
                 </div>
               </li>
                 <?php endif; ?>
             <li class="logoutOptions<?php if (!$account->getIdentity()) :
-                ?> hidden<?php
+                ?> d-none<?php
                                     endif ?>">
               <a href="<?=$this->url('myresearch-logout')?>" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> <?=$this->transEsc("Log Out")?></a>
             </li>
             <li id="loginOptions"<?php if ($account->getIdentity()) :
-                ?> class="hidden"<?php
+                ?> class="d-none"<?php
                                  endif ?>>
                 <?php if ($account->getSessionInitiator($this->serverUrl($this->url('myresearch-home')))) : ?>
                 <a href="<?=$this->url('myresearch-userlogin')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> <?=$this->transEsc("Institutional Login")?></a>
@@ -54,7 +54,7 @@
 
           <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1) : ?>
             <li class="theme dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->transEsc("Theme")?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><?=$this->transEsc("Theme")?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <?php foreach ($this->layout()->themeOptions as $current) : ?>
                   <li<?=$current['selected'] ? ' class="active"' : ''?>>
@@ -71,7 +71,7 @@
             if (isset($navigation[$this->layout()->userLang])) :
                 foreach ($navigation[$this->layout()->userLang] as $nav) : ?>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?=$nav['url']?>" aria-expanded="false"><?=$nav['title']?></a>
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="<?=$nav['url']?>" aria-expanded="false"><?=$nav['title']?></a>
               <ul class="dropdown-menu">
                     <?php foreach ($nav["children"] as $child) : ?>
                   <li class="nav-item">
@@ -119,7 +119,7 @@
 </div>
 <?php if ($this->layout()->searchbox !== false) : ?>
   <div class="search container navbar">
-    <div class="nav searchbox hidden-print" role="search">
+    <div class="nav searchbox d-print-none" role="search">
       <?=$this->layout()->searchbox ?>
     </div>
   </div>
