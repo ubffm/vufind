@@ -47,7 +47,7 @@ if ($hasCheckbox) {
     <?php if (!$this->facet['isApplied'] && null !== $this->facet['count']) : ?>
       <span class="badge">
         <?php $currentCount = $this->localizedNumber($this->facet['count']); ?>
-        <span class="sr-only"><?=$this->transEsc('result_count', ['%%count%%' => $currentCount]) ?></span>
+        <span class="visually-hidden"><?=$this->transEsc('result_count', ['%%count%%' => $currentCount]) ?></span>
         <span aria-hidden="true"><?=$currentCount ?></span>
       </span>
     <?php endif; ?>
@@ -56,7 +56,7 @@ if ($hasCheckbox) {
         <?php $excludeURL = $this->urlBase . $this->url->addFacet($this->group, $this->facet['value'], 'NOT'); ?>
     <a href="<?=$excludeURL ?>" data-lightbox-ignore class="exclude">
         <?=$this->icon('facet-exclude') ?>
-      <span class="sr-only"><?=$this->transEsc('exclude_facet') ?></span>
+      <span class="visually-hidden"><?=$this->transEsc('exclude_facet') ?></span>
     </a>
   <?php endif; ?>
 </span>
