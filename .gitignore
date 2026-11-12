@@ -40,3 +40,4 @@ local/config/vufind/FeedbackForms.yaml
 *.key
 *.pem
 .cecli*
+.venv
