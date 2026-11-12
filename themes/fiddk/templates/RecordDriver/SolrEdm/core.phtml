@@ -81,7 +81,7 @@
     <?php if (!empty($seeAlso)) : ?>
       <hr class="wmar">
       <div class="seeAlso data-table">
-      <h3><i class="fa fa-regular fa-link"></i>&nbsp;<?=$this->transEsc("Zugänge")?></h3>
+      <h3><i class="fa fa-solid fa-link" aria-hidden="true"></i>&nbsp;<?=$this->transEsc("Zugänge")?></h3>
         <table class="table">
           <?php foreach ($seeAlso as $current) : ?>
             <tr><th><?=$this->transEsc($current['label'])?></th><td><?=$current['value']?></td></tr>
