@@ -221,6 +221,12 @@ a.badge-secondary {
   width: 90%;
 }
 
+@media (min-width: 768px) {
+  .result .record-number {
+    margin-right: 0.75rem;
+  }
+}
+
 .result .media-right {
   margin-left: 1rem;
   padding-left: 0;

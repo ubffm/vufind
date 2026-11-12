@@ -197,7 +197,7 @@ if ($coverDetails['cover'] && $cover) :
           <div class="locationDetails"></div>
         <?php else : ?>
             <?php $summCallNo = $this->driver->getCallNumber(); if (!empty($summCallNo)) : ?>
-            <strong><?//=$this->transEsc('Call Number')?>:</strong> <?//=$this->escapeHtml($summCallNo)?>
+            <strong><?=$this->transEsc('Call Number')?>:</strong> <?=$this->escapeHtml($summCallNo)?>
             <?php endif; ?>
         <?php endif; ?>
       </div>
