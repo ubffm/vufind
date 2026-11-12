@@ -73,9 +73,11 @@ class SimilarItemsCarousel extends \VuFind\RecordTab\AbstractBase
     public function getResults()
     {
         $driver = $this->getRecordDriver();
-        $params = isset($this->config['Record']['similar_items_carousel_count'])
-            ? new ParamBag(['rows' => $this->config['Record']['similar_items_carousel_count']])
-            : null;
+        $params = new ParamBag(
+            [
+                'rows' => $this->config['Record']['similar_items_carousel_count'] ?? 40,
+            ]
+        );
         $command = new SimilarCommand(
             $driver->getSourceIdentifier(),
             $driver->getUniqueId(),
