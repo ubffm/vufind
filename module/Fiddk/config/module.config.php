@@ -142,8 +142,13 @@ $config = [
                 ],
             ],
             'recordtab' => [
+                'factories' => [
+                    \Fiddk\RecordTab\SimilarItemsCarousel::class =>
+                        \Fiddk\RecordTab\SimilarItemsCarouselFactory::class,
+                ],
                 'aliases' => [
                     'staffviewedm' => 'Fiddk\RecordTab\StaffViewEdm',
+                    'similaritemscarousel' => \Fiddk\RecordTab\SimilarItemsCarousel::class,
                 ],
             ],
             'contentblock' => [
