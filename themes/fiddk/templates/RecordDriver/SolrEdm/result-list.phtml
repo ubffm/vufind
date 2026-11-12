@@ -196,8 +196,10 @@ if ($coverDetails['cover'] && $cover) :
           </span>
           <div class="locationDetails"></div>
         <?php else : ?>
-            <?php $summCallNo = $this->driver->getCallNumber(); if (!empty($summCallNo)) : ?>
-            <strong><?=$this->transEsc('Call Number')?>:</strong> <?=$this->escapeHtml($summCallNo)?>
+            <?php
+                $summCallNos = array_filter((array)$this->driver->getCallNumber(), 'is_string');
+                if (!empty($summCallNos)) : ?>
+            <strong><?=$this->transEsc('Call Number')?>:</strong> <?=$this->escapeHtml(implode('; ', $summCallNos))?>
             <?php endif; ?>
         <?php endif; ?>
       </div>
