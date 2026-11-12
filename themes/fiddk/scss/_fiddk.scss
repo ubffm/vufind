@@ -191,7 +191,9 @@ ul.list-group {
   max-height: inherit;
 }
 
-a.badge-secondary {
+a.badge-secondary,
+a.bg-secondary,
+a.text-bg-secondary {
   color: $grey;
   border: 1px solid $grey;
   &:hover {

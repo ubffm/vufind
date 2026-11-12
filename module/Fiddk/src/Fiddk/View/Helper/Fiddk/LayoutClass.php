@@ -63,10 +63,10 @@ class LayoutClass extends \VuFind\View\Helper\Bootstrap5\LayoutClass
                 return 'mainbody left';
             case 'sidebar':
                 return $this->sidebarOnLeft
-                    ? 'sidebar left hidden-print'
-                    : 'sidebar right hidden-print';
+                    ? 'sidebar left d-print-none'
+                    : 'sidebar right d-print-none';
             case 'sidebarRecord':
-                return 'sidebar right hidden-print';
+                return 'sidebar right d-print-none';
             case 'offcanvas-row':
                 if (!$this->offcanvas) {
                     return "";

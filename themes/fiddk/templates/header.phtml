@@ -54,11 +54,11 @@
 
           <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1) : ?>
             <li class="theme dropdown">
-              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><?=$this->transEsc("Theme")?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><?=$this->transEsc("Theme")?></a>
               <ul class="dropdown-menu">
                 <?php foreach ($this->layout()->themeOptions as $current) : ?>
-                  <li<?=$current['selected'] ? ' class="active"' : ''?>>
-                    <a href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['ui' => $current['name']])) ?>" rel="nofollow">
+                  <li>
+                    <a class="dropdown-item<?=$current['selected'] ? ' active' : ''?>" href="<?=$this->escapeHtmlAttr($this->url()->addQueryParameters(['ui' => $current['name']])) ?>" rel="nofollow">
                       <?=$this->transEsc($current['desc']) ?>
                     </a>
                   </li>

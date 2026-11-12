@@ -46,25 +46,34 @@ if ($this->export()->recordSupportsFormat($this->driver, 'RDF')) {
                 <?php
                 $desc = $obj->getDescription();
                 $tabName = preg_replace("/\W/", "-", strtolower($tab));
-                $tabClasses = [ 'record-tab', $tabName ];
+                $liClasses = [ 'nav-item', 'record-tab', $tabName ];
+                $aAttrs = $this->htmlAttributes([
+                    'class' => 'nav-link',
+                    'role' => 'tab',
+                    'href' => $this->recordLinker()->getTabUrl($this->driver, $tab) . '#tabnav',
+                    'data-bs-target' => '.tab-pane.' . $tabName,
+                    'data-lightbox-ignore' => true,
+                ]);
                 if (0 === strcasecmp($this->activeTab, $tab)) {
                     if (!$this->loadInitialTabWithAjax || !$obj->supportsAjax()) {
-                        $tabClasses[] = 'active';
+                        $aAttrs->add('class', 'active');
+                        $aAttrs->add('aria-selected', 'true');
                     }
-                    $tabClasses[] = 'initiallyActive';
+                    $liClasses[] = 'initiallyActive';
+                    $activeTabName = $tabName;
                     $activeTabObj = $obj;
                 }
                 if (!$obj->isVisible()) {
-                    $tabClasses[] = 'hidden';
+                    $liClasses[] = 'hidden';
                 }
                 if (!$obj->supportsAjax()) {
-                    $tabClasses[] = 'noajax';
+                    $liClasses[] = 'noajax';
                 }
                 ?>
-            <li class="<?=implode(' ', $tabClasses)?>" role="tab" data-tab="<?=$this->escapeHtmlAttr($tabName)?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)) :
+            <li role="presentation" id="record-tab-<?=$this->escapeHtmlAttr($tabName)?>" class="<?=implode(' ', $liClasses)?>" data-tab="<?=$this->escapeHtmlAttr($tabName)?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)) :
                 ?> data-background<?php
                        endif ?>>
-              <a href="<?=$this->escapeHtmlAttr($this->recordLinker()->getTabUrl($this->driver, $tab))?>#tabnav" data-lightbox-ignore>
+              <a<?=$aAttrs?>>
                 <h3><?=$this->transEsc($desc)?></h3>
               </a>
             </li>
@@ -73,7 +82,7 @@ if ($this->export()->recordSupportsFormat($this->driver, 'RDF')) {
 
         <div class="tab-content">
           <?php if (!$this->loadInitialTabWithAjax || !isset($activeTabObj) || !$activeTabObj->supportsAjax()) : ?>
-            <div class="tab-pane active <?=$this->escapeHtmlAttr($this->activeTab) ?>-tab">
+            <div role="tabpanel" class="tab-pane active <?=$this->escapeHtmlAttr($this->activeTab) ?>-tab"<?= !empty($activeTabName) ? ' aria-labelledby="record-tab-' . $this->escapeHtmlAttr($activeTabName) . '"' : '' ?>>
                 <?=isset($activeTabObj) ? $this->record($this->driver)->getTab($activeTabObj) : '' ?>
             </div>
           <?php endif; ?>

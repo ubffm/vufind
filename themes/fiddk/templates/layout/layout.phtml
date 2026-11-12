@@ -150,7 +150,7 @@ if (!isset($this->layout()->searchbox)) {
         ?> rtl<?php
                             endif; ?>">
     <?=$this->cookieConsent()->render('bottom')?>
-    <header class="hidden-print">
+    <header class="d-print-none">
       <?php if (isset($this->layout()->srmessage)) : // message for benefit of screen-reader users ?>
         <span class="visually-hidden" role="heading" aria-level="1"><?=$this->layout()->srmessage ?></span>
       <?php endif; ?>
@@ -172,7 +172,7 @@ if (!isset($this->layout()->searchbox)) {
     </div>
     <?=$this->render('footer.phtml')?>
     <!-- MODAL IN CASE WE NEED ONE -->
-    <div id="modal" class="modal fade hidden-print" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modal" class="modal fade d-print-none" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="<?=$this->transEscAttr('Close')?>">
