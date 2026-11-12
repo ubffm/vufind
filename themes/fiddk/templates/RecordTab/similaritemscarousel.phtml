@@ -2,20 +2,20 @@
 <?php if (count($similarRecords) != 0) : ?>
     <?php $perPage = 4;
     $recordType = $this->driver->getRecordType();?>
-  <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
+  <div id="similar-items-carousel" class="carousel slide" data-bs-ride="carousel">
     <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#similar-items-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="<?=$this->transEscAttr('Prev')?> 1"></button>
       <?php for ($i = 1; $i < count($similarRecords) / $perPage; $i++) : ?>
-        <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
+        <button type="button" data-bs-target="#similar-items-carousel" data-bs-slide-to="<?=$i ?>" aria-label="<?=$this->transEscAttr('Next')?> <?=$i + 1?>"></button>
       <?php endfor; ?>
-    </ol>
+    </div>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <div class="item active">
+      <div class="carousel-item active">
         <?php foreach ($similarRecords as $index => $data) : ?>
-          <div class="carousel-item <?=$recordType?>Ls">
+          <div class="carousel-entry <?=$recordType?>Ls">
             <a class="hover-overlay record-cover-link" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getUrl($data))?>">
               <?php $thumb = $this->record($data)->getCoverDetails('similar-items', 'small')['html'];?>
               <?php if (strpos($thumb, "Cover/Unavailable") === false) :?>
@@ -34,19 +34,19 @@
           </div>
             <?php if (($index + 1) % $perPage == 0 && $index < count($similarRecords) - 1) : ?>
       </div>
-      <div class="item">
+      <div class="carousel-item">
             <?php endif; ?>
         <?php endforeach; ?>
       </div>
     </div>
 
     <!-- Controls -->
-    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev" aria-label="<?=$this->transEscAttr('Prev') ?>">
-      <span class="fa fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEscAttr('Prev') ?>"></span>
-    </a>
-    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next" aria-label="<?=$this->transEscAttr('Next') ?>">
-      <span class="fa fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEscAttr('Next') ?>"></span>
-    </a>
+    <button class="carousel-control-prev" type="button" data-bs-target="#similar-items-carousel" data-bs-slide="prev" aria-label="<?=$this->transEscAttr('Prev') ?>">
+      <span class="fa fa-solid fa-chevron-left glyphicon-chevron-left" title="<?=$this->transEscAttr('Prev') ?>"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#similar-items-carousel" data-bs-slide="next" aria-label="<?=$this->transEscAttr('Next') ?>">
+      <span class="fa fa-solid fa-chevron-right glyphicon-chevron-right" title="<?=$this->transEscAttr('Next') ?>"></span>
+    </button>
   </div>
 <?php else : ?>
   <p><?=$this->transEsc('Cannot find similar records')?></p>
@@ -69,4 +69,4 @@ function normalizeHeights() {
 $('#similar-items-carousel img').on('load', normalizeHeights);
 JS;
 ?>
-<?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET') ?>
+<?=$this->assetManager()->outputInlineScriptString($script) ?>

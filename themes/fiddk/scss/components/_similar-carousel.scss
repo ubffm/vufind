@@ -5,6 +5,14 @@
     height: 100%;
     padding: 0 1.5rem 0.5rem 1.5rem;
     .carousel-item {
+      &.carousel-item-prev,
+      &.carousel-item-next,
+      &.active {
+        display: flex;
+      }
+    }
+    .carousel-entry {
+      flex: 1 1 0;
       margin: 0 1rem;
       min-width: 250px;
       .recordcover {
@@ -16,13 +24,12 @@
     bottom: -3rem;
   }
   /* Controls */
-  .carousel-control {
+  .carousel-control-prev,
+  .carousel-control-next {
     width: 6%;
     color: $brand-primary;
     background: none;
-    &.left, &.right {
-      background: none;
-    }
+    text-shadow: none;
     .glyphicon-chevron-right {
       right: 0;
       font-size: 36px;
@@ -31,12 +38,17 @@
       left: 0;
       font-size: 36px;
     }
+    &:hover,
     &:focus {
+      color: $brand-primary;
+      background: none;
       outline: none;
       box-shadow: none;
     }
   }
   .hover-overlay {
+    width: 100%;
+    display: block;
     .contentDarker {
       color: $brand-primary;
       padding: 0.5rem 1.5rem 1rem 1.75rem;
