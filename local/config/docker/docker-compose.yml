@@ -1,0 +1,58 @@
+services:
+  solr:
+    build:
+      context: ./solr
+      dockerfile: Dockerfile.solr
+    container_name: fiddk-solr
+    expose:
+      - "8984"
+    volumes:
+      # Achtung, Daten unter $SOLR_DIR  müssen user/gruppe 8983 gehören oder o+rw sein!
+      - ${SOLR_DIR}:/var/solr/data
+    environment:
+      - SOLR_HOME=/var/solr/data
+      - SOLR_JETTY_HOST=0.0.0.0
+      - SOLR_PORT=8984
+      - SOLR_MODULES=analysis-extras
+      - SOLR_JAVA_MEM=-Xms4g -Xmx8g
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://solr:8984/solr/biblio/admin/ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "127.0.0.1:15884:8984"
+    networks:
+      - fiddk_network
+    restart: unless-stopped
+
+  vufind:
+    build:
+      context: ../../..
+      dockerfile: local/config/docker/vufind/Dockerfile
+    container_name: fiddk-vufind
+    expose:
+      - "80"
+    volumes:
+      - ./vufind/docker-vufind.conf:/etc/apache2/sites-available/vufind.conf:ro
+      - ./vufind/httpd-vufind-local.conf:/etc/apache2/conf-available/vufind.conf:ro
+      - ./vufind/99-prod.ini:/usr/local/etc/php/conf.d/99-prod.ini:ro
+    command: >
+      bash -lc "
+        a2dissite 000-default &&
+        a2ensite vufind &&
+        a2enconf vufind &&
+        apache2-foreground
+      "
+    depends_on:
+      solr:
+        condition: service_healthy
+    networks:
+      - fiddk_network
+    restart: unless-stopped
+
+
+# bash: docker network create common_network
+networks:
+  fiddk_network:
+    external: true

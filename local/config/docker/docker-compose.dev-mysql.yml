@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: fiddk-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: vufind_db
+      MYSQL_USER: vufinduser
+      MYSQL_PASSWORD: passwd
+    volumes:
+      - ${MYSQL_DIR}:/var/lib/mysql
+    ports:
+      - "127.0.0.1:15306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppasswd"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - fiddk_network
+    restart: unless-stopped
+
+  vufind:
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  fiddk_network:
+    external: true
