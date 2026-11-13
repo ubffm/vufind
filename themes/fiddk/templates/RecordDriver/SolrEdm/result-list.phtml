@@ -36,7 +36,7 @@ if ($coverDetails['cover'] && $cover) :
         <a href="<?=$this->escapeHtmlAttr($recordLinker->getUrl($this->driver))?>" class="title getFull" data-view="<?=isset($this->params) ? $this->params->getOptions()->getListViewOption() : 'list' ?>">
           <?php $subtitles = $this->driver->getSubtitle(); ?>
           <?php if (!empty($subtitles)) : ?>
-                <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate(implode('; ', $subtitles), 180));?>
+                <?=$this->record($this->driver)->getTitleHtml() . ' : ' . $this->escapeHtml($this->truncate($subtitles, 180));?>
           <?php else : ?>
               <?=$this->record($this->driver)->getTitleHtml()?>
           <?php endif; ?>
@@ -60,8 +60,8 @@ if ($coverDetails['cover'] && $cover) :
                 <?=$this->render('RecordDriver/SolrEdm/data-containerTitle.phtml', ['data' => $journalTitles,'driver' => $this->driver, 'highlight' => true]);?>
                 <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate) . ')' : ''?>
             <?php elseif (!empty($summDate)) : ?>
-                <?=!empty($summAuthor) ? '<br>' : ''?>
-                <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+                <?=!empty($summAuthors) ? '<br>' : ''?>
+                <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate)?>
             <?php endif; ?>
             <?php $summAuthors = array_slice(array_filter($this->driver->getPrimaryAuthorsWithHighlighting()), 0, 3); if (!empty($summAuthors)) :
                 $roles = $this->driver->getPrimaryAuthorsRoles();
