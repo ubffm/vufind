@@ -1,6 +1,0 @@
-<?php foreach ($data as $i => $link) : ?>
-   <a href="<?= $this->escapeHtmlAttr($link['id'] ?? '') ?>" target="_blank"><?= $this->escapeHtml($link['label'] ?? '') ?></a>
-    <?php if ($i < sizeof($data) - 1) :
-        ?> | <?php
-    endif; ?>
-<?php endforeach; ?>
