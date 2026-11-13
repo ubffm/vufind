@@ -65,6 +65,33 @@ class SolrWork extends SolrEdm implements
 
     protected $relatedEvents;
 
+    /**
+     * Get authority (GND) ID of this work.
+     *
+     * @return string
+     */
+    public function getAuthorityId()
+    {
+        $id = $this->fields['id'] ?? '';
+        if (is_string($id) && str_starts_with($id, 'gnd_')) {
+            return substr($id, 4);
+        }
+
+        foreach (($this->fields['links'] ?? []) as $link) {
+            if (!is_string($link)) {
+                continue;
+            }
+            if (str_starts_with($link, 'gnd_')) {
+                return substr($link, 4);
+            }
+            if (preg_match('~https?://d-nb\.info/gnd/([^/#?]+)~i', $link, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return '';
+    }
+
 
     /**
      * Get icon for this entity type.
