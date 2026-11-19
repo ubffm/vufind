@@ -41,3 +41,4 @@ local/config/vufind/FeedbackForms.yaml
 *.pem
 .cecli*
 .venv
+css-report/
