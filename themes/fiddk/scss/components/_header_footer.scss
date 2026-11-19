@@ -161,3 +161,45 @@ footer {
     }
   }
 }
+
+/* ------------------------------------------------------------
+ * Bootstrap-3-Parität Header (Abweichungen laut css-report)
+ * ------------------------------------------------------------ */
+header {
+  .banner.container.navbar,
+  .search.container.navbar {
+    display: block;
+    max-width: none;
+  }
+  .banner.container.navbar {
+    .navbar-header {
+      float: left;
+      width: 500px;
+    }
+    .navbar-brand {
+      display: block;
+      float: left;
+      margin: 0;
+      padding: 15px;
+      font-size: 20px;
+      line-height: 20px;
+      white-space: normal;
+    }
+    #header-collapse nav {
+      display: block;
+      width: 100%;
+    }
+    .navbar-nav {
+      float: right;
+      margin-right: -15px;
+    }
+  }
+  /* Verhindert Margin-Collapse des h1 durch den Container (früher Clearfix) */
+  .section.container.title {
+    display: flow-root;
+  }
+}
+
+.sectionHeader {
+  font-size: 36px;
+}

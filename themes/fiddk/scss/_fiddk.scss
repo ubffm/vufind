@@ -529,3 +529,37 @@ figcaption {
   text-align: center;
   padding: 1rem 0 0 0;
 }
+
+/* ------------------------------------------------------------
+ * Bootstrap-3-Parität (Abweichungen laut css-report)
+ * ------------------------------------------------------------ */
+
+/* Bootstrap 5 begrenzt .container auf 1320px; früher unbegrenzt. */
+.container {
+  max-width: none;
+}
+
+/* Buttons: kein Umbruch wie in Bootstrap 3 */
+.btn {
+  white-space: nowrap;
+}
+
+/* Facetten: Schrift 14px / Zeilenhöhe 21px wie früher */
+.facet-group .title,
+.facet,
+a.facet,
+button.btn.facet {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Facet-Titel (h3 > button.title > span.facet-title) */
+.facet-group h3.facet-title {
+  font-size: 1rem;
+  line-height: 1.1;
+  .title,
+  span.facet-title {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
