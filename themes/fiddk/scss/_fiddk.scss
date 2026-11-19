@@ -544,22 +544,29 @@ figcaption {
   white-space: nowrap;
 }
 
-/* Facetten: Schrift 14px / Zeilenhöhe 21px wie früher */
-.facet-group .title,
+/* Facetten: Eintraege 16.8px (geerbt) mit fester Zeilenhoehe 21px */
 .facet,
-a.facet,
+a.facet {
+  line-height: 21px;
+}
+
+/* "Mehr/Weniger"-Buttons: 14px / 21px */
 button.btn.facet {
   font-size: 1rem;
   line-height: 1.5;
 }
 
-/* Facet-Titel (h3 > button.title > span.facet-title) */
+/* Facet-Titel: h3 14px/1.1, Titeltext 21px/21px wie frueher */
 .facet-group h3.facet-title {
   font-size: 1rem;
   line-height: 1.1;
-  .title,
   span.facet-title {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.5rem;
+    line-height: 1;
   }
+}
+
+/* Bootstrap 3: primaere Buttons mit weissem Rand */
+.btn-primary {
+  border-color: $white;
 }

@@ -168,7 +168,7 @@ footer {
 header {
   .banner.container.navbar,
   .search.container.navbar {
-    display: block;
+    display: flow-root;
     max-width: none;
   }
   .banner.container.navbar {
@@ -191,7 +191,6 @@ header {
     }
     .navbar-nav {
       float: right;
-      margin-right: -15px;
     }
   }
   /* Verhindert Margin-Collapse des h1 durch den Container (früher Clearfix) */
@@ -202,4 +201,5 @@ header {
 
 .sectionHeader {
   font-size: 36px;
+  line-height: 1.1;
 }
