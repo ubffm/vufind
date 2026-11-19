@@ -570,3 +570,21 @@ button.btn.facet {
 .btn-primary {
   border-color: $white;
 }
+
+/* Facet-Titel-Button: Zeilenhoehe 1 (Bootstrap 5 vererbt 1.5 -> Titel 10.5px zu hoch) */
+.facet-group h3.facet-title .title {
+  line-height: 1;
+}
+
+/* "Mehr/Weniger"-Buttons: alter Rahmen */
+button.btn.facet {
+  border-bottom-color: #ddd;
+}
+
+/* Sprachumschalter: Bootstrap-3-Verhalten (keine Streckung, heller Rahmen beim aktiven Button) */
+.btn-group > .btn {
+  flex: 0 1 auto;
+}
+.btn-group .btn-primary.active {
+  border-color: #e0e0e0;
+}
