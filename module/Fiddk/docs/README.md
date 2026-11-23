@@ -174,7 +174,8 @@ Zentrale Namespaces/Klassen (Auswahl):
     - `edm::edm:isRelatedTo` → `getAllRecordLinks()` → `data-internalLink.phtml`
       - Nutzt `related_to`-IDs und löst per `getTitleIfExists()` Titel aus dem Index auf.
     - `Availability` → `getKVKLink()` → `data-externalLinkKVK.phtml`
-      - Erzeugt KVK-Abfrage (ISBN oder Titel/Jahr/Verlag), mit Ausschlusslogik für bestimmte Einrichtungen bzw. Archivfälle.
+      - Erzeugt KVK-Abfrage (ISBN oder Titel/Jahr/Verlag).
+      - Ausgeschlossen sind Institutionen aus `[KVK] excluded_institutions[]` (config.ini). Der Wert muss exakt dem ersten Eintrag von `getInstitutions()` entsprechen. Eine Archivprüfung findet aktuell nicht statt.
     - `Ask Archive` → `askArchive()` → `data-askArchive.phtml`
       - Baut institutionsabhängigen Link auf das Feedback-Formular mit vorbelegter Signatur (`callNumber`).
 

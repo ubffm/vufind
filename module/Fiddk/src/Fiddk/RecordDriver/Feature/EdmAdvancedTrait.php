@@ -57,7 +57,11 @@ trait EdmAdvancedTrait
     public function askArchive()
     {
         $callNumber = "";
-        if ($this->isArchiveRecord() && (strpos($this->getUniqueId(), "DTK") === 0 || strpos($this->getUniqueId(), "DTMA") === 0 || strpos($this->getUniqueId(), "MCB") === 0)) {
+        $id = $this->getUniqueId();
+        if (
+            $this->isArchiveRecord()
+            && (strpos($id, "DTK") === 0 || strpos($id, "DTMA") === 0 || strpos($id, "MCB") === 0)
+        ) {
             if ($this->getCallNumber()) {
                 $callNumber = $this->getCallNumber()[0];
             } else {
@@ -70,13 +74,19 @@ trait EdmAdvancedTrait
     public function getKVKLink()
     {
         $url = "";
-        $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
+        $base = "http://kvk.bibliothek.kit.edu/?kataloge=SWB&kataloge=BVB&kataloge=NRW&kataloge=HEBIS"
+            . "&kataloge=HEBIS_RETRO&kataloge=KOBV_SOLR&kataloge=GBV&kataloge=DDB&kataloge=STABI_BERLIN"
+            . "&kataloge=WORLDCAT&digitalOnly=0&embedFulltitle=0&newTab=1&";
         if (isset($this->getInstitutions()[0])) {
             $inst = $this->getInstitutions()[0];
         } else {
             $inst = "";
         }
-        $exclude = in_array($inst, ["Tanzfonds Erbe", "Thüringer Universitäts- und Landesbibliothek Jena"]) or $this->isArchiveRecord();
+        $excluded = $this->mainConfig->KVK->excluded_institutions ?? [];
+        if (!is_array($excluded)) {
+            $excluded = $excluded->toArray();
+        }
+        $exclude = in_array($inst, $excluded, true);
 
         if (!$exclude) {
             $isbn = $this->getCleanISBN();
