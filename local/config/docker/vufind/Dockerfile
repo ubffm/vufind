@@ -3,13 +3,15 @@ FROM php:8.2-apache
 # Systempakete für intl (+ optional nützliches)
 RUN apt-get update && apt-get install -y --no-install-recommends \
       libicu-dev locales git unzip libxslt1-dev \
+      libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
   && apt-get install -y --no-install-recommends --only-upgrade \
       libbrotli1 \
   && rm -rf /var/lib/apt/lists/*
 
 # PHP-Extensions bauen/aktivieren
 RUN docker-php-ext-configure intl \
-  && docker-php-ext-install -j"$(nproc)" intl opcache pdo_mysql mysqli xsl
+  && docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install -j"$(nproc)" intl opcache pdo_mysql mysqli xsl gd
 
 # Apache-Module aktivieren
 RUN a2enmod rewrite remoteip
@@ -44,4 +46,3 @@ COPY . .
 RUN mkdir -p /usr/local/vufind/local/cache/configs \
   && chown -R www-data:www-data /usr/local/vufind/local/cache \
   && chmod -R 775 /usr/local/vufind/local/cache
-
