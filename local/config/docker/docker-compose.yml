@@ -17,9 +17,6 @@ services:
         a2enconf vufind &&
         apache2-foreground
       "
-    depends_on:
-      solr:
-        condition: service_healthy
     networks:
       - fiddk_network
     restart: unless-stopped
