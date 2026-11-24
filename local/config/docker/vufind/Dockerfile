@@ -27,6 +27,10 @@ ENV LANG=de_DE.UTF-8 LC_ALL=de_DE.UTF-8
 # Composer aus offiziellem Composer-Image übernehmen
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
+ENV VUFIND_HOME=/usr/local/vufind \
+    VUFIND_LOCAL_DIR=/usr/local/vufind/local \
+    VUFIND_LOCAL_MODULES=Fiddk,FiddkApi
+
 WORKDIR /usr/local/vufind
 
 # Nur Composer-Metadaten + build.xml zuerst kopieren für besseres Docker-Layer-Caching
@@ -41,6 +45,9 @@ RUN --mount=type=cache,target=/tmp/composer-cache \
 
 # Danach erst den restlichen Quellcode kopieren
 COPY . .
+
+# Autoloader nach dem Kopieren neu erzeugen (PSR-4 für Fiddk/FiddkApi aus composer.local.json)
+RUN composer dump-autoload --no-dev --optimize --no-interaction
 
 # Schreibbare Cache-Verzeichnisse für VuFind anlegen
 RUN mkdir -p /usr/local/vufind/local/cache/configs \

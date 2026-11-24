@@ -8,13 +8,15 @@ services:
       - "80"
     volumes:
       - ./vufind/docker-vufind.conf:/etc/apache2/sites-available/vufind.conf:ro
-      - ./vufind/httpd-vufind-local.conf:/etc/apache2/conf-available/vufind.conf:ro
       - ./vufind/99-prod.ini:/usr/local/etc/php/conf.d/99-prod.ini:ro
+    environment:
+      VUFIND_HOME: /usr/local/vufind
+      VUFIND_LOCAL_DIR: /usr/local/vufind/local
+      VUFIND_LOCAL_MODULES: Fiddk,FiddkApi
     command: >
       bash -lc "
         a2dissite 000-default &&
         a2ensite vufind &&
-        a2enconf vufind &&
         apache2-foreground
       "
     networks:
