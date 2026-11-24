@@ -47,7 +47,10 @@ RUN --mount=type=cache,target=/tmp/composer-cache \
 COPY . .
 
 # Autoloader nach dem Kopieren neu erzeugen (PSR-4 für Fiddk/FiddkApi aus composer.local.json)
-RUN composer dump-autoload --no-dev --optimize --no-interaction
+# Cache leeren (Sicherheitsnetz) und prüfen, dass Fiddk im Autoloader steht
+RUN rm -rf /usr/local/vufind/local/cache/* \
+  && composer dump-autoload --no-dev --optimize --no-interaction \
+  && grep -q 'Fiddk' vendor/composer/autoload_psr4.php
 
 # Schreibbare Cache-Verzeichnisse für VuFind anlegen
 RUN mkdir -p /usr/local/vufind/local/cache/configs \
