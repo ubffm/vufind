@@ -1,0 +1,4 @@
+.git
+vendor
+local/cache
+node_modules
