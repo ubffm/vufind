@@ -27,6 +27,9 @@ ENV LANG=de_DE.UTF-8 LC_ALL=de_DE.UTF-8
 # Composer aus offiziellem Composer-Image übernehmen
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
+# Damit die Plugins aktiv sind
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 ENV VUFIND_HOME=/usr/local/vufind \
     VUFIND_LOCAL_DIR=/usr/local/vufind/local \
     VUFIND_LOCAL_MODULES=Fiddk,FiddkApi
@@ -41,7 +44,8 @@ COPY composer.local.json build.xml ./
 # --no-scripts verhindert langlaufende/hängende Phing-Hooks (z. B. installsolr) im Docker-Build.
 RUN --mount=type=cache,target=/tmp/composer-cache \
     COMPOSER_CACHE_DIR=/tmp/composer-cache \
-    composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
+    composer install --no-dev --prefer-dist \
+    --no-interaction --no-progress --no-autoloader --no-scripts
 
 # Danach erst den restlichen Quellcode kopieren
 COPY . .
