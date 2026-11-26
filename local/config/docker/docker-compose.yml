@@ -1,9 +1,10 @@
 services:
   vufind:
+    image: docker-vufind:11.1
     build:
       context: ../../..
       dockerfile: local/config/docker/vufind/Dockerfile
-    container_name: fiddk-vufind
+    container_name: fiddk-vufind-11.1
     expose:
       - "80"
     volumes:
